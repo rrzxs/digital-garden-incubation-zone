@@ -1,0 +1,11 @@
+# Common ignore patterns
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+.env
+.idea/
+.vscode/
+package-lock.json (ignore if you prefer yarn/pnpm)
+yarn-error.log
