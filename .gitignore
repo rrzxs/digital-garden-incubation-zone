@@ -9,3 +9,7 @@ build/
 .vscode/
 package-lock.json (ignore if you prefer yarn/pnpm)
 yarn-error.log
+
+# Deployment tools
+deploy.sh
+DEPLOY_GUIDE.md
