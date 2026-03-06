@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人人智学社 - 数字花园种子区</title>
+    <meta name="description" content="人人智学社数字花园种子区，展示各种 Web 项目的 Demo 和 MVP。">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-glow"></div>
+    
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <span class="logo-text">Digital Garden</span>
+            </div>
+            <div class="nav-links">
+                <a href="#seeds" class="nav-link">种子项目</a>
+                <a href="https://github.com/rrzxs/digital-garden-incubation-zone" target="_blank" class="nav-link">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <h1 class="animate-up">数字花园<span class="highlight">种子区</span></h1>
+                <p class="animate-up delay-1">这里是创意的孵化地。每一行代码都是一粒种子，在数字花园中静待生长。</p>
+                <div class="hero-stats animate-up delay-2">
+                    <div class="stat">
+                        <span class="stat-value" id="seed-count">0</span>
+                        <span class="stat-label">已播种</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">MVP</span>
+                        <span class="stat-label">阶段</span>
+                    </div>
+                </div>
+                <a href="#seeds" class="cta-button animate-up delay-3">探索种子</a>
+            </div>
+        </section>
+
+        <section id="seeds" class="seeds-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>项目列表 <span>Projects</span></h2>
+                    <p>点击下方卡片进入对应的项目演示</p>
+                </div>
+
+                <div class="seeds-grid" id="seeds-grid">
+                    <!-- Placeholder for no seeds -->
+                    <div class="no-seeds-message" id="empty-state">
+                        <div class="seed-icon-large">🪴</div>
+                        <h3>花园正准备播种...</h3>
+                        <p>目前还没有已发布的项目 Demo，请稍后再来。或者，在根目录下添加一个新目录来开始你的第一个项目！</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 人人智学社 (RRZXS). All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">加入孵化</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
