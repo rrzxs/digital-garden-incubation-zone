@@ -1,0 +1,549 @@
+/* 
+ * OpenClaw AI 界面 - 深色极客风样式
+ * 核心：极简深色、毛玻璃点缀、流畅的布局与组件设计
+ */
+
+:root {
+    --bg-app: #0f1115;
+    --bg-panel: #16181d;
+    --bg-element: #1e2128;
+    --bg-element-hover: #292d36;
+    
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    
+    --border-color: #2b303b;
+    
+    --color-primary: #3b82f6;
+    --color-primary-hover: #2563eb;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+
+    --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-app);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+/* ==========================================================================
+   左侧边栏 (Sidebar)
+   ========================================================================== */
+.sidebar {
+    width: 320px;
+    min-width: 320px;
+    background-color: var(--bg-panel);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    z-index: 10;
+}
+
+.sidebar-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.back-btn {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    color: var(--text-primary);
+}
+
+.sidebar-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.5px;
+}
+
+.badge {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--color-primary);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* 角色列表 */
+.roles-section {
+    padding: 24px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.role-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.role-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 1px solid transparent;
+}
+
+.role-item:hover {
+    background-color: var(--bg-element);
+}
+
+.role-item.active {
+    background-color: var(--bg-element);
+    border-color: var(--border-color);
+}
+
+.role-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-app);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border: 1px solid var(--border-color);
+}
+
+.role-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.role-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.role-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Prompt 注入区 */
+.prompt-section {
+    padding: 24px;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.prompt-editor {
+    background-color: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.prompt-editor:focus-within {
+    border-color: var(--color-primary);
+}
+
+.prompt-editor textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    resize: none;
+    outline: none;
+    line-height: 1.5;
+}
+
+.editor-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: var(--bg-element);
+    border-top: 1px solid var(--border-color);
+}
+
+.token-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   右侧主视窗 (Main Chat)
+   ========================================================================== */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.chat-header {
+    height: 72px;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(15, 17, 21, 0.8);
+    backdrop-filter: blur(12px);
+    z-index: 5;
+}
+
+.current-role-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.current-role-info .avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 1.4rem;
+    border-radius: var(--radius-sm);
+    background: var(--bg-element);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.current-role-info h2 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.status-indicator {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+}
+
+.styled-select {
+    background-color: var(--bg-element);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    outline: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 消息列表区域 */
+.chat-messages {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.empty-state {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-muted);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+/* 消息气泡容器 */
+.message-wrapper {
+    display: flex;
+    gap: 16px;
+    max-width: 80%;
+    animation: fadeIn 0.3s ease;
+}
+
+.message-wrapper.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message-wrapper.ai {
+    align-self: flex-start;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+}
+
+.user .message-avatar {
+    background: var(--bg-element);
+}
+
+.message-content {
+    background-color: var(--bg-panel);
+    padding: 16px 20px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+
+.message-wrapper.user .message-content {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.message-wrapper.system .message-content {
+    background-color: rgba(245, 158, 11, 0.05);
+    border-color: rgba(245, 158, 11, 0.2);
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* 打字机效果 */
+.typing-indicator {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.typing-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--text-secondary);
+    animation: typeBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+/* 底部输入区 */
+.chat-input-area {
+    padding: 24px 32px 32px;
+    background: linear-gradient(to top, var(--bg-app) 70%, transparent);
+}
+
+.input-wrapper {
+    position: relative;
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 4px;
+    display: flex;
+    align-items: flex-end;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.input-wrapper textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    padding: 12px 16px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: none;
+    outline: none;
+    max-height: 200px;
+    min-height: 48px;
+    line-height: 1.5;
+}
+
+.btn {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.btn-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px;
+    flex-shrink: 0;
+}
+
+.btn-send:disabled {
+    background-color: var(--bg-element);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.input-footer {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   提示系统 (Toast)
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.toast {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 20px;
+    border-radius: var(--radius-lg);
+    font-size: 0.85rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast.success { border-color: rgba(16, 185, 129, 0.5); }
+.toast.info { border-color: rgba(59, 130, 246, 0.5); }
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typeBounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 隐藏滚动条但保留功能 */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 光影微交互画板 (Cyber Paint)</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 顶部状态栏 -->
+    <header class="cyber-header">
+        <a href="../../index.html" class="back-link">
+            <span>[ ESC ] 返回系统</span>
+        </a>
+        <div class="sys-title">CYBER_PAINT // INTERACTIVE_GRID_V1.0</div>
+        <div class="sys-status">
+            <span>坐标: X:<span id="coord-x">000</span> Y:<span id="coord-y">000</span></span>
+            <span class="pulse">///</span>
+        </div>
+    </header>
+
+    <!-- 主交互区域 -->
+    <main class="grid-container" id="grid-container">
+        <!-- JS 将在这里注入数百个细胞网格(cells) -->
+    </main>
+
+    <!-- 底部控制面板 -->
+    <footer class="cyber-controls">
+        <div class="control-group">
+            <span class="label">NEON_COLOR</span>
+            <div class="color-palette" id="color-palette">
+                <!-- 颜色通过主 JS 控制与激活 -->
+                <button class="color-btn active" style="--btn-color: #0ff;" data-color="#0ff"></button>
+                <button class="color-btn" style="--btn-color: #f0f;" data-color="#f0f"></button>
+                <button class="color-btn" style="--btn-color: #0f0;" data-color="#0f0"></button>
+                <button class="color-btn" style="--btn-color: #ff0;" data-color="#ff0"></button>
+                <button class="color-btn" style="--btn-color: #f00;" data-color="#f00"></button>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <span class="label">MODE</span>
+            <div class="toggle-switch">
+                <input type="checkbox" id="mode-toggle" checked>
+                <label for="mode-toggle">PAINT <span class="slash">|</span> WIPE</label>
+            </div>
+        </div>
+        
+        <div class="control-group action-group">
+            <button class="cyber-btn" id="btn-clear">[ CLEAR_GRID ]</button>
+        </div>
+    </footer>
+
+    <!-- 光标跟随发光体 -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

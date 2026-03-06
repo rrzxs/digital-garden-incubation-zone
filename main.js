@@ -13,23 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             title: "OpenClaw AI 界面",
             description: "基于 GLM API 的多角色 AI 对话客户端原型构建及 Prompt 注入测试。",
-            path: "#",
+            path: "./seeds/openclaw/index.html",
             tags: ["React", "MVP", "LLM"],
             icon: "🤖",
             status: "开发中"
         },
         {
-            title: "前端构建打包器",
-            description: "实验性质的极简前端打包器，用于理解底层构建流转原理。",
-            path: "#",
-            tags: ["Node.js", "Tooling"],
-            icon: "📦",
-            status: "已完成"
+            title: "Aura 灵韵",
+            description: "极致审美的沉浸式呼吸冥想空间，兼具流体网格渐变与微晶玻璃拟物态。体验宁静与专注。",
+            path: "./seeds/aura/index.html",
+            tags: ["Design", "Animation", "Glassmorphism"],
+            icon: "🪷",
+            status: "已发布"
         },
         {
             title: "CSS 光影微交互画板",
             description: "纯使用 CSS Variables 与少量 JS 制作的赛博朋克风格交互画板。",
-            path: "#",
+            path: "./seeds/cyber-paint/index.html",
             tags: ["CSS3", "Design"],
             icon: "🎨",
             status: "已发布"

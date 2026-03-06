@@ -1,0 +1,416 @@
+/* 
+ * Aura - 灵韵冥想空间样式
+ * 核心技术点: CSS 变量体系、磨砂玻璃 (Glassmorphism)、流体背景网格渐变
+ */
+
+:root {
+    /* 核心调色板：海洋深邃蓝渐变体系 (默认放松模式) */
+    --color-bg: #090a0f;
+    --color-blob-1: #3b2c85; /* 深紫 */
+    --color-blob-2: #1e3b70; /* 藏蓝 */
+    --color-blob-3: #295270; /* 青蓝 */
+    --color-blob-4: #0f1c3f; /* 极夜蓝 */
+    
+    --color-text-main: rgba(255, 255, 255, 0.95);
+    --color-text-sub: rgba(255, 255, 255, 0.6);
+    --color-accent: #7ca8ff;
+
+    /* 玻璃态面板材质变量 */
+    --glass-bg: rgba(20, 25, 40, 0.35);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 24px 64px 0 rgba(0, 0, 0, 0.4);
+    
+    /* 律动微调 */
+    --breathe-cycle: 8s; /* 完整呼吸周期 4s吸, 4s呼 */
+    
+    /* 字体 */
+    --font-heading: 'Outfit', sans-serif;
+}
+
+/* 专注模式调色板 (橘辉/旭日) */
+body.mode-focus {
+    --color-blob-1: #85372c; /* 深橘红 */
+    --color-blob-2: #702f1e; /* 锈红 */
+    --color-blob-3: #704729; /* 焦糖色 */
+    --color-blob-4: #3f1a0f; /* 黯棕 */
+    --color-accent: #ffb47c;
+    --glass-bg: rgba(30, 20, 15, 0.35);
+}
+
+/* ==========================================================================
+   全局重置与排版
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    font-family: var(--font-heading);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 1.5s ease;
+}
+
+/* ==========================================================================
+   返回导航
+   ========================================================================== */
+.back-link {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-sub);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    z-index: 100;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    opacity: 1;
+    color: var(--color-text-main);
+    transform: translateX(-4px);
+}
+
+/* ==========================================================================
+   流体背景层 (Mesh Gradient)
+   通过多个带超级模糊滤镜的圆形元素进行平移、呼吸缩放，混合出赛博朋克深邃感
+   ========================================================================== */
+.mesh-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.blob {
+    position: absolute;
+    filter: blur(120px);
+    border-radius: 50%;
+    opacity: 0.8;
+    mix-blend-mode: screen;
+    animation: float 20s infinite ease-in-out alternate;
+    transition: background-color 2s ease;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background-color: var(--color-blob-1);
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    bottom: -20%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background-color: var(--color-blob-2);
+    animation-delay: -5s;
+    animation-direction: alternate-reverse;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 40%;
+    width: 40vw;
+    height: 40vw;
+    background-color: var(--color-blob-3);
+    animation-delay: -10s;
+}
+
+.blob-4 {
+    top: 10%;
+    right: 10%;
+    width: 45vw;
+    height: 45vw;
+    background-color: var(--color-blob-4);
+    animation-delay: -15s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(10%, -10%) scale(1.1); }
+    66% { transform: translate(-10%, 15%) scale(0.9); }
+    100% { transform: translate(5%, 5%) scale(1.05); }
+}
+
+/* ==========================================================================
+   主玻璃态容器 
+   ========================================================================== */
+.glass-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 460px;
+    height: 680px;
+    
+    /* Glassmorphism 核心属性 */
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.15); /* 顶部反射光 */
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 32px;
+    box-shadow: var(--glass-shadow);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 48px 32px;
+    z-index: 10;
+    
+    transition: background 1.5s ease;
+}
+
+/* 顶部标题区 */
+.panel-header {
+    text-align: center;
+    animation: fadeInDown 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brand-title {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--color-text-sub);
+}
+
+/* ==========================================================================
+   中央呼吸区 (Breathe Area)
+   ========================================================================== */
+.breathe-area {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* 内部实心/微发光内核 */
+.core-circle {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.02) 70%, transparent 100%);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05) inset;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 2;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 外部扩张发光环 */
+.glow-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent);
+    opacity: 0.3;
+    z-index: 1;
+    filter: blur(4px);
+    transform: scale(0.6);
+}
+
+/* 中心文字提示 */
+.breathe-instruction {
+    position: absolute;
+    z-index: 3;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: var(--color-text-main);
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+/* 播放状态：添加动画 */
+.is-playing .glow-ring {
+    animation: breathe-ring var(--breathe-cycle) infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+.is-playing .core-circle {
+    animation: breathe-core var(--breathe-cycle) infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+.is-playing .breathe-instruction {
+    opacity: 1;
+}
+
+/* 呼吸动画定义 */
+@keyframes breathe-ring {
+    0% { transform: scale(0.6); opacity: 0.2; }
+    50% { transform: scale(1.1); opacity: 0.6; }
+    100% { transform: scale(0.6); opacity: 0.2; }
+}
+
+@keyframes breathe-core {
+    0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.05) inset; }
+    50% { transform: scale(1.3); box-shadow: 0 0 60px rgba(255,255,255,0.15) inset; }
+    100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.05) inset; }
+}
+
+/* ==========================================================================
+   底部控制区
+   ========================================================================== */
+.panel-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 100%;
+    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timer-display {
+    font-size: 3.5rem;
+    font-weight: 200;
+    letter-spacing: 2px;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-main);
+    text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+}
+
+/* 按钮基础样式 */
+button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: var(--color-text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 图标小按钮 */
+.icon-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: var(--color-text-sub);
+}
+
+.icon-btn:hover {
+    color: var(--color-text-main);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* 主播放按钮 */
+.play-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.play-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.play-btn:active {
+    transform: scale(0.95);
+}
+
+/* Tooltip (轻微交互) */
+.tooltip-wrapper {
+    position: relative;
+}
+
+.tooltip {
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-wrapper:hover .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   页面入场动画
+   ========================================================================== */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 移动端适配 */
+@media (max-width: 600px) {
+    .glass-container {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        border: none;
+        padding: 64px 24px 48px;
+    }
+    .back-link {
+        top: 20px;
+        left: 20px;
+    }
+}

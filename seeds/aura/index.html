@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura 灵韵 - 沉浸式呼吸冥想空间</title>
+    <!-- 引入极简现代的 Outfit 字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 返回数字花园主页 -->
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <!-- 动态流体网格渐变背景 -->
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- 主控面板 -->
+    <main class="glass-container">
+        <!-- 顶部状态信息 -->
+        <header class="panel-header">
+            <h1 class="brand-title">Aura.</h1>
+            <p class="brand-subtitle" id="status-text">深呼吸，感知当下</p>
+        </header>
+
+        <!-- 居中的呼吸律动环 -->
+        <section class="breathe-area">
+            <div class="glow-ring"></div>
+            <div class="core-circle"></div>
+            <div class="breathe-instruction" id="breathe-text">吸气</div>
+        </section>
+
+        <!-- 底部控制区 -->
+        <footer class="panel-controls">
+            <div class="timer-display" id="timer">05:00</div>
+            
+            <div class="action-buttons">
+                <!-- 模式切换开关 -->
+                <button class="icon-btn tooltip-wrapper" id="mode-toggle" aria-label="切换模式">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                    </svg>
+                    <span class="tooltip">专注模式</span>
+                </button>
+                
+                <!-- 播放/暂停控制 -->
+                <button class="play-btn" id="play-pause-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-play">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-pause" style="display: none;">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                </button>
+                
+                <!-- 音效开关 -->
+                <button class="icon-btn tooltip-wrapper" id="sound-toggle" aria-label="切换音效">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <span class="tooltip">环境音</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

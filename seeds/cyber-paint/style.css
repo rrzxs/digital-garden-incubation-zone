@@ -1,0 +1,265 @@
+/* 
+ * Cyber Paint - 赛博朋克风网格交互光影画板
+ * 核心技术: 大量 CSS Variables, Grid, 伪类 :hover & 兄弟选择器, Neon 发光特效
+ */
+
+:root {
+    --bg-dark: #000207;
+    --grid-line: #0d1521;
+    --grid-line-glow: #1a2c47;
+    
+    --theme-color: #0ff; /* 默认主青色 */
+    
+    --sys-font: 'Share Tech Mono', monospace;
+    
+    /* 网格常量 */
+    --cell-size: 40px;
+    --gap-size: 1px;
+    
+    /* 鼠标全局坐标 (由 JS 持续注入) */
+    --mouse-x: -100px;
+    --mouse-y: -100px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #fff;
+    font-family: var(--sys-font);
+    overflow: hidden; /* 防止网格溢出 */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    cursor: crosshair;
+}
+
+/* ==========================================================================
+   Header Navbar
+   ========================================================================== */
+.cyber-header {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--grid-line-glow);
+    background: rgba(0, 2, 7, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.back-link {
+    color: #4a6890;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.back-link:hover {
+    color: var(--theme-color);
+    text-shadow: 0 0 8px var(--theme-color);
+}
+
+.sys-title {
+    color: var(--theme-color);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+}
+
+.sys-status {
+    color: #4a6890;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.pulse {
+    color: var(--theme-color);
+    animation: blink 1s infinite alternate step-end;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   主网格画板区域
+   ========================================================================== */
+.grid-container {
+    flex: 1;
+    display: grid;
+    /* 动态等比网格，格子大小受 --cell-size 控制 */
+    grid-template-columns: repeat(auto-fill, minmax(var(--cell-size), 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(var(--cell-size), 1fr));
+    gap: var(--gap-size);
+    background-color: var(--grid-line); /* 缝隙颜色 */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 单个网格细胞 (Cell) */
+.cell {
+    background-color: var(--bg-dark);
+    transition: background-color 0s ease, box-shadow 0s ease;
+    /* 默认不发光 */
+    box-shadow: inset 0 0 0 1px transparent;
+    position: relative;
+    z-index: 1;
+}
+
+/* 笔刷绘制状态持久化 (由 JS 切换类名) */
+.cell.painted {
+    background-color: var(--theme-color);
+    box-shadow: 0 0 15px var(--theme-color), inset 0 0 20px var(--theme-color);
+    z-index: 2;
+    transition: all 0.5s ease-out; /* 留下尾迹缓慢消散或持续点亮 */
+}
+
+/* Hover 微交互光效 (非绘制状态时的掠过探照灯效果) */
+.cell:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: 0s; /* 瞬间亮起 */
+}
+
+/* 临近兄弟格子的微微点亮效果，通过 CSS 复杂选择器模拟衰减 (也可以全靠 JS 实现，由于过于消耗性能，这里简化处理，依靠跟随鼠标的 Radial Gradient 遮罩实现全局环境光) */
+
+/* 鼠标跟随的全局发光探照灯 */
+.grid-container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* 使用 JS 注入的坐标构建放射状渐变 */
+    background: radial-gradient(
+        circle 200px at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.05),
+        transparent 80%
+    );
+    pointer-events: none; /* 让鼠标穿透到底层网格 */
+    z-index: 5;
+}
+
+/* ==========================================================================
+   底部控制面板
+   ========================================================================== */
+.cyber-controls {
+    height: 80px;
+    background: #050811;
+    border-top: 1px solid var(--grid-line-glow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    z-index: 100;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.label {
+    color: #4a6890;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+/* 调色板 */
+.color-palette {
+    display: flex;
+    gap: 12px;
+}
+
+.color-btn {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: var(--btn-color);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s;
+    opacity: 0.5;
+}
+
+.color-btn:hover {
+    opacity: 0.8;
+}
+
+.color-btn.active {
+    opacity: 1;
+    border-color: #fff;
+    box-shadow: 0 0 12px var(--btn-color), inset 0 0 8px #fff;
+    transform: scale(1.2);
+}
+
+/* 模式切换按钮 (Checkbox to Toggle) */
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-switch label {
+    display: inline-block;
+    color: #4a6890;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.toggle-switch input:checked + label {
+    color: var(--theme-color);
+    text-shadow: 0 0 8px var(--theme-color);
+}
+
+.slash {
+    color: #333;
+    margin: 0 8px;
+}
+
+/* 清除按钮 */
+.cyber-btn {
+    background: transparent;
+    border: 1px solid #ff3366;
+    color: #ff3366;
+    padding: 8px 16px;
+    font-family: var(--sys-font);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cyber-btn:hover {
+    background: rgba(255, 51, 102, 0.2);
+    box-shadow: 0 0 12px rgba(255, 51, 102, 0.5);
+    text-shadow: 0 0 5px #ff3366;
+}
+
+.cyber-btn:active {
+    transform: scale(0.95);
+}
+
+/* ==========================================================================
+   全局硬件鼠标的发光点替代
+   ========================================================================== */
+.cursor-glow {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 0 20px 10px var(--theme-color);
+    /* 让中心对准鼠标 */
+    transform: translate(-50%, -50%);
+    top: var(--mouse-y);
+    left: var(--mouse-x);
+    mix-blend-mode: screen;
+}
