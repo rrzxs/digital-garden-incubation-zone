@@ -30,6 +30,13 @@ else
     echo "[$(date '+%H:%M:%S')] 无新变更需要提交" | tee -a "$LOG_FILE"
 fi
 
+# Git 推送
+echo "[$(date '+%H:%M:%S')] Git 推送到远程仓库..." | tee -a "$LOG_FILE"
+git push 2>&1 | tee -a "$LOG_FILE" || {
+    echo "[$(date '+%H:%M:%S')] 警告: Git 推送失败，但继续执行部署" | tee -a "$LOG_FILE"
+}
+echo "[$(date '+%H:%M:%S')] ✓ Git 推送完成" | tee -a "$LOG_FILE"
+
 # 部署
 if [ -n "$SERVER_PASSWORD" ]; then
     echo "[$(date '+%H:%M:%S')] 执行部署脚本..." | tee -a "$LOG_FILE"
