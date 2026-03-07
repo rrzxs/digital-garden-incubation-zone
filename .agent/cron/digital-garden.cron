@@ -1,0 +1,14 @@
+# 数字花园孵化器 - 定时任务配置
+# 安装方法: crontab /opt/digital-garden-incubation-zone/.agent/cron/digital-garden.cron
+# 查看现有任务: crontab -l
+
+# 环境变量
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# 每日工作流 - 05:00 启动
+# 执行灵感捕获 → 创意孵化 → 委派研发 → 部署
+0 5 * * * /opt/digital-garden-incubation-zone/.agent/scripts/daily-workflow.sh >> /opt/digital-garden-incubation-zone/.agent/logs/cron.log 2>&1
+
+# 可选: 仅部署 (每小时检查一次是否有新提交)
+# 0 * * * * cd /opt/digital-garden-incubation-zone && [ -n "$(git status --porcelain)" ] && SERVER_PASSWORD="your_password" ./deploy.sh
