@@ -1,0 +1,8 @@
+{
+    "date": "2026-03-07",
+    "seed_name": "pixel-mood",
+    "tagline": "像素情绪日历 - 用像素艺术记录每日情绪，生成年度情绪可视化图谱",
+    "directory": "./seeds/pixel-mood/",
+    "status": "pending",
+    "tags": ["creative", "web-app", "micro-interaction"]
+}
