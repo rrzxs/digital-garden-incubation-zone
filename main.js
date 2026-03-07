@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 模拟种子项目数据
     const seeds = [
         {
+            title: "磁力光标",
+            description: "光标周围的元素会被磁力吸引或排斥，创造有趣的交互体验",
+            path: "./seeds/magnetic-cursor/index.html",
+            tags: ["Interactive", "Physics", "Creative"],
+            icon: "🧲",
+            status: "已发布"
+        },
+        {
             title: "OpenClaw AI 界面",
             description: "基于 GLM API 的多角色 AI 对话客户端原型构建及 Prompt 注入测试。",
             path: "./seeds/openclaw/index.html",
