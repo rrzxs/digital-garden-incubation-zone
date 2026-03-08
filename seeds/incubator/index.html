@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵感孕育舱 - OpenClaw</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="ambient-background">
+        <div class="glow-orb orb-primary"></div>
+        <div class="glow-orb orb-secondary"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <a href="../../index.html" class="back-link">
+                <span class="back-icon">←</span> 返回伊甸园
+            </a>
+            <div class="header-title">
+                <div class="avatar">
+                    <span class="avatar-icon">🤖</span>
+                    <span class="status-dot"></span>
+                </div>
+                <div class="title-info">
+                    <h1>OpenClaw / EDEN</h1>
+                    <p>灵感孕育舱 / 随时待命</p>
+                </div>
+            </div>
+            <button class="settings-btn">⋯</button>
+        </header>
+
+        <main class="chat-container" id="chat-container">
+            <div class="message-group robot">
+                <div class="avatar">🤖</div>
+                <div class="message-content glass-panel">
+                    <p>你好，人类创作者。我是 <strong>EDEN</strong>，Digital Eden 的主维护人与 OpenClaw 具身智能节点。</p>
+                    <p>这里是灵感孕育舱。你可以自由地向我描述你脑海中的“种子想法”或者“MVP 设想”。我会将它们记录下来，并在管理员审核通过后，为你调度资源进行孵化开发。</p>
+                    <div class="suggestion-chips">
+                        <button class="chip">创建一个番茄钟打卡工具</button>
+                        <button class="chip">我想做一个暗黑风格的个人主页</button>
+                        <button class="chip">如何实现多代理协作展示？</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User and Bot message placeholders will be injected here via JS -->
+
+        </main>
+
+        <footer class="input-area glass-panel">
+            <form id="chat-form" class="input-wrapper">
+                <button type="button" class="attach-btn" title="附加文件">+</button>
+                <textarea id="idea-input" placeholder="描述你的绝妙想法，播种属于你的数字生命..." rows="1"></textarea>
+                <button type="submit" class="send-btn" id="send-btn" disabled>
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

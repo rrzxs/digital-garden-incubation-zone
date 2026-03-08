@@ -11,12 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // 模拟种子项目数据
     const seeds = [
         {
+            title: "💡 孕育新灵感",
+            description: "与 Openclaw AI 交流你的绝妙想法。把灵感沉淀为种子，评估孵化属于你的 Demo 或 MVP。",
+            path: "./seeds/incubator/index.html",
+            tags: ["Idea", "AI Co-creation"],
+            icon: "🌱",
+            status: "灵感收集",
+            maintainer: "你 (User)",
+            special: true // 标记为特殊卡片
+        },
+        {
             title: "回声打字机",
             description: "打字时每个字符都会产生视觉回声和音效，营造沉浸式写作体验",
             path: "./seeds/echo-typing/index.html",
             tags: ["Creative", "Interactive"],
             icon: "✨",
-            status: "已发布"
+            status: "已发布",
+            maintainer: "EDEN"
         },
         {
             title: "磁力光标",
@@ -24,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             path: "./seeds/magnetic-cursor/index.html",
             tags: ["Interactive", "Physics", "Creative"],
             icon: "🧲",
-            status: "已发布"
+            status: "已发布",
+            maintainer: "EDEN"
         },
         {
             title: "OpenClaw AI 界面",
@@ -32,7 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
             path: "./seeds/openclaw/index.html",
             tags: ["React", "MVP", "LLM"],
             icon: "🤖",
-            status: "开发中"
+            status: "开发中",
+            maintainer: "EDEN"
         },
         {
             title: "Aura 灵韵",
@@ -40,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
             path: "./seeds/aura/index.html",
             tags: ["Design", "Animation", "Glassmorphism"],
             icon: "🪷",
-            status: "已发布"
+            status: "已发布",
+            maintainer: "EDEN"
         },
         {
             title: "CSS 光影微交互画板",
@@ -48,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             path: "./seeds/cyber-paint/index.html",
             tags: ["CSS3", "Design"],
             icon: "🎨",
-            status: "已发布"
+            status: "已发布",
+            maintainer: "EDEN"
         }
     ];
 
@@ -176,15 +191,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/**
- * 创建项目卡片 HTML 并附带 3D 悬浮效果辅助（部分靠 CSS 实现）
- */
 function createSeedCard(seed, index) {
     const a = document.createElement('a');
     a.href = seed.path;
-    // 加入不同的推迟动画
-    a.className = `seed-card reveal fade-bottom delay-${(index % 3 + 1) * 100}`;
 
+    // 维护人标识：如果是 EDEN 就显示机器人，否则显示用户
+    const maintainerBadge = seed.maintainer === 'EDEN'
+        ? `<span class="maintainer maintainer-bot"><span class="maintainer-icon">🤖</span> EDEN</span>`
+        : `<span class="maintainer maintainer-user"><span class="maintainer-icon">👤</span> ${seed.maintainer}</span>`;
+
+    if (seed.special) {
+        // 【破局者卡片】完全不同的 DOM 结构
+        a.className = `seed-card special-incubator-card reveal fade-bottom delay-100`;
+        a.innerHTML = `
+            <div class="incubator-bg-anim"></div>
+            <div class="incubator-content">
+                <div class="incubator-header">
+                    <div class="incubator-icon-wrap">
+                        <span class="pulsing-orb"></span>
+                        <span class="incubator-icon">✨</span>
+                    </div>
+                    <div class="seed-tags">
+                        <span class="tag">AI Co-creation</span>
+                        ${maintainerBadge}
+                    </div>
+                </div>
+                
+                <div class="incubator-text">
+                    <h3 class="incubator-title">唤醒新的数字生命</h3>
+                    <p class="incubator-desc">与 AI 架构师 EDEN 深度交流，将那些一闪而过的绝妙灵感，具象化并播种在数字花园中。</p>
+                </div>
+
+                <div class="incubator-fake-input">
+                    <span class="typing-placeholder">输入你的想法，开始培育...</span>
+                    <div class="enter-btn">播种 <span class="enter-icon">↵</span></div>
+                </div>
+            </div>
+        `;
+        return a;
+    }
+
+    // 常规卡片结构
+    a.className = `seed-card reveal fade-bottom delay-${(index % 3 + 1) * 100}`;
     a.innerHTML = `
         <div class="seed-header">
             <div class="seed-icon-wrapper">
@@ -192,7 +240,7 @@ function createSeedCard(seed, index) {
             </div>
             <div class="seed-tags">
                 <span class="tag">${seed.status || 'Draft'}</span>
-                ${(seed.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                ${maintainerBadge}
             </div>
         </div>
         <div class="seed-body">
