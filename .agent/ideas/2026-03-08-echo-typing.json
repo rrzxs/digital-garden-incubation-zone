@@ -1,0 +1,10 @@
+{
+    "date": "2026-03-08",
+    "seed_name": "echo-typing",
+    "title": "回声打字机",
+    "tagline": "打字时每个字符都会产生视觉回声和音效，营造沉浸式写作体验",
+    "directory": "./seeds/echo-typing/",
+    "status": "incubating",
+    "tags": ["creative", "web-app", "micro-interaction"],
+    "created_at": "2026-03-08T05:30:01+08:00"
+}
