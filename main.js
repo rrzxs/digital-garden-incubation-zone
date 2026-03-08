@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // 模拟种子项目数据
     const seeds = [
         {
+            title: "回声打字机",
+            description: "打字时每个字符都会产生视觉回声和音效，营造沉浸式写作体验",
+            path: "./seeds/echo-typing/index.html",
+            tags: ["Creative", "Interactive"],
+            icon: "✨",
+            status: "已发布"
+        },
+        {
             title: "磁力光标",
             description: "光标周围的元素会被磁力吸引或排斥，创造有趣的交互体验",
             path: "./seeds/magnetic-cursor/index.html",

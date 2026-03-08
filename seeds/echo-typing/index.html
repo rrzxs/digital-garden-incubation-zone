@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回声打字机 | Echo Typing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-container">
+        <div class="mesh-gradient"></div>
+        <div class="mesh-gradient-2"></div>
+        <div class="floating-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <header class="glass-header">
+            <div class="header-content">
+                <h1 class="app-title">✨ 回声打字机</h1>
+                <p class="app-subtitle">每一次按键，都是一次回声</p>
+            </div>
+            <div class="header-controls">
+                <button class="control-btn active" id="sound-toggle" title="开关音效">
+                    <span class="icon">🔊</span>
+                </button>
+                <button class="control-btn" id="echo-toggle" title="开关回声效果">
+                    <span class="icon">💫</span>
+                </button>
+                <button class="control-btn" id="clear-btn" title="清空内容">
+                    <span class="icon">🗑️</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="editor-container">
+            <div class="typing-area-wrapper">
+                <div class="echo-container"></div>
+                <div class="typing-area" 
+                     contenteditable="true" 
+                     spellcheck="false"
+                     placeholder="开始你的回声之旅..."
+                     id="typing-area"></div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-label">字符</span>
+                    <span class="stat-value" id="char-count">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">回声</span>
+                    <span class="stat-value" id="echo-count">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">节奏</span>
+                    <span class="stat-value" id="rhythm-indicator">--</span>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-hint">
+                <span class="hint-icon">⌨️</span>
+                <span class="hint-text">按下任何键开始打字，体验视觉与听觉的回声</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
