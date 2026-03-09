@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: "🌱",
             status: "灵感收集",
             maintainer: "你 (User)",
+            category: "ai",
             special: true // 标记为特殊卡片
         },
         {
@@ -26,7 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
             path: "./seeds/fluid-loader/index.html",
             tags: ["Creative", "Interactive"],
             icon: "✨",
-            status: "已发布"
+            status: "已发布",
+            maintainer: "EDEN",
+            category: "animation"
         },
         {
             title: "回声打字机",
@@ -35,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tags: ["Creative", "Interactive"],
             icon: "✨",
             status: "已发布",
-            maintainer: "EDEN"
+            maintainer: "EDEN",
+            category: "tool"
         },
         {
             title: "磁力光标",
@@ -44,7 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tags: ["Interactive", "Physics", "Creative"],
             icon: "🧲",
             status: "已发布",
-            maintainer: "EDEN"
+            maintainer: "EDEN",
+            category: "animation"
         },
         {
             title: "OpenClaw AI 界面",
@@ -53,7 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tags: ["React", "MVP", "LLM"],
             icon: "🤖",
             status: "开发中",
-            maintainer: "EDEN"
+            maintainer: "EDEN",
+            category: "ai"
         },
         {
             title: "Aura 灵韵",
@@ -62,7 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tags: ["Design", "Animation", "Glassmorphism"],
             icon: "🪷",
             status: "已发布",
-            maintainer: "EDEN"
+            maintainer: "EDEN",
+            category: "visual"
         },
         {
             title: "CSS 光影微交互画板",
@@ -71,7 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tags: ["CSS3", "Design"],
             icon: "🎨",
             status: "已发布",
-            maintainer: "EDEN"
+            maintainer: "EDEN",
+            category: "visual"
         }
     ];
 
@@ -129,6 +137,48 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             header.classList.remove('scrolled');
         }
+    });
+
+    // -------------------------------------------------------------------------
+    // 3.5 分类过滤逻辑 (Category Filtering)
+    // -------------------------------------------------------------------------
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active state
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+            const allCards = document.querySelectorAll('.seed-card');
+
+            allCards.forEach(card => {
+                const category = card.getAttribute('data-category');
+
+                card.classList.remove('anim-in');
+
+                // For 'all', show everything. Otherwise, show matching or special ones
+                if (filterValue === 'all' || category === filterValue || category === 'special') {
+                    if (card.classList.contains('hidden-card')) {
+                        card.classList.remove('hidden-card');
+                        setTimeout(() => {
+                            card.classList.add('anim-in');
+                        }, 50);
+                    } else {
+                        card.classList.add('anim-in');
+                    }
+                } else {
+                    card.classList.add('anim-out');
+                    setTimeout(() => {
+                        if (card.classList.contains('anim-out')) {
+                            card.classList.add('hidden-card');
+                            card.classList.remove('anim-out');
+                        }
+                    }, 300);
+                }
+            });
+        });
     });
 
     // -------------------------------------------------------------------------
@@ -202,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function createSeedCard(seed, index) {
     const a = document.createElement('a');
     a.href = seed.path;
+    a.setAttribute('data-category', seed.special ? 'special' : (seed.category || 'all'));
 
     // 维护人标识：如果是 EDEN 就显示机器人，否则显示用户
     const maintainerBadge = seed.maintainer === 'EDEN'

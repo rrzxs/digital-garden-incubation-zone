@@ -720,6 +720,7 @@ header.scrolled .glass-nav {
     font-weight: 500;
     transition: var(--transition-smooth);
 }
+
 .seed-card:hover .tag {
     color: var(--text-primary);
     border-color: rgba(255, 255, 255, 0.2);
@@ -790,8 +791,15 @@ header.scrolled .glass-nav {
 }
 
 @keyframes float-glow {
-    0% { transform: translateY(-50%) scale(1); opacity: 0.5; }
-    100% { transform: translateY(-40%) scale(1.2); opacity: 0.8; }
+    0% {
+        transform: translateY(-50%) scale(1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(-40%) scale(1.2);
+        opacity: 0.8;
+    }
 }
 
 .incubator-content {
@@ -834,8 +842,15 @@ header.scrolled .glass-nav {
 }
 
 @keyframes pulse-border {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.4); opacity: 0; }
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
 }
 
 .incubator-title {
@@ -888,8 +903,15 @@ header.scrolled .glass-nav {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 .incubator-fake-input .enter-btn {
@@ -1127,5 +1149,91 @@ header.scrolled .glass-nav {
     .footer-bottom {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+/* ========================================================================= */
+/* 分类过滤器样式 Filter UI */
+/* ========================================================================= */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+    padding: 0.5rem;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    padding: 0.6rem 1.25rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: var(--font-heading);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.filter-btn:hover {
+    color: var(--text-hightlight);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(139, 92, 246, 0.2));
+    border-color: rgba(14, 165, 233, 0.3);
+    color: var(--text-hightlight);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+}
+
+/* UI/UX 过滤动画状态 */
+.seed-card.hidden-card {
+    display: none;
+}
+
+.seed-card.anim-out {
+    animation: fade-out-scale 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+.seed-card.anim-in {
+    animation: fade-in-scale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes fade-out-scale {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+@keyframes fade-in-scale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }

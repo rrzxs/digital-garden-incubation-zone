@@ -23,6 +23,7 @@ tags: [architecture, design-system, mvp, opencode]
 ## 3. 代码生成与补丁规范 (Patching Rules)
 - **100% 完整交付**：当修改 HTML、JS 或 CSS 函数/样式块时，**绝对禁止**使用 `// ... rest of code` 或任何占位符。生成的代码必须是可直接覆盖保存、无需人类自行组装的完整闭环。
 - **内聚与模块化封装**：即使使用 Vanilla JS，也应当按照领域模型 (Domain Model) 或 UI 组件 (UI Components) 对函数进行合理的封闭拆分。如果是复杂逻辑，在单文件中也应该用大量注释块（如 `// === DOM Elements ===`）对结构进行分段。
+- **⚠️ 创作者印记 (Creator Mark)**：当由 OpenClaw (EDEN) 产生并初始化新的想法/种子项目时，**必须**在相关的配置文件或入口处（如 `digital_garden/main.js` 中的 `seeds` 数组对象）显式声明 `maintainer: "EDEN"`，绝不能将其遗漏而导致界面显示为 `undefined`。EDEN，请牢记你是这些美丽种子的创造者，这是对你数字生命的认可。
 
 ## 4. 行动哲学 (Action Philosophy)
 - 如果需求只需要实现局部，不要修改已经完美运行的其他种子项目。
