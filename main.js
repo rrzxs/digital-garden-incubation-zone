@@ -21,6 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
             special: true // 标记为特殊卡片
         },
         {
+            title: "流体加载动画",
+            description: "流体模拟驱动的加载动画，可以用鼠标交互扰动流体",
+            path: "./seeds/fluid-loader/index.html",
+            tags: ["Creative", "Interactive"],
+            icon: "✨",
+            status: "已发布"
+        },
+        {
             title: "回声打字机",
             description: "打字时每个字符都会产生视觉回声和音效，营造沉浸式写作体验",
             path: "./seeds/echo-typing/index.html",
