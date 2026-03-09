@@ -1,0 +1,10 @@
+{
+    "date": "2026-03-09",
+    "seed_name": "fluid-loader",
+    "title": "流体加载动画",
+    "tagline": "流体模拟驱动的加载动画，可以用鼠标交互扰动流体",
+    "directory": "./seeds/fluid-loader/",
+    "status": "incubating",
+    "tags": ["creative", "web-app", "micro-interaction"],
+    "created_at": "2026-03-09T05:30:01+08:00"
+}
