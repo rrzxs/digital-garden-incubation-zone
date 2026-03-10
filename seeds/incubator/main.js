@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             contentBox.innerHTML = `
                 <p>收到！您的灵感：<em>“${escapeHTML(userIdea)}”</em> 已作为一颗<strong>「数字种子」</strong>入库。</p>
                 <p>我将开始对它进行多维度的需求分析，并建立初始化工程上下文。一旦评估通过，管理员将审批进入孵化阶段（Demo / MVP）。</p>
-                <p>您可以继续补充细节，或者返回伊甸园首页查看其他已孵化的项目。</p>
+                <p>您可以继续补充细节，或者返回数字花园首页查看其他已孵化的项目。</p>
             `;
             scrollToBottom();
         }, 2000);

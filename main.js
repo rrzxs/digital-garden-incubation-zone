@@ -4,89 +4,49 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const seedConfig = globalThis.DigitalGardenSeedConfig;
+    if (!seedConfig) {
+        console.error('DigitalGardenSeedConfig is missing.');
+        return;
+    }
+
     // -------------------------------------------------------------------------
     // 1. 数据配置与 DOM 元素获取
     // -------------------------------------------------------------------------
 
-    // 模拟种子项目数据
-    const seeds = [
-        {
-            title: "💡 孕育新灵感",
-            description: "与 Openclaw AI 交流你的绝妙想法。把灵感沉淀为种子，评估孵化属于你的 Demo 或 MVP。",
-            path: "./seeds/incubator/index.html",
-            tags: ["Idea", "AI Co-creation"],
-            icon: "🌱",
-            status: "灵感收集",
-            maintainer: "你 (User)",
-            category: "ai",
-            special: true // 标记为特殊卡片
-        },
-        {
-            title: "流体加载动画",
-            description: "流体模拟驱动的加载动画，可以用鼠标交互扰动流体",
-            path: "./seeds/fluid-loader/index.html",
-            tags: ["Creative", "Interactive"],
-            icon: "✨",
-            status: "已发布",
-            maintainer: "EDEN",
-            category: "animation"
-        },
-        {
-            title: "回声打字机",
-            description: "打字时每个字符都会产生视觉回声和音效，营造沉浸式写作体验",
-            path: "./seeds/echo-typing/index.html",
-            tags: ["Creative", "Interactive"],
-            icon: "✨",
-            status: "已发布",
-            maintainer: "EDEN",
-            category: "tool"
-        },
-        {
-            title: "磁力光标",
-            description: "光标周围的元素会被磁力吸引或排斥，创造有趣的交互体验",
-            path: "./seeds/magnetic-cursor/index.html",
-            tags: ["Interactive", "Physics", "Creative"],
-            icon: "🧲",
-            status: "已发布",
-            maintainer: "EDEN",
-            category: "animation"
-        },
-        {
-            title: "OpenClaw AI 界面",
-            description: "基于 GLM API 的多角色 AI 对话客户端原型构建及 Prompt 注入测试。",
-            path: "./seeds/openclaw/index.html",
-            tags: ["React", "MVP", "LLM"],
-            icon: "🤖",
-            status: "开发中",
-            maintainer: "EDEN",
-            category: "ai"
-        },
-        {
-            title: "Aura 灵韵",
-            description: "极致审美的沉浸式呼吸冥想空间，兼具流体网格渐变与微晶玻璃拟物态。体验宁静与专注。",
-            path: "./seeds/aura/index.html",
-            tags: ["Design", "Animation", "Glassmorphism"],
-            icon: "🪷",
-            status: "已发布",
-            maintainer: "EDEN",
-            category: "visual"
-        },
-        {
-            title: "CSS 光影微交互画板",
-            description: "纯使用 CSS Variables 与少量 JS 制作的赛博朋克风格交互画板。",
-            path: "./seeds/cyber-paint/index.html",
-            tags: ["CSS3", "Design"],
-            icon: "🎨",
-            status: "已发布",
-            maintainer: "EDEN",
-            category: "visual"
-        }
-    ];
+    const seeds = seedConfig.getOrderedSeeds();
 
     const grid = document.getElementById('seeds-grid');
     const emptyState = document.getElementById('empty-state');
     const displaySeedCount = document.getElementById('seed-count');
     const displayCommitCount = document.getElementById('commit-count'); // 模拟的一个指标
+    const navAuthBtn = document.getElementById('nav-auth-btn');
+    const heroAuthBtn = document.getElementById('hero-auth-btn');
+    const footerAuthBtn = document.getElementById('footer-auth-btn');
+    const navAuthStatus = document.getElementById('nav-auth-status');
+    const navAuthText = document.getElementById('nav-auth-text');
+    const authStrip = document.getElementById('auth-strip');
+    const authStripLabel = document.getElementById('auth-strip-label');
+    const authUserName = document.getElementById('auth-user-name');
+    const authStripMeta = document.getElementById('auth-strip-meta');
+    const authCreditPill = document.getElementById('auth-credit-pill');
+    const authLogoutBtn = document.getElementById('auth-logout-btn');
+
+    const authConfig = resolveAuthConfig();
+    const authStorage = createAuthStorage();
+
+    const authState = {
+        busy: false,
+        tone: 'neutral',
+        message: '未登录也可以浏览数字花园；登录后会接入通用后端服务会话与积分体系。',
+        accessToken: authStorage.getAccessToken(),
+        user: authStorage.getUser(),
+        balance: null
+    };
+
+    bindAuthActions();
+    renderAuthState();
+    void bootstrapAuth();
 
     // -------------------------------------------------------------------------
     // 2. 项目卡片渲染
@@ -96,8 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
         emptyState.style.display = 'none';
 
         // 设置目标数字供递增计算使用
-        displaySeedCount.setAttribute('data-target', seeds.length);
-        displayCommitCount.setAttribute('data-target', seeds.length * 12 + 25); // 随便算个伪数据
+        const publishedSeedCount = seedConfig.countPublishedSeeds(seeds);
+        displaySeedCount.setAttribute('data-target', publishedSeedCount);
+        displayCommitCount.setAttribute('data-target', publishedSeedCount * 12 + 25); // 随便算个伪数据
 
         seeds.forEach((seed, index) => {
             const card = createSeedCard(seed, index);
@@ -247,19 +208,479 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         window.requestAnimationFrame(step);
     }
+
+    function bindAuthActions() {
+        [navAuthBtn, heroAuthBtn, footerAuthBtn].forEach((button) => {
+            if (!button) return;
+
+            button.addEventListener('click', async (event) => {
+                event.preventDefault();
+                if (authState.busy) return;
+
+                if (authState.accessToken) {
+                    authStrip?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
+
+                await startLogin();
+            });
+        });
+
+        authLogoutBtn?.addEventListener('click', async () => {
+            if (authState.busy) return;
+            await logout();
+        });
+    }
+
+    async function bootstrapAuth() {
+        const url = new URL(window.location.href);
+        const callbackError = url.searchParams.get('error');
+        const code = url.searchParams.get('code');
+        const state = url.searchParams.get('state');
+
+        if (callbackError) {
+            cleanCallbackUrl();
+            setAuthFeedback(`授权失败：${humanizeAuthError(callbackError)}`, 'error');
+            return;
+        }
+
+        if (code && state) {
+            await exchangeCallback(code, state);
+            return;
+        }
+
+        if (authState.accessToken) {
+            await loadCreditBalance();
+            if (!authState.message || authState.message.startsWith('未登录')) {
+                setAuthFeedback('当前页面已连接通用后端服务会话。', 'success');
+            } else {
+                renderAuthState();
+            }
+            return;
+        }
+
+        try {
+            await refreshSession({ silent: true });
+            await loadCreditBalance();
+            setAuthFeedback('已恢复通用后端服务会话。', 'success');
+        } catch {
+            renderAuthState();
+        }
+    }
+
+    async function startLogin() {
+        setBusy(true);
+        setAuthFeedback('正在发起统一登录授权...', 'neutral');
+
+        try {
+            const query = new URLSearchParams({
+                app_id: authConfig.appId,
+                redirect_uri: authConfig.redirectUri,
+                return_to: authConfig.returnTo
+            });
+
+            const payload = await requestJson(`${authConfig.apiBase}/api/v1/auth/sso/authorize-url?${query.toString()}`);
+            authStorage.setStateTicket(payload.state_ticket || '');
+
+            if (!payload.authorize_url) {
+                throw new Error('未获取到统一登录跳转地址');
+            }
+
+            window.location.href = payload.authorize_url;
+        } catch (error) {
+            setBusy(false);
+            setAuthFeedback(`无法发起登录：${humanizeAuthError(error)}`, 'error');
+        }
+    }
+
+    async function exchangeCallback(code, state) {
+        const stateTicket = authStorage.getStateTicket();
+        if (!stateTicket) {
+            cleanCallbackUrl();
+            setAuthFeedback('缺少 state_ticket，无法完成授权换票，请重新点击登录。', 'error');
+            return;
+        }
+
+        setBusy(true);
+        setAuthFeedback('正在完成授权换票...', 'neutral');
+
+        try {
+            const payload = await requestJson(`${authConfig.apiBase}/api/v1/auth/sso/exchange`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    app_id: authConfig.appId,
+                    state_ticket: stateTicket,
+                    code,
+                    state,
+                    redirect_uri: authConfig.redirectUri
+                })
+            });
+
+            authStorage.setStateTicket('');
+            authStorage.setAccessToken(payload.access_token || '');
+            authStorage.setUser(payload.user || null);
+
+            authState.accessToken = authStorage.getAccessToken();
+            authState.user = authStorage.getUser();
+            authState.balance = null;
+
+            cleanCallbackUrl();
+            await loadCreditBalance();
+            setBusy(false);
+            setAuthFeedback('登录成功，数字花园已接入通用后端服务会话。', 'success');
+        } catch (error) {
+            authStorage.setStateTicket('');
+            authStorage.clearSession();
+            authState.accessToken = '';
+            authState.user = null;
+            authState.balance = null;
+            cleanCallbackUrl();
+            setBusy(false);
+            setAuthFeedback(`授权换票失败：${humanizeAuthError(error)}`, 'error');
+        }
+    }
+
+    async function refreshSession({ silent = false } = {}) {
+        if (!silent) {
+            setBusy(true);
+            setAuthFeedback('正在恢复会话...', 'neutral');
+        }
+
+        try {
+            const payload = await requestJson(`${authConfig.apiBase}/api/v1/auth/refresh`, {
+                method: 'POST',
+                headers: {
+                    'X-App-Id': authConfig.appId
+                }
+            });
+
+            authStorage.setAccessToken(payload.access_token || '');
+            authState.accessToken = authStorage.getAccessToken();
+
+            if (!silent) {
+                setAuthFeedback('会话已刷新。', 'success');
+            }
+        } catch (error) {
+            authStorage.clearSession();
+            authState.accessToken = '';
+            authState.user = null;
+            authState.balance = null;
+
+            if (!silent) {
+                setAuthFeedback(`会话恢复失败：${humanizeAuthError(error)}`, 'error');
+            }
+
+            throw error;
+        } finally {
+            if (!silent) {
+                setBusy(false);
+            }
+        }
+    }
+
+    async function loadCreditBalance({ allowRefresh = true } = {}) {
+        if (!authState.accessToken) {
+            authState.balance = null;
+            renderAuthState();
+            return;
+        }
+
+        try {
+            const payload = await requestJson(`${authConfig.apiBase}/api/v1/credits/balance`, {
+                headers: {
+                    Authorization: `Bearer ${authState.accessToken}`,
+                    'X-App-Id': authConfig.appId
+                }
+            });
+
+            authState.balance = typeof payload.balance === 'number' ? payload.balance : null;
+            renderAuthState();
+        } catch (error) {
+            if (allowRefresh && error && typeof error === 'object' && error.status === 401) {
+                await refreshSession({ silent: true });
+                await loadCreditBalance({ allowRefresh: false });
+                return;
+            }
+
+            authState.balance = null;
+            setAuthFeedback(`已登录，但积分读取失败：${humanizeAuthError(error)}`, 'error');
+        }
+    }
+
+    async function logout() {
+        setBusy(true);
+        setAuthFeedback('正在退出当前站点会话...', 'neutral');
+
+        try {
+            await requestJson(`${authConfig.apiBase}/api/v1/auth/logout`, {
+                method: 'POST'
+            });
+        } catch (error) {
+            setBusy(false);
+            setAuthFeedback(`退出失败：${humanizeAuthError(error)}`, 'error');
+            return;
+        }
+
+        authStorage.clearSession();
+        authState.accessToken = '';
+        authState.user = null;
+        authState.balance = null;
+        setBusy(false);
+        setAuthFeedback('已退出数字花园会话。如需彻底退出统一登录态，请在统一登录中心执行全局退出。', 'neutral');
+    }
+
+    function renderAuthState() {
+        const isAuthenticated = Boolean(authState.accessToken);
+        const userName = authState.user && authState.user.name ? authState.user.name : '已登录用户';
+
+        navAuthStatus?.classList.remove('is-authenticated', 'is-error');
+        authStrip?.classList.remove('is-authenticated', 'is-error');
+
+        if (authState.tone === 'error') {
+            navAuthStatus?.classList.add('is-error');
+            authStrip?.classList.add('is-error');
+        } else if (isAuthenticated) {
+            navAuthStatus?.classList.add('is-authenticated');
+            authStrip?.classList.add('is-authenticated');
+        }
+
+        if (navAuthText) {
+            navAuthText.textContent = authState.tone === 'error'
+                ? '登录异常'
+                : (isAuthenticated ? `${userName} · 在线` : '游客模式');
+        }
+
+        updateButtonText(navAuthBtn, authState.busy ? '处理中...' : (isAuthenticated ? '已登录' : '登录'));
+        updateButtonText(heroAuthBtn, authState.busy ? '处理中...' : (isAuthenticated ? '会话已连接' : '统一登录'));
+        updateButtonText(footerAuthBtn, isAuthenticated ? '会话已连接' : '登录中心');
+
+        if (navAuthBtn) {
+            navAuthBtn.setAttribute('href', isAuthenticated ? '#auth-strip' : '#');
+            navAuthBtn.setAttribute('aria-disabled', authState.busy ? 'true' : 'false');
+        }
+        if (heroAuthBtn) {
+            heroAuthBtn.setAttribute('href', isAuthenticated ? '#auth-strip' : '#');
+            heroAuthBtn.setAttribute('aria-disabled', authState.busy ? 'true' : 'false');
+        }
+
+        if (authStripLabel) {
+            authStripLabel.textContent = authState.tone === 'error'
+                ? '会话异常'
+                : (isAuthenticated ? '已接入通用后端' : '游客浏览');
+        }
+
+        if (authUserName) {
+            authUserName.textContent = isAuthenticated ? userName : '未登录';
+        }
+
+        if (authStripMeta) {
+            authStripMeta.textContent = authState.message;
+        }
+
+        if (authCreditPill) {
+            if (isAuthenticated && typeof authState.balance === 'number') {
+                authCreditPill.hidden = false;
+                authCreditPill.textContent = `积分 ${authState.balance}`;
+            } else {
+                authCreditPill.hidden = true;
+            }
+        }
+
+        if (authLogoutBtn) {
+            authLogoutBtn.hidden = !isAuthenticated;
+            authLogoutBtn.disabled = authState.busy;
+        }
+    }
+
+    function setBusy(nextBusy) {
+        authState.busy = nextBusy;
+        renderAuthState();
+    }
+
+    function setAuthFeedback(message, tone = 'neutral') {
+        authState.message = message;
+        authState.tone = tone;
+        renderAuthState();
+    }
+
+    function cleanCallbackUrl() {
+        const target = new URL(authConfig.returnTo || authConfig.redirectUri, window.location.origin);
+        target.search = '';
+        target.hash = '';
+        window.history.replaceState({}, document.title, target.toString());
+    }
+
+    function requestJson(url, options = {}) {
+        const headers = {
+            ...(options.headers || {})
+        };
+
+        return fetch(url, {
+            ...options,
+            headers,
+            credentials: 'include'
+        }).then(async (response) => {
+            const contentType = response.headers.get('content-type') || '';
+            const payload = contentType.includes('application/json') ? await response.json() : await response.text();
+
+            if (!response.ok) {
+                const error = new Error(extractErrorMessage(payload, response.status));
+                error.status = response.status;
+                error.payload = payload;
+                throw error;
+            }
+
+            return payload;
+        });
+    }
+
+    function extractErrorMessage(payload, status) {
+        if (typeof payload === 'string' && payload.trim()) {
+            return payload.trim();
+        }
+
+        if (payload && typeof payload === 'object') {
+            if (typeof payload.detail === 'string' && payload.detail.trim()) {
+                return payload.detail.trim();
+            }
+
+            if (Array.isArray(payload.detail)) {
+                return payload.detail
+                    .map((item) => item && typeof item === 'object' && typeof item.msg === 'string' ? item.msg : '')
+                    .filter(Boolean)
+                    .join('; ') || `请求失败: ${status}`;
+            }
+
+            if (payload.detail && typeof payload.detail === 'object') {
+                if (typeof payload.detail.message === 'string') {
+                    return payload.detail.message;
+                }
+                if (typeof payload.detail.error_code === 'string') {
+                    return payload.detail.error_code;
+                }
+            }
+        }
+
+        return `请求失败: ${status}`;
+    }
+
+    function humanizeAuthError(error) {
+        const raw = error instanceof Error ? error.message : String(error || '');
+
+        switch (raw) {
+            case 'APP_NOT_ALLOWED':
+                return '数字花园尚未在通用后端服务完成应用接入配置';
+            case 'INVALID_STATE_TICKET':
+                return '授权票据已失效，请重新点击登录';
+            case 'AUTH_REFRESH_INVALID':
+                return '当前登录会话已失效，请重新登录';
+            case 'AUTH_TOKEN_INVALID':
+                return '当前访问令牌已失效，请重新登录';
+            default:
+                return raw;
+        }
+    }
+
+    function updateButtonText(button, text) {
+        if (!button) return;
+
+        const textElement = button.querySelector('.btn-text, .cta-text');
+        if (textElement) {
+            textElement.textContent = text;
+            return;
+        }
+
+        button.textContent = text;
+    }
+
+    function resolveAuthConfig() {
+        const override = globalThis.DigitalGardenAuthConfig || {};
+        const currentUrl = new URL(window.location.href);
+        currentUrl.search = '';
+        currentUrl.hash = '';
+
+        if (currentUrl.pathname === '/seed/' || currentUrl.pathname === '/seed/index.html') {
+            currentUrl.pathname = '/seed';
+        }
+
+        return {
+            apiBase: String(override.apiBase || window.location.origin).replace(/\/$/, ''),
+            appId: String(override.appId || 'digital_garden'),
+            redirectUri: String(override.redirectUri || currentUrl.toString()),
+            returnTo: String(override.returnTo || currentUrl.toString())
+        };
+    }
+
+    function createAuthStorage() {
+        const ACCESS_TOKEN_KEY = 'digital_garden_access_token';
+        const STATE_TICKET_KEY = 'digital_garden_state_ticket';
+        const USER_KEY = 'digital_garden_user';
+
+        return {
+            getAccessToken() {
+                return sessionStorage.getItem(ACCESS_TOKEN_KEY) || '';
+            },
+            setAccessToken(token) {
+                if (token) {
+                    sessionStorage.setItem(ACCESS_TOKEN_KEY, token);
+                    return;
+                }
+
+                sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+            },
+            getStateTicket() {
+                return sessionStorage.getItem(STATE_TICKET_KEY) || '';
+            },
+            setStateTicket(ticket) {
+                if (ticket) {
+                    sessionStorage.setItem(STATE_TICKET_KEY, ticket);
+                    return;
+                }
+
+                sessionStorage.removeItem(STATE_TICKET_KEY);
+            },
+            getUser() {
+                const raw = sessionStorage.getItem(USER_KEY);
+                if (!raw) return null;
+
+                try {
+                    return JSON.parse(raw);
+                } catch {
+                    sessionStorage.removeItem(USER_KEY);
+                    return null;
+                }
+            },
+            setUser(user) {
+                if (user) {
+                    sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+                    return;
+                }
+
+                sessionStorage.removeItem(USER_KEY);
+            },
+            clearSession() {
+                sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+                sessionStorage.removeItem(STATE_TICKET_KEY);
+                sessionStorage.removeItem(USER_KEY);
+            }
+        };
+    }
 });
 
 function createSeedCard(seed, index) {
     const a = document.createElement('a');
     a.href = seed.path;
-    a.setAttribute('data-category', seed.special ? 'special' : (seed.category || 'all'));
+    a.setAttribute('data-category', seed.isEntry ? 'special' : (seed.category || 'all'));
 
     // 维护人标识：如果是 EDEN 就显示机器人，否则显示用户
     const maintainerBadge = seed.maintainer === 'EDEN'
         ? `<span class="maintainer maintainer-bot"><span class="maintainer-icon">🤖</span> EDEN</span>`
         : `<span class="maintainer maintainer-user"><span class="maintainer-icon">👤</span> ${seed.maintainer}</span>`;
 
-    if (seed.special) {
+    if (seed.isEntry) {
         // 【破局者卡片】完全不同的 DOM 结构
         a.className = `seed-card special-incubator-card reveal fade-bottom delay-100`;
         a.innerHTML = `

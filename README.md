@@ -7,6 +7,16 @@
 
 “数字花园”的概念强调内容的生长性，这里的每一个项目目录都像一颗种子，可能在未来成长为成熟的产品或服务。
 
+## 通用后端接入
+
+数字花园首页已接入 RRZXS 通用后端服务的前端登录流程：
+
+- 默认 `apiBase`：当前站点源（生产环境即 `https://rrzxs.com`）
+- 默认 `app_id`：`digital_garden`
+- 默认 `redirect_uri` / `return_to`：当前页面标准地址（生产环境建议固定为 `https://rrzxs.com/seed`）
+
+后端仍需确保 `rrzxs_universal.app_clients` 中存在 `digital_garden` 配置，且 `allowed_redirect_uris` 精确包含数字花园使用的回调地址。
+
 ## 项目结构
 本仓库采用多项目目录结构，每个子目录都是一个独立的 Web 项目：
 

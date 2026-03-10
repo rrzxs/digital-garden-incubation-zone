@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XHS Cover Studio - 小红书封面生成器</title>
+  <meta name="description" content="更轻、更顺手的小红书封面生成器。输入主题，选择角度，生成文案，挑一个风格，直接下载。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23cb5c37'/%3E%3Cpath d='M18 17h28v8H32L46 47h-9L25 28v19h-7z' fill='%23fff8f2'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-glow glow-a"></div>
+  <div class="page-glow glow-b"></div>
+
+  <div class="shell">
+    <header class="topbar">
+      <a href="../../index.html" class="back-link">返回数字花园</a>
+      <div class="brand-lockup">
+        <span class="brand-mark">XHS COVER STUDIO</span>
+        <p>只做一件事：帮你快速做出一张有点击感、也有审美的小红书封面。</p>
+      </div>
+    </header>
+
+    <main class="studio-layout">
+      <section class="composer-card">
+        <div class="section-heading">
+          <span class="section-index">01</span>
+          <div>
+            <h1>小红书封面生成器</h1>
+            <p>主题、角度、文案、风格、下载。只保留真正有用的五步。</p>
+          </div>
+        </div>
+
+        <label class="field">
+          <span class="field-label">内容主题</span>
+          <input id="topic-input" type="text" placeholder="例如：AI 工作流 / 副业 / 读书笔记">
+        </label>
+
+        <div class="group">
+          <div class="group-head">
+            <span class="field-label">内容角度</span>
+          </div>
+          <div id="focus-options" class="chip-row"></div>
+        </div>
+
+        <div class="group action-row">
+          <button id="generate-copy" class="primary-button" type="button">生成默认文案</button>
+          <p class="action-hint">会根据当前主题和角度生成一版可直接修改的文案。</p>
+        </div>
+
+        <label class="field">
+          <span class="field-label">主标题</span>
+          <textarea id="headline-input" rows="4" placeholder="让人想点开的那一句"></textarea>
+        </label>
+
+        <label class="field compact-field">
+          <span class="field-label">高亮词</span>
+          <input id="highlight-input" type="text" placeholder="例如：3步 / 想点开 / 这3点">
+        </label>
+
+        <label class="field">
+          <span class="field-label">补充说明</span>
+          <textarea id="subhead-input" rows="4" placeholder="再补一句，让封面更完整"></textarea>
+        </label>
+
+        <div class="group">
+          <div class="group-head">
+            <span class="field-label">视觉风格</span>
+          </div>
+          <div id="style-options" class="style-list"></div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <span class="field-label">表情贴纸（可选）</span>
+            <p class="group-copy">选一个常用封面表情，然后直接到右侧预览里拖动位置。</p>
+          </div>
+          <div id="sticker-options" class="sticker-grid"></div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <span class="field-label">辅助元素显示</span>
+            <p class="group-copy">把不想要的辅助信息关掉，封面会更干净。</p>
+          </div>
+          <div class="toggle-list">
+            <label class="toggle-chip">
+              <input id="toggle-angle-badge" type="checkbox" checked>
+              <span>显示角度标签</span>
+            </label>
+            <label class="toggle-chip">
+              <input id="toggle-angle-mark" type="checkbox" checked>
+              <span>显示英文角度</span>
+            </label>
+            <label class="toggle-chip">
+              <input id="toggle-footer-brand" type="checkbox" checked>
+              <span>显示底部品牌字样</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview-card">
+        <div class="preview-head">
+          <div>
+            <span class="preview-label">实时预览 / 1080 × 1440</span>
+            <h2>封面预览</h2>
+            <p class="preview-hint">可直接拖动主标题、高亮词、补充说明和表情贴纸。</p>
+          </div>
+          <div class="download-actions">
+            <button id="download-svg" class="ghost-button" type="button">导出 SVG</button>
+            <button id="download-png" class="primary-button" type="button">导出 PNG</button>
+          </div>
+        </div>
+
+        <div id="preview-stage" class="preview-stage">
+          <div id="cover-canvas" class="cover-canvas" aria-live="polite"></div>
+        </div>
+
+        <div class="preview-foot">
+          <p>默认就是小红书竖版尺寸。先做内容判断，再做视觉强调，避免工具本身打断思路。</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
