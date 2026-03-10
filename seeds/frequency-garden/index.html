@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequency Garden 调频花园</title>
+    <meta name="description" content="AI 增强型情绪调频工具页。选择情绪、补一句心情、进入温柔引导与呼吸节律。">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23070b16'/%3E%3Ccircle cx='32' cy='32' r='16' fill='%23d6e2ff' opacity='0.95'/%3E%3Cpath d='M22 38c4-5 8-7 10-7 5 0 7 4 10 4 2 0 4-1 6-3-2 8-8 14-16 14-4 0-8-2-10-8Z' fill='%2394dfff'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-scene="moon">
+    <div class="atmosphere-shell" aria-hidden="true">
+        <div class="glow glow-a"></div>
+        <div class="glow glow-b"></div>
+        <div class="glow glow-c"></div>
+        <div class="grain"></div>
+    </div>
+
+    <a href="../../index.html" class="back-link">← 返回数字花园</a>
+
+    <main class="page-shell">
+        <section class="panel hero-panel">
+            <p class="eyebrow">Digital Garden Seed / AI Emotional Tuning</p>
+            <div class="hero-copy">
+                <p class="overline">Single-page ritual flow, with switchable healing atmospheres.</p>
+                <h1>Frequency Garden 调频花园</h1>
+                <p class="lede">
+                    这不是四个散开的功能块，而是一段被温柔接住的单页流程。
+                    先认出情绪，再生成引导，最后把自己慢慢带回呼吸里。
+                </p>
+            </div>
+
+            <div class="hero-meta">
+                <div>
+                    <span class="meta-label">当前场景</span>
+                    <strong id="scene-name">月光冥想</strong>
+                </div>
+                <div>
+                    <span class="meta-label">AI 模式</span>
+                    <strong id="ai-status">本地引导模式</strong>
+                </div>
+            </div>
+
+            <div class="switcher" id="scene-switcher" aria-label="切换场景">
+                <button type="button" class="switcher-btn is-active" data-scene-choice="moon">月光</button>
+                <button type="button" class="switcher-btn" data-scene-choice="nature">自然</button>
+                <button type="button" class="switcher-btn" data-scene-choice="temple">神殿</button>
+            </div>
+        </section>
+
+        <section class="panel step-panel" id="step-01" data-step-state="current">
+            <header class="step-header">
+                <div>
+                    <p class="section-kicker">Step 01</p>
+                    <h2>先告诉我，你此刻更像哪一种波动</h2>
+                </div>
+                <p class="step-state-copy" id="step-01-state-copy">先选定情绪底色，并写下一句此刻最需要被接住的话。</p>
+            </header>
+
+            <div class="step-body">
+                <div class="emotion-grid" id="emotion-grid">
+                    <button type="button" class="emotion-card is-active" data-emotion="anxious">
+                        <span class="emotion-icon">月</span>
+                        <strong>焦虑紧绷</strong>
+                        <small>脑子停不下来，胸口发紧</small>
+                    </button>
+                    <button type="button" class="emotion-card" data-emotion="overwhelmed">
+                        <span class="emotion-icon">雾</span>
+                        <strong>混乱过载</strong>
+                        <small>信息太多，注意力被撕碎</small>
+                    </button>
+                    <button type="button" class="emotion-card" data-emotion="tired">
+                        <span class="emotion-icon">泉</span>
+                        <strong>疲惫空掉</strong>
+                        <small>被抽空一样，不想再用力</small>
+                    </button>
+                    <button type="button" class="emotion-card" data-emotion="low">
+                        <span class="emotion-icon">潮</span>
+                        <strong>低落下沉</strong>
+                        <small>心里很重，只想慢一点</small>
+                    </button>
+                    <button type="button" class="emotion-card" data-emotion="restless">
+                        <span class="emotion-icon">火</span>
+                        <strong>烦躁失焦</strong>
+                        <small>想静下来，但心总往外跑</small>
+                    </button>
+                </div>
+
+                <label class="note-field" for="emotion-note">
+                    <span class="meta-label">补一句现在最难受的地方</span>
+                    <textarea id="emotion-note" rows="4" placeholder="例如：我一直担心自己会把事情做坏，越想越停不下来。"></textarea>
+                </label>
+
+                <div class="control-actions">
+                    <button type="button" class="primary-btn" id="generate-guidance-btn">生成温柔引导</button>
+                    <button type="button" class="secondary-btn" id="session-start-btn" disabled>开始调频</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel step-panel" id="step-02" data-step-state="locked">
+            <header class="step-header">
+                <div>
+                    <p class="section-kicker">Step 02</p>
+                    <h2>AI 一次性陪你走完这一轮</h2>
+                </div>
+                <p class="step-state-copy" id="step-02-state-copy">完成上一步后，这里会展开专属引导与呼吸节律。</p>
+            </header>
+
+            <div class="step-preview">生成后展开你的专属引导。先读一遍，再把自己带进呼吸里。</div>
+
+            <div class="step-body">
+                <div class="guidance-output" id="guidance-output" aria-live="polite"></div>
+
+                <div class="protocol-grid">
+                    <article class="protocol-card">
+                        <span class="meta-label">呼吸节律</span>
+                        <strong id="protocol-steps">4-2-6-1</strong>
+                        <small id="protocol-label">安抚减压节律</small>
+                    </article>
+                    <article class="protocol-card">
+                        <span class="meta-label">推荐环境音</span>
+                        <strong id="sound-name">雨声薄幕</strong>
+                        <small>可随时切换或关闭</small>
+                    </article>
+                    <article class="protocol-card">
+                        <span class="meta-label">当前轮次</span>
+                        <strong id="round-status">准备中</strong>
+                        <small id="session-message">先生成一段引导，再进入呼吸。</small>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel step-panel step-panel-stage" id="step-03" data-step-state="locked">
+            <header class="step-header">
+                <div>
+                    <p class="section-kicker">Step 03</p>
+                    <h2>把注意力带回身体</h2>
+                </div>
+                <p class="step-state-copy" id="step-03-state-copy">引导生成后，呼吸舞台才会向你打开。</p>
+            </header>
+
+            <div class="step-preview">当你准备好了，呼吸舞台会在这里亮起，声音与光场也会一起苏醒。</div>
+
+            <div class="step-body">
+                <div class="stage-toolbar">
+                    <div class="stage-caption">
+                        <span class="meta-label">沉浸控制</span>
+                        <strong>声音、节律、视觉在这里汇合</strong>
+                    </div>
+                    <button type="button" class="sound-toggle" id="sound-toggle-btn">开启环境音</button>
+                </div>
+
+                <div class="breathing-stage" id="breathing-stage">
+                    <div class="breathing-halo halo-outer"></div>
+                    <div class="breathing-halo halo-middle"></div>
+                    <div class="breathing-core">
+                        <span class="phase-label" id="phase-text">准备开始</span>
+                        <strong class="phase-count" id="phase-countdown">--</strong>
+                        <small id="phase-hint">吸气时放大，呼气时下沉。</small>
+                    </div>
+                </div>
+
+                <div class="switcher" id="sound-switcher" aria-label="切换环境音">
+                    <button type="button" class="switcher-btn is-active" data-sound-choice="rain">雨声</button>
+                    <button type="button" class="switcher-btn" data-sound-choice="forest">森林</button>
+                    <button type="button" class="switcher-btn" data-sound-choice="bowl">颂钵</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>

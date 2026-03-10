@@ -72,6 +72,16 @@
       category: 'visual'
     },
     {
+      title: 'Frequency Garden 调频花园',
+      description: 'AI 增强型情绪调频工具页。先点选情绪，再写下一句话，获得温柔引导、呼吸节律、场景与环境音的同步疗愈体验。',
+      path: './seeds/frequency-garden/index.html',
+      tags: ['Wellness', 'AI Guidance', 'Breathing'],
+      icon: '🌙',
+      status: '培育中',
+      maintainer: 'EDEN',
+      category: 'wellness'
+    },
+    {
       title: 'CSS 光影微交互画板',
       description: '纯使用 CSS Variables 与少量 JS 制作的赛博朋克风格交互画板。',
       path: './seeds/cyber-paint/index.html',

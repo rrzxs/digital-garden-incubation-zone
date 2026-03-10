@@ -29,5 +29,14 @@ test('published seed count excludes the incubator entry', () => {
   const seeds = seedConfig.getOrderedSeeds();
 
   assert.equal(seedConfig.countPublishedSeeds(seeds), seeds.filter((item) => !item.isEntry).length);
-  assert.equal(seedConfig.countPublishedSeeds(seeds), 7);
+  assert.equal(seedConfig.countPublishedSeeds(seeds), 8);
+});
+
+test('frequency garden seed is registered as a published healing tool', () => {
+  const seeds = loadSeedConfig().getOrderedSeeds();
+  const frequencyGarden = seeds.find((item) => item.path === './seeds/frequency-garden/index.html');
+
+  assert.ok(frequencyGarden);
+  assert.equal(frequencyGarden.category, 'wellness');
+  assert.match(frequencyGarden.title, /Frequency Garden|调频/);
 });
