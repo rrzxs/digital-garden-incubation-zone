@@ -90,6 +90,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: '代码雨屏保',
+      description: 'Matrix 风格的代码雨，但落下的是真实的代码片段，支持自定义语言',
+      path: './seeds/code-rain/index.html',
+      tags: ['Creative', 'Interactive', 'Matrix'],
+      icon: '🌧️',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

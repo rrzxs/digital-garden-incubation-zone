@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码雨屏保 | Code Rain</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="code-rain"></canvas>
+    <div class="ui-overlay">
+        <div class="info-panel">
+            <h1>代码雨屏保</h1>
+            <p class="tagline">Matrix 风格的代码雨，落下的是真实的代码片段</p>
+            <div class="controls">
+                <button id="pause-btn" class="btn">暂停</button>
+                <select id="lang-select" class="select">
+                    <option value="all">所有语言</option>
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="rust">Rust</option>
+                    <option value="go">Go</option>
+                </select>
+            </div>
+        </div>
+        <div class="hint">点击屏幕暂停/继续</div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
