@@ -100,6 +100,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: '文字解密',
+      description: '文字从乱码逐渐解密成目标文字的动画效果，支持多模式与高阶微交互',
+      path: './seeds/text/index.html',
+      tags: ['Animation', 'Interactive', 'Text Effect'],
+      icon: '🔐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

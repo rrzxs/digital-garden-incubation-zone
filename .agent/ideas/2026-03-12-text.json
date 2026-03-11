@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-12",
+  "name": "text",
+  "description": "scramble - 文字解密动画效果",
+  "tagline": "scramble - 文字解密动画效果，支持高阶微交互与审美氛围感",
+  "directory": "seeds/text/",
+  "status": "incubated"
+}
