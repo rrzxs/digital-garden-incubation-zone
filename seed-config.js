@@ -110,6 +110,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Fluid 流体',
+      description: '基于 Navier-Stokes 方程的交互式流体模拟，支持多配色与物理参数调节',
+      path: './seeds/fluid/index.html',
+      tags: ['Simulation', 'Interactive', 'Physics'],
+      icon: '💧',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
