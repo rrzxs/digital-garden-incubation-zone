@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-15",
+  "name": "fluid",
+  "description": "gradient - 流体渐变背景生成器",
+  "tagline": "gradient - 流体渐变背景生成器，支持高阶微交互与审美氛围感",
+  "directory": "seeds/fluid/",
+  "status": "incubated"
+}
