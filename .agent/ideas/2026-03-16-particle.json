@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-16",
+  "name": "particle",
+  "description": "wave - 粒子波浪动画",
+  "tagline": "wave - 粒子波浪动画，支持高阶微交互与审美氛围感",
+  "directory": "seeds/particle/",
+  "status": "incubated"
+}
