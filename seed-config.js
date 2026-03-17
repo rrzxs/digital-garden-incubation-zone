@@ -120,6 +120,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Ripple 涟漪',
+      description: '点击或触摸产生优雅的波纹扩散效果，支持多配色与参数调节',
+      path: './seeds/ripple/index.html',
+      tags: ['Simulation', 'Interactive', 'Animation'],
+      icon: '🌊',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

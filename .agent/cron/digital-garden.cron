@@ -4,6 +4,7 @@
 
 SHELL=/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOME=/root
 
 # 部署密码 (请修改为实际密码)
 SERVER_PASSWORD=YOUR_PASSWORD_HERE
