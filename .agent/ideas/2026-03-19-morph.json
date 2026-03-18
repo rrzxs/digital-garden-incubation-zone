@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-19",
+  "name": "morph",
+  "description": "shapes - 形态变换动画",
+  "tagline": "shapes - 形态变换动画，支持高阶微交互与审美氛围感",
+  "directory": "seeds/morph/",
+  "status": "incubated"
+}
