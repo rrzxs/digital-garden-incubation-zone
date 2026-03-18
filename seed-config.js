@@ -130,6 +130,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Glitch 故障艺术',
+      description: '赛博朋克风格的故障艺术文字效果，支持5种故障模式与高阶微交互',
+      path: './seeds/glitch/index.html',
+      tags: ['Creative', 'Interactive', 'Text Effect'],
+      icon: '⌁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

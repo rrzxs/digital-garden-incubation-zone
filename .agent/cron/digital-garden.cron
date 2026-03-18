@@ -7,7 +7,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOME=/root
 
 # 部署密码 (请修改为实际密码)
-SERVER_PASSWORD=YOUR_PASSWORD_HERE
+SERVER_PASSWORD=!Q1234567890123
 
 # 05:00 - 阶段1: 灵感捕获
 0 5 * * * /opt/digital-garden-incubation-zone/.agent/scripts/step1-inspiration.sh >> /opt/digital-garden-incubation-zone/.agent/logs/cron.log 2>&1
