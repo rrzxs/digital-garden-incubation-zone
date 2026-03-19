@@ -8,7 +8,7 @@ const html = fs.readFileSync(
 );
 
 test('homepage keeps classic script loading for broad compatibility', () => {
-  assert.match(html, /<script\s+src="seed-config\.js"><\/script>/);
-  assert.match(html, /<script\s+src="main\.js"><\/script>/);
-  assert.doesNotMatch(html, /type="module"\s+src="main\.js"/);
+  assert.match(html, /<script\s+src="seed-config\.js(?:\?v=[^"]+)?"><\/script>/);
+  assert.match(html, /<script\s+src="main\.js(?:\?v=[^"]+)?"><\/script>/);
+  assert.doesNotMatch(html, /type="module"\s+src="main\.js(?:\?v=[^"]+)?"/);
 });

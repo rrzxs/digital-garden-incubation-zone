@@ -38,3 +38,25 @@
 
 ---
 © 2026 人人智学社 (RRZXS)
+
+## CI/CD
+
+第一版正式流水线已经落到 GitHub Actions：
+
+- `CI`：`/.github/workflows/ci.yml`
+  - `push main` / `pull_request` 自动执行 `npm test`
+- `CD`：`/.github/workflows/deploy-production.yml`
+  - 仅支持 `workflow_dispatch` 手动发布生产环境
+  - 发布前会先跑一次 `npm test`
+  - 然后调用 `scripts/deploy_prod.sh` 同步到生产服务器
+
+### GitHub Secrets
+
+在仓库 `Settings -> Secrets and variables -> Actions` 中配置：
+
+- `PROD_HOST`：生产服务器地址，例如 `40.162.194.41`
+- `PROD_USER`：SSH 用户，例如 `azadmin`
+- `PROD_PORT`：SSH 端口，默认 `22`
+- `PROD_SSH_KEY`：拥有服务器访问权限的私钥内容
+
+建议同时启用 GitHub `production` environment 审批，避免误发生产。
