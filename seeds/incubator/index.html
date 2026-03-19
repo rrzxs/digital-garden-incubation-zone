@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>灵感孕育舱 - OpenClaw</title>
+    <title>灵感孕育舱 - EDEN</title>
     <link rel="stylesheet" href="style.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap"
         rel="stylesheet">
 </head>
 
@@ -24,39 +24,52 @@
             </a>
             <div class="header-title">
                 <div class="avatar">
-                    <span class="avatar-icon">🤖</span>
+                    <span class="avatar-icon">🌱</span>
                     <span class="status-dot"></span>
                 </div>
                 <div class="title-info">
-                    <h1>OpenClaw / EDEN</h1>
-                    <p>灵感孕育舱 / 随时待命</p>
+                    <h1>EDEN 灵感孕育舱</h1>
+                    <p>真实共创 / 种子采集 / OpenClaw 驱动</p>
                 </div>
             </div>
-            <button class="settings-btn">⋯</button>
+            <div class="header-actions">
+                <span class="session-pill" id="session-pill">游客模式</span>
+                <button class="auth-action-btn" id="auth-action-btn" type="button">登录</button>
+            </div>
         </header>
 
-        <main class="chat-container" id="chat-container">
-            <div class="message-group robot">
-                <div class="avatar">🤖</div>
-                <div class="message-content glass-panel">
-                    <p>你好，人类创作者。我是 <strong>EDEN</strong>，Digital Garden 的主维护人与 OpenClaw 具身智能节点。</p>
-                    <p>这里是灵感孕育舱。你可以自由地向我描述你脑海中的“种子想法”或者“MVP 设想”。我会将它们记录下来，并在管理员审核通过后，为你调度资源进行孵化开发。</p>
-                    <div class="suggestion-chips">
-                        <button class="chip">创建一个番茄钟打卡工具</button>
-                        <button class="chip">我想做一个暗黑风格的个人主页</button>
-                        <button class="chip">如何实现多代理协作展示？</button>
-                    </div>
+        <section class="meta-panels">
+            <div class="meta-card glass-panel auth-card">
+                <div>
+                    <span class="meta-eyebrow">会话状态</span>
+                    <h2 id="auth-heading">登录后即可唤醒新的数字生命</h2>
+                    <p id="auth-message">接入统一登录后，EDEN 会围绕你的创意进行追问、澄清和结构化整理。</p>
+                </div>
+                <div class="meta-actions">
+                    <span class="balance-pill" id="balance-pill" hidden></span>
+                    <button class="secondary-btn" id="logout-btn" type="button" hidden>退出</button>
                 </div>
             </div>
+            <div class="meta-card glass-panel idea-card" id="idea-panel" hidden>
+                <span class="meta-eyebrow">种子草稿</span>
+                <div class="idea-card-topline">
+                    <h3 id="idea-title">新的数字生命</h3>
+                    <span class="idea-score" id="idea-score">成熟度 0</span>
+                </div>
+                <p id="idea-summary">EDEN 会在对话推进后，为你生成结构化种子摘要。</p>
+                <div class="idea-footer">
+                    <span class="idea-status" id="idea-status">草稿中</span>
+                    <button class="primary-inline-btn" id="submit-idea-btn" type="button" disabled>提交种子</button>
+                </div>
+            </div>
+        </section>
 
-            <!-- User and Bot message placeholders will be injected here via JS -->
-
-        </main>
+        <main class="chat-container" id="chat-container"></main>
 
         <footer class="input-area glass-panel">
             <form id="chat-form" class="input-wrapper">
-                <button type="button" class="attach-btn" title="附加文件">+</button>
-                <textarea id="idea-input" placeholder="描述你的绝妙想法，播种属于你的数字生命..." rows="1"></textarea>
+                <button type="button" class="attach-btn" title="快速示例" id="suggest-btn">✦</button>
+                <textarea id="idea-input" placeholder="描述你的想法，和 EDEN 一起把它收敛成可孵化的种子..." rows="1"></textarea>
                 <button type="submit" class="send-btn" id="send-btn" disabled>
                     <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -65,6 +78,7 @@
                     </svg>
                 </button>
             </form>
+            <div class="input-footnote" id="input-footnote">游客可以浏览引导文案；真实对话、积分与种子提交需要先登录。</div>
         </footer>
     </div>
 

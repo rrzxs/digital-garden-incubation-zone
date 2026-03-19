@@ -21,16 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const displaySeedCount = document.getElementById('seed-count');
     const displayCommitCount = document.getElementById('commit-count'); // 模拟的一个指标
     const navAuthBtn = document.getElementById('nav-auth-btn');
-    const heroAuthBtn = document.getElementById('hero-auth-btn');
-    const footerAuthBtn = document.getElementById('footer-auth-btn');
-    const navAuthStatus = document.getElementById('nav-auth-status');
-    const navAuthText = document.getElementById('nav-auth-text');
-    const authStrip = document.getElementById('auth-strip');
-    const authStripLabel = document.getElementById('auth-strip-label');
-    const authUserName = document.getElementById('auth-user-name');
-    const authStripMeta = document.getElementById('auth-strip-meta');
-    const authCreditPill = document.getElementById('auth-credit-pill');
-    const authLogoutBtn = document.getElementById('auth-logout-btn');
+    const navAccountShell = document.getElementById('nav-account-shell');
+    const navAccountName = document.getElementById('nav-account-name');
+    const navAccountMeta = document.getElementById('nav-account-meta');
+    const navAccountBalance = document.getElementById('nav-account-balance');
+    const navAccountLogout = document.getElementById('nav-account-logout');
 
     const authConfig = resolveAuthConfig();
     const authStorage = createAuthStorage();
@@ -210,24 +205,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function bindAuthActions() {
-        [navAuthBtn, heroAuthBtn, footerAuthBtn].forEach((button) => {
-            if (!button) return;
-
-            button.addEventListener('click', async (event) => {
-                event.preventDefault();
-                if (authState.busy) return;
-
-                if (authState.accessToken) {
-                    authStrip?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    return;
-                }
-
-                await startLogin();
-            });
+        navAuthBtn?.addEventListener('click', async (event) => {
+            event.preventDefault();
+            if (authState.busy) return;
+            await startLogin();
         });
 
-        authLogoutBtn?.addEventListener('click', async () => {
-            if (authState.busy) return;
+        navAccountLogout?.addEventListener('click', async () => {
+            if (authState.busy || !authState.accessToken) return;
             await logout();
         });
     }
@@ -435,63 +420,36 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderAuthState() {
         const isAuthenticated = Boolean(authState.accessToken);
         const userName = authState.user && authState.user.name ? authState.user.name : '已登录用户';
+        const isError = authState.tone === 'error';
 
-        navAuthStatus?.classList.remove('is-authenticated', 'is-error');
-        authStrip?.classList.remove('is-authenticated', 'is-error');
+        navAccountShell?.toggleAttribute('hidden', !isAuthenticated);
+        navAuthBtn?.toggleAttribute('hidden', isAuthenticated);
+        navAccountShell?.classList.toggle('is-error', isAuthenticated && isError);
+        navAccountShell?.classList.toggle('is-busy', isAuthenticated && authState.busy);
 
-        if (authState.tone === 'error') {
-            navAuthStatus?.classList.add('is-error');
-            authStrip?.classList.add('is-error');
-        } else if (isAuthenticated) {
-            navAuthStatus?.classList.add('is-authenticated');
-            authStrip?.classList.add('is-authenticated');
+        if (navAccountName) {
+            navAccountName.textContent = userName;
         }
 
-        if (navAuthText) {
-            navAuthText.textContent = authState.tone === 'error'
-                ? '登录异常'
-                : (isAuthenticated ? `${userName} · 在线` : '游客模式');
+        if (navAccountMeta) {
+            navAccountMeta.textContent = isError
+                ? '会话波动'
+                : '已接入通用会话';
         }
 
-        updateButtonText(navAuthBtn, authState.busy ? '处理中...' : (isAuthenticated ? '已登录' : '登录'));
-        updateButtonText(heroAuthBtn, authState.busy ? '处理中...' : (isAuthenticated ? '会话已连接' : '统一登录'));
-        updateButtonText(footerAuthBtn, isAuthenticated ? '会话已连接' : '登录中心');
+        if (navAccountBalance) {
+            navAccountBalance.textContent = typeof authState.balance === 'number' ? `积分 ${authState.balance}` : '积分 --';
+        }
+
+        updateButtonText(navAuthBtn, authState.busy ? '处理中...' : '登录');
+        updateButtonText(navAccountLogout, authState.busy ? '处理中...' : '退出');
 
         if (navAuthBtn) {
-            navAuthBtn.setAttribute('href', isAuthenticated ? '#auth-strip' : '#');
+            navAuthBtn.setAttribute('href', '#');
             navAuthBtn.setAttribute('aria-disabled', authState.busy ? 'true' : 'false');
         }
-        if (heroAuthBtn) {
-            heroAuthBtn.setAttribute('href', isAuthenticated ? '#auth-strip' : '#');
-            heroAuthBtn.setAttribute('aria-disabled', authState.busy ? 'true' : 'false');
-        }
-
-        if (authStripLabel) {
-            authStripLabel.textContent = authState.tone === 'error'
-                ? '会话异常'
-                : (isAuthenticated ? '已接入通用后端' : '游客浏览');
-        }
-
-        if (authUserName) {
-            authUserName.textContent = isAuthenticated ? userName : '未登录';
-        }
-
-        if (authStripMeta) {
-            authStripMeta.textContent = authState.message;
-        }
-
-        if (authCreditPill) {
-            if (isAuthenticated && typeof authState.balance === 'number') {
-                authCreditPill.hidden = false;
-                authCreditPill.textContent = `积分 ${authState.balance}`;
-            } else {
-                authCreditPill.hidden = true;
-            }
-        }
-
-        if (authLogoutBtn) {
-            authLogoutBtn.hidden = !isAuthenticated;
-            authLogoutBtn.disabled = authState.busy;
+        if (navAccountLogout) {
+            navAccountLogout.disabled = authState.busy;
         }
     }
 

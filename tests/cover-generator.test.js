@@ -6,6 +6,7 @@ import {
   calculateDesignScore,
   normalizeCoverState
 } from '../seeds/xhs-cover-studio/lib/cover-generator.js';
+import { extractCoverContent, extractCoverVariants } from '../seeds/xhs-cover-studio/lib/content-extractor.js';
 import { generateConceptVariants, generateDraft } from '../seeds/xhs-cover-studio/lib/idea-generator.js';
 
 test('normalizeCoverState applies defaults and svg output includes escaped headline', () => {
@@ -129,6 +130,46 @@ test('buildCoverSvg can hide angle meta and footer brand', () => {
 test('buildCoverSvg keeps footer brand inside the safe right edge', () => {
   const svg = buildCoverSvg(normalizeCoverState());
   assert.match(svg, /<text x="972" y="1326"[^>]*text-anchor="end"[^>]*>XHS COVER STUDIO<\/text>/);
+});
+
+test('extractCoverContent derives topic and cover copy from article content', () => {
+  const result = extractCoverContent(`
+    我把团队的 AI 工作流重新做了一遍，最后稳定下来的只有 3 个动作：
+    第一，先把重复出现的问题沉淀成固定模板。
+    第二，让 AI 只处理它最擅长的拆解、归纳和改写。
+    第三，用看板把每一步的输入输出串起来，这样新人也能直接接手。
+    真正有用的不是“用了 AI”，而是流程终于变得稳定、可复制、能交接。
+  `);
+
+  assert.match(result.topic, /AI工作流|工作流/);
+  assert.ok(['authority', 'tutorial', 'list', 'emotion'].includes(result.focusMode));
+  assert.match(result.headline, /3个动作|3步|3点/);
+  assert.ok(result.headline.length >= 6);
+  assert.ok(result.highlight.length >= 2);
+  assert.ok(result.subhead.length >= 12);
+});
+
+test('extractCoverContent falls back gracefully for short input', () => {
+  const result = extractCoverContent('副业');
+
+  assert.equal(result.topic, '副业');
+  assert.ok(result.headline.length > 0);
+  assert.ok(result.highlight.length > 0);
+  assert.ok(result.subhead.length > 0);
+});
+
+test('extractCoverVariants returns three distinct candidate sets for one article', () => {
+  const variants = extractCoverVariants(`
+    我把团队的 AI 工作流重新做了一遍，最后稳定下来的只有 3 个动作：
+    第一，先把重复出现的问题沉淀成固定模板。
+    第二，让 AI 只处理它最擅长的拆解、归纳和改写。
+    第三，用看板把每一步的输入输出串起来，这样新人也能直接接手。
+  `);
+
+  assert.equal(variants.length, 3);
+  assert.ok(variants.every((item) => item.topic === 'AI工作流'));
+  assert.ok(new Set(variants.map((item) => item.focusMode)).size >= 2);
+  assert.ok(new Set(variants.map((item) => item.headline)).size >= 2);
 });
 
 test('generateDraft creates one ready-to-edit copy set for the selected angle', () => {

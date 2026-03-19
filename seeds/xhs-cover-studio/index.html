@@ -30,8 +30,29 @@
           <span class="section-index">01</span>
           <div>
             <h1>小红书封面生成器</h1>
-            <p>主题、角度、文案、风格、下载。只保留真正有用的五步。</p>
+            <p>先贴正文，再提炼主题和封面文案，最后微调风格与排版。</p>
           </div>
+        </div>
+
+        <div class="field source-field">
+          <div class="group-head">
+            <span class="field-label">小红书内容 / 文章正文</span>
+            <p class="group-copy">把笔记、文章或提纲贴进来，我会先提炼主题、角度和封面文案。</p>
+          </div>
+          <textarea id="article-input" rows="6" placeholder="粘贴你的小红书正文、公众号文章、笔记提纲或长段文案"></textarea>
+        </div>
+
+        <div class="group action-row extraction-row">
+          <button id="extract-content" class="primary-button" type="button">AI 提炼并生成 3 套候选</button>
+          <p class="action-hint">会一次生成 3 套不同风格的封面文案，默认先填充第一套。</p>
+        </div>
+
+        <div class="group candidate-group">
+          <div class="group-head">
+            <span class="field-label">候选文案</span>
+            <p class="group-copy">点任意一套候选，下面的主题和文案会立刻替换成对应版本。</p>
+          </div>
+          <div id="candidate-options" class="candidate-list"></div>
         </div>
 
         <label class="field">

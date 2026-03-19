@@ -7,9 +7,11 @@ import {
   createTemplateSticker,
   normalizeCoverState
 } from './lib/cover-generator.js';
+import { extractCoverVariants } from './lib/content-extractor.js';
 import { FOCUS_OPTIONS, generateDraft } from './lib/idea-generator.js';
 
 const STORAGE_KEY = 'xhs-cover-studio-state';
+const ARTICLE_STORAGE_KEY = 'xhs-cover-studio-article';
 const STICKER_OPTIONS = Object.freeze([
   { id: 'none', emoji: '', label: '无贴纸' },
   { id: 'thinking', emoji: '🤔', label: '思考' },
@@ -30,8 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     offsetX: 0,
     offsetY: 0
   };
+  let candidateVariants = [];
 
   const elements = {
+    articleInput: document.getElementById('article-input'),
     topicInput: document.getElementById('topic-input'),
     headlineInput: document.getElementById('headline-input'),
     highlightInput: document.getElementById('highlight-input'),
@@ -42,6 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleAngleBadge: document.getElementById('toggle-angle-badge'),
     toggleAngleMark: document.getElementById('toggle-angle-mark'),
     toggleFooterBrand: document.getElementById('toggle-footer-brand'),
+    extractContent: document.getElementById('extract-content'),
+    candidateOptions: document.getElementById('candidate-options'),
     generateCopy: document.getElementById('generate-copy'),
     previewStage: document.getElementById('preview-stage'),
     coverCanvas: document.getElementById('cover-canvas'),
@@ -52,8 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAngleOptions();
   renderStyleOptions();
   renderStickerOptions();
+  renderCandidateOptions();
+  elements.articleInput.value = loadArticleDraft();
   syncInputs();
   renderPreview();
+
+  elements.articleInput.addEventListener('input', (event) => {
+    persistArticleDraft(event.target.value);
+  });
 
   elements.topicInput.addEventListener('input', (event) => {
     setField('topic', event.target.value);
@@ -131,6 +143,28 @@ document.addEventListener('DOMContentLoaded', () => {
   elements.generateCopy.addEventListener('click', () => {
     const draft = generateDraft(state.topic, state.focusMode);
     setState(draft, { syncInputs: true });
+  });
+
+  elements.extractContent.addEventListener('click', () => {
+    candidateVariants = extractCoverVariants(elements.articleInput.value);
+    renderCandidateOptions(0);
+    setState(candidateVariants[0], { syncInputs: true });
+  });
+
+  elements.candidateOptions.addEventListener('click', (event) => {
+    const target = event.target.closest('[data-candidate-index]');
+    if (!target) {
+      return;
+    }
+
+    const index = Number(target.dataset.candidateIndex);
+    const variant = candidateVariants[index];
+    if (!variant) {
+      return;
+    }
+
+    renderCandidateOptions(index);
+    setState(variant, { syncInputs: true });
   });
 
   elements.toggleAngleBadge.addEventListener('change', (event) => {
@@ -298,6 +332,29 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
+  function renderCandidateOptions(activeIndex = 0) {
+    if (candidateVariants.length === 0) {
+      elements.candidateOptions.innerHTML = `
+        <div class="candidate-empty">
+          <strong>还没有候选文案</strong>
+          <span>先贴正文，再点上方按钮，一次生成 3 套不同风格。</span>
+        </div>
+      `;
+      return;
+    }
+
+    elements.candidateOptions.innerHTML = candidateVariants.map((variant, index) => {
+      const option = FOCUS_OPTIONS.find((item) => item.id === variant.focusMode);
+      return `
+        <button class="candidate-card${index === activeIndex ? ' is-active' : ''}" type="button" data-candidate-index="${index}">
+          <span class="candidate-kicker">${option ? option.label : variant.focusMode}</span>
+          <strong>${variant.headline}</strong>
+          <span>${variant.highlight} · ${variant.subhead}</span>
+        </button>
+      `;
+    }).join('');
+  }
+
   function updateSelectionStates() {
     elements.focusOptions.querySelectorAll('[data-focus]').forEach((button) => {
       button.classList.toggle('is-active', button.dataset.focus === state.focusMode);
@@ -338,6 +395,22 @@ function loadPersistedState() {
 function persistState(state) {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // Ignore storage failures.
+  }
+}
+
+function loadArticleDraft() {
+  try {
+    return window.localStorage.getItem(ARTICLE_STORAGE_KEY) || '';
+  } catch {
+    return '';
+  }
+}
+
+function persistArticleDraft(value) {
+  try {
+    window.localStorage.setItem(ARTICLE_STORAGE_KEY, String(value ?? ''));
   } catch {
     // Ignore storage failures.
   }
