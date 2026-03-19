@@ -13,6 +13,3 @@ yarn-error.log
 # Deployment tools
 deploy.sh
 DEPLOY_GUIDE.md
-
-# Agent tools
-.agent/scripts/
