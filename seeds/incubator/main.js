@@ -26,6 +26,7 @@ function initDigitalGardenIncubator() {
 
     const config = resolveConfig();
     const authStorage = createAuthStorage();
+    const markdownRenderer = globalThis.DigitalGardenIncubatorMarkdown;
 
     const state = {
         accessToken: authStorage.getAccessToken(),
@@ -231,7 +232,7 @@ function initDigitalGardenIncubator() {
     }
 
     async function sendMessage(message) {
-        appendMessage('user', message);
+        appendMessage('user', message, '', new Date().toISOString());
         ideaInput.value = '';
         handleInputResize.call(ideaInput);
         updateComposerState();
@@ -249,7 +250,12 @@ function initDigitalGardenIncubator() {
                 body: JSON.stringify({ message })
             });
             loader.remove();
-            appendMessage('robot', payload.assistant_message.content_text, payload.assistant_message.id);
+            appendMessage(
+                'robot',
+                payload.assistant_message.content_text,
+                payload.assistant_message.id,
+                payload.assistant_message.created_at || ''
+            );
             state.ideaDraft = payload.idea_draft || null;
             if (payload.credit && typeof payload.credit.balance === 'number') {
                 state.balance = payload.credit.balance;
@@ -257,7 +263,11 @@ function initDigitalGardenIncubator() {
             updateIdeaPanel();
             const charged = typeof payload.credit?.charged === 'number' ? payload.credit.charged : 0;
             const authMessage = state.ideaDraft
-                ? `本次已使用 ${charged} 积分，EDEN 已更新种子草稿。`
+                ? (
+                    state.ideaDraft.is_ready_for_submit
+                        ? `本次已使用 ${charged} 积分，种子需求已收集清晰，可点击“提交种子”进入后台审核阶段。`
+                        : `本次已使用 ${charged} 积分，EDEN 已更新种子草稿。`
+                )
                 : 'EDEN 正在继续澄清你的需求，当前还未生成种子草稿。';
             setBusy(false, authMessage);
         } catch (error) {
@@ -356,11 +366,16 @@ function initDigitalGardenIncubator() {
 
     function renderMessages(messages) {
         messages.forEach((message) => {
-            appendMessage(message.role === 'assistant' ? 'robot' : message.role, message.content_text, message.id);
+            appendMessage(
+                message.role === 'assistant' ? 'robot' : message.role,
+                message.content_text,
+                message.id,
+                message.created_at || ''
+            );
         });
     }
 
-    function appendMessage(role, content, messageId = '') {
+    function appendMessage(role, content, messageId = '', createdAt = '') {
         if (messageId && state.shownMessageIds.has(messageId)) {
             return null;
         }
@@ -377,7 +392,14 @@ function initDigitalGardenIncubator() {
 
         const contentNode = document.createElement('div');
         contentNode.className = 'message-content glass-panel';
-        contentNode.innerHTML = `<p>${escapeHtml(content)}</p>`;
+        const timeLabel = formatMessageTime(createdAt);
+        const bodyMarkup = role === 'robot' || role === 'system'
+            ? renderMarkdownContent(content)
+            : `<p>${escapeHtml(content)}</p>`;
+        contentNode.innerHTML = `
+            ${bodyMarkup}
+            ${timeLabel ? `<div class="message-time" title="${escapeHtml(formatMessageTime(createdAt, { detailed: true }))}">${escapeHtml(timeLabel)}</div>` : ''}
+        `;
 
         group.appendChild(avatar);
         group.appendChild(contentNode);
@@ -401,7 +423,52 @@ function initDigitalGardenIncubator() {
     }
 
     function renderSystemMessage(message) {
-        appendMessage('system', message);
+        appendMessage('system', message, '', new Date().toISOString());
+    }
+
+    function renderMarkdownContent(content) {
+        if (markdownRenderer && typeof markdownRenderer.renderMarkdown === 'function') {
+            return markdownRenderer.renderMarkdown(content);
+        }
+        return `<p>${escapeHtml(content)}</p>`;
+    }
+
+    function formatMessageTime(value, { detailed = false } = {}) {
+        if (!value) {
+            return '';
+        }
+
+        const date = value instanceof Date ? value : new Date(value);
+        if (Number.isNaN(date.getTime())) {
+            return '';
+        }
+
+        const locale = 'zh-CN';
+        if (detailed) {
+            return new Intl.DateTimeFormat(locale, {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).format(date);
+        }
+
+        const now = new Date();
+        const isSameDay = now.toDateString() === date.toDateString();
+        return new Intl.DateTimeFormat(locale, isSameDay ? {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        } : {
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }).format(date);
     }
 
     function updateIdeaPanel() {
@@ -411,11 +478,13 @@ function initDigitalGardenIncubator() {
             return;
         }
         ideaPanel.hidden = false;
-        ideaTitle.textContent = state.ideaDraft.idea_summary ? '已收敛的种子方向' : '新的数字生命';
+        ideaTitle.textContent = state.ideaDraft.idea_summary ? '已收集的种子需求' : '新的数字生命';
         ideaSummary.textContent = state.ideaDraft.idea_summary || 'EDEN 正在根据当前对话整理摘要。';
-        ideaStatus.textContent = state.ideaDraft.status === 'reviewing' ? '审核中' : '草稿中';
-        ideaScore.textContent = `成熟度 ${Math.round(Number(state.ideaDraft.maturity_score || 0))}`;
-        submitIdeaBtn.disabled = Number(state.ideaDraft.maturity_score || 0) < 60 || state.ideaDraft.status === 'reviewing';
+        ideaStatus.textContent = state.ideaDraft.status === 'reviewing'
+            ? '审核中'
+            : (state.ideaDraft.is_ready_for_submit ? '可提交' : '收集中');
+        ideaScore.textContent = `清晰度 ${Math.round(Number(state.ideaDraft.maturity_score || 0))}`;
+        submitIdeaBtn.disabled = !state.ideaDraft.is_ready_for_submit || state.ideaDraft.status === 'reviewing';
     }
 
     function updateAuthUI(message) {
@@ -510,7 +579,7 @@ function initDigitalGardenIncubator() {
         if (!error) return '发生未知错误';
         if (typeof error === 'string') return error;
         if (error.body && error.body.error_code === 'IDEA_NOT_READY') {
-            return '当前种子成熟度还不够，继续和 EDEN 补充信息后再提交。';
+            return '当前需求还不够清晰，继续补充目标用户、核心问题和交付形态后再提交。';
         }
         if (error.body && error.body.error_code === 'INSUFFICIENT_CREDITS') {
             return '当前积分不足，无法继续对话。';
