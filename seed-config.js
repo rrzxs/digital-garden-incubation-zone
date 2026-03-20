@@ -140,6 +140,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Gradient Mesh 渐变网格',
+      description: '交互式 Mesh 渐变生成器，拖拽节点实时创造美丽渐变，支持预设配色与 CSS/PNG 导出',
+      path: '/seed/seeds/gradient/index.html',
+      tags: ['Creative', 'Design Tool', 'Gradient'],
+      icon: '🌈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

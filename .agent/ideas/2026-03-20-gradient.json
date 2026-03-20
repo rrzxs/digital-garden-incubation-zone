@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-20",
+  "name": "gradient",
+  "description": "mesh - 渐变网格生成器",
+  "tagline": "mesh - 渐变网格生成器，支持高阶微交互与审美氛围感",
+  "directory": "seeds/gradient/",
+  "status": "incubated"
+}

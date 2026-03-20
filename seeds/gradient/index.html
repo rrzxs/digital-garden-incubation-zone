@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Mesh - 渐变网格生成器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="glass-container">
+        <header class="panel-header">
+            <div class="header-left">
+                <h1 class="brand-title">Gradient Mesh</h1>
+                <p class="brand-subtitle">拖拽节点，创造渐变</p>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="randomize-btn" title="随机生成">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="export-btn" title="导出 CSS">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <section class="canvas-wrapper">
+            <canvas id="gradient-canvas"></canvas>
+            <div id="nodes-container"></div>
+            <div class="canvas-hint" id="canvas-hint">
+                <span>拖拽彩色节点调整渐变</span>
+            </div>
+        </section>
+
+        <section class="controls-panel">
+            <div class="control-group">
+                <label class="control-label">预设配色</label>
+                <div class="preset-btns">
+                    <button class="preset-btn active" data-preset="aurora" aria-label="极光">
+                        <span class="preset-preview aurora"></span>
+                    </button>
+                    <button class="preset-btn" data-preset="sunset" aria-label="日落">
+                        <span class="preset-preview sunset"></span>
+                    </button>
+                    <button class="preset-btn" data-preset="ocean" aria-label="深海">
+                        <span class="preset-preview ocean"></span>
+                    </button>
+                    <button class="preset-btn" data-preset="neon" aria-label="霓虹">
+                        <span class="preset-preview neon"></span>
+                    </button>
+                    <button class="preset-btn" data-preset="forest" aria-label="森林">
+                        <span class="preset-preview forest"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">节点数量</label>
+                <div class="slider-container">
+                    <input type="range" id="node-count" min="3" max="8" value="5" class="slider">
+                    <span class="slider-value" id="node-count-value">5</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">模糊强度</label>
+                <div class="slider-container">
+                    <input type="range" id="blur-intensity" min="30" max="150" value="80" class="slider">
+                    <span class="slider-value" id="blur-value">80</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn" id="reset-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    <span>重置</span>
+                </button>
+                <button class="action-btn primary" id="fullscreen-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
+                        <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+                        <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
+                        <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+                    </svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </section>
+
+        <footer class="css-output">
+            <div class="css-header">
+                <span class="css-label">CSS Output</span>
+                <button class="copy-btn" id="copy-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                    <span>复制</span>
+                </button>
+            </div>
+            <pre class="css-code" id="css-code"></pre>
+        </footer>
+    </main>
+
+    <div class="toast" id="toast">已复制到剪贴板</div>
+
+    <script src="main.js"></script>
+</body>
+</html>
