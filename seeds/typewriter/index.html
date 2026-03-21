@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typewriter - 复古打字机体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <div class="typewriter-frame">
+        <div class="typewriter-body">
+            <div class="platen-roller">
+                <div class="roller-knob left"></div>
+                <div class="roller-bar"></div>
+                <div class="roller-knob right"></div>
+            </div>
+            
+            <div class="paper-container">
+                <div class="paper" id="paper">
+                    <div class="paper-content" id="paper-content">
+                        <span class="cursor" id="cursor"></span>
+                    </div>
+                    <div class="ink-smudge smudge-1"></div>
+                    <div class="ink-smudge smudge-2"></div>
+                    <div class="ink-smudge smudge-3"></div>
+                </div>
+            </div>
+
+            <div class="carriage">
+                <div class="carriage-rail"></div>
+                <div class="type-head" id="type-head">
+                    <div class="hammer"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="keyboard-area">
+            <textarea 
+                id="input-area" 
+                class="hidden-input" 
+                placeholder="在此输入文字..."
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+            ></textarea>
+            <div class="controls">
+                <button class="control-btn" id="sound-toggle" aria-label="切换音效">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <span class="btn-label">音效</span>
+                </button>
+                <button class="control-btn" id="clear-btn" aria-label="清空内容">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    <span class="btn-label">清空</span>
+                </button>
+                <button class="control-btn" id="new-line-btn" aria-label="换行">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 12h16M4 12l4-4M4 12l4 4"/>
+                    </svg>
+                    <span class="btn-label">换行</span>
+                </button>
+            </div>
+            <p class="hint">点击纸张区域开始输入，体验复古打字机节奏</p>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

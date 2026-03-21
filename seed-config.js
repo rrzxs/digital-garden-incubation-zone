@@ -150,6 +150,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Typewriter 打字机',
+      description: '复古打字机风格的文本输入体验，包含逐字打印、音效反馈、换行动作与墨迹残留效果',
+      path: '/seed/seeds/typewriter/index.html',
+      tags: ['Creative', 'Interactive', 'Retro'],
+      icon: '⌨️',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-21",
+  "name": "typewriter",
+  "description": "打字机效果",
+  "tagline": "打字机效果，支持高阶微交互与审美氛围感",
+  "directory": "seeds/typewriter/",
+  "status": "incubated"
+}
