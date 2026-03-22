@@ -52,6 +52,16 @@
       category: 'animation'
     },
     {
+      title: 'Magnetic 磁力交互',
+      description: '鼠标移动时周围UI元素被磁力吸引或排斥，产生流动视觉效果。支持吸引、排斥、环绕三种模式',
+      path: '/seed/seeds/magnetic/index.html',
+      tags: ['Interactive', 'Physics', 'Animation'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'OpenClaw AI 界面',
       description: '基于 GLM API 的多角色 AI 对话客户端原型构建及 Prompt 注入测试。',
       path: '/seed/seeds/openclaw/index.html',

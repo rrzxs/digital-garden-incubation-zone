@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnetic - 磁力光标交互</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="fluid-bg">
+        <div class="fluid-blob blob-1"></div>
+        <div class="fluid-blob blob-2"></div>
+        <div class="fluid-blob blob-3"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">◎</span>
+                <span class="logo-text">Magnetic</span>
+            </div>
+            <p class="tagline">光标创造磁场，元素随之起舞</p>
+        </header>
+
+        <main class="magnetic-canvas" id="magnetic-canvas">
+            <div class="magnetic-element" data-type="attract" data-strength="1.2">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊕</span>
+                    <span class="element-label">吸引</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="repel" data-strength="0.8">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊖</span>
+                    <span class="element-label">排斥</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="attract" data-strength="1.5">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊕</span>
+                    <span class="element-label">强吸引</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="orbit" data-strength="1.0">
+                <div class="element-inner glass-card orbit-style">
+                    <span class="element-symbol">↻</span>
+                    <span class="element-label">环绕</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="repel" data-strength="1.3">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊖</span>
+                    <span class="element-label">排斥</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="attract" data-strength="0.9">
+                <div class="element-inner glass-card glass-accent">
+                    <span class="element-symbol">✧</span>
+                    <span class="element-label">中心</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="orbit" data-strength="1.1">
+                <div class="element-inner glass-card orbit-style">
+                    <span class="element-symbol">↻</span>
+                    <span class="element-label">环绕</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="attract" data-strength="1.0">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊕</span>
+                    <span class="element-label">吸引</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="repel" data-strength="0.7">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊖</span>
+                    <span class="element-label">弱排斥</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="orbit" data-strength="0.9">
+                <div class="element-inner glass-card orbit-style">
+                    <span class="element-symbol">↻</span>
+                    <span class="element-label">环绕</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="attract" data-strength="1.4">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊕</span>
+                    <span class="element-label">吸引</span>
+                </div>
+            </div>
+            <div class="magnetic-element" data-type="repel" data-strength="1.1">
+                <div class="element-inner glass-card">
+                    <span class="element-symbol">⊖</span>
+                    <span class="element-label">排斥</span>
+                </div>
+            </div>
+        </main>
+
+        <div class="cursor-field" id="cursor-field"></div>
+
+        <footer class="app-footer">
+            <div class="control-panel glass-panel">
+                <div class="control-group">
+                    <label class="control-label">磁场强度</label>
+                    <input type="range" id="force-strength" min="0.5" max="2" step="0.1" value="1">
+                    <span class="control-value" id="force-value">1.0x</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">影响半径</label>
+                    <input type="range" id="influence-radius" min="100" max="400" step="20" value="200">
+                    <span class="control-value" id="radius-value">200px</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">阻尼系数</label>
+                    <input type="range" id="damping" min="0.05" max="0.3" step="0.01" value="0.12">
+                    <span class="control-value" id="damping-value">0.12</span>
+                </div>
+                <button class="reset-btn" id="reset-btn">
+                    <span class="btn-icon">⟲</span>
+                    <span class="btn-text">重置位置</span>
+                </button>
+            </div>
+            <p class="footer-note">移动鼠标感受磁力交互 · 不同元素对光标有不同响应</p>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

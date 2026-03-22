@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-22",
+  "name": "magnetic",
+  "description": "cursor - 磁力光标交互",
+  "tagline": "cursor - 磁力光标交互，支持高阶微交互与审美氛围感",
+  "directory": "seeds/magnetic/",
+  "status": "incubated"
+}
