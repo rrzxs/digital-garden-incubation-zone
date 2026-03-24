@@ -1,0 +1,8 @@
+{
+  "date": "2026-03-24",
+  "name": "ripple",
+  "description": "click - 点击涟漪效果",
+  "tagline": "click - 点击涟漪效果，支持高阶微交互与审美氛围感",
+  "directory": "seeds/ripple/",
+  "status": "incubated"
+}
