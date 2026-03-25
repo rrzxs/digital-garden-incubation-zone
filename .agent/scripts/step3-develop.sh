@@ -47,9 +47,9 @@ DEVELOP_PROMPT="
 修改 ./main.js 中的 seeds 数组，添加新种子配置。
 "
 
-# 明确指定模型，避免配置问题
-echo "[$(date +%H:%M:%S)] 使用 zai-coding-plan/glm-5 模型" | tee -a "$LOG_FILE"
-opencode run -m zai-coding-plan/glm-5 "$DEVELOP_PROMPT" 2>&1 | tee -a "$LOG_FILE" || true
+# 使用 opencode 默认配置（~/.config/opencode/opencode.json）
+echo "[$(date +%H:%M:%S)] 使用 opencode 默认模型配置" | tee -a "$LOG_FILE"
+opencode run "$DEVELOP_PROMPT" 2>&1 | tee -a "$LOG_FILE" || true
 
 # 3. 验证生成
 echo "[$(date +%H:%M:%S)] 验证生成文件..." | tee -a "$LOG_FILE"
