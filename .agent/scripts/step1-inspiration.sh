@@ -50,7 +50,7 @@ $ALL_RESULTS
 请直接输出 5 个创意，每行一个，不要其他说明。"
 
 # 调用 AI 提取创意
-CREATIVE_IDEAS=$(echo "$CREATIVE_PROMPT" | opencode run - 2>/dev/null || echo "")
+CREATIVE_IDEAS=$(opencode run "$CREATIVE_PROMPT" 2>/dev/null || echo "")
 
 # 保存完整灵感
 INSPIRATION_FILE=".agent/inspiration/${DATE}.md"
