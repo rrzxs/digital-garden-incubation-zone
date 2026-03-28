@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-7-8 呼吸法 - 深度放松呼吸训练</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="glass-container">
+        <header class="panel-header">
+            <h1 class="brand-title">4-7-8</h1>
+            <p class="brand-subtitle" id="status-text">深度放松呼吸法</p>
+        </header>
+
+        <section class="breathe-area">
+            <div class="progress-ring">
+                <svg viewBox="0 0 200 200">
+                    <circle class="ring-bg" cx="100" cy="100" r="90"/>
+                    <circle class="ring-progress" cx="100" cy="100" r="90" id="progress-circle"/>
+                </svg>
+            </div>
+            <div class="phase-indicator">
+                <div class="phase-count" id="phase-count">4</div>
+                <div class="phase-label" id="phase-label">准备吸气</div>
+            </div>
+        </section>
+
+        <section class="cycle-info">
+            <div class="cycle-stat">
+                <span class="stat-value" id="cycle-count">0</span>
+                <span class="stat-label">完成周期</span>
+            </div>
+            <div class="cycle-stat">
+                <span class="stat-value" id="total-time">00:00</span>
+                <span class="stat-label">练习时长</span>
+            </div>
+        </section>
+
+        <footer class="panel-controls">
+            <div class="action-buttons">
+                <button class="icon-btn tooltip-wrapper" id="reset-btn" aria-label="重置">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    <span class="tooltip">重置</span>
+                </button>
+                
+                <button class="play-btn" id="play-pause-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-play">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-pause" style="display: none;">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                </button>
+                
+                <button class="icon-btn tooltip-wrapper" id="sound-toggle" aria-label="音效">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <span class="tooltip">音效</span>
+                </button>
+            </div>
+            
+            <p class="hint-text">吸气 4 秒 → 屏息 7 秒 → 呼气 8 秒</p>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

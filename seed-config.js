@@ -82,6 +82,16 @@
       category: 'visual'
     },
     {
+      title: '4-7-8 呼吸法',
+      description: '经典的深度放松呼吸训练工具。吸气 4 秒 → 屏息 7 秒 → 呼气 8 秒，帮助缓解焦虑、快速入眠。',
+      path: '/seed/seeds/breathing-478/index.html',
+      tags: ['Wellness', 'Breathing', 'Relaxation'],
+      icon: '🌬️',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'wellness'
+    },
+    {
       title: 'Frequency Garden 调频花园',
       description: 'AI 增强型情绪调频工具页。先点选情绪，再写下一句话，获得温柔引导、呼吸节律、场景与环境音的同步疗愈体验。',
       path: '/seed/seeds/frequency-garden/index.html',
