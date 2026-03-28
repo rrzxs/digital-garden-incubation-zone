@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity - 重力场粒子模拟</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="cosmic-bg">
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+        <div class="nebula nebula-3"></div>
+        <div class="star-field" id="star-field"></div>
+    </div>
+
+    <main class="gravity-container">
+        <header class="panel-header">
+            <div class="title-group">
+                <h1 class="brand-title">Gravity</h1>
+                <span class="brand-icon">◇</span>
+            </div>
+            <p class="brand-subtitle">点击创造引力源，观察粒子在多重力场中的运动轨迹</p>
+        </header>
+
+        <section class="simulation-wrapper">
+            <canvas id="gravity-canvas"></canvas>
+            <div class="canvas-glow"></div>
+            <div class="hint-overlay" id="hint-overlay">
+                <div class="hint-content">
+                    <span class="hint-icon">◎</span>
+                    <span class="hint-text">点击画布创建引力中心</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="controls-panel glass-panel">
+            <div class="control-row">
+                <div class="control-group">
+                    <label class="control-label">引力强度</label>
+                    <div class="slider-wrap">
+                        <input type="range" id="gravity-strength" min="10" max="200" value="80" class="slider">
+                        <span class="slider-value" id="gravity-value">80</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">粒子数量</label>
+                    <div class="slider-wrap">
+                        <input type="range" id="particle-count" min="50" max="500" value="200" class="slider">
+                        <span class="slider-value" id="particle-value">200</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">粒子尺寸</label>
+                    <div class="slider-wrap">
+                        <input type="range" id="particle-size" min="1" max="6" value="2" step="0.5" class="slider">
+                        <span class="slider-value" id="size-value">2.0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-row">
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="attract" aria-label="吸引模式">
+                        <span class="mode-icon">⊕</span>
+                        <span class="mode-label">吸引</span>
+                    </button>
+                    <button class="mode-btn" data-mode="repel" aria-label="排斥模式">
+                        <span class="mode-icon">⊖</span>
+                        <span class="mode-label">排斥</span>
+                    </button>
+                    <button class="mode-btn" data-mode="orbit" aria-label="环绕模式">
+                        <span class="mode-icon">↻</span>
+                        <span class="mode-label">环绕</span>
+                    </button>
+                </div>
+
+                <div class="color-selector">
+                    <button class="color-swatch active" data-color="cosmic" aria-label="宇宙配色">
+                        <span class="swatch-preview cosmic"></span>
+                    </button>
+                    <button class="color-swatch" data-color="aurora" aria-label="极光配色">
+                        <span class="swatch-preview aurora"></span>
+                    </button>
+                    <button class="color-swatch" data-color="ember" aria-label="余烬配色">
+                        <span class="swatch-preview ember"></span>
+                    </button>
+                    <button class="color-swatch" data-color="ice" aria-label="冰霜配色">
+                        <span class="swatch-preview ice"></span>
+                    </button>
+                </div>
+
+                <div class="action-group">
+                    <button class="action-btn" id="clear-btn">
+                        <span class="btn-icon">✕</span>
+                        <span class="btn-text">清除</span>
+                    </button>
+                    <button class="action-btn primary" id="reset-btn">
+                        <span class="btn-icon">⟲</span>
+                        <span class="btn-text">重置</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">引力源</span>
+                <span class="stat-value" id="attractor-count">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">粒子</span>
+                <span class="stat-value" id="active-particles">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">FPS</span>
+                <span class="stat-value" id="fps-counter">60</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">总能量</span>
+                <span class="stat-value" id="energy-display">0</span>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

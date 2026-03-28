@@ -180,6 +180,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Gravity 重力场',
+      description: '点击创建引力源，观察粒子在多重力场中的运动轨迹。支持吸引、排斥、环绕三种模式',
+      path: '/seed/seeds/gravity/index.html',
+      tags: ['Simulation', 'Interactive', 'Physics'],
+      icon: '◇',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
