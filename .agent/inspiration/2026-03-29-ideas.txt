@@ -1,0 +1,5 @@
+morphing-text - 文字在鼠标悬停时液化变形
+particle-vortex - 点击产生粒子漩涡吸引效果
+wave-distortion - 波纹扭曲的图像折射镜
+neon-pulse - 霓虹灯光脉冲跟随鼠标路径
+gravity-bounce - 重力弹跳的物理小球场景
