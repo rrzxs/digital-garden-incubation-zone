@@ -48,8 +48,9 @@ DEVELOP_PROMPT="
 "
 
 # 使用 opencode 默认配置（~/.config/opencode/opencode.json）
-echo "[$(date +%H:%M:%S)] 使用 opencode 默认模型配置" | tee -a "$LOG_FILE"
-opencode run "$DEVELOP_PROMPT" 2>&1 | tee -a "$LOG_FILE" || true
+# 显式指定模型避免恢复旧会话模型
+echo "[$(date +%H:%M:%S)] 使用模型: zai-coding-plan/glm-5" | tee -a "$LOG_FILE"
+opencode run -m zai-coding-plan/glm-5 "$DEVELOP_PROMPT" 2>&1 | tee -a "$LOG_FILE" || true
 
 # 3. 验证生成
 echo "[$(date +%H:%M:%S)] 验证生成文件..." | tee -a "$LOG_FILE"

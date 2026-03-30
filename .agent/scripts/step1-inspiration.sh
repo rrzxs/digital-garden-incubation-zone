@@ -49,8 +49,8 @@ $ALL_RESULTS
 
 请直接输出 5 个创意，每行一个，不要其他说明。"
 
-# 调用 AI 提取创意
-CREATIVE_IDEAS=$(opencode run "$CREATIVE_PROMPT" 2>/dev/null || echo "")
+# 调用 AI 提取创意（显式指定模型避免恢复旧会话模型）
+CREATIVE_IDEAS=$(opencode run -m zai-coding-plan/glm-5 "$CREATIVE_PROMPT" 2>/dev/null || echo "")
 
 # 保存完整灵感
 INSPIRATION_FILE=".agent/inspiration/${DATE}.md"

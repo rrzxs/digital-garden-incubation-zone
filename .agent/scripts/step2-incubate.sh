@@ -43,7 +43,7 @@ if [ ! -f "$IDEAS_FILE" ] || [ ! -s "$IDEAS_FILE" ]; then
 
 直接输出 5 行，不要其他说明。"
 
-  EMERGENCY_IDEAS=$(opencode run "$EMERGENCY_PROMPT" 2>/dev/null || echo "")
+  EMERGENCY_IDEAS=$(opencode run -m zai-coding-plan/glm-5 "$EMERGENCY_PROMPT" 2>/dev/null || echo "")
   echo "$EMERGENCY_IDEAS" | grep -E '^[a-z]' > "$IDEAS_FILE"
 fi
 
@@ -83,7 +83,7 @@ if [ -z "$FILTERED_IDEAS" ]; then
 输出格式（仅一行）：
 目录名 - 简短描述"
 
-  FILTERED_IDEAS=$(opencode run "$FRESH_PROMPT" 2>/dev/null || echo "unique-ambient - 独特氛围空间")
+  FILTERED_IDEAS=$(opencode run -m zai-coding-plan/glm-5 "$FRESH_PROMPT" 2>/dev/null || echo "unique-ambient - 独特氛围空间")
 fi
 
 # 6. 随机选择一个（或取第一个）
@@ -102,7 +102,7 @@ ENHANCE_PROMPT="为以下 Web 交互创意生成一句吸引人的 Tagline（15�
 Tagline: [一句话]
 Interaction: [交互描述]"
 
-ENHANCED=$(opencode run "$ENHANCE_PROMPT" 2>/dev/null || echo "Tagline: $SEED_DESC
+ENHANCED=$(opencode run -m zai-coding-plan/glm-5 "$ENHANCE_PROMPT" 2>/dev/null || echo "Tagline: $SEED_DESC
 Interaction: 高阶微交互体验")
 TAGLINE=$(echo "$ENHANCED" | grep "Tagline:" | cut -d':' -f2- | sed 's/^[[:space:]]*//')
 INTERACTION=$(echo "$ENHANCED" | grep "Interaction:" | cut -d':' -f2- | sed 's/^[[:space:]]*//')
