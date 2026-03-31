@@ -12,13 +12,24 @@ echo "[$(date +%H:%M:%S)] [阶段1] 灵感捕获 - 开始" | tee -a "$LOG_FILE"
 # 创建灵感目录
 mkdir -p .agent/inspiration
 
-# 多源搜索策略
+# 扩展搜索策略 - 更精准的关键词
 SEARCH_QUERIES=(
-  "creative web interaction design 2025"
-  "CSS animation effects inspiration"
-  "micro-interaction UI examples"
-  "generative art web canvas"
-  "ambient website design"
+  # 产品设计灵感
+  "ProductHunt today best web app 2025"
+  "best web tools this week 2025"
+  # 设计趋势
+  "web design trends 2025 interactions"
+  "CSS animation codepen 2025"
+  "micro-interaction examples codepen"
+  # 生成艺术
+  "creative coding p5.js examples"
+  "webgl shader art tutorial"
+  # 实用工具
+  "online productivity tools simple"
+  "web-based utility apps"
+  # 氛围设计
+  "ambient UI design examples"
+  "immersive website experience"
 )
 
 ALL_RESULTS=""
@@ -49,8 +60,8 @@ $ALL_RESULTS
 
 请直接输出 5 个创意，每行一个，不要其他说明。"
 
-# 调用 AI 提取创意（显式指定模型避免恢复旧会话模型）
-CREATIVE_IDEAS=$(opencode run -m zai-coding-plan/glm-5 "$CREATIVE_PROMPT" 2>/dev/null || echo "")
+# 调用 AI 提取创意（使用默认模型配置）
+CREATIVE_IDEAS=$(opencode run "$CREATIVE_PROMPT" 2>/dev/null || echo "")
 
 # 保存完整灵感
 INSPIRATION_FILE=".agent/inspiration/${DATE}.md"

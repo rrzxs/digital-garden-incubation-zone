@@ -190,6 +190,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Focus Pulse 专注脉冲',
+      description: '有氛围感的番茄钟计时器。25分钟专注配合5分钟休息，圆环进度动画与脉搏背景营造宁静专注体验。',
+      path: '/seed/seeds/focus-pulse/index.html',
+      tags: ['Productivity', 'Timer', 'Pomodoro'],
+      icon: '⏱',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

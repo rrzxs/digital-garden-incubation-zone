@@ -1,0 +1,9 @@
+{
+  "date": "2026-03-31",
+  "name": "focus-pulse",
+  "description": "专注脉冲 - 氛围感番茄钟计时器",
+  "tagline": "Focus with rhythm",
+  "interaction": "点击中心圆环开始25分钟专注，背景脉搏随时间跳动，完成后温柔提醒休息5分钟",
+  "directory": "seeds/focus-pulse/",
+  "status": "incubated"
+}
