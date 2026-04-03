@@ -43,12 +43,12 @@ git push origin main 2>&1 | tee -a "$LOG_FILE" || echo "推送失败，可能需
 echo "[$(date +%H:%M:%S)] ✓ Git 推送完成" | tee -a "$LOG_FILE"
 
 # 4. 部署到服务器
-if [ -n "$SERVER_PASSWORD" ]; then
-  echo "[$(date +%H:%M:%S)] 执行部署脚本..." | tee -a "$LOG_FILE"
-  SERVER_PASSWORD="$SERVER_PASSWORD" ./deploy.sh 2>&1 | tee -a "$LOG_FILE"
+echo "[$(date +%H:%M:%S)] 执行部署脚本..." | tee -a "$LOG_FILE"
+if SERVER_PASSWORD="${SERVER_PASSWORD:-}" ./deploy.sh 2>&1 | tee -a "$LOG_FILE"; then
   echo "[$(date +%H:%M:%S)] ✓ 部署完成" | tee -a "$LOG_FILE"
 else
-  echo "[$(date +%H:%M:%S)] 跳过部署 (SERVER_PASSWORD 未设置)" | tee -a "$LOG_FILE"
+  echo "[$(date +%H:%M:%S)] ✗ 部署失败" | tee -a "$LOG_FILE"
+  exit 1
 fi
 
 # 5. 完成通知
