@@ -210,6 +210,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Spin Choice 决策转盘',
+      description: '氛围感随机决策转盘。输入选项，旋转转盘，让命运为你做决定。支持拖拽旋转与炫酷结果揭晓动画。',
+      path: '/seed/seeds/spin-choice/index.html',
+      tags: ['Decision', 'Interactive', 'Fun'],
+      icon: '🎡',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

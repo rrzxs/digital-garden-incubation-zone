@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin Choice - 氛围感随机决策转盘</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="fluid-bg">
+            <div class="fluid-blob blob-1"></div>
+            <div class="fluid-blob blob-2"></div>
+            <div class="fluid-blob blob-3"></div>
+            <div class="fluid-blob blob-4"></div>
+        </div>
+
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <span class="logo-icon">✦</span>
+                    <span class="logo-text">Spin Choice</span>
+                </h1>
+                <p class="tagline">When you can't decide, let fate spin for you</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="wheel-container">
+                <div class="wheel-glow"></div>
+                <div class="wheel-pointer"></div>
+                <div class="wheel" id="wheel">
+                    <canvas id="wheelCanvas"></canvas>
+                    <div class="wheel-center">
+                        <button class="spin-btn" id="spinBtn">
+                            <span class="spin-btn-text">SPIN</span>
+                            <span class="spin-btn-icon">↻</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="result-overlay" id="resultOverlay">
+                    <div class="result-card">
+                        <div class="result-pulse"></div>
+                        <div class="result-glow"></div>
+                        <span class="result-label">命运之选</span>
+                        <span class="result-text" id="resultText"></span>
+                        <button class="result-close" id="resultClose">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">选项设置</h2>
+                    <span class="option-count" id="optionCount">4 个选项</span>
+                </div>
+                
+                <div class="options-list" id="optionsList">
+                    <div class="option-item" data-index="0">
+                        <input type="text" class="option-input" value="喝咖啡" placeholder="输入选项...">
+                        <button class="option-delete" aria-label="删除选项">✕</button>
+                    </div>
+                    <div class="option-item" data-index="1">
+                        <input type="text" class="option-input" value="看电影" placeholder="输入选项...">
+                        <button class="option-delete" aria-label="删除选项">✕</button>
+                    </div>
+                    <div class="option-item" data-index="2">
+                        <input type="text" class="option-input" value="去散步" placeholder="输入选项...">
+                        <button class="option-delete" aria-label="删除选项">✕</button>
+                    </div>
+                    <div class="option-item" data-index="3">
+                        <input type="text" class="option-input" value="读书" placeholder="输入选项...">
+                        <button class="option-delete" aria-label="删除选项">✕</button>
+                    </div>
+                </div>
+
+                <button class="add-option-btn" id="addOptionBtn">
+                    <span class="add-icon">+</span>
+                    <span class="add-text">添加选项</span>
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <span class="footer-text">Made with ✨ by EDEN</span>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
