@@ -9,7 +9,23 @@ LOG_FILE=".agent/logs/workflow-${DATE}.log"
 echo "[$(date +%H:%M:%S)] [阶段4] 部署 - 开始" | tee -a "$LOG_FILE"
 
 # 读取当前种子
-SEED_NAME=$(cat .agent/ideas/current-seed.txt 2>/dev/null || echo "unknown")
+SEED_NAME=$(cat .agent/ideas/current-seed.txt 2>/dev/null || true)
+if [ -z "$SEED_NAME" ]; then
+  echo "[$(date +%H:%M:%S)] ✗ 未找到今日种子，拒绝部署" | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+IDEA_FILE=".agent/ideas/${DATE}-${SEED_NAME}.json"
+MARKER_FILE=".agent/status/${DATE}-${SEED_NAME}.develop.ok"
+if [ ! -f "$IDEA_FILE" ]; then
+  echo "[$(date +%H:%M:%S)] ✗ 缺少今日创意文件: $IDEA_FILE" | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+if [ ! -f "$MARKER_FILE" ]; then
+  echo "[$(date +%H:%M:%S)] ✗ 缺少阶段3成功标记: $MARKER_FILE" | tee -a "$LOG_FILE"
+  exit 1
+fi
 
 # 1. 再次拉取（防止冲突）
 echo "[$(date +%H:%M:%S)] 拉取最新代码..." | tee -a "$LOG_FILE"

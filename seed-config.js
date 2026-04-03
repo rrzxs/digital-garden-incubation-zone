@@ -200,6 +200,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Screenshot Polisher 截图美化器',
+      description: '上传截图后自动生成高级边框、柔和阴影与氛围背景的截图美化工具，支持拖拽、参数调节与导出。',
+      path: '/seed/seeds/screenshot-polisher/index.html',
+      tags: ['Creator Tool', 'Screenshot', 'Export'],
+      icon: '🖼️',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

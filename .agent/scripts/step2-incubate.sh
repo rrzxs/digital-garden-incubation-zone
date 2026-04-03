@@ -8,6 +8,15 @@ DATE=$(date +%Y-%m-%d)
 LOG_FILE=".agent/logs/workflow-${DATE}.log"
 
 echo "[$(date +%H:%M:%S)] [阶段2] 创意孵化 - 开始" | tee -a "$LOG_FILE"
+rm -f .agent/ideas/current-seed.txt
+
+normalize_ideas() {
+  sed -E \
+    -e 's/^[[:space:]]*[-*0-9.)]+[[:space:]]*//' \
+    -e 's/^`?([a-z][a-z0-9-]*)`?[[:space:]]*[:|-][[:space:]]*/\1 - /' \
+    -e 's/^[[:space:]]+//' |
+    grep -E '^[a-z][a-z0-9-]*[[:space:]]+-[[:space:]]+' || true
+}
 
 # 1. 获取已存在的种子目录（去重核心）
 EXISTING_SEEDS=$(ls -1 seeds/ 2>/dev/null | tr '\n' ' ')
@@ -42,15 +51,15 @@ if [ ! -f "$IDEAS_FILE" ] || [ ! -s "$IDEAS_FILE" ]; then
 - 生活实用工具（倒计时、纪念日计算、账单分摊...）
 - 数据可视化（进度追踪、统计图表...）
 
-目录名必须是：
+  目录名必须是：
 - 小写英文字母
 - 用连字符分隔单词
 - 简短有意义
 
 直接输出 5 行，不要其他说明。"
 
-  EMERGENCY_IDEAS=$(opencode run "$EMERGENCY_PROMPT" 2>/dev/null || echo "")
-  echo "$EMERGENCY_IDEAS" | grep -E '^[a-z]' > "$IDEAS_FILE"
+  EMERGENCY_IDEAS=$(opencode run "$EMERGENCY_PROMPT" 2>>"$LOG_FILE" || echo "")
+  printf '%s\n' "$EMERGENCY_IDEAS" | normalize_ideas > "$IDEAS_FILE" || true
 fi
 
 # 4. 过滤已存在的种子
@@ -95,13 +104,19 @@ if [ -z "$FILTERED_IDEAS" ]; then
 输出格式（仅一行）：
 目录名 - 简短描述"
 
-  FILTERED_IDEAS=$(opencode run "$FRESH_PROMPT" 2>/dev/null || echo "unique-ambient - 独特氛围空间")
+  FRESH_IDEAS=$(opencode run "$FRESH_PROMPT" 2>>"$LOG_FILE" || echo "unique-ambient - 独特氛围空间")
+  FILTERED_IDEAS=$(printf '%s\n' "$FRESH_IDEAS" | normalize_ideas || true)
 fi
 
 # 6. 随机选择一个（或取第一个）
-SELECTED=$(echo "$FILTERED_IDEAS" | shuf -n 1 2>/dev/null || echo "$FILTERED_IDEAS" | head -1)
-SEED_NAME=$(echo "$SELECTED" | cut -d'-' -f1 | tr -d ' ' | tr '[:upper:]' '[:lower:]')
-SEED_DESC=$(echo "$SELECTED" | cut -d'-' -f2- | sed 's/^[[:space:]]*//')
+SELECTED=$(printf '%s\n' "$FILTERED_IDEAS" | grep -E '.' | shuf -n 1 2>/dev/null || printf '%s\n' "$FILTERED_IDEAS" | head -1)
+if [ -z "$SELECTED" ]; then
+  echo "[$(date +%H:%M:%S)] ✗ 未能选出有效创意，阶段2失败" | tee -a "$LOG_FILE"
+  exit 1
+fi
+
+SEED_NAME=$(printf '%s\n' "$SELECTED" | sed 's/ -.*//' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
+SEED_DESC=$(printf '%s\n' "$SELECTED" | sed -E 's/^[a-z0-9-]+[[:space:]]+-[[:space:]]*//')
 
 echo "[$(date +%H:%M:%S)] ★ 选定创意: $SEED_NAME - $SEED_DESC" | tee -a "$LOG_FILE"
 
@@ -114,10 +129,18 @@ ENHANCE_PROMPT="为以下 Web 交互创意生成一句吸引人的 Tagline（15�
 Tagline: [一句话]
 Interaction: [交互描述]"
 
-ENHANCED=$(opencode run "$ENHANCE_PROMPT" 2>/dev/null || echo "Tagline: $SEED_DESC
+ENHANCED=$(opencode run "$ENHANCE_PROMPT" 2>>"$LOG_FILE" || echo "Tagline: $SEED_DESC
 Interaction: 高阶微交互体验")
-TAGLINE=$(echo "$ENHANCED" | grep "Tagline:" | cut -d':' -f2- | sed 's/^[[:space:]]*//')
-INTERACTION=$(echo "$ENHANCED" | grep "Interaction:" | cut -d':' -f2- | sed 's/^[[:space:]]*//')
+TAGLINE=$(printf '%s\n' "$ENHANCED" | sed -n 's/^Tagline:[[:space:]]*//p' | head -1)
+INTERACTION=$(printf '%s\n' "$ENHANCED" | sed -n 's/^Interaction:[[:space:]]*//p' | head -1)
+
+if [ -z "$TAGLINE" ]; then
+  TAGLINE="$SEED_DESC"
+fi
+
+if [ -z "$INTERACTION" ]; then
+  INTERACTION="围绕 ${SEED_NAME} 构建完整的高阶微交互体验。"
+fi
 
 echo "[$(date +%H:%M:%S)] Tagline: $TAGLINE" | tee -a "$LOG_FILE"
 

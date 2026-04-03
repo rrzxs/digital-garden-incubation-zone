@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-03",
+  "name": "toast-physics",
+  "description": "物理弹跳 Toast 通知组件  ",
+  "tagline": "Physics-powered toasts that bounce and collide naturally.",
+  "interaction": "Toast notifications spawn with realistic spring physics, bouncing off screen edges and each other like rubber balls. Users can drag, throw, and watch them collide - turning mundane alerts into satisfying micro-interactions.",
+  "directory": "seeds/toast-physics/",
+  "status": "incubated"
+}

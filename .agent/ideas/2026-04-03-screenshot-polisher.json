@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-03",
+  "name": "screenshot-polisher",
+  "description": "截图美化边框生成器",
+  "tagline": "Frame Your Screenshots Beautifully",
+  "interaction": "Users upload or drag a screenshot into the canvas. The system automatically generates elegant device frames, shadows, and background gradients. Users can fine-tune border radius, padding, and export polished results.",
+  "directory": "seeds/screenshot-polisher/",
+  "status": "incubated"
+}

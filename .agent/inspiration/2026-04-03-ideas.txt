@@ -1,0 +1,6 @@
+pixel-sorter - 交互式像素排序艺术生成器
+cube-dither - 三维抖动可视化探索器
+scroll-stories - 滚动驱动叙事微交互库
+motion-playground - 流体动画实验沙盒
+screenshot-polisher - 截图美化边框生成器
+rubiks-cube - 魔方滚动交互体验
