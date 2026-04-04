@@ -1,0 +1,6 @@
+color-mesh-generator - 交互式渐变网格生成器，实时预览并导出CSS代码
+fluid-motion-lab - 流体动力学可视化实验室，模拟真实物理运动
+text-rhythm-editor - 文字节奏动画编辑器，可视编排逐字渐显效果
+image-dither-studio - 图像抖动处理工作台，实时预览像素化艺术风格
+scroll-choreography - 滚动编舞工具，拖拽编排视差动画时间线
+cube-field-visualizer - 三维立方体场可视化，动态渲染万级几何体

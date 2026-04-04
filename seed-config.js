@@ -220,6 +220,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Dither Studio 抖动工作室',
+      description: '将图片转换为复古抖动艺术风格。支持 6 种经典算法、5 种色板预设、实时预览与 PNG 导出。',
+      path: '/seed/seeds/image-dither-studio/index.html',
+      tags: ['Image Processing', 'Retro', 'Creative'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
