@@ -3,3 +3,4 @@ focus-pulse
 toast-physics
 screenshot-polisher
 image-dither-studio
+briefing-crossword

@@ -1,0 +1,6 @@
+cube-dither-lab - 三维立方体可视化图像抖动算法
+fluid-glass-sim - 流体玻璃物理交互模拟器
+scroll-rhythm-craft - 编辑式滚动节奏可视化编辑器
+motion-curve-studio - GSAP动效曲线调试器
+rubik-code-visual - 编程概念魔方可视化演示
+briefing-crossword - 交互式新闻简报填字游戏

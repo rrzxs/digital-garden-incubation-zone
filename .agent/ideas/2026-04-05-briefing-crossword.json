@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-05",
+  "name": "briefing-crossword",
+  "description": "交互式新闻简报填字游戏",
+  "tagline": "Decode News, One Clue at a Time",
+  "interaction": "A daily crossword puzzle where every clue is pulled from the day's top headlines. Users tap empty cells to reveal hint excerpts from news articles, then type answers to fill the grid. Completing the puzzle unlocks a curated news briefing with context for each clue.",
+  "directory": "seeds/briefing-crossword/",
+  "status": "incubated"
+}

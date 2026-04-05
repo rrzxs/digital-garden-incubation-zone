@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Briefing Crossword - 填字游戏</title>
+    <meta name="description" content="氛围感填字游戏，支持提示面板、键盘输入与高阶微交互">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='28' font-family='monospace' fill='%2300d4aa'%3E%E2%96%A1%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grid-pattern"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="header glass-panel">
+            <div class="header-left">
+                <span class="logo-icon">▣</span>
+                <h1 class="logo-text">CROSSWORD</h1>
+            </div>
+            <div class="header-right">
+                <div class="stats-row">
+                    <span class="stat-item">
+                        <span class="stat-label">COMPLETED</span>
+                        <span class="stat-value" id="completed-count">0</span>
+                    </span>
+                    <span class="stat-divider">/</span>
+                    <span class="stat-value" id="total-count">0</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="crossword-section">
+                <div class="crossword-panel glass-panel" id="crossword-panel">
+                    <div class="crossword-grid" id="crossword-grid"></div>
+                </div>
+            </section>
+
+            <section class="sidebar">
+                <div class="clues-panel glass-panel">
+                    <div class="clues-tabs">
+                        <button class="clue-tab active" data-direction="across">
+                            <span class="tab-icon">→</span>
+                            <span class="tab-text">ACROSS</span>
+                        </button>
+                        <button class="clue-tab" data-direction="down">
+                            <span class="tab-icon">↓</span>
+                            <span class="tab-text">DOWN</span>
+                        </button>
+                    </div>
+                    <div class="clues-content">
+                        <div class="clues-list" id="across-clues"></div>
+                        <div class="clues-list hidden" id="down-clues"></div>
+                    </div>
+                </div>
+
+                <div class="current-clue glass-panel" id="current-clue-panel">
+                    <div class="clue-direction">
+                        <span class="direction-icon" id="clue-direction-icon">→</span>
+                        <span class="direction-text" id="clue-direction-text">ACROSS</span>
+                    </div>
+                    <p class="clue-text" id="current-clue-text">选择一个格子开始</p>
+                </div>
+
+                <div class="actions-panel glass-panel">
+                    <button class="action-btn" id="hint-btn">
+                        <span class="btn-icon">◈</span>
+                        <span class="btn-text">HINT</span>
+                    </button>
+                    <button class="action-btn" id="check-btn">
+                        <span class="btn-icon">✓</span>
+                        <span class="btn-text">CHECK</span>
+                    </button>
+                    <button class="action-btn primary" id="new-btn">
+                        <span class="btn-icon">⟳</span>
+                        <span class="btn-text">NEW PUZZLE</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <div class="completion-overlay" id="completion-overlay">
+            <div class="completion-modal glass-panel">
+                <div class="completion-icon">✦</div>
+                <h2 class="completion-title">COMPLETED</h2>
+                <p class="completion-message">You solved the puzzle!</p>
+                <button class="completion-btn" id="play-again-btn">PLAY AGAIN</button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <span class="footer-text">CROSSWORD v1.0 | Maintainer: EDEN</span>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

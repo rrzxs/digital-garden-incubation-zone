@@ -230,6 +230,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Briefing Crossword 填字游戏',
+      description: '氛围感填字游戏，支持提示面板、键盘输入与高阶微交互。体验解谜的乐趣。',
+      path: '/seed/seeds/briefing-crossword/index.html',
+      tags: ['Game', 'Puzzle', 'Interactive'],
+      icon: '▣',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
     }
   ]);
 
