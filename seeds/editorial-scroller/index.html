@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Scroller | 编年卷轴</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <nav class="progress-nav">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="chapter-dots" id="chapter-dots"></div>
+    </nav>
+
+    <main class="scroller-container" id="scroller">
+        <section class="editorial-section section-intro" data-chapter="0">
+            <div class="section-content glass-panel">
+                <div class="section-number">01</div>
+                <h1 class="section-title display-text">Editorial<br>Scroller</h1>
+                <p class="section-lead">沉浸式编辑滚动体验。通过视差、淡入、文字揭示等高阶微交互，讲述一个流动的故事。</p>
+                <div class="scroll-hint">
+                    <div class="scroll-mouse">
+                        <div class="scroll-wheel"></div>
+                    </div>
+                    <span>向下滚动探索</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="editorial-section" data-chapter="1">
+            <div class="section-content glass-panel">
+                <div class="section-number">02</div>
+                <h2 class="section-title">视差深度</h2>
+                <p class="section-body">每一层元素都以不同的速度移动，创造出真实的深度感。前景快、背景慢，这是自然界的视觉法则。</p>
+                <div class="parallax-demo">
+                    <div class="parallax-layer layer-back">背景层</div>
+                    <div class="parallax-layer layer-mid">中景层</div>
+                    <div class="parallax-layer layer-front">前景层</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="editorial-section" data-chapter="2">
+            <div class="section-content glass-panel">
+                <div class="section-number">03</div>
+                <h2 class="section-title">文字揭示</h2>
+                <p class="section-body reveal-text">文字不只是静态的信息载体，它可以像墨水在水中晕开一样，逐字逐句地呈现在读者眼前。</p>
+                <div class="text-reveal-demo">
+                    <div class="reveal-line" data-delay="0">设计不只是外观和感觉</div>
+                    <div class="reveal-line" data-delay="100">设计是它如何工作</div>
+                    <div class="reveal-line" data-delay="200">— Steve Jobs</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="editorial-section" data-chapter="3">
+            <div class="section-content glass-panel">
+                <div class="section-number">04</div>
+                <h2 class="section-title">呼吸节奏</h2>
+                <p class="section-body">好的滚动体验像一首诗，有停顿、有呼吸。不是信息的轰炸，而是有韵律的叙事。</p>
+                <div class="rhythm-visualizer">
+                    <div class="rhythm-bar"></div>
+                    <div class="rhythm-bar"></div>
+                    <div class="rhythm-bar"></div>
+                    <div class="rhythm-bar"></div>
+                    <div class="rhythm-bar"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="editorial-section" data-chapter="4">
+            <div class="section-content glass-panel">
+                <div class="section-number">05</div>
+                <h2 class="section-title">交互反馈</h2>
+                <p class="section-body">每一次滚动都是一次对话。页面会以微妙的方式回应你的动作，让你感受到数字世界的温度。</p>
+                <div class="interaction-demo">
+                    <button class="ripple-btn" id="ripple-btn">
+                        <span>点击感受涟漪</span>
+                        <div class="ripple-effect"></div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="editorial-section section-outro" data-chapter="5">
+            <div class="section-content glass-panel">
+                <div class="section-number">06</div>
+                <h2 class="section-title">故事未完</h2>
+                <p class="section-body">这是编辑滚动的艺术。用技术创造情感，用交互传递温度。每一个像素都在诉说着设计师的心意。</p>
+                <div class="outro-cta">
+                    <button class="cta-btn" id="restart-btn">
+                        <span>重新开始</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="scroll-indicator" id="scroll-indicator">
+        <div class="indicator-dot active"></div>
+        <div class="indicator-dot"></div>
+        <div class="indicator-dot"></div>
+        <div class="indicator-dot"></div>
+        <div class="indicator-dot"></div>
+        <div class="indicator-dot"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

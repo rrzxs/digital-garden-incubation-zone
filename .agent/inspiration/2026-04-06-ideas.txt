@@ -1,0 +1,6 @@
+dithering-playground - 像素抖动算法可视化演示工具
+motion-canvas-studio - GSAP动画编排实时预览器
+cube-flow-visualizer - 大规模立方体数据可视化引擎
+editorial-scroller - 编辑式节奏滚动叙事生成器
+fluid-sim-sandbox - 流体模拟交互沙盒
+crossword-briefing - 互动式新闻简报填字游戏

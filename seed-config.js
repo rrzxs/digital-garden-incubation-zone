@@ -240,6 +240,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'game'
+    },
+    {
+      title: 'Editorial Scroller 编年卷轴',
+      description: '沉浸式编辑滚动体验。视差深度、文字揭示、呼吸节奏与交互反馈，讲述流动的故事。',
+      path: '/seed/seeds/editorial-scroller/index.html',
+      tags: ['Creative', 'Scroll', 'Micro-interaction'],
+      icon: '📜',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

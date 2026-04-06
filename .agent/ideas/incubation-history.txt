@@ -4,3 +4,4 @@ toast-physics
 screenshot-polisher
 image-dither-studio
 briefing-crossword
+editorial-scroller
