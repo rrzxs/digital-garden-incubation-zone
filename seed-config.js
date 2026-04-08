@@ -250,6 +250,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Dither Lab 抖动实验室',
+      description: '实时交互式抖动艺术生成器。6种经典算法、6种色彩模式、参数调节与原图对比滑块，探索像素美学。',
+      path: '/seed/seeds/dither-lab/index.html',
+      tags: ['Image Processing', 'Creative', 'Interactive'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

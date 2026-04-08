@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dither Lab | 抖动实验室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-layer"></div>
+  <div class="bg-layer bg-layer--alt"></div>
+  <div class="noise-overlay"></div>
+  
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">Dither Lab</span>
+      </div>
+      <p class="tagline">实时抖动艺术生成器 · 交互式像素美学</p>
+    </header>
+
+    <main class="main-content">
+      <section class="canvas-section">
+        <div class="canvas-container glass-panel">
+          <canvas id="sourceCanvas" class="canvas-hidden"></canvas>
+          <canvas id="ditherCanvas" id="ditherCanvas"></canvas>
+          
+          <div class="canvas-placeholder" id="placeholder">
+            <div class="placeholder-icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="6" y="6" width="36" height="36" rx="4"/>
+                <circle cx="20" cy="20" r="6"/>
+                <path d="M12 36l8-12 6 8 10-14"/>
+              </svg>
+            </div>
+            <p class="placeholder-text">拖放图片或点击上传</p>
+            <p class="placeholder-hint">支持 JPG / PNG / WebP</p>
+          </div>
+          
+          <input type="file" id="fileInput" accept="image/*" hidden>
+        </div>
+        
+        <div class="comparison-slider" id="comparisonSlider">
+          <div class="slider-handle" id="sliderHandle"></div>
+          <span class="slider-label slider-label--left">Original</span>
+          <span class="slider-label slider-label--right">Dithered</span>
+        </div>
+      </section>
+
+      <section class="controls-section">
+        <div class="control-group glass-panel">
+          <h3 class="control-title">
+            <span class="control-icon">⬡</span>
+            抖动算法
+          </h3>
+          <div class="algorithm-grid" id="algorithmGrid">
+            <button class="algo-btn active" data-algo="floydSteinberg">Floyd-Steinberg</button>
+            <button class="algo-btn" data-algo="ordered">Ordered 4x4</button>
+            <button class="algo-btn" data-algo="atkinson">Atkinson</button>
+            <button class="algo-btn" data-algo="burkes">Burkes</button>
+            <button class="algo-btn" data-algo="sierra">Sierra</button>
+            <button class="algo-btn" data-algo="stucki">Stucki</button>
+          </div>
+        </div>
+
+        <div class="control-group glass-panel">
+          <h3 class="control-title">
+            <span class="control-icon">◈</span>
+            色彩模式
+          </h3>
+          <div class="palette-grid" id="paletteGrid">
+            <button class="palette-btn active" data-palette="bw">
+              <span class="palette-preview palette-preview--bw"></span>
+              <span class="palette-name">黑白</span>
+            </button>
+            <button class="palette-btn" data-palette="gameboy">
+              <span class="palette-preview palette-preview--gameboy"></span>
+              <span class="palette-name">GameBoy</span>
+            </button>
+            <button class="palette-btn" data-palette="sepia">
+              <span class="palette-preview palette-preview--sepia"></span>
+              <span class="palette-name">复古棕</span>
+            </button>
+            <button class="palette-btn" data-palette="cyberpunk">
+              <span class="palette-preview palette-preview--cyberpunk"></span>
+              <span class="palette-name">赛博</span>
+            </button>
+            <button class="palette-btn" data-palette="sunset">
+              <span class="palette-preview palette-preview--sunset"></span>
+              <span class="palette-name">日落</span>
+            </button>
+            <button class="palette-btn" data-palette="ocean">
+              <span class="palette-preview palette-preview--ocean"></span>
+              <span class="palette-name">深海</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="control-group glass-panel">
+          <h3 class="control-title">
+            <span class="control-icon">◐</span>
+            参数调节
+          </h3>
+          
+          <div class="slider-control">
+            <div class="slider-header">
+              <span class="slider-label">像素化强度</span>
+              <span class="slider-value" id="pixelSizeValue">1</span>
+            </div>
+            <input type="range" class="range-slider" id="pixelSize" min="1" max="8" value="1" step="1">
+          </div>
+          
+          <div class="slider-control">
+            <div class="slider-header">
+              <span class="slider-label">对比度</span>
+              <span class="slider-value" id="contrastValue">100%</span>
+            </div>
+            <input type="range" class="range-slider" id="contrast" min="50" max="150" value="100" step="1">
+          </div>
+          
+          <div class="slider-control">
+            <div class="slider-header">
+              <span class="slider-label">亮度</span>
+              <span class="slider-value" id="brightnessValue">100%</span>
+            </div>
+            <input type="range" class="range-slider" id="brightness" min="50" max="150" value="100" step="1">
+          </div>
+        </div>
+
+        <div class="control-group glass-panel">
+          <h3 class="control-title">
+            <span class="control-icon">⬢</span>
+            导出
+          </h3>
+          <div class="export-actions">
+            <button class="export-btn" id="exportPng">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7,10 12,15 17,10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              导出 PNG
+            </button>
+            <button class="export-btn export-btn--secondary" id="resetBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              重置
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>crafted with ♥ by <span class="highlight">EDEN</span></p>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

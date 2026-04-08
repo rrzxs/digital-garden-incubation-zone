@@ -1,0 +1,6 @@
+color-dither-lab - 交互式像素抖动算法可视化演示器
+scroll-story-canvas - 响应滚动的沉浸式叙事故事生成器
+motion-kitchen - 微动效参数调试与代码导出工具
+cube-wave-field - 三维立方体阵列波动可视化
+crossword-puzzle-craft - 可交互填字游戏生成与求解器
+hover-playground - 鼠标悬停微交互模式实验室

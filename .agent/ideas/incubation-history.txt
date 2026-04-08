@@ -5,3 +5,5 @@ screenshot-polisher
 image-dither-studio
 briefing-crossword
 editorial-scroller
+hover-playground
+dither-lab

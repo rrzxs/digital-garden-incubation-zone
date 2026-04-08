@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-08",
+  "name": "dither-lab",
+  "description": "抖动算法交互演示器",
+  "tagline": "Paint with pixels, master dithering",
+  "interaction": "Users adjust dithering algorithm parameters and color palettes in real-time while dragging across the canvas to compare different techniques side-by-side. The interface reveals how each algorithm distributes pixels to create the illusion of more colors, turning complex image processing into an intuitive visual playground.",
+  "directory": "seeds/dither-lab/",
+  "status": "incubated"
+}

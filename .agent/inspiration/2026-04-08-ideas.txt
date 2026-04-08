@@ -1,0 +1,6 @@
+ascii-pixel-morph - 图片转ASCII波纹动画
+dither-lab - 抖动算法交互演示器
+cymatic-wave-gen - 声波图形生成器
+color-mood-curator - 情绪配色策展工具
+physics-rope-play - 物理绳子交互沙盒
+scroll-trigger-story - 滚动驱动叙事生成器

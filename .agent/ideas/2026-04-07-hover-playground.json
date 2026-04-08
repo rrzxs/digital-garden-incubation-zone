@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-07",
+  "name": "hover-playground",
+  "description": "鼠标悬停微交互模式实验室",
+  "tagline": "Hover. Discover. Delight.",
+  "interaction": "一个专门探索鼠标悬停微交互的实验空间，展示了从微妙的状态过渡到富有创意的动画效果。用户可以通过悬停在不同的元素上，直观感受各种精心设计的反馈模式，并获取可直接应用于自己项目的交互灵感。",
+  "directory": "seeds/hover-playground/",
+  "status": "incubated"
+}
