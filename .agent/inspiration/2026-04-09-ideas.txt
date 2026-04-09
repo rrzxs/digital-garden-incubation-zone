@@ -1,0 +1,6 @@
+chromatic - dither — 用立方体矩阵可视化抖动算法
+motion - codex — 可复用GSAP动画预设浏览器
+fluid-webgl - canvas — 流体WebGL交互画布
+page-transition - lab — 页面过渡动画演练场
+color - alchemy — AI驱动的配色方案炼成器
+presence - cursor — 鼠标轨迹存在感可视化

@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-09",
+  "name": "motion",
+  "description": "codex — 可复用GSAP动画预设浏览器",
+  "tagline": "**Motion at your fingertips.**",
+  "interaction": "浏览一个精心策划的GSAP动画预设库，包括淡入、滑动、交错和变形效果。实时预览每个动画并自定义其关键属性（duration、easing、delay），然后复制生产就绪的代码片段。按类别或关键词筛选，标记收藏，即时将精美运动效果集成到任何项目中。",
+  "directory": "seeds/motion/",
+  "status": "incubated"
+}

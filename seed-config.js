@@ -260,6 +260,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Motion 韵动',
+      description: '高阶微交互体验场。弹簧-阻尼物理模型驱动的卡片动力学、粒子流场与非线性动效，支持双模式交互与4种氛围配色',
+      path: '/seed/seeds/motion/index.html',
+      tags: ['Interactive', 'Physics', 'Animation', 'Micro-interaction'],
+      icon: '⟐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

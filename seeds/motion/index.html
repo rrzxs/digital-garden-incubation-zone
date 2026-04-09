@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion 韵动 - 高阶微交互体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Motion<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">高阶微交互体验场</p>
+            </div>
+            <div class="header-actions">
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="compose" aria-label="编排模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="playground" aria-label="游乐场">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <div class="grid-lines" id="grid-lines"></div>
+            <canvas id="particle-canvas"></canvas>
+
+            <div class="motion-cards" id="motion-cards">
+                <div class="motion-card" data-spring="0.12" data-damping="0.75" data-delay="0">
+                    <div class="card-face glass-surface">
+                        <div class="card-icon-wrap">
+                            <span class="card-icon">⟐</span>
+                            <span class="icon-ring"></span>
+                        </div>
+                        <span class="card-label">弹性</span>
+                    </div>
+                </div>
+                <div class="motion-card" data-spring="0.08" data-damping="0.85" data-delay="60">
+                    <div class="card-face glass-surface accent-violet">
+                        <div class="card-icon-wrap">
+                            <span class="card-icon">◎</span>
+                            <span class="icon-ring"></span>
+                        </div>
+                        <span class="card-label">惯性</span>
+                    </div>
+                </div>
+                <div class="motion-card" data-spring="0.15" data-damping="0.65" data-delay="120">
+                    <div class="card-face glass-surface accent-cyan">
+                        <div class="card-icon-wrap">
+                            <span class="card-icon">◈</span>
+                            <span class="icon-ring"></span>
+                        </div>
+                        <span class="card-label">共振</span>
+                    </div>
+                </div>
+                <div class="motion-card" data-spring="0.06" data-damping="0.9" data-delay="180">
+                    <div class="card-face glass-surface accent-rose">
+                        <div class="card-icon-wrap">
+                            <span class="card-icon">✧</span>
+                            <span class="icon-ring"></span>
+                        </div>
+                        <span class="card-label">悬浮</span>
+                    </div>
+                </div>
+                <div class="motion-card" data-spring="0.18" data-damping="0.6" data-delay="240">
+                    <div class="card-face glass-surface accent-amber">
+                        <div class="card-icon-wrap">
+                            <span class="card-icon">⬡</span>
+                            <span class="icon-ring"></span>
+                        </div>
+                        <span class="card-label">脉冲</span>
+                    </div>
+                </div>
+                <div class="motion-card" data-spring="0.1" data-damping="0.8" data-delay="300">
+                    <div class="card-face glass-surface accent-emerald">
+                        <div class="card-icon-wrap">
+                            <span class="card-icon">◇</span>
+                            <span class="icon-ring"></span>
+                        </div>
+                        <span class="card-label">涟漪</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">移动鼠标 · 感受非线性动力学</span>
+            </div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">弹力</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-stiffness" min="2" max="30" value="12" class="slider">
+                    <span class="slider-val" id="val-stiffness">0.12</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">阻尼</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-damping" min="40" max="95" value="75" class="slider">
+                    <span class="slider-val" id="val-damping">0.75</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">磁场</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-magnetism" min="50" max="400" value="200" class="slider">
+                    <span class="slider-val" id="val-magnetism">200</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="obsidian" aria-label="黑曜石">
+                    <span class="swatch" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899)"></span>
+                </button>
+                <button class="palette-btn" data-palette="aurora" aria-label="极光">
+                    <span class="swatch" style="background:linear-gradient(135deg,#00d4ff,#a855f7,#00ff88)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+                </button>
+                <button class="palette-btn" data-palette="frost" aria-label="霜降">
+                    <span class="swatch" style="background:linear-gradient(135deg,#67e8f9,#a5b4fc,#e0e7ff)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btn-reset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>重置</span>
+                </button>
+                <button class="action-btn primary" id="btn-fullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
