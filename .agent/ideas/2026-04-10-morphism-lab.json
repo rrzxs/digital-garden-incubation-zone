@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-10",
+  "name": "morphism-lab",
+  "description": "SVG变形与弹性动效实验室",
+  "tagline": "Shape-Shift Your Imagination",
+  "interaction": "Users drag, morph, and blend SVG shapes in real-time by pulling control points on an elastic canvas. Every deformation responds with spring-physics animations, allowing fluid transitions between geometric forms, organic blobs, and complex typography. The lab lets you tweak stiffness, damping, and mass to feel how different elastic parameters shape the personality of each motion.",
+  "directory": "seeds/morphism-lab/",
+  "status": "incubated"
+}

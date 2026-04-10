@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morphism Lab - 形态变异实验室</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-trail" id="cursor-trail"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Morphism<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">形态变异实验室</p>
+            </div>
+            <div class="header-actions">
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="sculpt" aria-label="雕塑模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                            <path d="M2 2l7.586 7.586"/>
+                            <circle cx="11" cy="11" r="2"/>
+                        </svg>
+                    </button>
+                    <button class="mode-btn" data-mode="flow" aria-label="流体模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                    </button>
+                    <button class="mode-btn" data-mode="shatter" aria-label="碎裂模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <canvas id="morph-canvas"></canvas>
+
+            <div class="morph-entities" id="morph-entities">
+                <div class="morph-orb" data-index="0">
+                    <svg viewBox="0 0 200 200" class="orb-svg">
+                        <defs>
+                            <filter id="glow-0">
+                                <feGaussianBlur stdDeviation="4" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <radialGradient id="grad-0" cx="40%" cy="35%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+                                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                            </radialGradient>
+                        </defs>
+                        <path class="orb-path" filter="url(#glow-0)"/>
+                        <path class="orb-highlight" fill="url(#grad-0)"/>
+                    </svg>
+                    <span class="orb-label">Sphere</span>
+                </div>
+
+                <div class="morph-orb" data-index="1">
+                    <svg viewBox="0 0 200 200" class="orb-svg">
+                        <defs>
+                            <filter id="glow-1">
+                                <feGaussianBlur stdDeviation="4" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <radialGradient id="grad-1" cx="40%" cy="35%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+                                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                            </radialGradient>
+                        </defs>
+                        <path class="orb-path" filter="url(#glow-1)"/>
+                        <path class="orb-highlight" fill="url(#grad-1)"/>
+                    </svg>
+                    <span class="orb-label">Torus</span>
+                </div>
+
+                <div class="morph-orb" data-index="2">
+                    <svg viewBox="0 0 200 200" class="orb-svg">
+                        <defs>
+                            <filter id="glow-2">
+                                <feGaussianBlur stdDeviation="4" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <radialGradient id="grad-2" cx="40%" cy="35%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+                                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                            </radialGradient>
+                        </defs>
+                        <path class="orb-path" filter="url(#glow-2)"/>
+                        <path class="orb-highlight" fill="url(#grad-2)"/>
+                    </svg>
+                    <span class="orb-label">Blob</span>
+                </div>
+
+                <div class="morph-orb" data-index="3">
+                    <svg viewBox="0 0 200 200" class="orb-svg">
+                        <defs>
+                            <filter id="glow-3">
+                                <feGaussianBlur stdDeviation="4" result="blur"/>
+                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            </filter>
+                            <radialGradient id="grad-3" cx="40%" cy="35%">
+                                <stop offset="0%" stop-color="rgba(255,255,255,0.3)"/>
+                                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+                            </radialGradient>
+                        </defs>
+                        <path class="orb-path" filter="url(#glow-3)"/>
+                        <path class="orb-highlight" fill="url(#grad-3)"/>
+                    </svg>
+                    <span class="orb-label">Crystal</span>
+                </div>
+            </div>
+
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-pulse"></span>
+                <span class="hint-text">拖拽形体 · 探索形态变异</span>
+            </div>
+        </section>
+
+        <section class="controls-panel">
+            <div class="control-group">
+                <label class="control-label">变形</label>
+                <div class="shape-btns">
+                    <button class="shape-btn active" data-shape="sphere" aria-label="球体">
+                        <span class="shape-icon">●</span>
+                    </button>
+                    <button class="shape-btn" data-shape="star" aria-label="星形">
+                        <span class="shape-icon">✦</span>
+                    </button>
+                    <button class="shape-btn" data-shape="wave" aria-label="波动">
+                        <span class="shape-icon">∿</span>
+                    </button>
+                    <button class="shape-btn" data-shape="blob" aria-label="有机体">
+                        <span class="shape-icon">◉</span>
+                    </button>
+                    <button class="shape-btn" data-shape="crystal" aria-label="晶体">
+                        <span class="shape-icon">◇</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">扰动</label>
+                <div class="slider-container">
+                    <input type="range" id="ctrl-noise" min="0" max="100" value="30" class="slider">
+                    <span class="slider-value" id="val-noise">0.30</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">速度</label>
+                <div class="slider-container">
+                    <input type="range" id="ctrl-speed" min="5" max="100" value="40" class="slider">
+                    <span class="slider-value" id="val-speed">0.40</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">配色</label>
+                <div class="palette-btns">
+                    <button class="palette-btn active" data-palette="void" aria-label="虚空">
+                        <span class="swatch" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899)"></span>
+                    </button>
+                    <button class="palette-btn" data-palette="ocean" aria-label="深海">
+                        <span class="swatch" style="background:linear-gradient(135deg,#0ea5e9,#06b6d4,#2dd4bf)"></span>
+                    </button>
+                    <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                        <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#eab308)"></span>
+                    </button>
+                    <button class="palette-btn" data-palette="aurora" aria-label="极光">
+                        <span class="swatch" style="background:linear-gradient(135deg,#22d3ee,#a78bfa,#34d399)"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn" id="btn-reset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    <span>重置</span>
+                </button>
+                <button class="action-btn primary" id="btn-fullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
+                        <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+                        <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
+                        <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+                    </svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </section>
+
+        <footer class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">FPS</span>
+                <span class="stat-value" id="stat-fps">60</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">顶点</span>
+                <span class="stat-value" id="stat-vertices">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">模式</span>
+                <span class="stat-value" id="stat-mode">sculpt</span>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

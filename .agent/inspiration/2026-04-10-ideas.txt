@@ -1,0 +1,6 @@
+chromatic-weave - 着色器驱动的色彩方案探索器
+pixel-forge - 抖动算法可视化交互实验
+os-simulator - 浏览器内桌面环境模拟器
+pageflow - 页面转场动效编排工具
+ripple-canvas - 物理波纹与SVG形变交互画布
+morphism-lab - SVG变形与弹性动效实验室
