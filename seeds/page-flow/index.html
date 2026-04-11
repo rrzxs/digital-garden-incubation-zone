@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Flow 页流 - 沉浸式页面过渡体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="flow-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell" id="app-shell">
+        <nav class="flow-nav" id="flow-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">≋</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Page Flow</h1>
+                    <span class="nav-subtitle">沉浸式页面过渡体验</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <div class="flow-viewport" id="flow-viewport">
+            <div class="page-slider" id="page-slider">
+
+                <section class="flow-page" data-page="0" data-color="#6366f1">
+                    <div class="page-inner">
+                        <div class="page-badge">01 / 04</div>
+                        <h2 class="page-headline">页面不仅是容器</h2>
+                        <p class="page-body">它是情绪的流动。每一次过渡都是一次微型叙事，引导视线、呼吸与认知节奏。</p>
+                        <div class="page-cta" id="cta-0">
+                            <span class="cta-text">感受流动</span>
+                            <span class="cta-arrow">→</span>
+                        </div>
+                    </div>
+                    <div class="page-orb orb-violet"></div>
+                </section>
+
+                <section class="flow-page" data-page="1" data-color="#06b6d4">
+                    <div class="page-inner">
+                        <div class="page-badge">02 / 04</div>
+                        <h2 class="page-headline">过渡即设计语言</h2>
+                        <p class="page-body">非线性缓动曲线赋予界面物理质感。弹簧、阻尼、惯性 — 每一帧都在传递信息。</p>
+                        <div class="page-cta" id="cta-1">
+                            <span class="cta-text">探索动效</span>
+                            <span class="cta-arrow">→</span>
+                        </div>
+                    </div>
+                    <div class="page-orb orb-cyan"></div>
+                </section>
+
+                <section class="flow-page" data-page="2" data-color="#f43f5e">
+                    <div class="page-inner">
+                        <div class="page-badge">03 / 04</div>
+                        <h2 class="page-headline">光标是画笔</h2>
+                        <p class="page-body">鼠标扰动着流体粒子场，留下隐约的能量轨迹。光标不再是箭头，而是创作的延伸。</p>
+                        <div class="page-cta" id="cta-2">
+                            <span class="cta-text">挥洒能量</span>
+                            <span class="cta-arrow">→</span>
+                        </div>
+                    </div>
+                    <div class="page-orb orb-rose"></div>
+                </section>
+
+                <section class="flow-page" data-page="3" data-color="#10b981">
+                    <div class="page-inner">
+                        <div class="page-badge">04 / 04</div>
+                        <h2 class="page-headline">一切皆为流动</h2>
+                        <p class="page-body">页面、色彩、粒子、文字 — 它们不是孤立元素，而是同一流体中的不同涟漪。请随意滑动，感受连续性。</p>
+                        <div class="page-cta" id="cta-3">
+                            <span class="cta-text">回到起点</span>
+                            <span class="cta-arrow">↺</span>
+                        </div>
+                    </div>
+                    <div class="page-orb orb-emerald"></div>
+                </section>
+
+            </div>
+        </div>
+
+        <div class="flow-dots" id="flow-dots">
+            <button class="dot active" data-index="0" aria-label="第1页"></button>
+            <button class="dot" data-index="1" aria-label="第2页"></button>
+            <button class="dot" data-index="2" aria-label="第3页"></button>
+            <button class="dot" data-index="3" aria-label="第4页"></button>
+        </div>
+
+        <footer class="flow-footer">
+            <div class="footer-hint">
+                <span class="hint-key">↑ ↓</span>
+                <span class="hint-sep">或</span>
+                <span class="hint-key">Scroll</span>
+                <span class="hint-sep">或</span>
+                <span class="hint-key">Swipe</span>
+                <span class="hint-label">切换页面</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+                <span class="meta-chip" id="page-indicator">01 / 04</span>
+            </div>
+        </footer>
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

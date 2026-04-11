@@ -1,0 +1,6 @@
+glyph-field - 鼠标驱动的字符场互动可视化
+palette-forge - 渐变色板生成与对比度检测
+os-sim-demo - 仿macOS桌面交互演示器
+svg-morph-playground - SVG变形动画实验场
+photo-meta-lens - 图片EXIF元数据沉浸式浏览器
+page-flow - 多风格页面转场效果预览器

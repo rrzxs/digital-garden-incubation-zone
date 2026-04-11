@@ -280,6 +280,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Page Flow 页流',
+      description: '沉浸式页面过渡体验场。流体粒子场 + 微晶玻璃态容器 + 非线性缓动过渡，支持4种氛围配色与多模态导航',
+      path: '/seed/seeds/page-flow/index.html',
+      tags: ['Interactive', 'Animation', 'Page Transition', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
