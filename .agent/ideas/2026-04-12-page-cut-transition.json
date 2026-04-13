@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-12",
+  "name": "page-cut-transition",
+  "description": "clip-path页面切入转场效果生成器",
+  "tagline": "Slice Your Pages Into View",
+  "interaction": "Users select a geometric clip-path shape (diagonal slice, circle reveal, polygon wipe) and customize its entry direction and speed. A live preview panel instantly renders the transition between two placeholder pages. The generated CSS clip-path keyframe code can be copied with one click for direct use in any project.",
+  "directory": "seeds/page-cut-transition/",
+  "status": "incubated"
+}

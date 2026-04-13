@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ripple Canvas — 涟漪画布</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <div id="cursor-glow"></div>
+
+  <main class="app-shell">
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon">◎</span>
+        <h1 class="brand-title">Ripple Canvas</h1>
+      </div>
+      <div class="header-actions">
+        <div class="mode-toggle" id="modeToggle" role="button" tabindex="0" aria-label="切换交互模式">
+          <span class="mode-label" data-mode="draw">绘画</span>
+          <span class="mode-divider">/</span>
+          <span class="mode-label active" data-mode="physics">物理</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="canvas-stage">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <canvas id="rippleCanvas"></canvas>
+        <canvas id="particleCanvas"></canvas>
+        <div class="canvas-overlay" id="canvasOverlay">
+          <div class="overlay-ring"></div>
+          <span class="overlay-text">轻触水面，泛起涟漪</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="controls-bar">
+      <div class="controls-group">
+        <div class="slider-control">
+          <label class="slider-label">波纹强度</label>
+          <input type="range" class="slider" id="sliderStrength" min="50" max="512" value="256" step="1">
+        </div>
+        <div class="slider-control">
+          <label class="slider-label">阻尼系数</label>
+          <input type="range" class="slider" id="sliderDamping" min="90" max="99" value="97" step="1">
+        </div>
+        <div class="slider-control">
+          <label class="slider-label">折射率</label>
+          <input type="range" class="slider" id="sliderRefraction" min="1" max="20" value="8" step="1">
+        </div>
+      </div>
+
+      <div class="controls-group">
+        <div class="palette-row" id="paletteRow">
+          <button class="palette-btn active" data-palette="abyss" aria-label="深渊配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #0f1729, #1a3a5c, #0ea5e9)"></span>
+            <span class="palette-name">深渊</span>
+          </button>
+          <button class="palette-btn" data-palette="aurora" aria-label="极光配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #0f2027, #2c5364, #64ffda)"></span>
+            <span class="palette-name">极光</span>
+          </button>
+          <button class="palette-btn" data-palette="ember" aria-label="余烬配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #1a0a0a, #5c1a1a, #f97316)"></span>
+            <span class="palette-name">余烬</span>
+          </button>
+          <button class="palette-btn" data-palette="violet" aria-label="星云配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #0d0a1a, #4a1a6b, #a78bfa)"></span>
+            <span class="palette-name">星云</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="controls-group">
+        <button class="action-btn" id="btnClear" aria-label="清除画布">
+          <span class="action-icon">↺</span>
+          <span class="action-label">清除</span>
+        </button>
+        <button class="action-btn" id="btnFullscreen" aria-label="全屏">
+          <span class="action-icon">⤢</span>
+          <span class="action-label">全屏</span>
+        </button>
+      </div>
+    </footer>
+
+    <div class="stats-bar">
+      <span class="stat"><span class="stat-label">FPS</span><span class="stat-value" id="statFps">60</span></span>
+      <span class="stat"><span class="stat-label">波纹</span><span class="stat-value" id="statRipples">0</span></span>
+      <span class="stat"><span class="stat-label">粒子</span><span class="stat-value" id="statParticles">0</span></span>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-13",
+  "name": "ripple-canvas",
+  "description": "鼠标物理波纹SVG生成器",
+  "tagline": "Ripples that draw themselves.",
+  "interaction": "Click or drag anywhere on the canvas to spawn physics-driven ripple waves that propagate, interfere, and decay in real time. As ripples expand, their contours are continuously traced into an SVG path, turning fluid motion into crisp vector art. Every stroke you make becomes a living, exportable generative illustration.",
+  "directory": "seeds/ripple-canvas/",
+  "status": "incubated"
+}

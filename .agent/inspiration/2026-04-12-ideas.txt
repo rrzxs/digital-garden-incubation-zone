@@ -1,0 +1,6 @@
+glyph-field - 鼠标驱动的字符场域可视化交互
+morph-canvas - 形状变形与弹性过渡动效实验场
+shader-gradient-lab - WebGL渐变背景生成与导出工具
+photo-meta-inspector - 拖入图片即时解析EXIF元数据
+font-axis-playground - 可变字体轴参数实时调节器
+page-cut-transition - clip-path页面切入转场效果生成器

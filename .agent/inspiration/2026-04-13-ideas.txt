@@ -1,0 +1,6 @@
+glyph-field - 光标驱动字形权重热力可视化
+ripple-canvas - 鼠标物理波纹SVG生成器
+axis-playground - 可变字体多轴实时对比器
+gradient-forge - 着色器渐变参数实时编辑器
+photo-metadata - 拖拽图片即刻解析EXIF数据
+motion-study - 页面过渡动效编排沙盒
