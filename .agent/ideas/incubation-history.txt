@@ -12,3 +12,4 @@ morphism-lab
 page-flow
 page-cut-transition
 ripple-canvas
+chromasift

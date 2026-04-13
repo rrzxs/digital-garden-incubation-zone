@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChromaSift - 色彩筛分器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">ChromaSift<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">色彩筛分器</p>
+            </div>
+            <div class="header-actions">
+                <div class="sort-toggle">
+                    <button class="sort-btn active" data-sort="hue" aria-label="色相排序">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/></svg>
+                        <span>H</span>
+                    </button>
+                    <button class="sort-btn" data-sort="saturation" aria-label="饱和度排序">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                        <span>S</span>
+                    </button>
+                    <button class="sort-btn" data-sort="lightness" aria-label="明度排序">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                        <span>L</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <canvas id="sift-canvas"></canvas>
+
+            <div class="sieve-overlay" id="sieve-overlay">
+                <div class="sieve-line sieve-line-1"></div>
+                <div class="sieve-line sieve-line-2"></div>
+                <div class="sieve-line sieve-line-3"></div>
+                <div class="sieve-line sieve-line-4"></div>
+                <div class="sieve-line sieve-line-5"></div>
+                <div class="sieve-line sieve-line-6"></div>
+                <div class="sieve-line sieve-line-7"></div>
+            </div>
+
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">移动鼠标扰动色彩 · 点击筛分 · 双击采样</span>
+            </div>
+        </section>
+
+        <section class="palette-strip" id="palette-strip">
+            <div class="palette-label">
+                <span class="palette-count" id="palette-count">0</span>
+                <span class="palette-text">已采集</span>
+            </div>
+            <div class="palette-slots" id="palette-slots"></div>
+            <button class="palette-clear" id="palette-clear" aria-label="清空调色板">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">粒子密度</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-density" min="30" max="300" value="120" class="slider">
+                    <span class="slider-val" id="val-density">120</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">筛分力度</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-force" min="10" max="100" value="50" class="slider">
+                    <span class="slider-val" id="val-force">0.50</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">粒径</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-size" min="4" max="24" value="10" class="slider">
+                    <span class="slider-val" id="val-size">10</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="spectrum" aria-label="全光谱">
+                    <span class="swatch" style="background:conic-gradient(from 0deg, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)"></span>
+                </button>
+                <button class="palette-btn" data-palette="aurora" aria-label="极光">
+                    <span class="swatch" style="background:linear-gradient(135deg,#00d4ff,#a855f7,#00ff88)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ocean" aria-label="深海">
+                    <span class="swatch" style="background:linear-gradient(135deg,#0ea5e9,#6366f1,#0d9488)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btn-shuffle">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                    <span>打散</span>
+                </button>
+                <button class="action-btn" id="btn-sift">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v4l-8 8v4l-2 2v-6L3 7V3z"/></svg>
+                    <span>筛分</span>
+                </button>
+                <button class="action-btn primary" id="btn-fullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <div class="color-tooltip" id="color-tooltip">
+        <div class="tooltip-swatch" id="tooltip-swatch"></div>
+        <div class="tooltip-info">
+            <span class="tooltip-hex" id="tooltip-hex">#000000</span>
+            <span class="tooltip-hsl" id="tooltip-hsl">hsl(0, 0%, 0%)</span>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

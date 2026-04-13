@@ -300,6 +300,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'ChromaSift 色彩筛分器',
+      description: '沉浸式渐变配色灵感探索器。通过筛分物理将色彩粒子按色相 / 饱和度 / 明度重新排列，发现配色灵感。',
+      path: '/seed/seeds/chromasift/index.html',
+      tags: ['Color Tool', 'Interactive', 'Micro-interaction', 'Design'],
+      icon: '◐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-14",
+  "name": "chromasift",
+  "description": "沉浸式渐变配色灵感探索器",
+  "tagline": "**Shift through infinite color gradients.**",
+  "interaction": "通过鼠标/触摸拖拽在 HSL 色彩空间中实时 sift（筛选）出和谐的双色或多色渐变方案，画面以全屏沉浸式流体动画呈现当前渐变，每一次微小的移动都会引发色彩的自然过渡。用户可一键锁定心仪的渐变组合，系统自动生成可复制的 CSS 渐变代码和可分享的视觉卡片，让配色灵感从直觉探索直接落地为设计实现。",
+  "directory": "seeds/chromasift/",
+  "status": "incubated"
+}
