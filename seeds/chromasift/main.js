@@ -1,611 +1,701 @@
 /**
- * ChromaSift - 色彩筛分器
- * 沉浸式渐变配色灵感探索器
- * 
- * 核心：色彩粒子系统 + 筛分物理 + 交互采样
+ * ChromaSift — Color Particle Sifting System
+ * Maintainer: EDEN
  */
 
 (function () {
   'use strict';
 
-  // ============================================================
-  // 配置与状态
-  // ============================================================
-
-  const CONFIG = {
-    particleCount: 120,
-    baseSize: 10,
-    baseForce: 0.5,
-    easing: 0.08,
-    friction: 0.92,
-    mouseRadius: 160,
-    siftDuration: 1800,
-    shuffleDuration: 600,
-  };
-
-  const PALETTES = {
-    spectrum: null, // 动态生成
-    aurora: ['#00d4ff', '#a855f7', '#00ff88', '#ff6b6b', '#ffd93d'],
-    ember: ['#f97316', '#ef4444', '#fbbf24', '#dc2626', '#f59e0b'],
-    ocean: ['#0ea5e9', '#6366f1', '#0d9488', '#06b6d4', '#8b5cf6'],
-  };
-
-  const STATE = {
+  // ─── State ───────────────────────────────────────────────────
+  const state = {
+    hueStart: 0,
+    hueEnd: 180,
+    saturation: 75,
+    lightness: 55,
+    stops: 2,
+    flowSpeed: 4,
+    gradientAngle: 135,
+    locked: false,
+    isDragging: false,
+    lastX: 0,
+    lastY: 0,
     particles: [],
-    palette: [],
-    currentPalette: 'spectrum',
-    sortMode: 'hue', // hue | saturation | lightness
-    isSifting: false,
-    isShuffling: false,
-    mouseX: -1000,
-    mouseY: -1000,
-    siftTarget: null,
-    siftProgress: 0,
+    animationId: null,
+    time: 0,
+    savedGradients: [],
+    dragTrail: []
   };
 
-  // ============================================================
-  // 色彩工具函数
-  // ============================================================
+  // ─── DOM refs ─────────────────────────────────────────────────
+  const canvas = document.getElementById('gradientCanvas');
+  const ctx = canvas.getContext('2d');
+  const overlay = document.getElementById('overlay');
+
+  const elHueStart      = document.getElementById('hueStart');
+  const elHueEnd        = document.getElementById('hueEnd');
+  const elHueStartVal   = document.getElementById('hueStartVal');
+  const elHueEndVal     = document.getElementById('hueEndVal');
+  const elSaturation    = document.getElementById('saturation');
+  const elSaturationVal = document.getElementById('saturationVal');
+  const elLightness     = document.getElementById('lightness');
+  const elLightnessVal  = document.getElementById('lightnessVal');
+  const elFlowSpeed     = document.getElementById('flowSpeed');
+  const elFlowSpeedVal  = document.getElementById('flowSpeedVal');
+  const elGradientAngle = document.getElementById('gradientAngle');
+  const elAngleVal      = document.getElementById('gradientAngleVal');
+  const elStopBtns      = document.querySelectorAll('.stop-btn');
+  const elRandomizeBtn  = document.getElementById('randomizeBtn');
+  const elLockBtn       = document.getElementById('lockBtn');
+  const elTogglePanel   = document.getElementById('togglePanel');
+  const elControlPanel  = document.getElementById('controlPanel');
+  const elColorBar      = document.getElementById('colorBar');
+  const elColorPreview  = document.getElementById('colorPreview');
+  const elHslDisplay    = document.getElementById('hslDisplay');
+  const elHexDisplay    = document.getElementById('hexDisplay');
+  const elShowSavedBtn  = document.getElementById('showSavedBtn');
+  const elSavedPanel    = document.getElementById('savedPanel');
+  const elSavedList     = document.getElementById('savedList');
+  const elCloseSaved    = document.getElementById('closeSaved');
+  const elCodeModal     = document.getElementById('codeModal');
+  const elCodeOutput    = document.getElementById('codeOutput');
+  const elCloseModal    = document.getElementById('closeModal');
+  const elCopyBtn       = document.getElementById('copyBtn');
+  const elToast         = document.getElementById('toast');
+  const elToastMsg      = document.getElementById('toastMsg');
+
+  // ─── Canvas Setup ─────────────────────────────────────────────
+  function resizeCanvas() {
+    canvas.width  = window.innerWidth  * devicePixelRatio;
+    canvas.height = window.innerHeight * devicePixelRatio;
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+    initParticles();
+  }
+
+  // ─── Particle System ──────────────────────────────────────────
+  const PARTICLE_COUNT = 180;
+
+  function initParticles() {
+    state.particles = [];
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      state.particles.push(createParticle(Math.random() * w, Math.random() * h));
+    }
+  }
+
+  function createParticle(x, y) {
+    const hue  = lerp(state.hueStart, state.hueEnd, Math.random());
+    const sat  = state.saturation + rand(-8, 8);
+    const lig  = state.lightness  + rand(-10, 10);
+    return {
+      x, y,
+      baseX: x, baseY: y,
+      hue, sat, lig,
+      size: rand(2, 5),
+      vx: 0, vy: 0,
+      phase: Math.random() * Math.PI * 2,
+      drift: rand(-0.3, 0.3),
+      trail: []
+    };
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function rand(a, b) {
+    return a + Math.random() * (b - a);
+  }
 
   function hslToRgb(h, s, l) {
-    s /= 100;
-    l /= 100;
+    s /= 100; l /= 100;
+    const k = n => (n + h / 30) % 12;
     const a = s * Math.min(l, 1 - l);
-    const f = (n) => {
-      const k = (n + h / 30) % 12;
-      return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    };
+    const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
     return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
   }
 
-  function rgbToHsl(r, g, b) {
-    r /= 255; g /= 255; b /= 255;
-    const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
-    if (max === min) {
-      h = s = 0;
-    } else {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
-        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
-        case g: h = ((b - r) / d + 2) / 6; break;
-        case b: h = ((r - g) / d + 4) / 6; break;
-      }
-    }
-    return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
-  }
-
   function rgbToHex(r, g, b) {
-    return '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('');
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
   }
 
-  function hexToRgb(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? [
-      parseInt(result[1], 16),
-      parseInt(result[2], 16),
-      parseInt(result[3], 16),
-    ] : [0, 0, 0];
+  function hslToHex(h, s, l) {
+    const [r, g, b] = hslToRgb(h, s, l);
+    return rgbToHex(r, g, b);
   }
 
-  function isValidColor(hex) {
-    return /^#[0-9a-f]{6}$/i.test(hex);
+  // ─── Particle Update ──────────────────────────────────────────
+  function updateParticles() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const speed = state.flowSpeed * 0.4;
+
+    state.particles.forEach(p => {
+      // Brownian-ish drift
+      p.phase += 0.012;
+      const wave = Math.sin(p.phase) * speed * 0.6;
+      p.vx += Math.cos(p.phase * 0.7) * 0.08 + wave * 0.05 + p.drift * 0.1;
+      p.vy += Math.sin(p.phase * 0.5) * 0.06 + 0.04;
+
+      // Gentle attraction toward base position
+      p.vx += (p.baseX - p.x) * 0.002;
+      p.vy += (p.baseY - p.y) * 0.002;
+
+      // Drag
+      p.vx *= 0.92;
+      p.vy *= 0.92;
+
+      // Trail
+      if (p.trail.length > 6) p.trail.shift();
+      p.trail.push({ x: p.x, y: p.y, hue: p.hue, sat: p.sat, lig: p.lig });
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Wrap edges softly
+      if (p.x < -20)  { p.x = w + 20; p.baseX = p.x; }
+      if (p.x > w + 20){ p.x = -20;   p.baseX = p.x; }
+      if (p.y < -20)  { p.y = h + 20; p.baseY = p.y; }
+      if (p.y > h + 20){ p.y = -20;   p.baseY = p.y; }
+
+      // Recalculate color from current HSL bounds (sift effect)
+      p.hue = lerp(state.hueStart, state.hueEnd, (Math.sin(p.phase * 0.3) + 1) / 2);
+      p.sat = Math.max(20, Math.min(100, state.saturation + rand(-5, 5)));
+      p.lig = Math.max(15, Math.min(85, state.lightness  + rand(-6, 6)));
+    });
   }
 
-  function generateSpectrumColors(count) {
+  // ─── Render ────────────────────────────────────────────────────
+  function render() {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    state.time += 0.016 * state.flowSpeed;
+
+    // Draw gradient mesh background
+    drawGradientMesh(w, h);
+
+    // Draw drag trail
+    drawDragTrail();
+
+    // Draw particles
+    state.particles.forEach(p => {
+      // Trail
+      p.trail.forEach((t, i) => {
+        const alpha = (i / p.trail.length) * 0.3;
+        const [r, g, b] = hslToRgb(t.hue, t.sat, t.lig);
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, p.size * 0.6 * (i / p.trail.length), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.fill();
+      });
+
+      // Particle body
+      const [r, g, b] = hslToRgb(p.hue, p.sat, p.lig);
+      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
+      glow.addColorStop(0, `rgba(${r},${g},${b},0.9)`);
+      glow.addColorStop(0.4, `rgba(${r},${g},${b},0.3)`);
+      glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+
+      // Core
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},0.95)`;
+      ctx.fill();
+    });
+
+    updateParticles();
+    state.animationId = requestAnimationFrame(render);
+  }
+
+  function drawGradientMesh(w, h) {
+    const cx = w / 2;
+    const cy = h / 2;
+    const angle = state.gradientAngle * Math.PI / 180;
+    const stops = state.stops;
     const colors = [];
-    for (let i = 0; i < count; i++) {
-      const h = Math.round((i / count) * 360);
-      const s = 70 + Math.random() * 25;
-      const l = 45 + Math.random() * 20;
-      const [r, g, b] = hslToRgb(h, s, l);
-      colors.push({ h, s, l, hex: rgbToHex(r, g, b), r, g, b });
+
+    for (let i = 0; i < stops; i++) {
+      const t = i / (stops - 1);
+      const hue = lerp(state.hueStart, state.hueEnd, t);
+      const sat = state.saturation;
+      const lig = state.lightness;
+      colors.push({ hue, sat, lig, t });
     }
-    return colors;
+
+    // Build gradient
+    const rad = Math.max(w, h) * 1.4;
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+
+    colors.forEach((c, i) => {
+      const [r, g, b] = hslToRgb(c.hue, c.sat, c.lig);
+      grad.addColorStop(c.t, `rgba(${r},${g},${b},0.7)`);
+    });
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
+
+    // Flowing wave overlay
+    const waveCount = 3;
+    for (let wi = 0; wi < waveCount; wi++) {
+      const waveAngle = angle + (wi - 1) * 0.4;
+      const ox = Math.cos(waveAngle) * w * 0.3 * Math.sin(state.time * 0.5 + wi);
+      const oy = Math.sin(waveAngle) * h * 0.3 * Math.sin(state.time * 0.5 + wi);
+      const wg = ctx.createRadialGradient(cx + ox, cy + oy, 0, cx + ox, cy + oy, rad * 0.7);
+      const wHue = lerp(state.hueStart, state.hueEnd, (wi + 1) / (waveCount + 1));
+      const [wr, wg_, wb] = hslToRgb(wHue, state.saturation - 10, state.lightness + 15);
+      wg.addColorStop(0, `rgba(${wr},${wg_},${wb},0.12)`);
+      wg.addColorStop(1, `rgba(${wr},${wg_},${wb},0)`);
+      ctx.fillStyle = wg;
+      ctx.fillRect(0, 0, w, h);
+    }
   }
 
-  function mixPalette(baseColors) {
-    const mixed = [];
-    for (let i = 0; i < CONFIG.particleCount; i++) {
-      const base = baseColors[i % baseColors.length];
-      const hVar = (Math.random() - 0.5) * 15;
-      const sVar = (Math.random() - 0.5) * 20;
-      const lVar = (Math.random() - 0.5) * 15;
-      const h = ((base.h + hVar) % 360 + 360) % 360;
-      const s = Math.max(30, Math.min(100, base.s + sVar));
-      const l = Math.max(20, Math.min(80, base.l + lVar));
-      const [r, g, b] = hslToRgb(h, s, l);
-      mixed.push({ h, s, l, hex: rgbToHex(r, g, b), r, g, b });
-    }
-    return mixed;
-  }
-
-  // ============================================================
-  // 粒子类
-  // ============================================================
-
-  class Particle {
-    constructor(x, y, color, size) {
-      this.x = x;
-      this.y = y;
-      this.originX = x;
-      this.originY = y;
-      this.vx = 0;
-      this.vy = 0;
-      this.targetX = x;
-      this.targetY = y;
-      this.color = color;
-      this.size = size;
-      this.baseSize = size;
-      this.alpha = 0.85;
-      this.sorted = false;
-      this.siftStartX = 0;
-      this.siftStartY = 0;
-      this.siftTargetX = 0;
-      this.siftTargetY = 0;
-      this.siftStart = 0;
-    }
-
-    update(delta, width, height, mouseX, mouseY) {
-      // 鼠标排斥力
-      const dx = this.x - mouseX;
-      const dy = this.y - mouseY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < CONFIG.mouseRadius && dist > 0) {
-        const force = (CONFIG.mouseRadius - dist) / CONFIG.mouseRadius;
-        this.vx += (dx / dist) * force * 3;
-        this.vy += (dy / dist) * force * 3;
-      }
-
-      // 目标吸附（筛分或打散）
-      if (!this.sorted) {
-        this.vx += (this.targetX - this.x) * CONFIG.easing;
-        this.vy += (this.targetY - this.y) * CONFIG.easing;
-      } else {
-        // 筛分动画
-        const t = Math.min(1, (Date.now() - this.siftStart) / CONFIG.siftDuration);
-        const ease = 1 - Math.pow(1 - t, 4);
-        this.x = this.siftStartX + (this.siftTargetX - this.siftStartX) * ease;
-        this.y = this.siftStartY + (this.siftTargetY - this.siftStartY) * ease;
-      }
-
-      // 摩擦力
-      this.vx *= CONFIG.friction;
-      this.vy *= CONFIG.friction;
-
-      // 应用速度
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // 边界
-      if (this.x < 0) { this.x = 0; this.vx *= -0.5; }
-      if (this.x > width) { this.x = width; this.vx *= -0.5; }
-      if (this.y < 0) { this.y = 0; this.vy *= -0.5; }
-      if (this.y > height) { this.y = height; this.vy *= -0.5; }
-
-      // 尺寸脉动
-      this.size = this.baseSize + Math.sin(Date.now() * 0.003 + this.x * 0.01) * 1.5;
-    }
-
-    draw(ctx) {
-      const gradient = ctx.createRadialGradient(
-        this.x, this.y, 0,
-        this.x, this.y, this.size * 1.5
-      );
-      gradient.addColorStop(0, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`);
-      gradient.addColorStop(0.4, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha * 0.6})`);
-      gradient.addColorStop(1, `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, 0)`);
-      ctx.fillStyle = gradient;
+  // ─── Drag Trail ───────────────────────────────────────────────
+  function drawDragTrail() {
+    state.dragTrail.forEach((pt, i) => {
+      const alpha = (i / state.dragTrail.length) * 0.5;
+      const [r, g, b] = hslToRgb(pt.hue, pt.sat, pt.lig);
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size * 1.5, 0, Math.PI * 2);
+      ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
       ctx.fill();
-
-      // 内核
-      ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.alpha})`;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
-      ctx.fill();
+    });
+    // Fade trail
+    if (state.dragTrail.length > 0) {
+      state.dragTrail = state.dragTrail.filter(pt => {
+        pt.size *= 0.92;
+        pt.alpha = (pt.alpha || 1) * 0.92;
+        return pt.alpha > 0.05;
+      });
     }
   }
 
-  // ============================================================
-  // Canvas & 渲染
-  // ============================================================
-
-  let canvas, ctx, width, height;
-  let animationId;
-  let lastTime = 0;
-
-  function initCanvas() {
-    canvas = document.getElementById('sift-canvas');
-    ctx = canvas.getContext('2d');
-    resize();
-    window.addEventListener('resize', resize);
+  // ─── Mouse / Touch Interaction ─────────────────────────────────
+  function onPointerDown(e) {
+    if (state.locked) return;
+    state.isDragging = true;
+    const pt = getEventPos(e);
+    state.lastX = pt.x;
+    state.lastY = pt.y;
+    addDragPoint(pt.x, pt.y);
   }
 
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width * devicePixelRatio;
-    canvas.height = height * devicePixelRatio;
-    canvas.style.width = width + 'px';
-    canvas.style.height = height + 'px';
-    ctx.scale(devicePixelRatio, devicePixelRatio);
-  }
-
-  function initParticles() {
-    STATE.particles = [];
-    const baseColors = PALETTES[STATE.currentPalette] || generateSpectrumColors(5);
-    const palette = STATE.currentPalette === 'spectrum'
-      ? generateSpectrumColors(CONFIG.particleCount)
-      : mixPalette(baseColors);
-
-    const cols = Math.ceil(Math.sqrt(CONFIG.particleCount * (width / height)));
-    const rows = Math.ceil(CONFIG.particleCount / cols);
-    const cellW = width / cols;
-    const cellH = height / rows;
-    const marginX = cellW * 0.15;
-    const marginY = cellH * 0.15;
-
-    for (let i = 0; i < CONFIG.particleCount; i++) {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      const x = col * cellW + cellW / 2 + (Math.random() - 0.5) * marginX;
-      const y = row * cellH + cellH / 2 + (Math.random() - 0.5) * marginY;
-      const color = palette[i % palette.length];
-      const size = CONFIG.baseSize + (Math.random() - 0.5) * 3;
-      const p = new Particle(x, y, color, size);
-      p.targetX = x;
-      p.targetY = y;
-      p.originX = x;
-      p.originY = y;
-      STATE.particles.push(p);
+  function onPointerMove(e) {
+    if (!state.isDragging || state.locked) return;
+    const pt = getEventPos(e);
+    const dx = pt.x - state.lastX;
+    const dy = pt.y - state.lastY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const steps = Math.max(1, Math.floor(dist / 8));
+    for (let i = 0; i < steps; i++) {
+      const t = i / steps;
+      const ix = state.lastX + dx * t;
+      const iy = state.lastY + dy * t;
+      addDragPoint(ix, iy, 5 - t * 3);
     }
+    state.lastX = pt.x;
+    state.lastY = pt.y;
+
+    // Update color preview from dragged position
+    updateColorAtPoint(pt.x, pt.y);
   }
 
-  function clearCanvas() {
-    ctx.clearRect(0, 0, width, height);
+  function onPointerUp() {
+    state.isDragging = false;
   }
 
-  function render(timestamp) {
-    const delta = timestamp - lastTime;
-    lastTime = timestamp;
+  function addDragPoint(x, y, size = 5) {
+    const hue = lerp(state.hueStart, state.hueEnd, Math.random());
+    const sat = state.saturation;
+    const lig = state.lightness;
+    state.dragTrail.push({ x, y, hue, sat, lig, size, alpha: 1 });
+    if (state.dragTrail.length > 40) state.dragTrail.shift();
+  }
 
-    clearCanvas();
-
-    for (const p of STATE.particles) {
-      p.update(delta, width, height, STATE.mouseX, STATE.mouseY);
-      p.draw(ctx);
+  function getEventPos(e) {
+    if (e.touches && e.touches.length > 0) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
     }
-
-    animationId = requestAnimationFrame(render);
+    return { x: e.clientX, y: e.clientY };
   }
 
-  function startAnimation() {
-    if (animationId) cancelAnimationFrame(animationId);
-    lastTime = performance.now();
-    animationId = requestAnimationFrame(render);
-  }
-
-  // ============================================================
-  // 筛分逻辑
-  // ============================================================
-
-  function getSortKey(p, mode) {
-    if (mode === 'hue') return p.color.h;
-    if (mode === 'saturation') return p.color.s;
-    if (mode === 'lightness') return p.color.l;
-    return 0;
-  }
-
-  function sift() {
-    if (STATE.isSifting || STATE.particles.length === 0) return;
-    STATE.isSifting = true;
-
-    const mode = STATE.sortMode;
-    const particles = [...STATE.particles];
-
-    // 按目标属性排序
-    particles.sort((a, b) => getSortKey(a, mode) - getSortKey(b, mode));
-
-    // 网格排列
-    const cols = Math.ceil(Math.sqrt(particles.length * (width / height)));
-    const rows = Math.ceil(particles.length / cols);
-    const cellW = width / cols;
-    const cellH = height / rows;
-
-    particles.forEach((p, i) => {
-      p.sorted = true;
-      p.siftStartX = p.x;
-      p.siftStartY = p.y;
-      p.siftStart = Date.now();
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      p.siftTargetX = col * cellW + cellW / 2;
-      p.siftTargetY = row * cellH + cellH / 2;
-    });
-
-    // 动画结束后重置为可交互状态
-    setTimeout(() => {
-      particles.forEach((p) => {
-        p.sorted = false;
-        p.targetX = p.siftTargetX;
-        p.targetY = p.siftTargetY;
-        p.originX = p.siftTargetX;
-        p.originY = p.siftTargetY;
-      });
-      STATE.isSifting = false;
-    }, CONFIG.siftDuration + 200);
-  }
-
-  function shuffle() {
-    if (STATE.isShuffling || STATE.particles.length === 0) return;
-    STATE.isShuffling = true;
-
-    const particles = STATE.particles;
-    particles.forEach((p) => {
-      p.sorted = false;
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 80 + Math.random() * 200;
-      p.targetX = p.originX + Math.cos(angle) * radius;
-      p.targetY = p.originY + Math.sin(angle) * radius;
-    });
-
-    setTimeout(() => {
-      particles.forEach((p) => {
-        p.targetX = p.originX;
-        p.targetY = p.originY;
-      });
-      setTimeout(() => {
-        STATE.isShuffling = false;
-      }, CONFIG.shuffleDuration * 2);
-    }, CONFIG.shuffleDuration);
-  }
-
-  // ============================================================
-  // 调色板
-  // ============================================================
-
-  function addToPalette(color) {
-    if (STATE.palette.length >= 12) {
-      STATE.palette.shift();
-    }
-    STATE.palette.push(color);
-    renderPalette();
-    showToast(`已采集 ${color.hex}`, color.hex);
-  }
-
-  function renderPalette() {
-    const container = document.getElementById('palette-slots');
-    const countEl = document.getElementById('palette-count');
-    countEl.textContent = STATE.palette.length;
-    container.innerHTML = '';
-
-    STATE.palette.forEach((color, i) => {
-      const slot = document.createElement('div');
-      slot.className = 'palette-slot';
-      slot.style.background = color.hex;
-      slot.title = `${color.hex}\nHSL(${color.h}, ${color.s}%, ${color.l}%)`;
-      slot.addEventListener('click', () => {
-        navigator.clipboard.writeText(color.hex).catch(() => {});
-        showToast(`已复制 ${color.hex}`, color.hex);
-      });
-      container.appendChild(slot);
-    });
-  }
-
-  function clearPalette() {
-    STATE.palette = [];
-    renderPalette();
-  }
-
-  // ============================================================
-  // 工具提示
-  // ============================================================
-
-  const tooltip = document.getElementById('color-tooltip');
-  const tooltipSwatch = document.getElementById('tooltip-swatch');
-  const tooltipHex = document.getElementById('tooltip-hex');
-  const tooltipHsl = document.getElementById('tooltip-hsl');
-
-  function showTooltip(x, y, color) {
-    tooltipSwatch.style.background = color.hex;
-    tooltipHex.textContent = color.hex;
-    tooltipHsl.textContent = `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
-    tooltip.style.opacity = '1';
-    tooltip.style.left = (x + 16) + 'px';
-    tooltip.style.top = (y - 12) + 'px';
-  }
-
-  function hideTooltip() {
-    tooltip.style.opacity = '0';
-  }
-
-  // ============================================================
-  // Toast 通知
-  // ============================================================
-
-  function showToast(message, colorHex) {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `
-      <div class="toast-swatch" style="background:${colorHex || '#6366f1'}"></div>
-      <span class="toast-msg">${message}</span>
-    `;
-    container.appendChild(toast);
-    requestAnimationFrame(() => {
-      toast.classList.add('show');
-    });
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 400);
-    }, 2000);
-  }
-
-  // ============================================================
-  // 事件绑定
-  // ============================================================
-
-  function bindEvents() {
-    const stageArea = document.getElementById('stage-area');
-
-    // 鼠标跟踪
-    document.addEventListener('mousemove', (e) => {
-      STATE.mouseX = e.clientX;
-      STATE.mouseY = e.clientY;
-      updateCursorGlow(e.clientX, e.clientY);
-
-      // 实时显示悬停颜色
-      if (!STATE.isSifting) {
-        const hit = findNearestParticle(e.clientX, e.clientY);
-        if (hit) {
-          showTooltip(e.clientX, e.clientY, hit.color);
-        } else {
-          hideTooltip();
-        }
-      }
-    });
-
-    document.addEventListener('mouseleave', () => {
-      STATE.mouseX = -1000;
-      STATE.mouseY = -1000;
-      hideTooltip();
-    });
-
-    // 点击采样
-    canvas.addEventListener('click', (e) => {
-      if (STATE.isSifting) return;
-      const hit = findNearestParticle(e.clientX, e.clientY);
-      if (hit) {
-        addToPalette(hit.color);
-      }
-    });
-
-    // 双击打散
-    canvas.addEventListener('dblclick', () => {
-      shuffle();
-    });
-
-    // 控件绑定
-    const densitySlider = document.getElementById('ctrl-density');
-    const forceSlider = document.getElementById('ctrl-force');
-    const sizeSlider = document.getElementById('ctrl-size');
-    const valDensity = document.getElementById('val-density');
-    const valForce = document.getElementById('val-force');
-    const valSize = document.getElementById('val-size');
-
-    densitySlider.addEventListener('input', (e) => {
-      CONFIG.particleCount = parseInt(e.target.value);
-      valDensity.textContent = CONFIG.particleCount;
-      initParticles();
-    });
-
-    forceSlider.addEventListener('input', (e) => {
-      CONFIG.baseForce = parseInt(e.target.value) / 100;
-      valForce.textContent = CONFIG.baseForce.toFixed(2);
-    });
-
-    sizeSlider.addEventListener('input', (e) => {
-      CONFIG.baseSize = parseInt(e.target.value);
-      valSize.textContent = CONFIG.baseSize;
-      STATE.particles.forEach((p) => {
-        p.baseSize = CONFIG.baseSize + (Math.random() - 0.5) * 3;
-      });
-    });
-
-    // 调色板切换
-    document.querySelectorAll('.palette-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.palette-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        STATE.currentPalette = btn.dataset.palette;
-        initParticles();
-      });
-    });
-
-    // 排序按钮
-    document.querySelectorAll('.sort-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.sort-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        STATE.sortMode = btn.dataset.sort;
-      });
-    });
-
-    // 调色板清理
-    document.getElementById('palette-clear').addEventListener('click', clearPalette);
-
-    // 操作按钮
-    document.getElementById('btn-shuffle').addEventListener('click', shuffle);
-    document.getElementById('btn-sift').addEventListener('click', sift);
-    document.getElementById('btn-fullscreen').addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
-      } else {
-        document.exitFullscreen().catch(() => {});
-      }
-    });
-
-    // 键盘快捷键
-    document.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.code === 'Space') {
-        e.preventDefault();
-        sift();
-      } else if (e.key === 'r' || e.key === 'R') {
-        shuffle();
-      }
-    });
-  }
-
-  // ============================================================
-  // 光标辉光
-  // ============================================================
-
-  const cursorGlow = document.getElementById('cursor-glow');
-
-  function updateCursorGlow(x, y) {
-    cursorGlow.style.left = (x - 100) + 'px';
-    cursorGlow.style.top = (y - 100) + 'px';
-  }
-
-  // ============================================================
-  // 粒子碰撞检测
-  // ============================================================
-
-  function findNearestParticle(x, y) {
+  function updateColorAtPoint(x, y) {
+    // Sample a nearby particle's color
     let nearest = null;
     let minDist = Infinity;
-    const hitRadius = 30;
-    for (const p of STATE.particles) {
-      const dx = p.x - x;
-      const dy = p.y - y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < hitRadius && dist < minDist) {
-        minDist = dist;
-        nearest = p;
-      }
+    state.particles.forEach(p => {
+      const d = Math.hypot(p.x - x, p.y - y);
+      if (d < minDist) { minDist = d; nearest = p; }
+    });
+    if (nearest) {
+      const hex = hslToHex(nearest.hue, nearest.sat, nearest.lig);
+      elColorPreview.style.background = `hsl(${nearest.hue}, ${nearest.sat}%, ${nearest.lig}%)`;
+      elHslDisplay.textContent = `hsl(${Math.round(nearest.hue)}, ${Math.round(nearest.sat)}%, ${Math.round(nearest.lig)}%)`;
+      elHexDisplay.textContent = hex;
     }
-    return nearest;
   }
 
-  // ============================================================
-  // 初始化
-  // ============================================================
+  // ─── Wheel — adjust lightness ─────────────────────────────────
+  function onWheel(e) {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -2 : 2;
+    state.lightness = Math.max(15, Math.min(85, state.lightness + delta));
+    elLightness.value = state.lightness;
+    elLightnessVal.textContent = state.lightness + '%';
+    // Update overlay gradient to reflect lightness change
+    updateOverlayLightness();
+  }
 
+  function updateOverlayLightness() {
+    const lig = state.lightness;
+    overlay.style.background = `
+      radial-gradient(ellipse 120% 80% at 20% 10%, hsla(${state.hueStart}, ${state.saturation}%, ${lig}%, 0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 120% at 80% 90%, hsla(${lerp(state.hueStart, state.hueEnd, 0.7)}, ${state.saturation}%, ${lig}%, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 60% at 50% 50%, hsla(${lerp(state.hueStart, state.hueEnd, 0.5)}, ${state.saturation}%, ${lig + 10}%, 0.08) 0%, transparent 70%)
+    `;
+  }
+
+  // ─── Controls ─────────────────────────────────────────────────
+  function bindControls() {
+    elHueStart.addEventListener('input', () => {
+      state.hueStart = +elHueStart.value;
+      elHueStartVal.textContent = state.hueStart + '°';
+      if (state.hueStart > state.hueEnd) {
+        state.hueEnd = state.hueStart;
+        elHueEnd.value = state.hueEnd;
+        elHueEndVal.textContent = state.hueEnd + '°';
+      }
+      updateSliderTrack();
+    });
+
+    elHueEnd.addEventListener('input', () => {
+      state.hueEnd = +elHueEnd.value;
+      elHueEndVal.textContent = state.hueEnd + '°';
+      if (state.hueEnd < state.hueStart) {
+        state.hueStart = state.hueEnd;
+        elHueStart.value = state.hueStart;
+        elHueStartVal.textContent = state.hueStart + '°';
+      }
+      updateSliderTrack();
+    });
+
+    elSaturation.addEventListener('input', () => {
+      state.saturation = +elSaturation.value;
+      elSaturationVal.textContent = state.saturation + '%';
+      updateSliderTrack();
+    });
+
+    elLightness.addEventListener('input', () => {
+      state.lightness = +elLightness.value;
+      elLightnessVal.textContent = state.lightness + '%';
+      updateOverlayLightness();
+    });
+
+    elFlowSpeed.addEventListener('input', () => {
+      state.flowSpeed = +elFlowSpeed.value;
+      elFlowSpeedVal.textContent = state.flowSpeed;
+    });
+
+    elGradientAngle.addEventListener('input', () => {
+      state.gradientAngle = +elGradientAngle.value;
+      elAngleVal.textContent = state.gradientAngle + '°';
+    });
+
+    elStopBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elStopBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.stops = +btn.dataset.stops;
+      });
+    });
+
+    elRandomizeBtn.addEventListener('click', randomize);
+    elLockBtn.addEventListener('click', toggleLock);
+    elTogglePanel.addEventListener('click', () => {
+      elControlPanel.classList.toggle('collapsed');
+    });
+
+    elColorBar.addEventListener('click', openCodeModal);
+
+    elShowSavedBtn.addEventListener('click', () => {
+      elSavedPanel.classList.toggle('hidden');
+      elShowSavedBtn.classList.toggle('hidden', !elSavedPanel.classList.contains('hidden'));
+    });
+
+    elCloseSaved.addEventListener('click', () => {
+      elSavedPanel.classList.add('hidden');
+      elShowSavedBtn.classList.remove('hidden');
+    });
+
+    elCloseModal.addEventListener('click', () => {
+      elCodeModal.classList.add('hidden');
+    });
+
+    elCodeModal.querySelector('.modal-backdrop').addEventListener('click', () => {
+      elCodeModal.classList.add('hidden');
+    });
+
+    elCopyBtn.addEventListener('click', copyCode);
+
+    // Save gradient on double-click of color bar
+    elColorBar.addEventListener('dblclick', saveGradient);
+  }
+
+  function updateSliderTrack() {
+    // Hue sliders have a gradient track set via CSS, no JS update needed
+  }
+
+  function randomize() {
+    state.hueStart = Math.floor(Math.random() * 360);
+    let end = state.hueStart + Math.floor(Math.random() * 180) + 30;
+    if (end > 360) end -= 360;
+    state.hueEnd = end;
+
+    state.saturation = Math.floor(Math.random() * 60) + 30;
+    state.lightness  = Math.floor(Math.random() * 50) + 25;
+    state.stops      = Math.floor(Math.random() * 4) + 2;
+    state.flowSpeed  = Math.floor(Math.random() * 8) + 2;
+    state.gradientAngle = Math.floor(Math.random() * 360);
+
+    // Update DOM
+    elHueStart.value = state.hueStart;
+    elHueEnd.value   = state.hueEnd;
+    elHueStartVal.textContent = state.hueStart + '°';
+    elHueEndVal.textContent   = state.hueEnd + '°';
+
+    elSaturation.value = state.saturation;
+    elSaturationVal.textContent = state.saturation + '%';
+
+    elLightness.value = state.lightness;
+    elLightnessVal.textContent = state.lightness + '%';
+
+    elFlowSpeed.value = state.flowSpeed;
+    elFlowSpeedVal.textContent = state.flowSpeed;
+
+    elGradientAngle.value = state.gradientAngle;
+    elAngleVal.textContent = state.gradientAngle + '°';
+
+    elStopBtns.forEach(b => {
+      b.classList.toggle('active', +b.dataset.stops === state.stops);
+    });
+
+    updateOverlayLightness();
+    showToast('Colors randomized ✦');
+  }
+
+  function toggleLock() {
+    state.locked = !state.locked;
+    const btn = elLockBtn;
+    if (state.locked) {
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Unlock`;
+      btn.classList.add('primary');
+      btn.classList.remove('secondary');
+      showToast('Canvas locked');
+    } else {
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Lock`;
+      btn.classList.remove('primary');
+      btn.classList.add('secondary');
+      showToast('Canvas unlocked');
+    }
+  }
+
+  // ─── Code Export ─────────────────────────────────────────────
+  function openCodeModal() {
+    const code = generateGradientCSS();
+    elCodeOutput.textContent = code;
+    elCodeModal.classList.remove('hidden');
+  }
+
+  function generateGradientCSS() {
+    const angle = state.gradientAngle;
+    const stops = state.stops;
+    const colors = [];
+    for (let i = 0; i < stops; i++) {
+      const t = i / (stops - 1);
+      const hue = lerp(state.hueStart, state.hueEnd, t);
+      const hex = hslToHex(hue, state.saturation, state.lightness);
+      colors.push(`${hex} ${Math.round(t * 100)}%`);
+    }
+    const gradientStr = `linear-gradient(${angle}deg, ${colors.join(', ')})`;
+    return `.gradient-bg {\n  background: ${gradientStr};\n  background-attachment: fixed;\n}\n\n/* HSL version */\n.gradient-bg-hsl {\n  background: linear-gradient(\n    ${angle}deg,\n    ${colors.map((_, i) => {
+      const t = i / (stops - 1);
+      const hue = lerp(state.hueStart, state.hueEnd, t);
+      return `hsl(${Math.round(hue)}, ${state.saturation}%, ${state.lightness}%)`;
+    }).join(',\n    ')}\n  );\n  background-attachment: fixed;\n}`;
+  }
+
+  function copyCode() {
+    const code = elCodeOutput.textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Code copied to clipboard ✓');
+      }).catch(() => {
+        fallbackCopy(code);
+      });
+    } else {
+      fallbackCopy(code);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('Code copied to clipboard ✓');
+  }
+
+  // ─── Save Gradients ────────────────────────────────────────────
+  function saveGradient() {
+    const gradient = {
+      hueStart: state.hueStart,
+      hueEnd: state.hueEnd,
+      saturation: state.saturation,
+      lightness: state.lightness,
+      stops: state.stops,
+      gradientAngle: state.gradientAngle,
+      timestamp: Date.now()
+    };
+    state.savedGradients.push(gradient);
+    if (state.savedGradients.length > 12) state.savedGradients.shift();
+    renderSavedList();
+    showToast('Gradient saved ✦');
+  }
+
+  function renderSavedList() {
+    if (state.savedGradients.length === 0) {
+      elSavedList.innerHTML = '<div class="saved-empty">No saved gradients yet.<br>Double-click the color bar to save.</div>';
+      return;
+    }
+    elSavedList.innerHTML = state.savedGradients.map((g, i) => {
+      const colors = [];
+      for (let j = 0; j < g.stops; j++) {
+        const t = j / (g.stops - 1);
+        const hue = lerp(g.hueStart, g.hueEnd, t);
+        colors.push(hslToHex(hue, g.saturation, g.lightness));
+      }
+      const gradientStr = `linear-gradient(${g.gradientAngle}deg, ${colors.join(', ')})`;
+      const firstHex = colors[0];
+      return `<div class="saved-item" data-index="${i}">
+        <div class="saved-swatch" style="background: ${gradientStr}"></div>
+        <div class="saved-info">
+          <span class="mono">${firstHex}</span>
+        </div>
+        <button class="saved-delete" data-index="${i}" title="Delete">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>`;
+    }).join('');
+
+    elSavedList.querySelectorAll('.saved-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (e.target.closest('.saved-delete')) return;
+        loadGradient(+item.dataset.index);
+      });
+    });
+
+    elSavedList.querySelectorAll('.saved-delete').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteGradient(+btn.dataset.index);
+      });
+    });
+  }
+
+  function loadGradient(index) {
+    const g = state.savedGradients[index];
+    if (!g) return;
+    state.hueStart = g.hueStart;
+    state.hueEnd = g.hueEnd;
+    state.saturation = g.saturation;
+    state.lightness = g.lightness;
+    state.stops = g.stops;
+    state.gradientAngle = g.gradientAngle;
+
+    elHueStart.value = state.hueStart;
+    elHueEnd.value = state.hueEnd;
+    elHueStartVal.textContent = state.hueStart + '°';
+    elHueEndVal.textContent = state.hueEnd + '°';
+    elSaturation.value = state.saturation;
+    elSaturationVal.textContent = state.saturation + '%';
+    elLightness.value = state.lightness;
+    elLightnessVal.textContent = state.lightness + '%';
+    elFlowSpeed.value = state.flowSpeed;
+    elFlowSpeedVal.textContent = state.flowSpeed;
+    elGradientAngle.value = state.gradientAngle;
+    elAngleVal.textContent = state.gradientAngle + '°';
+    elStopBtns.forEach(b => b.classList.toggle('active', +b.dataset.stops === state.stops));
+    updateOverlayLightness();
+    showToast('Gradient loaded ✓');
+  }
+
+  function deleteGradient(index) {
+    state.savedGradients.splice(index, 1);
+    renderSavedList();
+    showToast('Gradient removed');
+  }
+
+  // ─── Toast ────────────────────────────────────────────────────
+  let toastTimer = null;
+  function showToast(msg) {
+    elToastMsg.textContent = msg;
+    elToast.classList.remove('hidden');
+    elToast.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      elToast.classList.remove('visible');
+      setTimeout(() => elToast.classList.add('hidden'), 400);
+    }, 2200);
+  }
+
+  // ─── Init ─────────────────────────────────────────────────────
   function init() {
-    initCanvas();
-    initParticles();
-    bindEvents();
-    startAnimation();
-    renderPalette();
+    resizeCanvas();
+    bindControls();
 
-    // 隐藏加载提示
-    const hint = document.getElementById('stage-hint');
-    setTimeout(() => {
-      if (hint) hint.style.opacity = '0';
-    }, 4000);
+    // Pointer events
+    canvas.addEventListener('mousedown',  onPointerDown);
+    canvas.addEventListener('mousemove',  onPointerMove);
+    canvas.addEventListener('mouseup',    onPointerUp);
+    canvas.addEventListener('mouseleave', onPointerUp);
+    canvas.addEventListener('touchstart', onPointerDown, { passive: true });
+    canvas.addEventListener('touchmove',  onPointerMove, { passive: true });
+    canvas.addEventListener('touchend',   onPointerUp);
+
+    // Wheel
+    window.addEventListener('wheel', onWheel, { passive: false });
+
+    // Resize
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+    });
+
+    // Start render loop
+    render();
+
+    // Initial overlay
+    updateOverlayLightness();
+
+    // Keyboard shortcut: R = randomize, L = lock, C = copy code
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'r' || e.key === 'R') randomize();
+      if (e.key === 'l' || e.key === 'L') toggleLock();
+      if (e.key === 'c' || e.key === 'C') openCodeModal();
+    });
   }
 
   if (document.readyState === 'loading') {
