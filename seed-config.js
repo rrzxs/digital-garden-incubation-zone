@@ -310,6 +310,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Glyph Field 字形力场',
+      description: '交互式字形力场体验。弹簧物理驱动的字符对鼠标产生吸引、排斥、漩涡响应，4种字符集与氛围配色',
+      path: '/seed/seeds/glyph-field/index.html',
+      tags: ['Interactive', 'Physics', 'Typography', 'Micro-interaction'],
+      icon: '༚',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

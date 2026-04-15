@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-15",
+  "name": "glyph-field",
+  "description": "鼠标驱动的字体权重热力场",
+  "tagline": "Where your cursor shapes every letter.",
+  "interaction": "As the mouse moves across a canvas of glyphs, each character's font-weight dynamically shifts based on proximity to the cursor, creating a radiant heatmap of typographic density. The field ripples and breathes in real-time — closer letters grow bold and heavy while distant ones remain ghost-thin, turning static text into a living, cursor-reactive topography.",
+  "directory": "seeds/glyph-field/",
+  "status": "incubated"
+}
