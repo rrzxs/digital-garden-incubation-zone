@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-16",
+  "name": "glyph-proximity",
+  "description": "鼠标驱动的字符场互动体验",
+  "tagline": "**Where Glyphs Dance at Your Fingertips**",
+  "interaction": "当鼠标移动时，附近的字符会被无形力场吸引或排斥，产生如同磁场般的流动效果。每个字形根据与光标的距离实时改变大小、颜色和旋转角度，形成动态的文字星系。当光标悬停时，字符会短暂聚合排列成可读的词语，随即再次散入混沌的字符场中。",
+  "directory": "seeds/glyph-proximity/",
+  "status": "incubated"
+}

@@ -14,3 +14,4 @@ page-cut-transition
 ripple-canvas
 chromasift
 glyph-field
+glyph-proximity

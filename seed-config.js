@@ -320,6 +320,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Glyph Proximity 字形邻近',
+      description: '邻近性感知驱动的交互式字形力场。力场半径内的字形产生吸引、排斥、环绕、冻结响应，邻近拓扑连接线与弹簧归位物理',
+      path: '/seed/seeds/glyph-proximity/index.html',
+      tags: ['Interactive', 'Physics', 'Typography', 'Micro-interaction'],
+      icon: '⌘',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

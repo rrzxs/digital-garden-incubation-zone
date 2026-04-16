@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glyph Proximity — 字形邻近</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="mesh-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <div id="cursor-glow"></div>
+
+  <div class="app-shell">
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon">⌘</span>
+        <div>
+          <h1 class="brand-title">Glyph Proximity</h1>
+          <p class="brand-sub">字形邻近 · 邻近性感知交互</p>
+        </div>
+      </div>
+      <nav class="header-controls">
+        <button class="mode-btn active" data-mode="attract" title="吸引模式">Attract</button>
+        <button class="mode-btn" data-mode="repel" title="排斥模式">Repel</button>
+        <button class="mode-btn" data-mode="orbit" title="环绕模式">Orbit</button>
+        <button class="mode-btn" data-mode="freeze" title="冻结模式">Freeze</button>
+      </nav>
+    </header>
+
+    <section class="stage">
+      <canvas id="field-canvas"></canvas>
+      <div class="stage-overlay" id="stage-overlay">
+        <p class="overlay-text">Move your cursor to disturb the glyphs</p>
+      </div>
+    </section>
+
+    <footer class="controls-bar">
+      <div class="control-group">
+        <label class="control-label">Radius</label>
+        <input type="range" class="control-slider" id="radius-slider" min="60" max="300" value="150">
+        <span class="control-value" id="radius-value">150</span>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Force</label>
+        <input type="range" class="control-slider" id="force-slider" min="1" max="20" value="8">
+        <span class="control-value" id="force-value">8</span>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Damping</label>
+        <input type="range" class="control-slider" id="damping-slider" min="1" max="20" value="12">
+        <span class="control-value" id="damping-value">12</span>
+      </div>
+      <div class="palette-group">
+        <button class="palette-btn active" data-palette="obsidian" title="黑曜石">
+          <span class="swatch" style="background: linear-gradient(135deg, #1a1a2e, #e94560)"></span>
+          <span>Obsidian</span>
+        </button>
+        <button class="palette-btn" data-palette="aurora" title="极光">
+          <span class="swatch" style="background: linear-gradient(135deg, #0a1628, #00f5d4)"></span>
+          <span>Aurora</span>
+        </button>
+        <button class="palette-btn" data-palette="ember" title="余烬">
+          <span class="swatch" style="background: linear-gradient(135deg, #1a0a00, #ff6b35)"></span>
+          <span>Ember</span>
+        </button>
+        <button class="palette-btn" data-palette="nebula" title="星云">
+          <span class="swatch" style="background: linear-gradient(135deg, #0d001a, #c77dff)"></span>
+          <span>Nebula</span>
+        </button>
+      </div>
+      <div class="action-group">
+        <button class="action-btn" id="shuffle-btn" title="随机打乱">⧫ Shuffle</button>
+        <button class="action-btn" id="reset-btn" title="重置位置">↺ Reset</button>
+      </div>
+    </footer>
+
+    <div class="stats-bar">
+      <span class="stat">FPS: <span id="stat-fps">60</span></span>
+      <span class="stat">Glyphs: <span id="stat-glyphs">0</span></span>
+      <span class="stat">Mode: <span id="stat-mode">Attract</span></span>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
