@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-17",
+  "name": "photo-meta-lens",
+  "description": "图片EXIF元数据沉浸式可视化",
+  "tagline": "See the unseen story behind every shot.",
+  "interaction": "Hover over any region of a photo to reveal a radial lens that surfaces EXIF metadata — camera model, aperture, shutter speed, GPS coordinates — as floating, context-aware cards that drift and fade with your cursor movement. The metadata lens distorts the image beneath it with a subtle glass-refraction effect, making invisible data feel tactile and spatial. Pinch or scroll to zoom the lens depth, toggling between surface-level stats and deep technical histograms.",
+  "directory": "seeds/photo-meta-lens/",
+  "status": "incubated"
+}

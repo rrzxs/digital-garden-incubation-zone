@@ -1,0 +1,6 @@
+glyph-field - 鼠标驱动的字符权重热力可视化
+screenshot-animaker - 截图转3D动态展示卡生成器
+photo-meta-lens - 图片EXIF元数据沉浸式可视化
+scene-transition-lab - 页面切换动效编排沙盒
+cinematic-scene-builder - 电影感分段叙事页面生成器
+morphic-type-explorer - 变量字体实时轴操控实验场
