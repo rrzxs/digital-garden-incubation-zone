@@ -16,3 +16,4 @@ chromasift
 glyph-field
 glyph-proximity
 photo-meta-lens
+typo-shift

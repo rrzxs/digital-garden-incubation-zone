@@ -1,0 +1,6 @@
+typo-shift - 变量字体轴探索器，实时预览字重与字宽
+scroll-theater - 电影感滚动叙事片段，视差场景切换
+particle-atelier - 粒子画笔创作工坊，鼠标拖绘光点轨迹
+motion-snapshot - 截图生成动态展示卡，添加模拟3D旋转
+proximity-field - 磁力场感文字交互，距离驱动的视觉涟漪
+page-warp - 页面转场效果沙盒，可视化配置过渡动画

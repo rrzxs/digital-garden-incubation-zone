@@ -340,6 +340,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Typo Shift 字形位移',
+      description: '沉浸式排版位移交互体验。4种流体位移模式实时驱动字号、字重、字距非线性形变，乱码揭示动画与4种氛围配色',
+      path: '/seed/seeds/typo-shift/index.html',
+      tags: ['Interactive', 'Typography', 'Animation', 'Micro-interaction'],
+      icon: '≍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

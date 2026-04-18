@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-18",
+  "name": "typo-shift",
+  "description": "变量字体轴探索器，实时预览字重与字宽",
+  "tagline": "Bend Every Letter, Live.",
+  "interaction": "用滑块实时驱动变量字体的 weight 与 width 轴，文字随拖拽即刻变形。可输入自定义文本，拖动时轴值标注同步更新，帮助设计师直观感受可变字体的连续设计空间。",
+  "directory": "seeds/typo-shift/",
+  "status": "incubated"
+}
