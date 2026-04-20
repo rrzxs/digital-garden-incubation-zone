@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-19",
+  "name": "parallax-stage",
+  "description": "视差深度场景搭建器",
+  "tagline": "Build depth, one layer at a time.",
+  "interaction": "在画布上逐层添加前景、中景、背景元素，拖拽调整纵向深度值，实时预览多重视差滚动效果。每个图层可独立设定滚动速率倍数与模糊/透明度衰减，鼠标水平移动即驱动全场景模拟视差响应。支持一键导出分层参数配置，便于集成至任何前端视差框架。",
+  "directory": "seeds/parallax-stage/",
+  "status": "incubated"
+}

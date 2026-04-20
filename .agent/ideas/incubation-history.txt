@@ -17,3 +17,5 @@ glyph-field
 glyph-proximity
 photo-meta-lens
 typo-shift
+parallax-stage
+morph-curtain

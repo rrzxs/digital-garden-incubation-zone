@@ -350,6 +350,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Morph Curtain 变形幕',
+      description: '沉浸式窗帘变形体验。弹簧-阻尼布料物理模拟、三种变形模式（推开/裂开/溶解）、参数调节与4种氛围配色',
+      path: '/seed/seeds/morph-curtain/index.html',
+      tags: ['Interactive', 'Cloth Simulation', 'Animation', 'Micro-interaction'],
+      icon: '帷幕',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
