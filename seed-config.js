@@ -360,6 +360,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'World Ticker 全球脉搏',
+      description: '沉浸式世界事件实时脉冲可视化。8类全球互联网事件模拟、双侧滚动Ticker流、粒子流场与微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/world-ticker/index.html',
+      tags: ['Interactive', 'Data Visualization', 'Animation', 'Micro-interaction'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

@@ -19,3 +19,4 @@ photo-meta-lens
 typo-shift
 parallax-stage
 morph-curtain
+world-ticker

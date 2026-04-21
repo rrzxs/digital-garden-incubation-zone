@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-21",
+  "name": "world-ticker",
+  "description": "分屏实时世界数据计数器",
+  "tagline": "**Watch the world tick in real time.**",
+  "interaction": "A split-screen dashboard displays live-updating global counters — population growth, CO₂ emissions, tweets sent, and more — each ticking upward with mesmerizing momentum. Users can tap or hover on individual counters to reveal deeper data breakdowns, compare rates between categories, or switch between different data themes. The split-screen layout allows simultaneous viewing of contrasting metrics, creating a powerful visual narrative of our planet in motion.",
+  "directory": "seeds/world-ticker/",
+  "status": "incubated"
+}

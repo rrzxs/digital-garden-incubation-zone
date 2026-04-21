@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Ticker — 全球脉搏</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="deep-ocean">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">◎</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">World<span class="nav-dot">.</span>Ticker</h1>
+                    <span class="nav-subtitle">实时世界脉搏可视化</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="neon" aria-label="霓虹">霓虹</button>
+                </div>
+                <div class="speed-toggle" id="speed-toggle">
+                    <button class="speed-btn" data-speed="0.5" aria-label="0.5x">0.5x</button>
+                    <button class="speed-btn active" data-speed="1" aria-label="1x">1x</button>
+                    <button class="speed-btn" data-speed="3" aria-label="3x">3x</button>
+                    <button class="speed-btn" data-speed="10" aria-label="10x">10x</button>
+                </div>
+                <button class="icon-btn" id="btn-pause" aria-label="暂停">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <section class="ticker-stage">
+            <div class="ticker-column ticker-left" id="ticker-left"></div>
+            <div class="ticker-center">
+                <div class="hero-card glass-panel" id="hero-card">
+                    <div class="hero-icon" id="hero-icon">🌍</div>
+                    <div class="hero-label" id="hero-label">TOTAL</div>
+                    <div class="hero-stat">
+                        <span class="stat-value" id="hero-value">0</span>
+                        <span class="stat-unit" id="hero-unit">次/秒</span>
+                    </div>
+                    <div class="hero-desc" id="hero-desc">自页面打开以来发生的世界事件</div>
+                    <div class="hero-bar-track">
+                        <div class="hero-bar-fill" id="hero-bar-fill"></div>
+                    </div>
+                    <div class="hero-time">
+                        <span class="time-label">运行时间</span>
+                        <span class="time-value" id="hero-elapsed">00:00</span>
+                    </div>
+                </div>
+                <div class="pulse-rings" id="pulse-rings">
+                    <div class="pulse-ring ring-1"></div>
+                    <div class="pulse-ring ring-2"></div>
+                    <div class="pulse-ring ring-3"></div>
+                </div>
+            </div>
+            <div class="ticker-column ticker-right" id="ticker-right"></div>
+        </section>
+
+        <section class="stat-rail" id="stat-rail">
+            <div class="stat-card glass-panel" data-category="searches">
+                <div class="stat-card-icon">🔍</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">Google 搜索</span>
+                    <span class="stat-card-value" id="stat-searches">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-searches"></div></div>
+            </div>
+            <div class="stat-card glass-panel" data-category="emails">
+                <div class="stat-card-icon">📧</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">邮件发送</span>
+                    <span class="stat-card-value" id="stat-emails">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-emails"></div></div>
+            </div>
+            <div class="stat-card glass-panel" data-category="tweets">
+                <div class="stat-card-icon">💬</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">推文发布</span>
+                    <span class="stat-card-value" id="stat-tweets">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-tweets"></div></div>
+            </div>
+            <div class="stat-card glass-panel" data-category="videos">
+                <div class="stat-card-icon">▶️</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">YouTube 观看</span>
+                    <span class="stat-card-value" id="stat-videos">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-videos"></div></div>
+            </div>
+            <div class="stat-card glass-panel" data-category="purchases">
+                <div class="stat-card-icon">🛒</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">电商订单</span>
+                    <span class="stat-card-value" id="stat-purchases">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-purchases"></div></div>
+            </div>
+            <div class="stat-card glass-panel" data-category="stars">
+                <div class="stat-card-icon">⭐</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">GitHub Stars</span>
+                    <span class="stat-card-value" id="stat-stars">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-stars"></div></div>
+            </div>
+            <div class="stat-card glass-panel" data-category="photos">
+                <div class="stat-card-icon">📸</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">Instagram 照片</span>
+                    <span class="stat-card-value" id="stat-photos">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-photos"></div></div>
+            </div>
+            <div class="stat-card glass-panel" data-category="co2">
+                <div class="stat-card-icon">🌫️</div>
+                <div class="stat-card-info">
+                    <span class="stat-card-label">CO₂ 排放 (吨)</span>
+                    <span class="stat-card-value" id="stat-co2">0</span>
+                </div>
+                <div class="stat-card-bar"><div class="bar-fill" id="bar-co2"></div></div>
+            </div>
+        </section>
+
+        <footer class="bottom-bar">
+            <span class="bottom-note">数据为基于公开统计的模拟估算，仅作可视化演示</span>
+            <span class="bottom-tech">Powered by vanilla JS + CSS3</span>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
