@@ -1,0 +1,6 @@
+procedural-terrain - WebGPU程序化地形生成器
+split-ledger - 分屏实时世界变化计数器
+scroll-typography - 滚动驱动字体排版剧场
+shader-lab - 可视化着色器编辑沙盒
+cinematic-narrative - 滚动式电影化分镜叙事工具
+tilt-bento - 3D倾斜交互便当格展示

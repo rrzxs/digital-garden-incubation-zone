@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic Narrative | 影像叙事</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <canvas class="particle-field" id="particle-field"></canvas>
+        <div class="noise-layer"></div>
+    </div>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <nav class="progress-nav">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </nav>
+
+    <aside class="chapter-nav" id="chapter-nav"></aside>
+
+    <main class="narrative-stage" id="narrative-stage">
+
+        <section class="scene scene-cover" data-chapter="0">
+            <div class="scene-content glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">001</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">PROLOGUE</span>
+                </div>
+                <h1 class="cover-title">
+                    <span class="title-line" data-delay="0">Cinematic</span>
+                    <span class="title-line" data-delay="150">Narrative</span>
+                </h1>
+                <p class="cover-subtitle reveal-char" data-text="A story told through light, motion, and interaction.">A story told through light, motion, and interaction.</p>
+                <div class="scroll-cue">
+                    <div class="cue-line"></div>
+                    <span class="cue-text">SCROLL TO BEGIN</span>
+                    <div class="cue-line"></div>
+                </div>
+            </div>
+            <div class="scene-lightbar lightbar-left"></div>
+            <div class="scene-lightbar lightbar-right"></div>
+        </section>
+
+        <section class="scene" data-chapter="1">
+            <div class="scene-content glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">002</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE CUT</span>
+                </div>
+                <h2 class="scene-title reveal-line" data-delay="0">Every Frame<br>Is a Doorway</h2>
+                <p class="scene-body reveal-line" data-delay="200">In cinema, the cut is the most powerful tool. It can transport you across continents, through decades, into the mind of another human being. One moment you are here, the next you are somewhere entirely different.</p>
+                <div class="transition-strip">
+                    <div class="strip-bar" data-speed="1.0"></div>
+                    <div class="strip-bar" data-speed="1.5"></div>
+                    <div class="strip-bar" data-speed="2.0"></div>
+                    <div class="strip-bar" data-speed="1.2"></div>
+                    <div class="strip-bar" data-speed="0.8"></div>
+                    <div class="strip-bar" data-speed="1.7"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-chapter="2">
+            <div class="scene-content glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">003</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">LIGHT & SHADOW</span>
+                </div>
+                <h2 class="scene-title reveal-line" data-delay="0">Between Light<br>And Shadow</h2>
+                <p class="scene-body reveal-line" data-delay="200">Chiaroscuro. The art of revealing through concealing. Every great cinematographer knows that what you hide is just as important as what you show. The shadows give shape to the light.</p>
+                <div class="chiaroscuro-demo" id="chiaroscuro-demo">
+                    <div class="shadow-layer"></div>
+                    <div class="light-spot" id="light-spot"></div>
+                    <div class="chiaroscuro-text">Move your cursor to reveal</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-chapter="3">
+            <div class="scene-content glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">004</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">TEMPORALITY</span>
+                </div>
+                <h2 class="scene-title reveal-line" data-delay="0">Time Stretches,<br>Time Collapses</h2>
+                <p class="scene-body reveal-line" data-delay="200">Slow motion reveals the hidden beauty in a single instant. Time-lapse compresses hours into seconds. The cinema manipulates time like clay, shaping it to serve emotion.</p>
+                <div class="tempo-visualizer" id="tempo-visualizer">
+                    <canvas class="tempo-canvas" id="tempo-canvas"></canvas>
+                    <div class="tempo-controls">
+                        <button class="tempo-btn active" data-speed="slow">SLOW</button>
+                        <button class="tempo-btn" data-speed="normal">NORMAL</button>
+                        <button class="tempo-btn" data-speed="fast">FAST</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-chapter="4">
+            <div class="scene-content glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">005</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE MONTAGE</span>
+                </div>
+                <h2 class="scene-title reveal-line" data-delay="0">Images Collide,<br>Meaning Is Born</h2>
+                <p class="scene-body reveal-line" data-delay="200">The Kuleshov Effect. Two images placed side by side create a third meaning that exists in neither alone. This is the alchemy of montage — the collision of frames that births new thought.</p>
+                <div class="montage-grid" id="montage-grid">
+                    <div class="montage-cell" data-word="LIGHT">
+                        <span class="montage-char">L</span>
+                        <span class="montage-char">I</span>
+                        <span class="montage-char">G</span>
+                        <span class="montage-char">H</span>
+                        <span class="montage-char">T</span>
+                    </div>
+                    <div class="montage-cell montage-operator">+</div>
+                    <div class="montage-cell" data-word="SHADOW">
+                        <span class="montage-char">S</span>
+                        <span class="montage-char">H</span>
+                        <span class="montage-char">A</span>
+                        <span class="montage-char">D</span>
+                        <span class="montage-char">O</span>
+                        <span class="montage-char">W</span>
+                    </div>
+                    <div class="montage-cell montage-operator">=</div>
+                    <div class="montage-cell montage-result" data-word="DEPTH">
+                        <span class="montage-char">D</span>
+                        <span class="montage-char">E</span>
+                        <span class="montage-char">P</span>
+                        <span class="montage-char">T</span>
+                        <span class="montage-char">H</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene scene-outro" data-chapter="5">
+            <div class="scene-content glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">006</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">EPILOGUE</span>
+                </div>
+                <h2 class="scene-title reveal-line" data-delay="0">The Story<br>Continues</h2>
+                <p class="scene-body reveal-line" data-delay="200">Every scroll was a cut. Every hover, a camera movement. You were not just reading — you were directing. The cinema lives not on the screen, but in the space between the viewer and the image.</p>
+                <div class="outro-actions">
+                    <button class="action-btn" id="replay-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 4v6h6M23 20v-6h-6"/>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+                        </svg>
+                        <span>Replay</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-lens" id="cursor-lens">
+        <div class="lens-ring"></div>
+        <div class="lens-crosshair"></div>
+    </div>
+
+    <div class="frame-counter" id="frame-counter">
+        <span class="counter-label">FRAME</span>
+        <span class="counter-value" id="counter-value">000</span>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

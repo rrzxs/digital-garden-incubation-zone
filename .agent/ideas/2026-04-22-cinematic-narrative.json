@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-22",
+  "name": "cinematic-narrative",
+  "description": "滚动式电影化分镜叙事工具",
+  "tagline": "Scroll the Story, Direct the Scene.",
+  "interaction": "As users scroll, the viewport becomes a cinematic canvas where each scene transitions with film-grade motion—zooms, fades, and parallax shifts triggered by scroll velocity and direction. Users can pause mid-scroll to explore layered details within each "frame," while a timeline scrubber allows non-linear navigation through the narrative arc.",
+  "directory": "seeds/cinematic-narrative/",
+  "status": "incubated"
+}
