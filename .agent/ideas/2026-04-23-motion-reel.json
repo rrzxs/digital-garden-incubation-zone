@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-23",
+  "name": "motion-reel",
+  "description": "影视级分镜场景编排与回放工具",
+  "tagline": "**Direct every frame, live.**",
+  "interaction": "A cinematic storyboard orchestrator where users drag-and-drop scene nodes onto a timeline canvas, arranging camera angles, transitions, and timing with fluid, film-strip-style gestures. Playback renders the sequence in real-time with viewport scrubbing, allowing directors to preview, tweak, and re-render scenes interactively—cutting between shots as naturally as editing film on a steenbeck.",
+  "directory": "seeds/motion-reel/",
+  "status": "incubated"
+}

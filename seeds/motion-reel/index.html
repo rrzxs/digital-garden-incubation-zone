@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Reel 韵动卷轴 - 沉浸式动效展示</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="reel-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="reel-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">⏴</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Motion Reel</h1>
+                    <span class="nav-subtitle">沉浸式动效展示卷轴</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+                <div class="mode-toggle" id="mode-toggle">
+                    <button class="mode-btn active" data-mode="reel" aria-label="卷轴">卷轴</button>
+                    <button class="mode-btn" data-mode="grid" aria-label="网格">网格</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="reel-viewport" id="reel-viewport">
+            <div class="reel-track" id="reel-track">
+
+                <div class="reel-card" data-index="0" data-color="#6366f1">
+                    <div class="card-glass">
+                        <div class="card-badge">01 / 08</div>
+                        <div class="card-demo" id="demo-spring">
+                            <div class="spring-box" id="spring-box">
+                                <div class="spring-face"></div>
+                            </div>
+                            <div class="spring-label">弹簧物理 · 拖拽我</div>
+                        </div>
+                        <h2 class="card-title">弹簧阻尼</h2>
+                        <p class="card-desc">弹簧-阻尼模型赋予元素物理质感，每一次回弹都在传递能量与惯性的对话。</p>
+                    </div>
+                </div>
+
+                <div class="reel-card" data-index="1" data-color="#06b6d4">
+                    <div class="card-glass">
+                        <div class="card-badge">02 / 08</div>
+                        <div class="card-demo" id="demo-ripple">
+                            <canvas class="ripple-canvas" id="ripple-canvas"></canvas>
+                            <div class="ripple-label">点击产生涟漪</div>
+                        </div>
+                        <h2 class="card-title">涟漪扩散</h2>
+                        <p class="card-desc">触点化为同心波纹，水波物理模拟让每一次点击都成为池塘中的石子。</p>
+                    </div>
+                </div>
+
+                <div class="reel-card" data-index="2" data-color="#f43f5e">
+                    <div class="card-glass">
+                        <div class="card-badge">03 / 08</div>
+                        <div class="card-demo" id="demo-morph">
+                            <canvas class="morph-canvas" id="morph-canvas"></canvas>
+                        </div>
+                        <h2 class="card-title">形态流变</h2>
+                        <p class="card-desc">圆形与星形之间的无缝变形，噪声驱动的有机轮廓在持续呼吸。</p>
+                    </div>
+                </div>
+
+                <div class="reel-card" data-index="3" data-color="#10b981">
+                    <div class="card-glass">
+                        <div class="card-badge">04 / 08</div>
+                        <div class="card-demo" id="demo-particles">
+                            <canvas class="particles-canvas" id="particles-canvas"></canvas>
+                            <div class="particles-label">鼠标驱动力场</div>
+                        </div>
+                        <h2 class="card-title">粒子流场</h2>
+                        <p class="card-desc">百粒微尘在力场中起舞，鼠标是引力中心，轨迹是光的河流。</p>
+                    </div>
+                </div>
+
+                <div class="reel-card" data-index="4" data-color="#a855f7">
+                    <div class="card-glass">
+                        <div class="card-badge">05 / 08</div>
+                        <div class="card-demo" id="demo-glitch">
+                            <div class="glitch-text" id="glitch-text">GLITCH</div>
+                        </div>
+                        <h2 class="card-title">故障美学</h2>
+                        <p class="card-desc">RGB 分离、扫描线与像素错位，赛博世界的视觉噪音化为数字诗意。</p>
+                    </div>
+                </div>
+
+                <div class="reel-card" data-index="5" data-color="#f59e0b">
+                    <div class="card-glass">
+                        <div class="card-badge">06 / 08</div>
+                        <div class="card-demo" id="demo-elastic">
+                            <div class="elastic-bar" id="elastic-bar">
+                                <div class="elastic-segment"></div>
+                                <div class="elastic-segment"></div>
+                                <div class="elastic-segment"></div>
+                                <div class="elastic-segment"></div>
+                                <div class="elastic-segment"></div>
+                            </div>
+                            <div class="elastic-label">悬停触发弹性波</div>
+                        </div>
+                        <h2 class="card-title">弹性波纹</h2>
+                        <p class="card-desc">延迟级联的弹性波在元素间传播，像声音在山谷中的回响。</p>
+                    </div>
+                </div>
+
+                <div class="reel-card" data-index="6" data-color="#ec4899">
+                    <div class="card-glass">
+                        <div class="card-badge">07 / 08</div>
+                        <div class="card-demo" id="demo-orbits">
+                            <canvas class="orbits-canvas" id="orbits-canvas"></canvas>
+                        </div>
+                        <h2 class="card-title">轨道共振</h2>
+                        <p class="card-desc">多层椭圆轨道的粒子系统，引力编织出精密而优雅的天体力学。</p>
+                    </div>
+                </div>
+
+                <div class="reel-card" data-index="7" data-color="#14b8a6">
+                    <div class="card-glass">
+                        <div class="card-badge">08 / 08</div>
+                        <div class="card-demo" id="demo-reveal">
+                            <div class="reveal-mask" id="reveal-mask">
+                                <div class="reveal-bg"></div>
+                                <div class="reveal-content">REVEAL</div>
+                            </div>
+                            <div class="reveal-label">悬停揭示</div>
+                        </div>
+                        <h2 class="card-title">遮罩揭示</h2>
+                        <p class="card-desc">光标是揭秘的钥匙，跟随鼠标的圆形遮罩揭开隐藏的底层世界。</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="reel-progress" id="reel-progress">
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-dots" id="progress-dots"></div>
+        </div>
+
+        <footer class="reel-footer">
+            <div class="footer-hint">
+                <span class="hint-key">← →</span>
+                <span class="hint-sep">或</span>
+                <span class="hint-key">Scroll</span>
+                <span class="hint-sep">或</span>
+                <span class="hint-key">Drag</span>
+                <span class="hint-label">切换场景</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+                <span class="meta-chip" id="scene-indicator">01 / 08</span>
+            </div>
+        </footer>
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -380,6 +380,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Motion Reel 韵动卷轴',
+      description: '沉浸式动效展示卷轴。8种高阶微交互（弹簧阻尼、涟漪扩散、形态流变、粒子流场、故障美学、弹性波纹、轨道共振、遮罩揭示），4种氛围配色',
+      path: '/seed/seeds/motion-reel/index.html',
+      tags: ['Interactive', 'Physics', 'Animation', 'Micro-interaction'],
+      icon: '⏴',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

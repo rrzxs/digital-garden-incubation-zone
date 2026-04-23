@@ -21,3 +21,4 @@ parallax-stage
 morph-curtain
 world-ticker
 cinematic-narrative
+motion-reel
