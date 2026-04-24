@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-24",
+  "name": "scroll-chapter",
+  "description": "滚动驱动的分段式叙事阅读器",
+  "tagline": "Scroll through stories, chapter by chapter.",
+  "interaction": "The page is divided into full-screen chapters that transition smoothly as the user scrolls, with parallax backgrounds and animated text reveals creating an immersive reading experience. Progress is tracked via a subtle chapter indicator, and each section morphs into the next with cinematic easing. Users can also use keyboard arrows or click navigation dots for direct chapter access.",
+  "directory": "seeds/scroll-chapter/",
+  "status": "incubated"
+}

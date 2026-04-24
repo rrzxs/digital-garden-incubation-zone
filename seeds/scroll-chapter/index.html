@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Chapter · 章节卷轴</title>
+    <meta name="description" content="沉浸式章节卷轴体验。滚动驱动的文字揭示、视差深度、粒子流场与微晶玻璃态容器。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="particle-field"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <nav class="progress-rail" id="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="chapter-dots" id="chapter-dots"></div>
+    </nav>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void">◈</button>
+    </div>
+
+    <main id="main-content">
+
+        <section class="chapter" data-chapter="0">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">001</div>
+                    <div class="chapter-label">Prologue</div>
+                    <h1 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">万物起源于</span>
+                        <span class="line accent" data-delay="120">一次微小的扰动</span>
+                    </h1>
+                    <p class="chapter-body reveal-text" data-delay="300">
+                        <span class="line">在数字花园的最深处，每一行代码都是一颗种子。它们在比特的土壤中等待——</span>
+                        <span class="line">等待一次滚动、一次触碰、一次凝视，来唤醒沉睡中的生命力。</span>
+                    </p>
+                    <div class="scroll-hint reveal-text" data-delay="500">
+                        <span class="line">
+                            <span class="scroll-arrow">↓</span> 向下滚动开始旅程
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="1">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">002</div>
+                    <div class="chapter-label">Emergence</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">涌现：</span>
+                        <span class="line accent" data-delay="120">当简单规则碰撞出复杂</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">自然界最优雅的结构——海岸线的分形、雪花的六角对称、 flocking 鸟群的流体舞蹈——</span>
+                        <span class="line">都源自极其简单的局部规则。没有总指挥，只有邻域间的信息传递。</span>
+                    </p>
+                    <div class="demo-area reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="interaction-hint glass-pill">
+                                <span class="hint-dot"></span>
+                                移动鼠标，扰动粒子流场
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="2">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">003</div>
+                    <div class="chapter-label">Resonance</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">共振：</span>
+                        <span class="line accent" data-delay="120">数字空间中的呼吸节律</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">每一次交互都是一次共振。光标的轨迹是力的波动，</span>
+                        <span class="line">元素的响应是结构的回声。当频率对齐，体验便超越了界面——它开始呼吸。</span>
+                    </p>
+                    <div class="rhythm-demo reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="rhythm-ring" id="rhythm-ring"></div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="3">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">004</div>
+                    <div class="chapter-label">Metamorphosis</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">蜕变：</span>
+                        <span class="line accent" data-delay="120">从像素到意义的炼金术</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">设计不是装饰，而是翻译。它将抽象的逻辑翻译为可感知的美——</span>
+                        <span class="line">将 0 和 1 的沉默，转化为令人屏息的视觉诗篇。</span>
+                    </p>
+                    <div class="morph-demo reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="morph-word" id="morph-word">DECODE</div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="4">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">005</div>
+                    <div class="chapter-label">Epilogue</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">每一粒种子</span>
+                        <span class="line accent" data-delay="120">都是一个宇宙的起点</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">你刚刚经历的，是数字花园中一粒种子的苏醒过程。</span>
+                        <span class="line">而这，仅仅是一个开始。继续探索，继续创造，继续播种。</span>
+                    </p>
+                    <div class="epilogue-cta reveal-text" data-delay="450">
+                        <span class="line">
+                            <a href="../../index.html" class="cta-glass">
+                                <span>返回数字花园</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

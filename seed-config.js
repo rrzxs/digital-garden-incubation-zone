@@ -390,6 +390,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Chapter 章节卷轴',
+      description: '沉浸式章节卷轴体验。5幕叙事章节、滚动驱动文字揭示、粒子流场、故障文字变形、呼吸节律可视化与4种氛围配色',
+      path: '/seed/seeds/scroll-chapter/index.html',
+      tags: ['Interactive', 'Scroll', 'Animation', 'Micro-interaction'],
+      icon: '◚',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
