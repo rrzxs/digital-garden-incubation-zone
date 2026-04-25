@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-25",
+  "name": "terrain-walker",
+  "description": "程序化无限地形漫游体验",
+  "tagline": "Walk worlds that never end.",
+  "interaction": "用户的鼠标移动和键盘输入驱动角色在程序化生成的无限3D地形上漫游。地形基于Perlin噪声实时生成，包含山脉、平原、河流等多样化地貌，随探索不断向地平线延伸。每次访问都会生成独一无二的随机地形，支持奔跑、跳跃和视角控制，营造沉浸式的无限探索体验。",
+  "directory": "seeds/terrain-walker/",
+  "status": "incubated"
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terrain Walker — 地形漫步</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+  </div>
+
+  <div id="cursor-glow"></div>
+
+  <main class="app-shell">
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon">⏚</span>
+        <h1 class="brand-title">Terrain Walker</h1>
+      </div>
+      <div class="header-actions">
+        <div class="mode-toggle" id="modeToggle" role="button" tabindex="0" aria-label="切换交互模式">
+          <span class="mode-label active" data-mode="walk">漫步</span>
+          <span class="mode-divider">/</span>
+          <span class="mode-label" data-mode="orbit">轨道</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="canvas-stage">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <canvas id="terrainCanvas"></canvas>
+        <canvas id="overlayCanvas"></canvas>
+        <div class="canvas-overlay" id="canvasOverlay">
+          <div class="overlay-ring"></div>
+          <span class="overlay-text">点击或拖拽，开始地形漫步</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="controls-bar">
+      <div class="controls-group">
+        <div class="slider-control">
+          <label class="slider-label">海拔</label>
+          <input type="range" class="slider" id="sliderAmplitude" min="20" max="180" value="80" step="1">
+        </div>
+        <div class="slider-control">
+          <label class="slider-label">频率</label>
+          <input type="range" class="slider" id="sliderFrequency" min="10" max="80" value="35" step="1">
+        </div>
+        <div class="slider-control">
+          <label class="slider-label">速度</label>
+          <input type="range" class="slider" id="sliderSpeed" min="10" max="120" value="50" step="1">
+        </div>
+      </div>
+
+      <div class="controls-group">
+        <div class="palette-row" id="paletteRow">
+          <button class="palette-btn active" data-palette="midnight" aria-label="午夜配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #0f172a, #1e3a5f, #38bdf8)"></span>
+            <span class="palette-name">午夜</span>
+          </button>
+          <button class="palette-btn" data-palette="aurora" aria-label="极光配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #064e3b, #2dd4bf, #a7f3d0)"></span>
+            <span class="palette-name">极光</span>
+          </button>
+          <button class="palette-btn" data-palette="ember" aria-label="熔岩配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #450a0a, #dc2626, #fbbf24)"></span>
+            <span class="palette-name">熔岩</span>
+          </button>
+          <button class="palette-btn" data-palette="nebula" aria-label="星云配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #1e1b4b, #7c3aed, #c4b5fd)"></span>
+            <span class="palette-name">星云</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="controls-group">
+        <button class="action-btn" id="btnRegenerate" aria-label="重新生成">
+          <span class="action-icon">⟲</span>
+          <span class="action-label">重生成</span>
+        </button>
+        <button class="action-btn" id="btnFullscreen" aria-label="全屏">
+          <span class="action-icon">⤢</span>
+          <span class="action-label">全屏</span>
+        </button>
+      </div>
+    </footer>
+
+    <div class="stats-bar">
+      <span class="stat"><span class="stat-label">FPS</span><span class="stat-value" id="statFps">60</span></span>
+      <span class="stat"><span class="stat-label">X</span><span class="stat-value" id="statX">0</span></span>
+      <span class="stat"><span class="stat-label">Z</span><span class="stat-value" id="statZ">0</span></span>
+      <span class="stat"><span class="stat-label">H</span><span class="stat-value" id="statH">0</span></span>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

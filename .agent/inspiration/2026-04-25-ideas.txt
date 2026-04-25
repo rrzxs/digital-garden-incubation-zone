@@ -1,0 +1,6 @@
+shader-playground - 实时WebGL着色器编辑与预览工具
+clip-menu-studio - 裁剪路径驱动的菜单动效设计器
+terrain-walker - 程序化无限地形漫游体验
+watercolor-scape - 水彩风格三维场景渲染器
+motion-reverse-lab - 动效正反向缓动对比实验台
+font-scope - 本地字体检测与可视化比对工具

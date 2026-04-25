@@ -400,6 +400,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Terrain Walker 地形漫步',
+      description: 'Simplex Noise 驱动的交互式 3D 地形生成与漫步体验。多层噪声叠加地形、WASD 行走物理、惯性相机、行走轨迹、4种氛围配色',
+      path: '/seed/seeds/terrain-walker/index.html',
+      tags: ['Interactive', '3D', 'Procedural', 'Micro-interaction'],
+      icon: '⏚',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
