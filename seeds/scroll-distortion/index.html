@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Distortion · 滚动畸变</title>
+    <meta name="description" content="沉浸式滚动畸变体验。滚动驱动的 SVG 形体变形、涟漪波场、色散文字与弹性流体容器，流体渐变背景 + 微晶玻璃态容器 + 非线性动效">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="ripple-field"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <nav class="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="section-dots" id="section-dots"></div>
+    </nav>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void">◈</button>
+    </div>
+
+    <div class="scroll-speed-indicator" id="scroll-speed-indicator">
+        <div class="speed-bar" id="speed-bar"></div>
+        <span class="speed-label mono">VELOCITY</span>
+    </div>
+
+    <main id="main-content">
+
+        <section class="scene" data-section="0">
+            <div class="scene-inner">
+                <div class="glass-card hero-card" data-distort>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">001</div>
+                        <div class="section-label">Origin</div>
+                        <h1 class="section-title distort-text">
+                            <span class="line" data-delay="0">滚动不再是</span>
+                            <span class="line accent" data-delay="140">简单的位移</span>
+                        </h1>
+                        <p class="section-body distort-text" data-delay="320">
+                            <span class="line">当你向下滚动的瞬间，空间开始扭曲。文字液化、容器呼吸、</span>
+                            <span class="line">色散光棱穿透每一个像素——这是滚动畸变的起点。</span>
+                        </p>
+                        <div class="scroll-hint distort-text" data-delay="520">
+                            <span class="line">
+                                <span class="scroll-arrow">↓</span> 滚动以触发畸变
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="1">
+            <div class="scene-inner">
+                <div class="morph-stage">
+                    <svg class="morph-svg" id="morph-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <linearGradient id="morph-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" class="grad-stop-1" />
+                                <stop offset="100%" class="grad-stop-2" />
+                            </linearGradient>
+                            <filter id="morph-blur">
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="0" />
+                            </filter>
+                        </defs>
+                        <path id="morph-path" fill="url(#morph-grad)" filter="url(#morph-blur)" />
+                    </svg>
+                    <div class="morph-label mono" id="morph-label">CIRCLE</div>
+                </div>
+                <div class="glass-card" data-distort>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">002</div>
+                        <div class="section-label">Metamorphosis</div>
+                        <h2 class="section-title distort-text">
+                            <span class="line" data-delay="0">形变：</span>
+                            <span class="line accent" data-delay="140">噪声驱动的拓扑流变</span>
+                        </h2>
+                        <p class="section-body distort-text" data-delay="300">
+                            <span class="line">Simplex 噪声赋予形体生命力。滚动速度越快，扰动越剧烈——</span>
+                            <span class="line">球体在星形、晶体、有机体之间不断变形，永远不重复同一姿态。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="2">
+            <div class="scene-inner">
+                <div class="chromatic-stage">
+                    <div class="chromatic-text" id="chromatic-text">
+                        <span class="chr-layer chr-r">DISTORT</span>
+                        <span class="chr-layer chr-g">DISTORT</span>
+                        <span class="chr-layer chr-b">DISTORT</span>
+                    </div>
+                </div>
+                <div class="glass-card" data-distort>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">003</div>
+                        <div class="section-label">Dispersion</div>
+                        <h2 class="section-title distort-text">
+                            <span class="line" data-delay="0">色散：</span>
+                            <span class="line accent" data-delay="140">光棱分裂的文字</span>
+                        </h2>
+                        <p class="section-body distort-text" data-delay="300">
+                            <span class="line">滚动产生力量，力量撕裂光谱。RGB 通道分离、错位、再重组——</span>
+                            <span class="line">每一次滚动都是一次棱镜折射，文字在三原色之间颤动。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="3">
+            <div class="scene-inner">
+                <div class="elastic-grid" id="elastic-grid">
+                    <div class="elastic-cell" data-distort data-intensity="0.8"></div>
+                    <div class="elastic-cell" data-distort data-intensity="1.0"></div>
+                    <div class="elastic-cell" data-distort data-intensity="0.6"></div>
+                    <div class="elastic-cell" data-distort data-intensity="1.2"></div>
+                    <div class="elastic-cell" data-distort data-intensity="0.9"></div>
+                    <div class="elastic-cell" data-distort data-intensity="0.7"></div>
+                    <div class="elastic-cell" data-distort data-intensity="1.1"></div>
+                    <div class="elastic-cell" data-distort data-intensity="0.5"></div>
+                    <div class="elastic-cell" data-distort data-intensity="1.0"></div>
+                </div>
+                <div class="glass-card" data-distort>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">004</div>
+                        <div class="section-label">Elasticity</div>
+                        <h2 class="section-title distort-text">
+                            <span class="line" data-delay="0">弹性：</span>
+                            <span class="line accent" data-delay="140">弹簧阻尼的网格呼吸</span>
+                        </h2>
+                        <p class="section-body distort-text" data-delay="300">
+                            <span class="line">每个格子都是一个弹簧系统。滚动产生冲量，弹簧产生回弹——</span>
+                            <span class="line">9 个弹性单元以各自的频率呼吸，构成一幅非线性的流体网格。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="4">
+            <div class="scene-inner">
+                <div class="glass-card cta-card" data-distort>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">005</div>
+                        <div class="section-label">Epilogue</div>
+                        <h2 class="section-title distort-text">
+                            <span class="line" data-delay="0">畸变不是破坏</span>
+                            <span class="line accent" data-delay="140">而是维度之间的过渡态</span>
+                        </h2>
+                        <p class="section-body distort-text" data-delay="300">
+                            <span class="line">你刚刚穿越了五种畸变：空间弯曲、形态流变、光谱分裂、弹性回弹、</span>
+                            <span class="line">以及此刻——一切回归平静。畸变是秩序与混沌之间的呼吸。</span>
+                        </p>
+                        <div class="epilogue-cta distort-text" data-delay="480">
+                            <span class="line">
+                                <a href="../../index.html" class="cta-glass">
+                                    <span>返回数字花园</span>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

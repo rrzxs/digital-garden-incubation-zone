@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-26",
+  "name": "scroll-distortion",
+  "description": "滚动驱动的畸变模糊视觉叙事页",
+  "tagline": "滚动驱动的畸变模糊视觉叙事页",
+  "interaction": "围绕 scroll-distortion 构建完整的高阶微交互体验。",
+  "directory": "seeds/scroll-distortion/",
+  "status": "incubated"
+}

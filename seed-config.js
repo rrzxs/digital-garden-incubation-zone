@@ -410,6 +410,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Distortion 滚动畸变',
+      description: '沉浸式滚动畸变体验。滚动速度驱动五种非线性畸变：空间弯曲、形态流变、色散光棱、弹性网格、涟漪波场，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/scroll-distortion/index.html',
+      tags: ['Interactive', 'Scroll', 'Distortion', 'Micro-interaction'],
+      icon: '⋫',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

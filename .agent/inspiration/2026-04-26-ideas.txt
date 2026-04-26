@@ -1,0 +1,6 @@
+clip-scatter-menu - clip-path卡片散射式弹出菜单交互
+shader-sketchpad - 实时水彩画风 shader 绘画板
+procedural-terrain - 程序化地形生成与漫游探索器
+scroll-distortion - 滚动驱动的畸变模糊视觉叙事页
+layered-storyteller - 滚动节奏分层场景沉浸式故事工具
+shader-playground - 可视化调参的 shader 实验与分享台
