@@ -25,3 +25,4 @@ motion-reel
 scroll-chapter
 terrain-walker
 scroll-distortion
+coordinate-cursor

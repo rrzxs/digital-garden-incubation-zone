@@ -420,6 +420,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Coordinate Cursor 坐标光标',
+      description: '沉浸式非线性坐标空间体验。光标实时扭曲网格空间，三种扰动模式（扭曲/涟漪/磁力），轨迹流、速度向量与点击涟漪，4种氛围配色',
+      path: '/seed/seeds/coordinate-cursor/index.html',
+      tags: ['Interactive', 'Grid', 'Coordinate', 'Micro-interaction'],
+      icon: '⊛',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

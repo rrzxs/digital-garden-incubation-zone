@@ -1,0 +1,6 @@
+clip-scatter-menu - 裁剪遮罩飞散式交互动画菜单
+fire-independence - 资产增长路径可视化计算器
+watercolor-render - 可交互的水彩画风格 WebGL 场景
+shader-lens - 实时扭曲模糊与RGB偏移滤镜透镜
+coordinate-cursor - 坐标系自定义光标与轨迹追踪
+scroll-moon-voyage - 滚动驱动的月球探索沉浸叙事

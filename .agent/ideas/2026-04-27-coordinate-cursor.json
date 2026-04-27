@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-27",
+  "name": "coordinate-cursor",
+  "description": "坐标系自定义光标与轨迹追踪",
+  "tagline": "Your cursor, coordinate-coded.",
+  "interaction": "光标被替换为实时显示X/Y坐标的自定义十字准星，移动时留下带有坐标标注的渐隐轨迹。用户可以通过控制面板自定义坐标系原点、网格密度和轨迹样式，所有鼠标路径将被实时渲染为可导出的坐标地图。",
+  "directory": "seeds/coordinate-cursor/",
+  "status": "incubated"
+}
