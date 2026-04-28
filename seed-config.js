@@ -440,6 +440,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Ink Spread Menu 墨韵菜单',
+      description: '沉浸式墨韵展开导航菜单。点击画布任意位置墨滴扩散，径向菜单从墨迹中浮现，多层涟漪环 + 不规则墨斑 + 粒子迸射 + 连接线辐射，4种氛围配色',
+      path: '/seed/seeds/ink-spread-menu/index.html',
+      tags: ['Interactive', 'Menu', 'Animation', 'Micro-interaction'],
+      icon: '墨',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

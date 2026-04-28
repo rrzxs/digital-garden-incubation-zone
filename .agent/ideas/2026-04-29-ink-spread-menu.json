@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-29",
+  "name": "ink-spread-menu",
+  "description": "墨迹扩散式菜单展开交互",
+  "tagline": "Ink Bleeds, Menus Breathe.",
+  "interaction": "点击菜单按钮时，一道墨滴从中心溅落，随后以流体模拟的方式向四周晕染扩散，每个菜单项如同墨迹渗透纸面般从模糊到清晰地浮现在扩散路径上。选择完成后，墨迹如宣纸吸水般从边缘向中心迅速消退，留下干净的界面。整个过程模拟真实墨水在纸张纤维中毛细扩散的物理质感。",
+  "directory": "seeds/ink-spread-menu/",
+  "status": "incubated"
+}

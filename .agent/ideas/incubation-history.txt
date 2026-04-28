@@ -27,3 +27,4 @@ terrain-walker
 scroll-distortion
 coordinate-cursor
 crowd-choreography
+ink-spread-menu
