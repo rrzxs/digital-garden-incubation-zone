@@ -430,6 +430,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Crowd Choreography 群舞编排',
+      description: '沉浸式群体编排交互体验。Boid 群集算法驱动粒子群落模拟，6种编舞队形（Flock/Spiral/Grid/Wave/Circle/Scatter）+ 脉冲冲击波 + 粒子尾迹，4种氛围配色',
+      path: '/seed/seeds/crowd-choreography/index.html',
+      tags: ['Interactive', 'Simulation', 'Boid', 'Micro-interaction'],
+      icon: '⊛',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

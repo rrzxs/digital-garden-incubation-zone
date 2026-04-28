@@ -1,0 +1,6 @@
+clip-menu-playground - 交互式缓动动画调试器，实时预览clip-path与反向动效
+financial-independence-calc - 投资资产可视化计算器，预测财务自由时间线
+procedural-terrain - WebGPU驱动的无限程序化地形与交互式植被生成器
+watercolor-world - 水彩风格NPR着色器场景，沉浸式冥想互动体验
+distortion-lab - 模糊/扭曲/运动视觉参数实时调节与效果合成工具
+crowd-choreography - 可控节奏的像素角色群体动画编排器

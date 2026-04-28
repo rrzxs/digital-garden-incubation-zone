@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-28",
+  "name": "crowd-choreography",
+  "description": "可控节奏的像素角色群体动画编排器",
+  "tagline": "Command the Crowd, Frame by Frame.",
+  "interaction": "使用者通过点击网格放置像素角色并设定其动作序列（站立、行走、跳跃、挥手），可调控全局 BPM 节拍让所有角色按统一韵律同步表演。支持分组编排——不同组群可被赋予不同节拍偏移与动作序列，从而在统一节奏中制造丰富的错位与层次感，形成一场由使用者指挥的像素群体舞蹈。",
+  "directory": "seeds/crowd-choreography/",
+  "status": "incubated"
+}

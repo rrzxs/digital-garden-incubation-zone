@@ -26,3 +26,4 @@ scroll-chapter
 terrain-walker
 scroll-distortion
 coordinate-cursor
+crowd-choreography

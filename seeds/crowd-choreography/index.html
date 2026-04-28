@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crowd Choreography · 群舞编排</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="stage"></canvas>
+
+  <div class="ambient-layer">
+    <div class="ambient-orb orb-a"></div>
+    <div class="ambient-orb orb-b"></div>
+    <div class="ambient-orb orb-c"></div>
+    <div class="noise-film"></div>
+  </div>
+
+  <header class="glass-header" id="header">
+    <div class="header-inner">
+      <a href="../../index.html" class="back-link">
+        <span class="back-arrow">←</span>
+        <span class="back-label">Digital Garden</span>
+      </a>
+      <div class="header-title-group">
+        <h1 class="header-title">Crowd Choreography</h1>
+        <span class="header-subtitle">群舞编排</span>
+      </div>
+      <div class="header-stats" id="header-stats">
+        <span class="stat-pill" id="agent-count-pill">
+          <span class="stat-dot"></span>
+          <span class="stat-val" id="agent-count-val">0</span>
+          <span class="stat-lbl">agents</span>
+        </span>
+        <span class="stat-pill">
+          <span class="stat-dot fps"></span>
+          <span class="stat-val" id="fps-val">60</span>
+          <span class="stat-lbl">fps</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <aside class="glass-panel control-panel" id="control-panel">
+    <div class="panel-header">
+      <span class="panel-icon">◈</span>
+      <span class="panel-title">编舞控制台</span>
+      <button class="panel-toggle" id="panel-toggle" aria-label="Toggle panel">
+        <span class="toggle-icon">▾</span>
+      </button>
+    </div>
+
+    <div class="panel-body" id="panel-body">
+      <section class="ctrl-group">
+        <h3 class="ctrl-label">舞型 Formation</h3>
+        <div class="formation-grid" id="formation-grid">
+          <button class="formation-btn active" data-formation="flock">
+            <span class="fm-icon">⊛</span>
+            <span class="fm-name">Flock</span>
+          </button>
+          <button class="formation-btn" data-formation="spiral">
+            <span class="fm-icon">◎</span>
+            <span class="fm-name">Spiral</span>
+          </button>
+          <button class="formation-btn" data-formation="grid">
+            <span class="fm-icon">⊞</span>
+            <span class="fm-name">Grid</span>
+          </button>
+          <button class="formation-btn" data-formation="wave">
+            <span class="fm-icon">≋</span>
+            <span class="fm-name">Wave</span>
+          </button>
+          <button class="formation-btn" data-formation="circle">
+            <span class="fm-icon">○</span>
+            <span class="fm-name">Circle</span>
+          </button>
+          <button class="formation-btn" data-formation="scatter">
+            <span class="fm-icon">✦</span>
+            <span class="fm-name">Scatter</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <h3 class="ctrl-label">氛围配色 Palette</h3>
+        <div class="palette-row" id="palette-row">
+          <button class="palette-btn active" data-palette="aurora" title="Aurora">
+            <span class="swatch" style="background: linear-gradient(135deg, #06b6d4, #8b5cf6);"></span>
+          </button>
+          <button class="palette-btn" data-palette="ember" title="Ember">
+            <span class="swatch" style="background: linear-gradient(135deg, #f97316, #ef4444);"></span>
+          </button>
+          <button class="palette-btn" data-palette="jade" title="Jade">
+            <span class="swatch" style="background: linear-gradient(135deg, #10b981, #06b6d4);"></span>
+          </button>
+          <button class="palette-btn" data-palette="violet" title="Violet">
+            <span class="swatch" style="background: linear-gradient(135deg, #a855f7, #ec4899);"></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <h3 class="ctrl-label">群落数量 Agents</h3>
+        <div class="slider-row">
+          <input type="range" class="range-input" id="agent-slider" min="50" max="800" value="300" step="10">
+          <span class="range-val" id="agent-slider-val">300</span>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <h3 class="ctrl-label">凝聚力 Cohesion</h3>
+        <div class="slider-row">
+          <input type="range" class="range-input" id="cohesion-slider" min="0" max="100" value="50">
+          <span class="range-val" id="cohesion-slider-val">50</span>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <h3 class="ctrl-label">游弋半径 Wander</h3>
+        <div class="slider-row">
+          <input type="range" class="range-input" id="wander-slider" min="0" max="100" value="40">
+          <span class="range-val" id="wander-slider-val">40</span>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <h3 class="ctrl-label">尾迹 Trail</h3>
+        <div class="slider-row">
+          <input type="range" class="range-input" id="trail-slider" min="0" max="100" value="60">
+          <span class="range-val" id="trail-slider-val">60</span>
+        </div>
+      </section>
+
+      <div class="ctrl-actions">
+        <button class="action-btn" id="btn-reset" title="Reset simulation">
+          <span class="action-icon">↺</span>
+          <span class="action-text">重置</span>
+        </button>
+        <button class="action-btn" id="btn-pause" title="Pause / Resume">
+          <span class="action-icon" id="pause-icon">⏸</span>
+          <span class="action-text" id="pause-text">暂停</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="glass-hint" id="hint-bar">
+    <span class="hint-icon">✦</span>
+    <span class="hint-text">移动鼠标引导群舞 · 点击产生脉冲冲击波 · 按 Space 暂停 · 按 R 重置</span>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
