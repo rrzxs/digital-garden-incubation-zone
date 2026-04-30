@@ -1,0 +1,9 @@
+{
+  "date": "2026-04-30",
+  "name": "crowd-sync-playground",
+  "description": "角色群舞节奏同步控制器",
+  "tagline": "Move Together, Feel the Beat.",
+  "interaction": "Users control a troupe of characters, syncing their dance moves to a shared rhythm timeline. Drag, tap, and slide to adjust each character's timing and choreography, creating harmonious group performances through real-time collaborative beat-matching.",
+  "directory": "seeds/crowd-sync-playground/",
+  "status": "incubated"
+}

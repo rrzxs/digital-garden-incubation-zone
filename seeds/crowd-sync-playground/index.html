@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crowd Sync Playground — 群体同步游乐场</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="fluid-bg"></canvas>
+
+  <div class="app">
+    <header class="app-header">
+      <div class="header-left">
+        <h1 class="logo">Crowd Sync</h1>
+        <span class="logo-sub">Playground</span>
+      </div>
+      <div class="header-right">
+        <div class="stat-pill" id="stat-sync">
+          <span class="stat-label">Sync Rate</span>
+          <span class="stat-value" id="sync-rate">0%</span>
+        </div>
+        <div class="stat-pill" id="stat-count">
+          <span class="stat-label">Agents</span>
+          <span class="stat-value" id="agent-count">80</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="canvas-area">
+      <canvas id="crowd-canvas"></canvas>
+
+      <div class="sync-wave-overlay" id="sync-wave"></div>
+
+      <div class="cursor-field" id="cursor-field"></div>
+    </main>
+
+    <footer class="controls">
+      <div class="control-group">
+        <span class="group-label">Mode</span>
+        <div class="btn-group" id="mode-group">
+          <button class="ctrl-btn active" data-mode="swarm">
+            <span class="btn-icon">◎</span>
+            <span class="btn-text">Swarm</span>
+          </button>
+          <button class="ctrl-btn" data-mode="orbit">
+            <span class="btn-icon">◉</span>
+            <span class="btn-text">Orbit</span>
+          </button>
+          <button class="ctrl-btn" data-mode="fountain">
+            <span class="btn-icon">△</span>
+            <span class="btn-text">Fountain</span>
+          </button>
+          <button class="ctrl-btn" data-mode="breath">
+            <span class="btn-icon">◯</span>
+            <span class="btn-text">Breath</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <span class="group-label">Sync Pulse</span>
+        <button class="ctrl-btn pulse-btn" id="pulse-btn">
+          <span class="btn-icon">◈</span>
+          <span class="btn-text">Pulse</span>
+        </button>
+      </div>
+
+      <div class="control-group">
+        <span class="group-label">Palette</span>
+        <div class="btn-group" id="palette-group">
+          <button class="ctrl-btn palette-btn active" data-palette="aurora">
+            <span class="swatch swatch-aurora"></span>
+            <span class="btn-text">Aurora</span>
+          </button>
+          <button class="ctrl-btn palette-btn" data-palette="ember">
+            <span class="swatch swatch-ember"></span>
+            <span class="btn-text">Ember</span>
+          </button>
+          <button class="ctrl-btn palette-btn" data-palette="ocean">
+            <span class="swatch swatch-ocean"></span>
+            <span class="btn-text">Ocean</span>
+          </button>
+          <button class="ctrl-btn palette-btn" data-palette="void">
+            <span class="swatch swatch-void"></span>
+            <span class="btn-text">Void</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="control-group slider-group">
+        <span class="group-label">Agents <span id="agent-slider-val">80</span></span>
+        <input type="range" id="agent-slider" min="20" max="300" value="80" />
+      </div>
+
+      <div class="control-group slider-group">
+        <span class="group-label">Cohesion <span id="cohesion-val">0.50</span></span>
+        <input type="range" id="cohesion-slider" min="0" max="100" value="50" />
+      </div>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

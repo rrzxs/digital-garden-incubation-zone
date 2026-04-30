@@ -1,0 +1,6 @@
+clip-scatter-menu - 裁剪路径卡片飞散式交互菜单
+keycap-depth-stage - 键帽深度弹出动画演示工具
+watercolor-shader-paint - 水彩NPR风格实时涂鸦画板
+ink-bleed-overlay - 墨迹晕染展开式全屏覆盖层
+crowd-sync-playground - 角色群舞节奏同步控制器
+scroll-chapter-world - 滚动驱动的3D分镜漫游器

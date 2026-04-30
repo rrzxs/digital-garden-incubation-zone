@@ -28,3 +28,4 @@ scroll-distortion
 coordinate-cursor
 crowd-choreography
 ink-spread-menu
+crowd-sync-playground

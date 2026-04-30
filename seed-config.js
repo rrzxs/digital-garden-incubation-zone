@@ -450,6 +450,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Crowd Sync Playground 群体同步游乐场',
+      description: '沉浸式群体同步交互体验场。Boid 群集物理驱动粒子涌现行为，4种运动模式 + 同步脉冲冲击波 + 光标力场 + 粒子尾迹连接线，4种氛围配色',
+      path: '/seed/seeds/crowd-sync-playground/index.html',
+      tags: ['Interactive', 'Simulation', 'Boid', 'Micro-interaction'],
+      icon: '⊛',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
