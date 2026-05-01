@@ -460,6 +460,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Infinite Canvas 无限画布',
+      description: '沉浸式无限画布地图体验。在无尽空间中创建节点、建立连接，构建思想地图。支持拖拽平移、缩放、节点编辑、贝塞尔曲线连接与4种氛围配色',
+      path: '/seed/seeds/infinite-canvas-map/index.html',
+      tags: ['Interactive', 'Canvas', 'Map', 'Micro-interaction'],
+      icon: '⊛',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

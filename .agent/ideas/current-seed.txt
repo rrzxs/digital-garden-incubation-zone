@@ -1,1 +1,1 @@
-crowd-sync-playground
+infinite-canvas-map

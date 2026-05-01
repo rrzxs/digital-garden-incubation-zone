@@ -29,3 +29,4 @@ coordinate-cursor
 crowd-choreography
 ink-spread-menu
 crowd-sync-playground
+infinite-canvas-map

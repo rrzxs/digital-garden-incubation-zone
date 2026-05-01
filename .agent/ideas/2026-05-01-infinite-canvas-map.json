@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-01",
+  "name": "infinite-canvas-map",
+  "description": "无限画布概念节点漫游器",
+  "tagline": "**Wander Ideas Without Borders.**",
+  "interaction": "在一块无限延展的画布上自由平移与缩放，点击任意概念节点即可展开关联子网络，以直觉化的手势在知识星图间漫游，让思路自然生长而非被页面边界打断。",
+  "directory": "seeds/infinite-canvas-map/",
+  "status": "incubated"
+}

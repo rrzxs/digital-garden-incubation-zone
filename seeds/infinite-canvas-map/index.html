@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Canvas Map — 无限画布</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <header class="app-header">
+        <div class="brand-group">
+            <h1 class="brand-title">Infinite<span class="brand-dot">.</span>Canvas</h1>
+            <p class="brand-subtitle">无限画布 — 自由漫游你的思想地图</p>
+        </div>
+    </header>
+
+    <aside class="nav-panel glass-panel" id="nav-panel">
+        <div class="nav-header">
+            <span class="nav-label">节点导航</span>
+            <button class="nav-collapse-btn" id="nav-collapse-btn" aria-label="折叠导航">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+        </div>
+        <div class="nav-list" id="nav-list"></div>
+    </aside>
+
+    <div class="toolbar glass-panel" id="toolbar">
+        <button class="tool-btn active" data-tool="pan" title="平移 (V)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="add" title="添加节点 (N)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="connect" title="连接节点 (C)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </button>
+        <div class="tool-divider"></div>
+        <button class="tool-btn" data-tool="delete" title="删除 (X)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+        </button>
+    </div>
+
+    <div class="zoom-panel glass-panel">
+        <button class="zoom-btn" id="zoom-out" title="缩小">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg>
+        </button>
+        <span class="zoom-label mono" id="zoom-label">100%</span>
+        <button class="zoom-btn" id="zoom-in" title="放大">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+    </div>
+
+    <div class="coords-panel glass-panel mono" id="coords-panel">
+        <span class="coord-item">X <span id="coord-x">0</span></span>
+        <span class="coord-sep">·</span>
+        <span class="coord-item">Y <span id="coord-y">0</span></span>
+    </div>
+
+    <div class="palette-panel glass-panel" id="palette-panel">
+        <button class="palette-swatch active" data-palette="obsidian" title="黑曜石" style="background: linear-gradient(135deg, #6366f1, #8b5cf6)"></button>
+        <button class="palette-swatch" data-palette="aurora" title="极光" style="background: linear-gradient(135deg, #10b981, #34d399)"></button>
+        <button class="palette-swatch" data-palette="ember" title="余烬" style="background: linear-gradient(135deg, #f59e0b, #ef4444)"></button>
+        <button class="palette-swatch" data-palette="frost" title="冰霜" style="background: linear-gradient(135deg, #67e8f9, #a5b4fc)"></button>
+    </div>
+
+    <div class="help-hint glass-panel" id="help-hint">
+        <span>拖拽平移 · 滚轮缩放 · 双击添加节点</span>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="node-editor glass-panel" id="node-editor" hidden>
+        <div class="editor-header">
+            <span class="editor-title">编辑节点</span>
+            <button class="editor-close" id="editor-close">&times;</button>
+        </div>
+        <div class="editor-body">
+            <label class="editor-label">名称</label>
+            <input class="editor-input" id="editor-name" type="text" placeholder="节点名称..." maxlength="40">
+            <label class="editor-label">描述</label>
+            <textarea class="editor-textarea" id="editor-desc" placeholder="节点描述..." rows="3" maxlength="200"></textarea>
+            <div class="editor-colors">
+                <label class="editor-label">颜色</label>
+                <div class="color-options" id="color-options"></div>
+            </div>
+        </div>
+        <div class="editor-footer">
+            <button class="editor-btn editor-btn-save" id="editor-save">保存</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
