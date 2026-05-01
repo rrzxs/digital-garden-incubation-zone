@@ -470,6 +470,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Keystroke Depth 按键深度',
+      description: '沉浸式按键力场体验。击键触发多层涟漪力场、字符粒子迸射、流场偏转与节奏感知，营造击键即创造的沉浸感',
+      path: '/seed/seeds/keystroke-depth/index.html',
+      tags: ['Interactive', 'Keystroke', 'Micro-interaction', 'Animation'],
+      icon: '⌨',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-02",
+  "name": "keystroke-depth",
+  "description": "键帽动画与立体深度效果演示器",
+  "tagline": "**Depth at Your Fingertips**",
+  "interaction": "Each keystroke triggers a real-time 3D parallax animation on the keycap, simulating physical depth as it compresses and rebounds. Shadows, lighting, and perspective shift dynamically based on press intensity, creating a tactile illusion of mechanical key travel rendered entirely in the browser.",
+  "directory": "seeds/keystroke-depth/",
+  "status": "incubated"
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keystroke Depth 按键深度 - 沉浸式按键力场体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Keystroke<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">按键力场 · 击键即创造</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-chip">
+                    <span class="stat-icon">⟟</span>
+                    <span class="stat-val" id="stat-keys">0</span>
+                    <span class="stat-label">击键</span>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-icon">◎</span>
+                    <span class="stat-val" id="stat-depth">0</span>
+                    <span class="stat-label">深度</span>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-icon">∿</span>
+                    <span class="stat-val" id="stat-wave">0</span>
+                    <span class="stat-label">涟漪</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <div class="grid-lines"></div>
+            <canvas id="main-canvas"></canvas>
+
+            <div class="floating-text" id="floating-text"></div>
+
+            <div class="center-ring" id="center-ring">
+                <div class="ring-pulse"></div>
+                <div class="ring-inner">
+                    <span class="ring-char" id="ring-char">?</span>
+                </div>
+            </div>
+
+            <div class="key-trail" id="key-trail"></div>
+
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">按下任意键 · 创造你的力场涟漪</span>
+            </div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">涟漪力</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-force" min="20" max="100" value="60" class="slider">
+                    <span class="slider-val" id="val-force">0.60</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">衰减</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-decay" min="30" max="95" value="70" class="slider">
+                    <span class="slider-val" id="val-decay">0.70</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">粒子</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-particles" min="4" max="24" value="12" class="slider">
+                    <span class="slider-val" id="val-particles">12</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="obsidian" aria-label="黑曜石">
+                    <span class="swatch" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899)"></span>
+                </button>
+                <button class="palette-btn" data-palette="aurora" aria-label="极光">
+                    <span class="swatch" style="background:linear-gradient(135deg,#00d4ff,#a855f7,#00ff88)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+                </button>
+                <button class="palette-btn" data-palette="frost" aria-label="霜降">
+                    <span class="swatch" style="background:linear-gradient(135deg,#67e8f9,#a5b4fc,#e0e7ff)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btn-clear">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"/></svg>
+                    <span>清空</span>
+                </button>
+                <button class="action-btn primary" id="btn-fullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3"/></svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
