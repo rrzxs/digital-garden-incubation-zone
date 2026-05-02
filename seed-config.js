@@ -480,6 +480,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Watercolor 水彩秘境',
+      description: 'Kuwahara 水彩 NPR 风格 + 鼠标交互 + 环境音效。移动光标即可看到笔触绽放与颜料晕染，营造 ASMR 般的沉浸体验',
+      path: '/seed/seeds/watercolor/index.html',
+      tags: ['Interactive', 'NPR', 'Watercolor', 'Audio'],
+      icon: '🎨',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

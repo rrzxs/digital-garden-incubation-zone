@@ -1,0 +1,12 @@
+exif-lens - 拖入照片即可可视化EXIF元数据与地图轨迹
+infinite-canvas - 无限画布式自由缩放图片/笔记陈列板
+shader-playground - 实时编辑GLSL着色器并预览渲染效果
+watercolor-scene - 可交互的水彩风格WebGL沉浸冥想场景
+keystroke-visualizer - 键盘敲击实时映射为3D键帽动画与音效
+ink-transition-lab - 模拟墨水扩散/燃烧纸张的WebGL转场生成器
+exif - lens` ← Lorenzo Bocchi Shot on iPhone (WEIGHT 0.97) 提取 EXIF + 地图可视化
+infinite - canvas` ← Gunes Atakan Peksen (WEIGHT 0.97) 无限画布体验
+shader - playground` ← 4WIDE (WEIGHT 0.93) 扭曲/模糊/RGB Shift 着色器实验
+watercolor - scene` ← Susurrus (WEIGHT 0.93) Kuwahara 水彩 NPR + 交互 + 音效
+keystroke - visualizer` ← Typer (WEIGHT 0.97) 键帽动画与深度效果
+ink-transition - lab` ← Joseph Santamaria Portfolio (WEIGHT 0.93) 墨水扩散着色器转场

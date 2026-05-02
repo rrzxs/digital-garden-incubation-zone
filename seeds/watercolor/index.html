@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watercolor 水彩秘境 — 数字花园</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 返回数字花园主页 -->
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <!-- 动态流体网格渐变背景 -->
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+
+    <!-- 水彩画布主区域 -->
+    <main class="glass-container watercolor-scene">
+        <header class="panel-header">
+            <h1 class="brand-title">Watercolor.</h1>
+            <p class="brand-subtitle">Where watercolor breathes with your touch.</p>
+        </header>
+
+        <!-- 水彩画布 -->
+        <section class="canvas-area">
+            <canvas id="watercolor-canvas"></canvas>
+            <div class="canvas-overlay" id="canvas-overlay">
+                <span class="hint-text">移动光标，体验水彩晕染</span>
+            </div>
+        </section>
+
+        <!-- 底部控制区 -->
+        <footer class="panel-controls">
+            <div class="color-palette" id="color-palette">
+                <button class="color-swatch active" data-color="indigo" style="background: #6366f1;" aria-label="靛蓝"></button>
+                <button class="color-swatch" data-color="rose" style="background: #f43f5e;" aria-label="玫瑰红"></button>
+                <button class="color-swatch" data-color="emerald" style="background: #10b981;" aria-label="翠绿"></button>
+                <button class="color-swatch" data-color="amber" style="background: #f59e0b;" aria-label="琥珀"></button>
+                <button class="color-swatch" data-color="violet" style="background: #8b5cf6;" aria-label="紫罗兰"></button>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="icon-btn tooltip-wrapper" id="clear-btn" aria-label="清空画布">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                    </svg>
+                    <span class="tooltip">清空</span>
+                </button>
+                
+                <!-- 音效开关 -->
+                <button class="icon-btn tooltip-wrapper active" id="sound-toggle" aria-label="切换音效">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                    </svg>
+                    <span class="tooltip">环境音</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

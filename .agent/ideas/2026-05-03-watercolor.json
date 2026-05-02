@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-03",
+  "name": "watercolor",
+  "description": "scene` ← Susurrus (WEIGHT 0.93) Kuwahara 水彩 NPR + 交互 + 音效",
+  "tagline": "Where watercolor breathes with your touch.",
+  "interaction": "The scene renders in a real-time Kuwahara watercolor NPR style that responds to cursor movement — strokes bloom and pigment bleeds outward as you glide across the canvas, each gesture accompanied by soft, ASMR-like susurrus sound effects that shift in timbre with your speed and pressure, making the entire page feel like a living, whispering watercolor painting.",
+  "directory": "seeds/watercolor/",
+  "status": "incubated"
+}
