@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-04",
+  "name": "bill-split",
+  "description": "智能账单分摊，支持多人多种分摊规则与实时结算预览",
+  "tagline": "Split smart, settle easy.",
+  "interaction": "Users drag item cards onto diners' avatars to assign dishes, with real-time per-person totals updating instantly. Custom split rules—equal, percentage, or exact amounts—can be mixed within a single bill. A shared live preview lets all participants see and confirm their share before finalizing.",
+  "directory": "seeds/bill-split/",
+  "status": "planted"
+}

@@ -490,6 +490,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Bill Split 智能分摊',
+      description: '智能账单分摊，支持多人多种分摊规则与实时结算预览。拖拽菜品至用餐者头像即可分配，均分/自定义模式混合使用。',
+      path: '/seed/seeds/bill-split/index.html',
+      tags: ['Tool', 'Bill Split', 'Interactive'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

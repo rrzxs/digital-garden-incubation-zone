@@ -32,3 +32,4 @@ crowd-sync-playground
 infinite-canvas-map
 keystroke-depth
 watercolor
+bill-split
