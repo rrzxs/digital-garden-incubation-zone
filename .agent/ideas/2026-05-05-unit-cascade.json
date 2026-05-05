@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-05",
+  "name": "unit-cascade",
+  "description": "多单位实时换算工具，修改任一字段自动级联更新所有关联数值",
+  "tagline": "Change one, cascade all.",
+  "interaction": "用户点击任意单位字段并输入数值，所有关联单位字段即刻实时更新，形成流畅的级联换算体验。每个字段既是输入也是输出，无需切换模式。多单位之间的关系以动态数值流动呈现，让换算直觉化。",
+  "directory": "seeds/unit-cascade/",
+  "status": "incubated"
+}

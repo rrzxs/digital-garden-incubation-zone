@@ -1,0 +1,5 @@
+pomodoro-ambient - 番茄钟专注计时器，每个番茄伴随渐变氛围背景变化与白噪音节奏
+palette-from-photo - 从任意上传照片中提取主色板并生成可直接复用的 CSS 变量代码
+year-progress - 以极简风格展示今年已过天数的实时进度条与百分比
+markdown-live - 左右分栏 Markdown 实时编辑预览器，支持导出 HTML 和复制富文本
+unit-cascade - 多单位实时换算工具，修改任一字段自动级联更新所有关联数值

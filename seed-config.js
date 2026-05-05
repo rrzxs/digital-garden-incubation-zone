@@ -500,6 +500,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Unit Cascade 级联单元',
+      description: '沉浸式级联微交互体验场。点击触发冲击波级联坍缩、力场排斥、波浪起伏，3种模式 × 4种氛围配色，重力弹性碰撞物理模拟',
+      path: '/seed/seeds/unit-cascade/index.html',
+      tags: ['Interactive', 'Physics', 'Cascade', 'Micro-interaction'],
+      icon: '⊞',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
