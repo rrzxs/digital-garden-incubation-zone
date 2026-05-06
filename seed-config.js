@@ -510,6 +510,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'EXIF Insight 照片灵魂透视',
+      description: '沉浸式照片 EXIF 元数据查看器。拖入照片即刻揭示相机参数、快门光圈、GPS 坐标、RGB 直方图与主导色彩分析，4种氛围配色',
+      path: '/seed/seeds/exif/index.html',
+      tags: ['Photo', 'EXIF', 'Tool', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

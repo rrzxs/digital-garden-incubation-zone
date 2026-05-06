@@ -34,3 +34,4 @@ keystroke-depth
 watercolor
 bill-split
 unit-cascade
+exif

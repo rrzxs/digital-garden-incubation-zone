@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-06",
+  "name": "exif",
+  "description": "atlas` ← One Page Love: Lorenzo Bocchi EXIF photography (0.97) — 抽象出纯前端EXIF解析+地图可视化工具",
+  "tagline": "**Your photos, mapped by metadata.**",
+  "interaction": "将一张照片拖入页面，工具即时在前端解析其 EXIF 数据（相机型号、镜头、快门、光圈、GPS 坐标等），并将地理信息定位标注在交互式地图上。用户可批量拖入多张照片，地图上聚合并呈现拍摄轨迹，点击任意标记即可展开该照片的完整 EXIF 参数面板，形成一个无需上传、纯浏览器端的"照片元数据地图集"。",
+  "directory": "seeds/exif/",
+  "status": "incubated"
+}

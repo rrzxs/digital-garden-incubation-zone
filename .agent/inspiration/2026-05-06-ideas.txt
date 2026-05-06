@@ -1,0 +1,12 @@
+voxel-choreographer - 像素角色动画编排器
+scene-snap-walker - 3D场景逐帧漫游引擎
+ink-bleed-reveal - 墨渍扩散式转场效果生成器
+exif-atlas - 照片元数据可视化地图册
+audio-pulse-shader - 音频驱动流体着色器合成器
+pixel-sprite-timeline - 像素精灵帧动画时间轴编辑器
+voxel - choreographer` ← Codrops: Claude AI mascot animation (WEIGHT 0.93) — 抽象出像素角色+GSAP时间轴编排工具
+scene-snap - walker` ← Awwwards: Where Worlds Take Shape (WEIGHT 1.00) + Codrops: scroll-driven 3D world (0.93) — 抽象出snap-scroll+3D场景切换引擎
+ink-bleed - reveal` ← Codrops: portfolio ink bleed shader (0.93) — 抽象出基于fBM噪声的转场效果生成工具
+exif - atlas` ← One Page Love: Lorenzo Bocchi EXIF photography (0.97) — 抽象出纯前端EXIF解析+地图可视化工具
+audio-pulse - shader` ← Awwwards: Astrodither audio-reactive fluid sim (1.00) — 抽象出麦克风/Web Audio驱动的WebGL着色器合成器
+pixel-sprite - timeline` ← Codrops: sprite frame animation with dynamic delays (0.93) — 抽象出逐帧精灵动画的GSAP时间轴编辑器
