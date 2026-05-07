@@ -520,6 +520,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Scene Twilight 暮光剧场',
+      description: '沉浸式暮光场景交互体验。多层视差景物、闪烁星空、萤火虫粒子、极光模拟、流星效果与水面涟漪，时间滑块调节氛围，4种配色',
+      path: '/seed/seeds/scene-twilight/index.html',
+      tags: ['Interactive', 'Scene', 'Animation', 'Micro-interaction'],
+      icon: '🌆',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

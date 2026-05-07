@@ -1,0 +1,6 @@
+pixel-stage - 像素角色逐帧动画编排器
+soundscape-morph - 声纹驱动流体形态可视化
+scene-twilight - 日夜交替场景主题切换器
+geoshot-map - 照片地理分布可视化地图
+ink-reveal-stage - 墨迹扩散页面过渡工坊
+clip-path-reel - 裁切路径动态遮罩动画库

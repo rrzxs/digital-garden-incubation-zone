@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scene Twilight 暮光剧场 - 沉浸式场景交互体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+
+    <canvas id="star-canvas"></canvas>
+    <canvas id="aurora-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="click-ripple" id="click-ripple"></div>
+
+    <main class="app-shell" id="app-shell">
+        <nav class="scene-nav" id="scene-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">🌆</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Scene Twilight<span class="brand-dot">.</span></h1>
+                    <span class="nav-subtitle">暮光剧场 — 沉浸式场景交互</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="golden-hour" aria-label="金色黄昏">黄昏</button>
+                    <button class="theme-btn" data-theme="deep-dusk" aria-label="深暮">深暮</button>
+                    <button class="theme-btn" data-theme="northern-glow" aria-label="北境极光">极光</button>
+                    <button class="theme-btn" data-theme="void-twilight" aria-label="虚空暮色">虚空</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <section class="scene-stage" id="scene-stage">
+            <div class="horizon-line" id="horizon-line"></div>
+
+            <div class="scene-layers" id="scene-layers">
+                <div class="layer layer-sky" data-depth="0.05">
+                    <div class="celestial-body" id="celestial-body">
+                        <div class="sun-core"></div>
+                        <div class="sun-glow sun-glow-inner"></div>
+                        <div class="sun-glow sun-glow-outer"></div>
+                        <div class="sun-rays" id="sun-rays"></div>
+                    </div>
+                </div>
+
+                <div class="layer layer-clouds" data-depth="0.1">
+                    <div class="cloud cloud-1" id="cloud-1">
+                        <div class="cloud-puff"></div>
+                        <div class="cloud-puff"></div>
+                        <div class="cloud-puff"></div>
+                    </div>
+                    <div class="cloud cloud-2" id="cloud-2">
+                        <div class="cloud-puff"></div>
+                        <div class="cloud-puff"></div>
+                    </div>
+                    <div class="cloud cloud-3" id="cloud-3">
+                        <div class="cloud-puff"></div>
+                        <div class="cloud-puff"></div>
+                        <div class="cloud-puff"></div>
+                        <div class="cloud-puff"></div>
+                    </div>
+                </div>
+
+                <div class="layer layer-mountain-far" data-depth="0.15">
+                    <svg class="mountain-svg" viewBox="0 0 1440 200" preserveAspectRatio="none">
+                        <path d="M0,200 L0,140 Q120,60 240,110 Q360,40 480,90 Q600,20 720,80 Q840,30 960,100 Q1080,50 1200,120 Q1320,70 1440,130 L1440,200 Z" class="mountain-far-path"/>
+                    </svg>
+                </div>
+
+                <div class="layer layer-mountain-near" data-depth="0.25">
+                    <svg class="mountain-svg" viewBox="0 0 1440 200" preserveAspectRatio="none">
+                        <path d="M0,200 L0,160 Q180,80 360,130 Q540,60 720,110 Q900,50 1080,120 Q1260,90 1440,150 L1440,200 Z" class="mountain-near-path"/>
+                    </svg>
+                </div>
+
+                <div class="layer layer-trees" data-depth="0.35">
+                    <svg class="trees-svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+                        <path d="M0,120 L0,90 L30,90 L45,40 L60,90 L90,90 L105,50 L120,90 L160,90 L175,30 L190,90 L230,90 L250,55 L270,90 L310,90 L330,35 L350,90 L390,90 L410,45 L430,90 L470,90 L490,25 L510,90 L550,90 L570,50 L590,90 L630,90 L650,30 L670,90 L710,90 L730,55 L750,90 L790,90 L810,40 L830,90 L870,90 L890,50 L910,90 L950,90 L970,35 L990,90 L1030,90 L1050,55 L1070,90 L1110,90 L1130,40 L1150,90 L1190,90 L1210,30 L1230,90 L1270,90 L1290,45 L1310,90 L1350,90 L1370,50 L1390,90 L1440,90 L1440,120 Z" class="trees-path"/>
+                    </svg>
+                </div>
+
+                <div class="layer layer-water" data-depth="0.2">
+                    <div class="water-surface" id="water-surface"></div>
+                    <canvas id="water-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="firefly-container" id="firefly-container"></div>
+        </section>
+
+        <section class="control-dock" id="control-dock">
+            <div class="dock-inner glass-surface">
+                <div class="dock-group">
+                    <span class="dock-label">时间</span>
+                    <input type="range" class="dock-slider" id="time-slider" min="0" max="100" value="35">
+                    <span class="dock-value" id="time-value">暮光</span>
+                </div>
+                <div class="dock-divider"></div>
+                <div class="dock-group">
+                    <span class="dock-label">星空</span>
+                    <button class="dock-toggle active" id="stars-toggle" aria-label="切换星空">
+                        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    </button>
+                </div>
+                <div class="dock-divider"></div>
+                <div class="dock-group">
+                    <span class="dock-label">萤火</span>
+                    <button class="dock-toggle active" id="firefly-toggle" aria-label="切换萤火虫">
+                        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    </button>
+                </div>
+                <div class="dock-divider"></div>
+                <div class="dock-group">
+                    <span class="dock-label">极光</span>
+                    <button class="dock-toggle" id="aurora-toggle" aria-label="切换极光">
+                        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    </button>
+                </div>
+                <div class="dock-divider"></div>
+                <div class="dock-group">
+                    <span class="dock-label">涟漪</span>
+                    <button class="dock-toggle active" id="ripple-toggle" aria-label="切换水面涟漪">
+                        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="scene-footer">
+            <div class="footer-hint">
+                <span class="hint-icon">✦</span>
+                <span class="hint-text">移动光标扰动场景 · 点击触发流星 · 滑块调节暮光时刻</span>
+            </div>
+        </footer>
+    </main>
+
+    <div class="meteor-container" id="meteor-container"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

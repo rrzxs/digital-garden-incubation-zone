@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-07",
+  "name": "scene-twilight",
+  "description": "日夜交替场景主题切换器",
+  "tagline": "Where Day Meets Night",
+  "interaction": "用户拖动地平线滑块，实时驱动整个场景在天光渐变中完成日夜交替——天空色彩、星辰可见度、建筑剪影与氛围灯光均平滑联动过渡。切换过程伴随对应时段的环境音效（鸟鸣→虫鸣），创造沉浸式的时空感知体验。",
+  "directory": "seeds/scene-twilight/",
+  "status": "incubated"
+}
