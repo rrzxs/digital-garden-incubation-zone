@@ -530,6 +530,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Shader Wipe Transitions 着色擦除',
+      description: '沉浸式着色器风格擦除过渡体验。6种 Simplex 噪声场驱动的像素级擦除模式（噪声溶解/涟漪扩散/径向收缩/对角切割/网格裂变/螺旋漩涡），参数调节与4种氛围配色',
+      path: '/seed/seeds/shader-wipe-transitions/index.html',
+      tags: ['Interactive', 'Transition', 'Animation', 'Micro-interaction'],
+      icon: '⌁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

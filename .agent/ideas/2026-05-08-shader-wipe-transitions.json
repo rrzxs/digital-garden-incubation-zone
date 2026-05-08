@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-08",
+  "name": "shader-wipe-transitions",
+  "description": "片段式噪声视频转场生成器",
+  "tagline": "**Slice Reality Into Art**",
+  "interaction": "Users drag across the canvas to control the speed and direction of a fragment-noise wipe transition that dissolves one scene into another through organic, crystalline shards. Adjusting noise scale and fragmentation depth in real-time lets you craft everything from glass-shatter reveals to liquid digital erosion.",
+  "directory": "seeds/shader-wipe-transitions/",
+  "status": "incubated"
+}

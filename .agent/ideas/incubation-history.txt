@@ -36,3 +36,4 @@ bill-split
 unit-cascade
 exif
 scene-twilight
+shader-wipe-transitions

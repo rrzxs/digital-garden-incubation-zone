@@ -1,0 +1,6 @@
+pixel-mascot-studio - 像素吉祥物SVG动画编排器
+exif-globe-walker - 照片EXIF数据在地球上的可视化
+audio-reactive-fluid - 麦克风驱动流体色彩画布
+shader-wipe-transitions - 片段式噪声视频转场生成器
+team-portrait-styler - 统一团队头像风格生成器
+voice-ripple-capsule - 语音留言可视化时间胶囊

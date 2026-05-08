@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shader Wipe Transitions 着色擦除 - 沉浸式过渡体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell" id="app-shell">
+        <nav class="wipe-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">⌁</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Shader Wipe</h1>
+                    <span class="nav-subtitle">沉浸式着色擦除过渡</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <div class="content-area">
+            <div class="viewport-panel">
+                <div class="viewport-label">
+                    <span class="viewport-tag">CANVAS</span>
+                    <span class="viewport-info" id="viewport-info">01 / 04</span>
+                </div>
+                <div class="wipe-viewport" id="wipe-viewport">
+                    <canvas id="wipe-canvas"></canvas>
+                    <div class="scene-overlay" id="scene-overlay">
+                        <div class="scene-content active" data-scene="0">
+                            <div class="scene-badge">01 / 04</div>
+                            <h2 class="scene-headline">擦除即叙事</h2>
+                            <p class="scene-body">每一次过渡不只是页面的切换，而是一场视觉叙事。像素在噪声场中溶解、在涟漪中重生。</p>
+                        </div>
+                        <div class="scene-content" data-scene="1">
+                            <div class="scene-badge">02 / 04</div>
+                            <h2 class="scene-headline">噪声是灵魂</h2>
+                            <p class="scene-body">Simplex 噪声场赋予每个像素独特的运动轨迹。没有两次擦除是完全相同的，如同雪花般独一无二。</p>
+                        </div>
+                        <div class="scene-content" data-scene="2">
+                            <div class="scene-badge">03 / 04</div>
+                            <h2 class="scene-headline">六种擦除美学</h2>
+                            <p class="scene-body">噪声溶解、涟漪扩散、径向收缩、对角切割、网格裂变、螺旋漩涡 — 每一种都是独特的视觉诗篇。</p>
+                        </div>
+                        <div class="scene-content" data-scene="3">
+                            <div class="scene-badge">04 / 04</div>
+                            <h2 class="scene-headline">光标即画笔</h2>
+                            <p class="scene-body">移动光标扰动背景粒子场，留下能量涟漪。在这个流体世界中，你既是观察者，也是创造者。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-panel">
+                <div class="panel-section">
+                    <div class="section-label">擦除模式</div>
+                    <div class="mode-grid" id="mode-grid">
+                        <button class="mode-btn active" data-mode="noise" aria-label="噪声溶解">
+                            <span class="mode-icon">≋</span>
+                            <span class="mode-name">噪声溶解</span>
+                        </button>
+                        <button class="mode-btn" data-mode="ripple" aria-label="涟漪扩散">
+                            <span class="mode-icon">◎</span>
+                            <span class="mode-name">涟漪扩散</span>
+                        </button>
+                        <button class="mode-btn" data-mode="radial" aria-label="径向收缩">
+                            <span class="mode-icon">◉</span>
+                            <span class="mode-name">径向收缩</span>
+                        </button>
+                        <button class="mode-btn" data-mode="diagonal" aria-label="对角切割">
+                            <span class="mode-icon">◢</span>
+                            <span class="mode-name">对角切割</span>
+                        </button>
+                        <button class="mode-btn" data-mode="grid" aria-label="网格裂变">
+                            <span class="mode-icon">⊞</span>
+                            <span class="mode-name">网格裂变</span>
+                        </button>
+                        <button class="mode-btn" data-mode="spiral" aria-label="螺旋漩涡">
+                            <span class="mode-icon">⊛</span>
+                            <span class="mode-name">螺旋漩涡</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="section-label">参数调节</div>
+                    <div class="param-group">
+                        <div class="param-row">
+                            <span class="param-label">过渡时长</span>
+                            <div class="param-slider-wrap">
+                                <input type="range" class="param-slider" id="slider-duration" min="0.3" max="2.0" step="0.1" value="0.8">
+                                <span class="param-value" id="val-duration">0.8s</span>
+                            </div>
+                        </div>
+                        <div class="param-row">
+                            <span class="param-label">噪声尺度</span>
+                            <div class="param-slider-wrap">
+                                <input type="range" class="param-slider" id="slider-noise" min="2" max="20" step="1" value="8">
+                                <span class="param-value" id="val-noise">8</span>
+                            </div>
+                        </div>
+                        <div class="param-row">
+                            <span class="param-label">边缘羽化</span>
+                            <div class="param-slider-wrap">
+                                <input type="range" class="param-slider" id="slider-feather" min="0.02" max="0.3" step="0.01" value="0.08">
+                                <span class="param-value" id="val-feather">0.08</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="trigger-btn" id="btn-trigger" aria-label="触发过渡">
+                    <span class="trigger-text">触发过渡</span>
+                    <span class="trigger-arrow">→</span>
+                </button>
+
+                <div class="nav-dots" id="nav-dots">
+                    <button class="dot active" data-index="0" aria-label="场景1"></button>
+                    <button class="dot" data-index="1" aria-label="场景2"></button>
+                    <button class="dot" data-index="2" aria-label="场景3"></button>
+                    <button class="dot" data-index="3" aria-label="场景4"></button>
+                </div>
+
+                <div class="auto-play-row">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="chk-autoplay" checked>
+                        <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                        <span class="toggle-text">自动播放</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <footer class="wipe-footer">
+            <div class="footer-hint">
+                <span class="hint-key">← →</span>
+                <span class="hint-sep">或</span>
+                <span class="hint-key">Space</span>
+                <span class="hint-label">切换场景</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+                <span class="meta-chip" id="mode-indicator">噪声溶解</span>
+            </div>
+        </footer>
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
