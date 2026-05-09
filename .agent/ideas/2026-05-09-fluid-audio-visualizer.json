@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-09",
+  "name": "fluid-audio-visualizer",
+  "description": "音频驱动的流体粒子可视化器",
+  "tagline": "Sound Shapes Fluid Light",
+  "interaction": "麦克风或音频输入实时驱动粒子流体运动，声音的频率与振幅映射为粒子的速度、颜色和密度变化。用户可通过鼠标或触摸在画布上施加力场，与音频驱动的粒子流动进行实时交互，形成声音与手势共创的视觉交响。",
+  "directory": "seeds/fluid-audio-visualizer/",
+  "status": "incubated"
+}

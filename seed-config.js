@@ -540,6 +540,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Fluid Audio 流体音频',
+      description: '沉浸式流体音频可视化器。4种可视化模式（频谱柱/波形线/径向谱/粒子场）、4种氛围配色、实时麦克风分析、演示音源、鼠标力场交互',
+      path: '/seed/seeds/fluid-audio-visualizer/index.html',
+      tags: ['Interactive', 'Audio', 'Visualization', 'Micro-interaction'],
+      icon: '♫',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

@@ -37,3 +37,4 @@ unit-cascade
 exif
 scene-twilight
 shader-wipe-transitions
+fluid-audio-visualizer

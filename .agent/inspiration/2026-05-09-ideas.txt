@@ -1,0 +1,6 @@
+pixel-motion-stage - 像素角色动画编排与回放工具
+fluid-audio-visualizer - 音频驱动的流体粒子可视化器
+reservoir-gauge - 单指标大屏数据可视化模板
+svg-timeline-choreo - SVG逐帧动画时间线编辑器
+tile-material-mixer - 纹理材质实时混合与预览
+scroll-world-navigator - 滚轮驱动的微缩世界探索器
