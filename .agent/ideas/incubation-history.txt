@@ -38,3 +38,5 @@ exif
 scene-twilight
 shader-wipe-transitions
 fluid-audio-visualizer
+reservoir-pulse
+tile-material

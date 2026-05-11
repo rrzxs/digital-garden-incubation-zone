@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-10",
+  "name": "reservoir-pulse",
+  "description": "水库水位实时可视化仪表盘",
+  "tagline": "Watch the water breathe.",
+  "interaction": "A real-time reservoir dashboard where water levels rise and fall with live sensor data, visualized through animated wave surfaces and color-coded depth zones. Users can hover over time periods to trace historical trends, toggle between reservoirs, and receive pulse-like alerts when levels approach critical thresholds.",
+  "directory": "seeds/reservoir-pulse/",
+  "status": "incubated"
+}

@@ -550,6 +550,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Tile Material 瓷质',
+      description: '沉浸式瓦片材质微交互体验场。弹簧-阻尼物理驱动的 3D 透视瓦片网格，4种交互模式（排斥/吸引/波浪/形变）、涟漪脉冲级联、光标轨迹流场，4种氛围配色',
+      path: '/seed/seeds/tile-material/index.html',
+      tags: ['Interactive', 'Physics', 'Material', 'Micro-interaction'],
+      icon: '_mD',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

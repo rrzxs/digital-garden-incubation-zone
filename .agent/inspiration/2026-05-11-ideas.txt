@@ -1,0 +1,6 @@
+habitscape - 习惯地形：生成式地形图可视化习惯养成
+svg-choreographer - SVG像素角色逐帧动画编排器
+cursor-flowmap - 鼠标流场驱动文字色散彩虹畸变
+clip-wipe-lab - 噪声像素化遮罩转场效果实验室
+tile-material - 瓷砖材质纹理无缝拼接预览器
+reservoir-pulse - 储量水位动态数据可视化模板

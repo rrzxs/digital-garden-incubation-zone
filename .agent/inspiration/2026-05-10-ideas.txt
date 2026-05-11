@@ -1,0 +1,6 @@
+scroll-fabric - 滚动驱动的织物纹理生成器
+tile-architect - 交互式瓷砖拼花图案设计器
+clip-path-theatre - 剪裁路径遮罩的幻灯片剧场
+reservoir-pulse - 水库水位实时可视化仪表盘
+particle-cursor-trail - 光标粒子拖尾引擎
+modular-layout-studio - 模块化页面排版实验场

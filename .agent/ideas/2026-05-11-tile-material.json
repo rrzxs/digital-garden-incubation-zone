@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-11",
+  "name": "tile-material",
+  "description": "瓷砖材质纹理无缝拼接预览器",
+  "tagline": "Seamlessly Tile, Instantly Preview",
+  "interaction": "拖拽或上传瓷砖材质贴图后，画布实时生成无缝平铺预览，可自由缩放与平移查看拼接效果。通过调节旋转、偏移、亮度等参数微调纹理，直观判断材质在大面积铺设后的真实视觉表现。",
+  "directory": "seeds/tile-material/",
+  "status": "incubated"
+}

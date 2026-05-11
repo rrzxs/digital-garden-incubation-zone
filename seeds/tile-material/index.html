@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Material 瓷质 - 沉浸式瓦片材质微交互</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Tile<span class="brand-dot">.</span> Material</h1>
+                <p class="brand-subtitle">沉浸式瓦片材质微交互</p>
+            </div>
+            <div class="header-actions">
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="repel" aria-label="排斥模式" title="排斥">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="attract" aria-label="吸引模式" title="吸引">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="wave" aria-label="波浪模式" title="波浪">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12c.6.5 1.2 1 2.5 1s2-.5 2.5-1 .6-1 2.5-1 2 .5 2.5 1 .6 1 2.5 1 2-.5 2.5-1 .6-1 2.5-1 1.9.5 2.5 1"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="morph" aria-label="形变模式" title="形变">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <div class="tile-grid" id="tile-grid"></div>
+            <canvas id="trail-canvas"></canvas>
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">移动鼠标 · 触碰瓦片 · 感受材质</span>
+            </div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">磁场半径</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-radius" min="60" max="300" value="160" class="slider">
+                    <span class="slider-val" id="val-radius">160</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">弹性</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-stiffness" min="3" max="25" value="12" class="slider">
+                    <span class="slider-val" id="val-stiffness">0.12</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">阻尼</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-damping" min="50" max="96" value="82" class="slider">
+                    <span class="slider-val" id="val-damping">0.82</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="porcelain" aria-label="瓷白">
+                    <span class="swatch" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe,#a5b4fc)"></span>
+                </button>
+                <button class="palette-btn" data-palette="obsidian" aria-label="黑曜">
+                    <span class="swatch" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899)"></span>
+                </button>
+                <button class="palette-btn" data-palette="jade" aria-label="翡翠">
+                    <span class="swatch" style="background:linear-gradient(135deg,#34d399,#06b6d4,#22d3ee)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btn-ripple">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    <span>脉冲</span>
+                </button>
+                <button class="action-btn" id="btn-reset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>重置</span>
+                </button>
+                <button class="action-btn primary" id="btn-fullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
