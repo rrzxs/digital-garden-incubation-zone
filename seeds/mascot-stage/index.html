@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascot Stage 吉祥物舞台 - 沉浸式角色互动体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell" id="app-shell">
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">◉</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Mascot Stage</h1>
+                    <span class="nav-subtitle">沉浸式吉祥物舞台</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="cosmos" aria-label="星尘">星尘</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <div class="stage-area" id="stage-area">
+            <div class="spotlight" id="spotlight"></div>
+
+            <div class="mascot-body" id="mascot">
+                <div class="mascot-inner">
+                    <div class="mascot-ear mascot-ear-l" id="ear-l">
+                        <div class="ear-inner"></div>
+                    </div>
+                    <div class="mascot-ear mascot-ear-r" id="ear-r">
+                        <div class="ear-inner"></div>
+                    </div>
+                    <div class="mascot-face">
+                        <div class="mascot-eye mascot-eye-l" id="eye-l">
+                            <div class="eye-socket">
+                                <div class="pupil" id="pupil-l"></div>
+                                <div class="eye-shine"></div>
+                                <div class="eye-shine eye-shine-sm"></div>
+                            </div>
+                            <div class="eyelid" id="eyelid-l"></div>
+                        </div>
+                        <div class="mascot-eye mascot-eye-r" id="eye-r">
+                            <div class="eye-socket">
+                                <div class="pupil" id="pupil-r"></div>
+                                <div class="eye-shine"></div>
+                                <div class="eye-shine eye-shine-sm"></div>
+                            </div>
+                            <div class="eyelid" id="eyelid-r"></div>
+                        </div>
+                        <div class="mascot-nose" id="nose"></div>
+                        <div class="mascot-mouth" id="mouth">
+                            <svg viewBox="0 0 40 20" class="mouth-svg">
+                                <path id="mouth-path" d="M 8 8 Q 20 18 32 8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="mascot-cheek mascot-cheek-l" id="cheek-l"></div>
+                        <div class="mascot-cheek mascot-cheek-r" id="cheek-r"></div>
+                    </div>
+                </div>
+                <div class="mascot-body-lower" id="mascot-body-lower"></div>
+                <div class="mascot-shadow" id="mascot-shadow"></div>
+            </div>
+
+            <div class="emotion-ring" id="emotion-ring"></div>
+
+            <div class="floating-hearts" id="floating-hearts"></div>
+            <div class="sparkle-container" id="sparkle-container"></div>
+        </div>
+
+        <div class="controls-bar">
+            <div class="emotion-picker" id="emotion-picker">
+                <button class="emotion-btn active" data-emotion="happy" aria-label="开心">◕‿◕</button>
+                <button class="emotion-btn" data-emotion="excited" aria-label="兴奋">⌐■_■</button>
+                <button class="emotion-btn" data-emotion="sleepy" aria-label="困倦">-‿-</button>
+                <button class="emotion-btn" data-emotion="surprised" aria-label="惊讶">◉‿◉</button>
+                <button class="emotion-btn" data-emotion="love" aria-label="爱心">♥‿♥</button>
+                <button class="emotion-btn" data-emotion="curious" aria-label="好奇">°‿°</button>
+            </div>
+            <button class="action-btn" id="btn-poke">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                戳一戳
+            </button>
+            <button class="action-btn" id="btn-feed">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                喂食
+            </button>
+            <button class="action-btn" id="btn-pet">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                抚摸
+            </button>
+        </div>
+
+        <footer class="stage-footer">
+            <div class="footer-hint">
+                <span class="hint-key">Mouse</span>
+                <span class="hint-sep">·</span>
+                <span class="hint-key">Click</span>
+                <span class="hint-sep">·</span>
+                <span class="hint-key">Drag</span>
+                <span class="hint-label">与吉祥物互动</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip" id="emotion-display">开心</span>
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+                <span class="meta-chip" id="affection-display">好感度 50</span>
+            </div>
+        </footer>
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

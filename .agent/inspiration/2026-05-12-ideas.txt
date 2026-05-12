@@ -1,0 +1,13 @@
+tile-atelier - 拖拽拼贴式情绪板生成器
+clip-wipe-lab - 剪裁路径擦除过渡工作台
+dial-craft - 拟物旋钮交互控件工坊
+reservoir-pulse - 本地水库水位可视化仪表盘
+mascot-stage - SVG 骨架动画角色创作台
+layer-peel - 分层揭幕式滚动叙事编辑器
+reservoir - pulse` 与现有种子没有重叠。`tile-atelier` 与 `tile-material` 的概念不同（生成器与物理演示）。其余方向也各具特色。
+tile-atelier - 拖拽拼贴式情绪板生成器
+clip-wipe-lab - 剪裁路径擦除过渡工作台
+dial-craft - 拟物旋钮交互控件工坊
+reservoir-pulse - 本地水库水位可视化仪表盘
+mascot-stage - SVG 骨架动画角色创作台
+layer-peel - 分层揭幕式滚动叙事编辑器

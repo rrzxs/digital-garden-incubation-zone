@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-12",
+  "name": "mascot-stage",
+  "description": "SVG 骨架动画角色创作台",
+  "tagline": "Bring Your SVG Mascot to Life",
+  "interaction": "在画布上绘制 SVG 骨架节点并绑定关节层级，通过拖拽关键帧时间轴定义角色的运动曲线，实时预览骨架动画效果，一键导出可复用的动画 SVG 代码。",
+  "directory": "seeds/mascot-stage/",
+  "status": "incubated"
+}

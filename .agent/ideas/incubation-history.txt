@@ -40,3 +40,4 @@ shader-wipe-transitions
 fluid-audio-visualizer
 reservoir-pulse
 tile-material
+mascot-stage

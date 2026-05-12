@@ -560,6 +560,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Mascot Stage 吉祥物舞台',
+      description: '沉浸式吉祥物角色互动体验场。实时眼球追踪、6种表情切换、弹性物理动效、好感度系统、粒子流场背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/mascot-stage/index.html',
+      tags: ['Interactive', 'Character', 'Animation', 'Micro-interaction'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
