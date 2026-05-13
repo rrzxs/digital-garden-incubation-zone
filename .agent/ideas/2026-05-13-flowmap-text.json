@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-13",
+  "name": "flowmap-text",
+  "description": "光标速度驱动的流体文字畸变体验",
+  "tagline": "Words flow where your cursor goes.",
+  "interaction": "当用户在文本上移动光标时，文本字符会根据光标的速度和方向发生流体般的畸变效果。越快移动光标，文字形变越剧烈；静止时光标周围的文字会缓缓恢复原状，营造出文字在液面上漂浮、随波荡漾的沉浸感。",
+  "directory": "seeds/flowmap-text/",
+  "status": "incubated"
+}

@@ -570,6 +570,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'FlowMap Text 流场文字',
+      description: '沉浸式流场文字交互体验。输入文字，观察字符在 Simplex 噪声流场中流动旋转，鼠标力场扰动，4种流场模式 × 3种力场交互 × 4种氛围配色',
+      path: '/seed/seeds/flowmap-text/index.html',
+      tags: ['Interactive', 'Flow Field', 'Typography', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

@@ -41,3 +41,4 @@ fluid-audio-visualizer
 reservoir-pulse
 tile-material
 mascot-stage
+flowmap-text
