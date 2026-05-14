@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-14",
+  "name": "liquid-dial",
+  "description": "拟物旋钮控件，拖拽调节参数",
+  "tagline": "Twist Reality, Shape Sound.",
+  "interaction": "A skeuomorphic rotary knob rendered with realistic liquid-smooth physics. Drag in a circular motion around the knob to adjust parameters with haptic-like visual feedback, including subtle shadow shifts, gloss highlights, and resistance simulation that mirrors real analog hardware.",
+  "directory": "seeds/liquid-dial/",
+  "status": "incubated"
+}

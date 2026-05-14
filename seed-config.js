@@ -580,6 +580,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Liquid Dial 液态刻度',
+      description: '沉浸式液态刻度盘交互体验。拖拽表盘设置数值，流体粒子流场环绕，4种刻度模式（强度/频率/温度/速度）× 4种氛围配色，脉冲冲击波涟漪',
+      path: '/seed/seeds/liquid-dial/index.html',
+      tags: ['Interactive', 'Dial', 'Particle', 'Micro-interaction'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

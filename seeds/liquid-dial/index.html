@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liquid Dial — 液态刻度</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app">
+    <header class="app-header">
+      <div class="header-left">
+        <span class="logo-icon">◎</span>
+        <h1 class="logo-text">Liquid Dial</h1>
+      </div>
+      <div class="header-center">
+        <span class="header-subtitle" id="mode-label">Drag to set value</span>
+      </div>
+      <div class="header-right">
+        <button class="theme-btn" id="theme-btn" aria-label="Switch theme">
+          <span class="theme-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="dial-stage">
+      <div class="dial-container">
+        <canvas id="dial-canvas"></canvas>
+        <div class="dial-value-display">
+          <span class="dial-value" id="dial-value">0</span>
+          <span class="dial-unit" id="dial-unit">%</span>
+        </div>
+        <div class="dial-label" id="dial-label">INTENSITY</div>
+      </div>
+
+      <div class="dial-aura" id="dial-aura"></div>
+    </main>
+
+    <nav class="controls-bar">
+      <div class="mode-tabs" id="mode-tabs">
+        <button class="mode-tab active" data-mode="intensity">
+          <span class="tab-icon">◈</span>
+          <span class="tab-label">Intensity</span>
+        </button>
+        <button class="mode-tab" data-mode="frequency">
+          <span class="tab-icon">≋</span>
+          <span class="tab-label">Frequency</span>
+        </button>
+        <button class="mode-tab" data-mode="temperature">
+          <span class="tab-icon">⊛</span>
+          <span class="tab-label">Temperature</span>
+        </button>
+        <button class="mode-tab" data-mode="velocity">
+          <span class="tab-icon">⇌</span>
+          <span class="tab-label">Velocity</span>
+        </button>
+      </div>
+
+      <div class="control-group">
+        <button class="ctrl-btn" id="btn-reset" aria-label="Reset">
+          <span class="ctrl-icon">↺</span>
+          <span class="ctrl-label">Reset</span>
+        </button>
+        <button class="ctrl-btn" id="btn-ripple" aria-label="Ripple Pulse">
+          <span class="ctrl-icon">◎</span>
+          <span class="ctrl-label">Pulse</span>
+        </button>
+      </div>
+    </nav>
+
+    <footer class="status-bar">
+      <span class="status-text" id="status-text">Ready</span>
+      <span class="status-separator">—</span>
+      <span class="status-mode" id="status-mode">Intensity Mode</span>
+    </footer>
+  </div>
+
+  <div class="ripple-layer" id="ripple-layer"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
