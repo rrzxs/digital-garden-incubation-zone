@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-15",
+  "name": "habit-terrarium",
+  "description": "习惯玻璃箱：每天完成习惯为微型生态缸注入生机，植物随坚持天数从种子长成森林",
+  "tagline": "**Grow your habits, watch them bloom.**",
+  "interaction": "Each completed daily habit adds a new element to your living terrarium — a seed sprouts on day one, a stem emerges by day three, and branches unfurl over weeks of consistency. Skip a day and the ecosystem subtly dims, reminding you that growth needs nurture. Over time, your persistent streaks transform a barren glass jar into a thriving miniature forest, making every habit visually tangible.",
+  "directory": "seeds/habit-terrarium/",
+  "status": "incubated"
+}

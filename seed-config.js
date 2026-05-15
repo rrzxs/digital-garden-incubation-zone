@@ -590,6 +590,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Habit Terrarium 习惯生态瓶',
+      description: '沉浸式习惯追踪器。将日常习惯可视化为玻璃生态瓶中生长的植物，4种植物类型、生长等级、连续天数追踪，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/habit-terrarium/index.html',
+      tags: ['Productivity', 'Habit Tracker', 'Micro-interaction', 'Plant Growth'],
+      icon: '&#x1F331;',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

@@ -43,3 +43,4 @@ tile-material
 mascot-stage
 flowmap-text
 liquid-dial
+habit-terrarium
