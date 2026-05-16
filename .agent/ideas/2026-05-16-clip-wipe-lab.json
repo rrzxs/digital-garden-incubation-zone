@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-16",
+  "name": "clip-wipe-lab",
+  "description": "裁剪路径擦除过渡实验室",
+  "tagline": "**Shape Your Transitions**",
+  "interaction": "绘制任意形状的裁剪路径，触发元素从画面中精确擦除并平滑过渡到下一状态。支持自定义缓动曲线与路径方向，实时预览裁剪动画效果。用户可保存自定义擦除模板，组合多路径实现复杂的分层过渡。",
+  "directory": "seeds/clip-wipe-lab/",
+  "status": "incubated"
+}

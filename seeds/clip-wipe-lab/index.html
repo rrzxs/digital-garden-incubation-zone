@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clip Wipe Lab 裁切擦除实验室</title>
+    <meta name="description" content="沉浸式 CSS clip-path 裁切擦除交互实验场。7种擦除模式、实时参数调节、拖拽控制与4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <main class="app-shell" id="app-shell">
+
+        <nav class="top-bar">
+            <div class="brand">
+                <span class="brand-icon">◹</span>
+                <div class="brand-text">
+                    <h1 class="brand-title">Clip Wipe Lab</h1>
+                    <span class="brand-sub">裁切擦除实验室</span>
+                </div>
+            </div>
+            <div class="top-controls">
+                <div class="theme-switcher" id="theme-switcher">
+                    <button class="theme-btn active" data-theme="aurora" title="极光">◈</button>
+                    <button class="theme-btn" data-theme="ember" title="余烬">◈</button>
+                    <button class="theme-btn" data-theme="ocean" title="深海">◈</button>
+                    <button class="theme-btn" data-theme="void" title="虚空">◈</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <div class="content-grid">
+
+            <div class="viewport-col">
+                <div class="viewport-frame">
+                    <div class="viewport-hud">
+                        <span class="hud-tag mono">VIEWPORT</span>
+                        <span class="hud-info mono" id="hud-scene">01 / 05</span>
+                    </div>
+                    <div class="wipe-stage" id="wipe-stage">
+
+                        <div class="scene-layer layer-bg active" data-layer="0">
+                            <div class="scene-inner" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);">
+                                <div class="scene-art">
+                                    <div class="art-circle c1"></div>
+                                    <div class="art-circle c2"></div>
+                                    <div class="art-circle c3"></div>
+                                </div>
+                                <div class="scene-text">
+                                    <div class="scene-badge mono">001</div>
+                                    <h2 class="scene-title">裁切即揭示</h2>
+                                    <p class="scene-desc">CSS clip-path 不只是遮罩，它是时间的刀锋。每一次擦除都是一次空间折叠与展开的对话。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scene-layer layer-bg" data-layer="1">
+                            <div class="scene-inner" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);">
+                                <div class="scene-art">
+                                    <div class="art-diamond d1"></div>
+                                    <div class="art-diamond d2"></div>
+                                    <div class="art-diamond d3"></div>
+                                </div>
+                                <div class="scene-text">
+                                    <div class="scene-badge mono">002</div>
+                                    <h2 class="scene-title">多边形几何</h2>
+                                    <p class="scene-desc">从简单的三角形到复杂的多边形星形，几何裁切路径将空间切割成意想不到的形状。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scene-layer layer-bg" data-layer="2">
+                            <div class="scene-inner" style="background: linear-gradient(135deg, #7c2d12 0%, #9a3412 50%, #c2410c 100%);">
+                                <div class="scene-art">
+                                    <div class="art-wave w1"></div>
+                                    <div class="art-wave w2"></div>
+                                </div>
+                                <div class="scene-text">
+                                    <div class="scene-badge mono">003</div>
+                                    <h2 class="scene-title">路径即笔触</h2>
+                                    <p class="scene-desc">SVG path 语法赋予了 clip-path 无限的表现力。有机曲线、锯齿边缘、螺旋形状——一切皆可裁切。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scene-layer layer-bg" data-layer="3">
+                            <div class="scene-inner" style="background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 50%, #7c3aed 100%);">
+                                <div class="scene-art">
+                                    <div class="art-ring r1"></div>
+                                    <div class="art-ring r2"></div>
+                                    <div class="art-ring r3"></div>
+                                </div>
+                                <div class="scene-text">
+                                    <div class="scene-badge mono">004</div>
+                                    <h2 class="scene-title">交互即仪式</h2>
+                                    <p class="scene-desc">拖拽、点击、悬停——每种交互都对应不同的裁切响应。你是这场视觉仪式的主持者。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scene-layer layer-bg" data-layer="4">
+                            <div class="scene-inner" style="background: linear-gradient(135deg, #0c4a6e 0%, #075985 50%, #0369a1 100%);">
+                                <div class="scene-art">
+                                    <div class="art-grid-lines"></div>
+                                </div>
+                                <div class="scene-text">
+                                    <div class="scene-badge mono">005</div>
+                                    <h2 class="scene-title">擦除即创造</h2>
+                                    <p class="scene-desc">当你擦去旧画面，新的空间同时诞生。这不仅是过渡，更是一次对视觉边界的重新定义。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scene-layer layer-wipe" id="wipe-layer">
+                            <div class="wipe-fill" id="wipe-fill"></div>
+                        </div>
+
+                        <div class="drag-handle" id="drag-handle">
+                            <div class="handle-line"></div>
+                            <div class="handle-grip">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="handle-line"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-col">
+                <div class="glass-panel">
+                    <div class="panel-section">
+                        <div class="section-label">擦除模式</div>
+                        <div class="mode-grid" id="mode-grid">
+                            <button class="mode-btn active" data-mode="circle" aria-label="圆形收缩">
+                                <span class="mode-icon">◉</span>
+                                <span class="mode-name">圆形收缩</span>
+                            </button>
+                            <button class="mode-btn" data-mode="diamond" aria-label="菱形旋转">
+                                <span class="mode-icon">◇</span>
+                                <span class="mode-name">菱形旋转</span>
+                            </button>
+                            <button class="mode-btn" data-mode="polygon" aria-label="多边形擦除">
+                                <span class="mode-icon">⬡</span>
+                                <span class="mode-name">多边形</span>
+                            </button>
+                            <button class="mode-btn" data-mode="star" aria-label="星形展开">
+                                <span class="mode-icon">✦</span>
+                                <span class="mode-name">星形展开</span>
+                            </button>
+                            <button class="mode-btn" data-mode="wave" aria-label="波浪揭幕">
+                                <span class="mode-icon">≋</span>
+                                <span class="mode-name">波浪揭幕</span>
+                            </button>
+                            <button class="mode-btn" data-mode="spiral" aria-label="螺旋切割">
+                                <span class="mode-icon">⊛</span>
+                                <span class="mode-name">螺旋切割</span>
+                            </button>
+                            <button class="mode-btn" data-mode="bars" aria-label="百叶窗">
+                                <span class="mode-icon">▦</span>
+                                <span class="mode-name">百叶窗</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <div class="section-label">参数调节</div>
+                        <div class="param-group">
+                            <div class="param-row">
+                                <span class="param-label">擦除进度</span>
+                                <div class="param-slider-wrap">
+                                    <input type="range" class="param-slider" id="slider-progress" min="0" max="100" step="1" value="0">
+                                    <span class="param-value mono" id="val-progress">0%</span>
+                                </div>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label">过渡时长</span>
+                                <div class="param-slider-wrap">
+                                    <input type="range" class="param-slider" id="slider-duration" min="300" max="3000" step="100" value="1200">
+                                    <span class="param-value mono" id="val-duration">1.2s</span>
+                                </div>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label">边数/瓣数</span>
+                                <div class="param-slider-wrap">
+                                    <input type="range" class="param-slider" id="slider-sides" min="3" max="12" step="1" value="6">
+                                    <span class="param-value mono" id="val-sides">6</span>
+                                </div>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label">旋转角度</span>
+                                <div class="param-slider-wrap">
+                                    <input type="range" class="param-slider" id="slider-rotation" min="0" max="360" step="5" value="0">
+                                    <span class="param-value mono" id="val-rotation">0°</span>
+                                </div>
+                            </div>
+                            <div class="param-row">
+                                <span class="param-label">缓动曲线</span>
+                                <div class="param-slider-wrap">
+                                    <select class="param-select" id="select-easing">
+                                        <option value="expo" selected>Expo Out</option>
+                                        <option value="elastic">Elastic</option>
+                                        <option value="back">Back Out</option>
+                                        <option value="bounce">Bounce</option>
+                                        <option value="linear">Linear</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <div class="section-label">交互模式</div>
+                        <div class="interact-modes" id="interact-modes">
+                            <button class="interact-btn active" data-interact="drag" aria-label="拖拽">
+                                <span class="interact-icon">⇔</span>
+                                <span class="interact-name">拖拽控制</span>
+                            </button>
+                            <button class="interact-btn" data-interact="hover" aria-label="悬停">
+                                <span class="interact-icon">◎</span>
+                                <span class="interact-name">悬停跟随</span>
+                            </button>
+                            <button class="interact-btn" data-interact="auto" aria-label="自动">
+                                <span class="interact-icon">▶</span>
+                                <span class="interact-name">自动播放</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button class="action-btn" id="btn-play" aria-label="播放">
+                            <span class="action-text">播放擦除</span>
+                            <span class="action-arrow">→</span>
+                        </button>
+                        <button class="action-btn secondary" id="btn-reset" aria-label="重置">
+                            <span class="action-text">重置</span>
+                        </button>
+                    </div>
+
+                    <div class="nav-dots" id="nav-dots">
+                        <button class="dot active" data-index="0" aria-label="场景1"></button>
+                        <button class="dot" data-index="1" aria-label="场景2"></button>
+                        <button class="dot" data-index="2" aria-label="场景3"></button>
+                        <button class="dot" data-index="3" aria-label="场景4"></button>
+                        <button class="dot" data-index="4" aria-label="场景5"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="bottom-bar">
+            <div class="footer-hint">
+                <span class="hint-key">← →</span>
+                <span class="hint-sep">或</span>
+                <span class="hint-key">Space</span>
+                <span class="hint-label">切换场景</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip mono" id="fps-counter">60 FPS</span>
+                <span class="meta-chip mono" id="mode-indicator">圆形收缩</span>
+                <span class="meta-chip mono" id="progress-indicator">0%</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

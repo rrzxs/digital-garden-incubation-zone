@@ -600,6 +600,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Clip Wipe Lab 裁切擦除实验室',
+      description: '沉浸式 CSS clip-path 裁切擦除交互实验场。7种擦除模式（圆形/菱形/多边形/星形/波浪/螺旋/百叶窗）、实时参数调节、3种交互模式与4种氛围配色',
+      path: '/seed/seeds/clip-wipe-lab/index.html',
+      tags: ['Interactive', 'CSS', 'clip-path', 'Micro-interaction'],
+      icon: '◹',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
