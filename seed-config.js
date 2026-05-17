@@ -610,6 +610,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Storyboard 分镜卷轴',
+      description: '沉浸式分镜叙事卷轴。7幕故事分镜、滚动驱动场景转换、手绘线框美学、视差深度与粒子流场，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/scroll-storyboard/index.html',
+      tags: ['Interactive', 'Scroll', 'Storyboard', 'Micro-interaction'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

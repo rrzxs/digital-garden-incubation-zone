@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-17",
+  "name": "scroll-storyboard",
+  "description": "滚动驱动的分镜叙事编排器",
+  "tagline": "Scroll unfolds your story.",
+  "interaction": "As the user scrolls, the page reveals sequential storyboard panels with cinematic transitions—zooms, fades, and parallax shifts—each triggered by precise scroll positions. Users can rearrange scenes via drag-and-drop in an edit mode, and the scroll timeline auto-recalculates keyframes in real time, turning passive reading into an immersive, frame-by-frame narrative journey.",
+  "directory": "seeds/scroll-storyboard/",
+  "status": "incubated"
+}

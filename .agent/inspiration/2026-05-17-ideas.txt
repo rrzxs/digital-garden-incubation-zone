@@ -1,0 +1,6 @@
+voice-capsule - 语音念头捕捉与结构化整理器
+scroll-storyboard - 滚动驱动的分镜叙事编排器
+shader-canvas-playground - 实时着色器片段编辑与预览
+sound-scape-weaver - 可视化环境音景编织器
+mood-kaleidoscope - 情绪驱动生成式万花筒
+layout-grid-theater - 响应式布局实时编排剧场
