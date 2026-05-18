@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-18",
+  "name": "voice-to",
+  "description": "task` ← Novu (W:0.97) 的语音转任务概念抽象",
+  "tagline": "Speak It, Ship It.",
+  "interaction": "Users press and hold a microphone button to speak a task description in natural language. The voice input is instantly transcribed and parsed into a structured task card with title, priority, and assignee. A subtle waveform animation provides real-time audio feedback, and the task card animates into the pipeline once released.",
+  "directory": "seeds/voice-to/",
+  "status": "incubated"
+}

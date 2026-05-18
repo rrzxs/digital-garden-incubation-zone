@@ -620,6 +620,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Voice To 声波凝形',
+      description: '沉浸式语音转文字交互体验。言语化为流体波形，文字从声波中浮现。Web Speech API + Canvas 波形可视化 + 粒子流场，4种氛围配色',
+      path: '/seed/seeds/voice-to/index.html',
+      tags: ['Interactive', 'Voice', 'Visualization', 'Micro-interaction'],
+      icon: '🎙',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
