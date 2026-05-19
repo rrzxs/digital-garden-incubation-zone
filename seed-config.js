@@ -630,6 +630,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Brand Morph Timeline 品牌形变时间线',
+      description: '沉浸式品牌形变时间线体验。7个品牌纪元、时间轴驱动色彩字体形态流变、4种形态模式（光棱/球体/晶体/波场）、可拖拽时间轴、粒子流场与微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/brand-morph-timeline/index.html',
+      tags: ['Interactive', 'Timeline', 'Animation', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

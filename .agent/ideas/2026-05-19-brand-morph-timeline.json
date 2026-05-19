@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-19",
+  "name": "brand-morph-timeline",
+  "description": "品牌标识变形过渡动画编排器",
+  "tagline": "Morph Your Brand, Frame by Frame.",
+  "interaction": "Users arrange brand identity elements (logos, colors, typography) along a draggable timeline, defining keyframes where each element morphs into its next state. Scrubbing the playhead or scrolling triggers fluid shape/color transitions in real-time, allowing designers to orchestrate and preview how a brand evolves visually across campaigns or rebrands.",
+  "directory": "seeds/brand-morph-timeline/",
+  "status": "incubated"
+}

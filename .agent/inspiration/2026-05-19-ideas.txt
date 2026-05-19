@@ -1,0 +1,6 @@
+mascot-keyframe - SVG角色帧动画编排与时间轴编辑器
+clip-reveal-editor - 文字擦除揭示动画配置与预览工具
+marquee-canvas - 跑马灯排版画布：配置滚动文字视觉
+shader-fx-playground - HTML片段施加着色器后处理效果
+cli-portfolio-gen - 终端风格动态简历生成器
+brand-morph-timeline - 品牌标识变形过渡动画编排器

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Morph Timeline — 品牌形变时间线</title>
+    <meta name="description" content="沉浸式品牌形变时间线体验。时间轴驱动品牌色彩、字体与形态流变，微晶玻璃态容器 + 非线性动效 + 粒子流场">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a12'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='24' font-family='monospace' fill='%23c4b5fd'%3EBM%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas class="particle-canvas" id="particle-canvas"></canvas>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="app-shell">
+        <header class="panel-header glass-panel">
+            <div class="brand-group">
+                <h1 class="brand-title">Brand<span class="brand-dot">.</span>Morph</h1>
+                <p class="brand-subtitle">品牌形变时间线 — 色彩、字体与形态的流动叙事</p>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="btn-autoplay" aria-label="自动播放" title="自动播放">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-shuffle" aria-label="随机" title="随机排列">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-reset" aria-label="重置" title="重置">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <section class="morph-stage glass-panel" id="morph-stage">
+            <div class="morph-container" id="morph-container">
+                <canvas class="morph-canvas" id="morph-canvas"></canvas>
+                <div class="morph-label-overlay" id="morph-label">
+                    <span class="morph-era-tag" id="era-tag">ERA 01</span>
+                    <h2 class="morph-brand-name" id="brand-name">Prism</h2>
+                    <p class="morph-brand-desc" id="brand-desc">极简几何光棱 — 光谱折射的品牌叙事</p>
+                </div>
+            </div>
+
+            <div class="morph-nav-arrows">
+                <button class="nav-arrow nav-prev" id="nav-prev" aria-label="上一阶段">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button class="nav-arrow nav-next" id="nav-next" aria-label="下一阶段">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+        </section>
+
+        <section class="timeline-section glass-panel" id="timeline-section">
+            <div class="timeline-track" id="timeline-track">
+                <div class="timeline-rail">
+                    <div class="timeline-fill" id="timeline-fill"></div>
+                    <div class="timeline-nodes" id="timeline-nodes"></div>
+                </div>
+                <div class="timeline-labels" id="timeline-labels"></div>
+            </div>
+            <div class="timeline-scrubber" id="timeline-scrubber">
+                <div class="scrubber-head" id="scrubber-head"></div>
+            </div>
+        </section>
+
+        <footer class="controls-bar glass-panel">
+            <div class="controls-scroll">
+                <div class="ctrl-group">
+                    <label class="ctrl-label">配色</label>
+                    <div class="theme-swatches" id="theme-swatches">
+                        <button class="swatch active" data-theme="aurora" style="--swatch-1:#c4b5fd;--swatch-2:#818cf8" aria-label="极光"></button>
+                        <button class="swatch" data-theme="ember" style="--swatch-1:#f97316;--swatch-2:#ef4444" aria-label="余烬"></button>
+                        <button class="swatch" data-theme="ocean" style="--swatch-1:#06b6d4;--swatch-2:#3b82f6" aria-label="深海"></button>
+                        <button class="swatch" data-theme="flora" style="--swatch-1:#22c55e;--swatch-2:#84cc16" aria-label="翠林"></button>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">形态模式</label>
+                    <div class="mode-toggle" id="mode-toggle">
+                        <button class="mode-btn active" data-mode="prism" aria-label="光棱">光棱</button>
+                        <button class="mode-btn" data-mode="orb" aria-label="球体">球体</button>
+                        <button class="mode-btn" data-mode="crystal" aria-label="晶体">晶体</button>
+                        <button class="mode-btn" data-mode="wave" aria-label="波场">波场</button>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">变形速度 <span class="ctrl-value" id="val-speed">50</span></label>
+                    <input type="range" id="ctrl-speed" class="range-input" min="10" max="100" value="50">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">粒子密度 <span class="ctrl-value" id="val-density">60</span></label>
+                    <input type="range" id="ctrl-density" class="range-input" min="10" max="100" value="60">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">噪声扰动 <span class="ctrl-value" id="val-noise">40</span></label>
+                    <input type="range" id="ctrl-noise" class="range-input" min="0" max="100" value="40">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
