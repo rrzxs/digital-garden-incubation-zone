@@ -640,6 +640,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scramble Reveal 解密揭示',
+      description: '沉浸式文字乱码揭示交互体验。5种揭示模式（级联/波浪/漩涡/故障/量子）× 4种氛围配色，粒子流场、幽灵字符飘浮与微晶玻璃态容器',
+      path: '/seed/seeds/scramble-reveal/index.html',
+      tags: ['Interactive', 'Text Effect', 'Animation', 'Micro-interaction'],
+      icon: '⟐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

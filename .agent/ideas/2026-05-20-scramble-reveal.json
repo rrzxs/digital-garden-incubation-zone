@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-20",
+  "name": "scramble-reveal",
+  "description": "文字解码式逐字揭秘动效工具",
+  "tagline": "Decode the mystery, word by word.",
+  "interaction": "Text starts as scrambled cipher characters and progressively decodes to reveal the real content, character by character. The user can trigger the unscramble effect on scroll, hover, or click, creating a cinematic "decryption" experience ideal for headings, code reveals, and storytelling moments.",
+  "directory": "seeds/scramble-reveal/",
+  "status": "incubated"
+}

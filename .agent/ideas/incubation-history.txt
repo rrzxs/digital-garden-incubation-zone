@@ -48,3 +48,4 @@ clip-wipe-lab
 scroll-storyboard
 voice-to
 brand-morph-timeline
+scramble-reveal
