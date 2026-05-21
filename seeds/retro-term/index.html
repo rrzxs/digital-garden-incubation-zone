@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Term — 复古终端</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mesh-bg">
+        <div class="mesh-orb mesh-orb-1"></div>
+        <div class="mesh-orb mesh-orb-2"></div>
+        <div class="mesh-orb mesh-orb-3"></div>
+        <div class="mesh-orb mesh-orb-4"></div>
+    </div>
+
+    <canvas id="scanlines-canvas"></canvas>
+
+    <div class="noise-overlay"></div>
+
+    <main class="terminal-stage">
+        <div class="terminal-window glassmorphic" id="terminal">
+            <div class="terminal-titlebar">
+                <div class="titlebar-dots">
+                    <span class="dot dot-close"></span>
+                    <span class="dot dot-minimize"></span>
+                    <span class="dot dot-maximize"></span>
+                </div>
+                <div class="titlebar-text">
+                    <span class="titlebar-icon">◈</span>
+                    retro-term — session://eden.local
+                </div>
+                <div class="titlebar-controls">
+                    <button class="tb-btn" id="btn-theme" title="切换配色">◐</button>
+                    <button class="tb-btn" id="btn-clear" title="清屏">⎚</button>
+                    <button class="tb-btn" id="btn-sound" title="音效开关">♪</button>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="terminal-output" id="terminal-output"></div>
+                <div class="terminal-input-line" id="input-line">
+                    <span class="prompt-user">eden</span><span class="prompt-sep">@</span><span class="prompt-host">retro-term</span><span class="prompt-path">:~$</span>
+                    <span class="prompt-spacer"></span>
+                    <span class="terminal-input-text" id="input-text"></span>
+                    <span class="cursor-blink" id="cursor">█</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar glassmorphic-subtle">
+            <div class="status-left">
+                <span class="status-indicator" id="status-indicator"></span>
+                <span class="status-label" id="status-label">CONNECTED</span>
+            </div>
+            <div class="status-center">
+                <span id="status-time"></span>
+            </div>
+            <div class="status-right">
+                <span class="status-theme-name" id="theme-name">PHOSPHOR</span>
+                <span class="status-sep">|</span>
+                <span id="char-count">0 chars</span>
+            </div>
+        </div>
+
+        <div class="hint-bar" id="hint-bar">
+            <span class="hint-item">Tab <span class="hint-key">自动补全</span></span>
+            <span class="hint-item">↑↓ <span class="hint-key">历史命令</span></span>
+            <span class="hint-item">help <span class="hint-key">查看命令</span></span>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

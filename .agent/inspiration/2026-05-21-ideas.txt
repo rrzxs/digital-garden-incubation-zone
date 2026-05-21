@@ -1,0 +1,6 @@
+gravity-shed - 鼠标拖拽图片坠落弹跳的物理画布
+node-weave - 可拖拽节点与流动连线的可视化编排器
+retro-term - 复古终端风格的作品展示播放器
+page-curl-studio - 拖拽翻页卷曲过渡效果实验场
+glyph-morph - 字符形变与品牌标识动效生成器
+scene-flip-book - 滚动驱动的场景切片无缝转场播放器

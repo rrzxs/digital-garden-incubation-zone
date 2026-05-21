@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-21",
+  "name": "retro-term",
+  "description": "复古终端风格的作品展示播放器",
+  "tagline": ""Your garden, rendered in phosphor green."",
+  "interaction": "A CRT-styled terminal interface where visitors type commands to browse and play creative works. Typing `list` reveals a directory of projects displayed as flickering green-on-black text, while `play <title>` launches each piece inside the terminal viewport with authentic scanline overlays and boot-sequence animations.",
+  "directory": "seeds/retro-term/",
+  "status": "incubated"
+}

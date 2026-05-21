@@ -650,6 +650,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Retro Term 复古终端',
+      description: '沉浸式复古终端模拟体验。CRT 扫描线 + 流体渐变背景 + 微晶玻璃态容器，16 种内置命令、4 种配色、Web Audio 音效反馈与开机启动序列动画',
+      path: '/seed/seeds/retro-term/index.html',
+      tags: ['Interactive', 'Terminal', 'Retro', 'Micro-interaction'],
+      icon: '⌨',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
