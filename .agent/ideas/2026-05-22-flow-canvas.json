@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-22",
+  "name": "flow-canvas",
+  "description": "可拖拽节点连线可视化编辑器",
+  "tagline": "Weave your logic, visually.",
+  "interaction": "Drag nodes onto an infinite canvas and draw connections between their ports to build data flow graphs in real time. Pan and zoom freely while a live minimap keeps you oriented; select any node to instantly inspect or rewire its links.",
+  "directory": "seeds/flow-canvas/",
+  "status": "incubated"
+}

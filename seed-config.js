@@ -660,6 +660,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Flow Canvas 流体画布',
+      description: '沉浸式流体画布交互体验。Simplex 噪声流场驱动的粒子绘画系统，4种流场模式 × 5种画笔风格 × 3种力场交互 × 4种氛围配色，脉冲冲击波与参数调节',
+      path: '/seed/seeds/flow-canvas/index.html',
+      tags: ['Interactive', 'Flow Field', 'Painting', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

@@ -1,0 +1,6 @@
+cursor-physics - 鼠标驱动图片重力掉落弹跳交互
+flow-canvas - 可拖拽节点连线可视化编辑器
+route-sketch - 滚动驱动SVG路径动画绘制工具
+scene-wipe - 像素级过渡转场效果实验场
+cli-folio - 复古终端风格交互式简历生成器
+trail-cascade - 自定义图片粒子拖尾轨迹效果
