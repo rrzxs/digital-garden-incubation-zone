@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-23",
+  "name": "typo-morph",
+  "description": "文字实时变形与物理动效画布",
+  "tagline": "Type It. Morph It. Feel It.",
+  "interaction": "用户在画布上键入文字，每个字符实时生成物理动效——可被拖拽、碰撞、弹跳，文字在不同字体形态间流畅变形。支持调节重力、弹性和风力等物理参数，让排版成为一场动态的视觉实验。",
+  "directory": "seeds/typo-morph/",
+  "status": "incubated"
+}

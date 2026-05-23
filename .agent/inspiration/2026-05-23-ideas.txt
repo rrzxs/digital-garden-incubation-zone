@@ -1,0 +1,6 @@
+typo-morph - 文字实时变形与物理动效画布
+scroll-map-anim - 滚动驱动SVG路径旅行动画生成器
+gravity-trail - 带重力弹跳的鼠标拖尾粒子引擎
+node-canvas-flow - 可拖拽节点流程图构建器
+cinematic-scroll - 电影级滚动视差叙事播放器
+ascii-physics - ASCII字符2D物理沙盒模拟器

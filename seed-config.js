@@ -670,6 +670,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Typo Morph 字形流变',
+      description: '沉浸式字形流变交互体验。5种变形场（弹性/晶格/漩涡/脉动/碎裂）实时驱动字符非线性形变，光标力场、爆炸脉冲、乱码揭示动画与粒子流场，4种氛围配色',
+      path: '/seed/seeds/typo-morph/index.html',
+      tags: ['Interactive', 'Typography', 'Morphing', 'Micro-interaction'],
+      icon: '≍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
