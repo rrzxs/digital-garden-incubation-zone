@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="obsidian">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Story Scroller · 色彩叙事卷轴</title>
+    <meta name="description" content="沉浸式色彩叙事卷轴。滚动驱动的色彩蜕变、光谱可视化、流体渐变背景与微晶玻璃态容器。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="particle-field"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <nav class="progress-rail" id="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="chapter-dots" id="chapter-dots"></div>
+    </nav>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="obsidian" title="Obsidian">◈</button>
+        <button class="theme-btn" data-theme="dusk" title="Dusk">◈</button>
+        <button class="theme-btn" data-theme="verdant" title="Verdant">◈</button>
+        <button class="theme-btn" data-theme="scarlet" title="Scarlet">◈</button>
+    </div>
+
+    <div class="color-spectrum-bar" id="color-spectrum-bar"></div>
+
+    <main id="main-content">
+
+        <section class="chapter" data-chapter="0" data-color-phase="origin">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">001</div>
+                    <div class="chapter-label">Origin · 原点</div>
+                    <h1 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">在光与暗的交界处</span>
+                        <span class="line accent" data-delay="120">色彩开始呼吸</span>
+                    </h1>
+                    <p class="chapter-body reveal-text" data-delay="300">
+                        <span class="line">色彩不是静止的属性——它是频率的舞蹈，是光子与视网膜的私密对话。</span>
+                        <span class="line">每一个波长都携带一段故事，从宇宙深处的恒星熔炉到你的瞳孔深处。</span>
+                    </p>
+                    <div class="color-preview reveal-text" data-delay="500">
+                        <span class="line">
+                            <div class="spectrum-wave" id="spectrum-wave-origin"></div>
+                        </span>
+                    </div>
+                    <div class="scroll-hint reveal-text" data-delay="650">
+                        <span class="line">
+                            <span class="scroll-arrow">↓</span> 向下滚动，开启色彩之旅
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="1" data-color-phase="ember">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">002</div>
+                    <div class="chapter-label">Ember · 余烬</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">赤红：</span>
+                        <span class="line accent" data-delay="120">620–750 纳米的脉动</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">红色是波长最长的可见光。它是血液的颜色，是岩浆的温度，</span>
+                        <span class="line">是恒星濒死时最后的呐喊。在所有文化中，红色都是生命的同义词。</span>
+                    </p>
+                    <div class="color-swatch-row reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="swatch" style="background:#dc2626" data-name="Crimson"></div>
+                            <div class="swatch" style="background:#ef4444" data-name="Vermillion"></div>
+                            <div class="swatch" style="background:#f87171" data-name="Coral"></div>
+                            <div class="swatch" style="background:#b91c1c" data-name="Garnet"></div>
+                            <div class="swatch" style="background:#991b1b" data-name="Maroon"></div>
+                        </span>
+                    </div>
+                    <div class="interaction-hint glass-pill reveal-text" data-delay="550">
+                        <span class="line">
+                            <span class="hint-dot"></span>
+                            移动鼠标，感受赤色的脉动
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="2" data-color-phase="aurum">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">003</div>
+                    <div class="chapter-label">Aurum · 金辉</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">金黄：</span>
+                        <span class="line accent" data-delay="120">570–590 纳米的辉煌</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">金色是太阳赠予大地的签名。从法老的面具到梵高的向日葵，</span>
+                        <span class="line">人类对金色的迷恋从未消退——因为它是光最纯粹的化身。</span>
+                    </p>
+                    <div class="color-lab reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="hue-ring" id="hue-ring">
+                                <div class="hue-indicator" id="hue-indicator"></div>
+                                <div class="hue-center">
+                                    <span class="hue-value" id="hue-value">579nm</span>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="3" data-color-phase="verdant">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">004</div>
+                    <div class="chapter-label">Verdant · 翠生</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">翠绿：</span>
+                        <span class="line accent" data-delay="120">495–570 纳米的生息</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">叶绿素选择吸收红蓝、反射绿色——这不是偶然，而是三十五亿年</span>
+                        <span class="line">光合作用演化的最优解。绿色是地球对"活着"最响亮的回答。</span>
+                    </p>
+                    <div class="particle-garden reveal-text" data-delay="450">
+                        <span class="line">
+                            <canvas id="garden-canvas" width="400" height="200"></canvas>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="4" data-color-phase="cerulean">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">005</div>
+                    <div class="chapter-label">Cerulean · 深蓝</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">深蓝：</span>
+                        <span class="line accent" data-delay="120">450–495 纳米的深邃</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">蓝色是天空的欺骗——瑞利散射让白日苍穹披上蓝纱。</span>
+                        <span class="line">深海之下，最后消失的光也是蓝色。它是距离的颜色，是无限的颜色。</span>
+                    </p>
+                    <div class="depth-visualizer reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="depth-bar" id="depth-bar">
+                                <div class="depth-fill" id="depth-fill"></div>
+                                <div class="depth-labels">
+                                    <span>海面</span>
+                                    <span>深海</span>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="5" data-color-phase="violet">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">006</div>
+                    <div class="chapter-label">Violet · 幽紫</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">幽紫：</span>
+                        <span class="line accent" data-delay="120">380–450 纳米的神秘</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">紫色是可见光光谱的尽头。在人眼能感知的最短波长处，</span>
+                        <span class="line">现实开始模糊，想象力接管了一切。紫色是物理与梦境的边境。</span>
+                    </p>
+                    <div class="spectrum-reveal reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="full-spectrum" id="full-spectrum">
+                                <div class="spectrum-line" data-hue="0"></div>
+                                <div class="spectrum-line" data-hue="30"></div>
+                                <div class="spectrum-line" data-hue="60"></div>
+                                <div class="spectrum-line" data-hue="90"></div>
+                                <div class="spectrum-line" data-hue="120"></div>
+                                <div class="spectrum-line" data-hue="150"></div>
+                                <div class="spectrum-line" data-hue="180"></div>
+                                <div class="spectrum-line" data-hue="210"></div>
+                                <div class="spectrum-line" data-hue="240"></div>
+                                <div class="spectrum-line" data-hue="270"></div>
+                                <div class="spectrum-line" data-hue="300"></div>
+                                <div class="spectrum-line" data-hue="330"></div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="6" data-color-phase="synthesis">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">007</div>
+                    <div class="chapter-label">Synthesis · 归一</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">所有色彩终将</span>
+                        <span class="line accent" data-delay="120">汇成白光</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">牛顿的三棱镜实验揭示了真相：白光不是"没有颜色"，</span>
+                        <span class="line">而是所有颜色的总和。每一种色彩，都是白光的一封信。</span>
+                    </p>
+                    <div class="epilogue-cta reveal-text" data-delay="450">
+                        <span class="line">
+                            <a href="../../index.html" class="cta-glass">
+                                <span>返回数字花园</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+    <div class="color-tooltip" id="color-tooltip"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

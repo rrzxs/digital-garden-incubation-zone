@@ -680,6 +680,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Color Story Scroller 色彩叙事卷轴',
+      description: '沉浸式色彩叙事卷轴体验。7幕色彩章节讲述可见光光谱的故事，滚动驱动色彩蜕变、光谱进度条、色板交互、色相环动画、粒子花园、深度可视化与全谱揭示，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/color-story-scroller/index.html',
+      tags: ['Interactive', 'Scroll', 'Color', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

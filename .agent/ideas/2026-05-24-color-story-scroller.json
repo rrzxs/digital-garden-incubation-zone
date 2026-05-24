@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-24",
+  "name": "color-story-scroller",
+  "description": "滚动叙事配色生成器",
+  "tagline": "Scroll Your Story, Paint Your Palette",
+  "interaction": "As the user scrolls through a narrative timeline, each story segment dynamically maps its emotional tone to a generated color swatch. Scrolling speed and direction influence hue shifts and saturation, creating a living palette that mirrors the reader's journey. The final output is a shareable color palette uniquely shaped by the story and the way it was experienced.",
+  "directory": "seeds/color-story-scroller/",
+  "status": "incubated"
+}

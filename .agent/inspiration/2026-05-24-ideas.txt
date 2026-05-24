@@ -1,0 +1,6 @@
+node-flow-builder - 可拖拽节点画布连线工具
+scroll-route-tracer - 滚动驱动路径动画生成器
+gravity-cascade - 鼠标重力拖尾特效引擎
+bento-mock-playground - 可交互应用截图沙盒
+scroll-graph-annotator - 滚动叙事数据图表标注器
+color-story-scroller - 滚动叙事配色生成器
