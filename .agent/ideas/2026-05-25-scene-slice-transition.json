@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-25",
+  "name": "scene-slice-transition",
+  "description": "滚动触发多场景碎片化转场",
+  "tagline": "Shatter Reality as You Scroll.",
+  "interaction": "As the user scrolls, the current scene visually fractures into geometric shards that scatter and dissolve, revealing the next scene beneath. Each scroll increment dynamically controls the fragmentation intensity and shard trajectories, creating a cinematic montage-like transition. The shards respond to scroll velocity, producing sharper breaks on fast scrolling and gentle drifts on slow scrolling.",
+  "directory": "seeds/scene-slice-transition/",
+  "status": "incubated"
+}

@@ -53,3 +53,4 @@ retro-term
 flow-canvas
 typo-morph
 color-story-scroller
+scene-slice-transition

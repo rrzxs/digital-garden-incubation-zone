@@ -690,6 +690,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Scene Slice Transition 场景切片过渡',
+      description: '沉浸式场景切片过渡体验。6种切片模式（垂直/水平/对角/涟漪/旋转/网格）、交错延迟弹性动效、粒子流场、微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/scene-slice-transition/index.html',
+      tags: ['Interactive', 'Transition', 'Animation', 'Micro-interaction'],
+      icon: '⊞',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

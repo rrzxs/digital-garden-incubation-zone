@@ -1,0 +1,7 @@
+node-wire-canvas - 可拖拽节点连线画布，流动粒子沿路径奔跑
+route-drawer - 滚动驱动SVG路径绘制与镜头漫游工具
+gravity-trail-fx - 鼠标跟随重力弹跳图片拖尾特效
+scene-slice-transition - 滚动触发多场景碎片化转场
+ascii-physics-text - 文字实时物理形变与ASCII艺术生成器
+craft-world-viewport - 纸艺风格3D视差滚动叙事画布
+crt-signal-glitch - 复古CRT信号噪声与后期处理滤镜
