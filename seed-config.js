@@ -700,6 +700,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Cinema Scroller 影院卷轴',
+      description: '沉浸式影院卷轴滚动体验。6幕场景章节、胶片齿孔边栏、影片倒计时、逐字揭示、滚动谷物感、光标追踪光晕与粒子流场，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/cinema-scroller/index.html',
+      tags: ['Interactive', 'Scroll', 'Cinema', 'Micro-interaction'],
+      icon: '⊪',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

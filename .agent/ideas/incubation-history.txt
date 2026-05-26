@@ -54,3 +54,4 @@ flow-canvas
 typo-morph
 color-story-scroller
 scene-slice-transition
+cinema-scroller

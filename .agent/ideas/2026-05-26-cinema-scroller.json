@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-26",
+  "name": "cinema-scroller",
+  "description": "电影感长滚动叙事排版",
+  "tagline": "Scroll Through Cinema",
+  "interaction": "As the user scrolls, cinematic scene transitions unfold—parallax-driven backgrounds shift between acts, dialogue cards fade in with typewriter precision, and full-bleed imagery dissolves like reel-to-reel cuts. A persistent progress bar styled as a filmstrip tracks the reader's position through the narrative, while scroll velocity triggers subtle film grain and letterbox effects that intensify during dramatic moments.",
+  "directory": "seeds/cinema-scroller/",
+  "status": "incubated"
+}

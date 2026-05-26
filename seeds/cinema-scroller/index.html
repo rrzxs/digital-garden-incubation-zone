@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Scroller | 影院卷轴</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <canvas class="particle-canvas" id="particle-canvas"></canvas>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <div class="grain-overlay" id="grain-overlay"></div>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <nav class="progress-rail" id="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="reel-counter">
+            <span class="reel-current" id="reel-current">01</span>
+            <span class="reel-divider">/</span>
+            <span class="reel-total" id="reel-total">06</span>
+        </div>
+    </nav>
+
+    <aside class="scene-indicators" id="scene-indicators"></aside>
+
+    <div class="film-strip" id="film-strip">
+        <div class="perforations left"></div>
+        <div class="perforations right"></div>
+    </div>
+
+    <main class="cinema-stage" id="cinema-stage">
+
+        <section class="scene scene-cover" data-scene="0">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">000</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">OVERTURE</span>
+                </div>
+                <h1 class="cover-title">
+                    <span class="title-line" data-delay="0">Cinema</span>
+                    <span class="title-line" data-delay="180">Scroller</span>
+                </h1>
+                <p class="cover-sub reveal-chars" data-text="An immersive scrolling experience that transforms your screen into a living film reel.">An immersive scrolling experience that transforms your screen into a living film reel.</p>
+                <div class="scroll-cue" id="scroll-cue">
+                    <div class="scroll-cue-track">
+                        <div class="scroll-cue-dot"></div>
+                    </div>
+                    <span class="scroll-cue-text">Scroll to begin</span>
+                </div>
+            </div>
+            <div class="film-countdown" id="film-countdown">
+                <svg class="countdown-ring" viewBox="0 0 100 100">
+                    <circle class="countdown-bg" cx="50" cy="50" r="45"/>
+                    <circle class="countdown-fg" cx="50" cy="50" r="45" id="countdown-fg"/>
+                </svg>
+                <span class="countdown-num" id="countdown-num">3</span>
+            </div>
+        </section>
+
+        <section class="scene" data-scene="1">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">001</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE FRAME</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">Every pixel</span>
+                    <span class="heading-line">is a frame</span>
+                    <span class="heading-line accent-line">in your story.</span>
+                </h2>
+                <div class="scene-body">
+                    <p class="body-text reveal-chars" data-text="The cinema is not just a medium — it is a language of light and shadow, of time compressed and expanded, of emotions distilled into twenty-four frames per second.">The cinema is not just a medium — it is a language of light and shadow, of time compressed and expanded, of emotions distilled into twenty-four frames per second.</p>
+                </div>
+                <div class="scene-visual frame-grid">
+                    <div class="frame-cell"></div>
+                    <div class="frame-cell"></div>
+                    <div class="frame-cell"></div>
+                    <div class="frame-cell"></div>
+                    <div class="frame-cell"></div>
+                    <div class="frame-cell"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-scene="2">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">002</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE LIGHT</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">Light writes</span>
+                    <span class="heading-line">in invisible ink,</span>
+                    <span class="heading-line accent-line">shadow reveals.</span>
+                </h2>
+                <div class="scene-body">
+                    <p class="body-text reveal-chars" data-text="In the darkroom of consciousness, every photon that strikes the silver halide crystal carries a universe of meaning. The photographer merely frames what was always there.">In the darkroom of consciousness, every photon that strikes the silver halide crystal carries a universe of meaning. The photographer merely frames what was always there.</p>
+                </div>
+                <div class="scene-visual light-play">
+                    <div class="light-beam beam-1"></div>
+                    <div class="light-beam beam-2"></div>
+                    <div class="light-beam beam-3"></div>
+                    <div class="lens-flare" id="lens-flare"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-scene="3">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">003</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE CUT</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">Between two cuts</span>
+                    <span class="heading-line">lies an entire</span>
+                    <span class="heading-line accent-line">universe of meaning.</span>
+                </h2>
+                <div class="scene-body">
+                    <p class="body-text reveal-chars" data-text="The Soviet montage theorists understood: the collision of images creates meaning beyond either frame alone. Eisenstein called it dialectical — thesis, antithesis, synthesis.">The Soviet montage theorists understood: the collision of images creates meaning beyond either frame alone. Eisenstein called it dialectical — thesis, antithesis, synthesis.</p>
+                </div>
+                <div class="scene-visual split-screen">
+                    <div class="split-pane pane-left">
+                        <div class="split-lines"></div>
+                    </div>
+                    <div class="split-divider"></div>
+                    <div class="split-pane pane-right">
+                        <div class="split-lines"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-scene="4">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">004</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE TIME</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">Time is the editor</span>
+                    <span class="heading-line">we never asked for</span>
+                    <span class="heading-line accent-line">but always needed.</span>
+                </h2>
+                <div class="scene-body">
+                    <p class="body-text reveal-chars" data-text="Tarkovsky sculpted in time. He believed cinema was not about editing but about the pressure of time within the frame — a pressure you could feel in the slow drift of rain across a window.">Tarkovsky sculpted in time. He believed cinema was not about editing but about the pressure of time within the frame — a pressure you could feel in the slow drift of rain across a window.</p>
+                </div>
+                <div class="scene-visual time-rings">
+                    <div class="time-ring ring-1"></div>
+                    <div class="time-ring ring-2"></div>
+                    <div class="time-ring ring-3"></div>
+                    <div class="time-center"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene scene-finale" data-scene="5">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">005</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">FIN</span>
+                </div>
+                <h2 class="finale-title reveal-lines">
+                    <span class="heading-line">The screen fades</span>
+                    <span class="heading-line">to black.</span>
+                </h2>
+                <p class="finale-sub reveal-chars" data-text="But the story continues — in the space between frames, in the silence after the credits, in you.">But the story continues — in the space between frames, in the silence after the credits, in you.</p>
+                <div class="credits-roll" id="credits-roll">
+                    <div class="credit-line">Directed by <span class="credit-name">The Viewer</span></div>
+                    <div class="credit-line">Photography <span class="credit-name">Light & Shadow</span></div>
+                    <div class="credit-line">Editing <span class="credit-name">Time Itself</span></div>
+                    <div class="credit-line">Music <span class="credit-name">The Sound of Silence</span></div>
+                    <div class="credit-line">Special Thanks <span class="credit-name">You</span></div>
+                </div>
+                <div class="replay-btn" id="replay-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="1 4 1 10 7 10"/>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                    <span>Replay from Start</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
