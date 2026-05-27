@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raindrop Reveal — 雨滴揭示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bg-orb bg-orb--1"></div>
+  <div class="bg-orb bg-orb--2"></div>
+  <div class="bg-orb bg-orb--3"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="app-container">
+
+    <div class="glass-panel header-area">
+      <h1>Raindrop Reveal</h1>
+      <p class="subtitle">// 点击或拖拽，让雨滴洗去迷雾，揭示隐藏内容</p>
+    </div>
+
+    <div class="glass-panel reveal-stage" id="reveal-stage">
+      <canvas id="rain-canvas"></canvas>
+      <canvas id="reveal-canvas"></canvas>
+      <div class="hidden-layer" id="hidden-layer">
+        <div class="hidden-title">数字花园</div>
+        <div class="hidden-body">每一颗种子都孕育着无限可能。在这里，代码与美学交融，交互与灵感碰撞，创造属于你的数字宇宙。</div>
+        <div class="hidden-badge">maintainer: EDEN</div>
+      </div>
+    </div>
+
+    <div class="glass-panel controls-bar">
+      <div class="progress-info">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-text" id="progress-text">0%</span>
+      </div>
+
+      <div class="mode-group">
+        <button class="mode-btn active" data-mode="draw">绘制</button>
+        <button class="mode-btn" data-mode="rain">降雨</button>
+        <button class="mode-btn" data-mode="ripple">涟漪</button>
+      </div>
+
+      <div class="mode-group">
+        <div class="theme-dot active" data-theme="ocean" title="深海"></div>
+        <div class="theme-dot" data-theme="aurora" title="极光"></div>
+        <div class="theme-dot" data-theme="ember" title="余烬"></div>
+        <div class="theme-dot" data-theme="nebula" title="星云"></div>
+      </div>
+
+      <div class="action-btns">
+        <button class="action-btn" id="btn-reset">重置</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cursor-drop" id="cursor-drop"></div>
+  <div class="toast" id="toast"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

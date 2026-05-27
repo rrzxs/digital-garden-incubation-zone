@@ -1,0 +1,6 @@
+gravity-trail - 鼠标重力粒子拖尾生成器
+svg-route-animator - 滚动驱动SVG路径叙事地图
+cube-orbit-gallery - 滚动控制3D立方体旋转画廊
+raindrop-reveal - 雨滴点击展开沉浸式画廊
+gravity-trail - 鼠标重力粒子拖尾生成器
+keyboard-navigator - 纯键盘驱动的卡片浏览交互

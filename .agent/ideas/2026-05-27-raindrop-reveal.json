@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-27",
+  "name": "raindrop-reveal",
+  "description": "雨滴点击展开沉浸式画廊",
+  "tagline": "Every drop unveils a story.",
+  "interaction": "Users click or tap on animated raindrops falling across the screen, causing each drop to burst open and reveal a hidden gallery image with a smooth ripple expansion. As more drops are opened, the images mosaic into an immersive, scroll-free gallery. The rain continues in the background, inviting users to keep discovering.",
+  "directory": "seeds/raindrop-reveal/",
+  "status": "incubated"
+}

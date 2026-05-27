@@ -710,6 +710,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Raindrop Reveal 雨滴揭示',
+      description: '沉浸式雨滴揭示交互体验。Simplex 噪声迷雾画布，3种交互模式（绘制/降雨/涟漪）揭示隐藏内容，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/raindrop-reveal/index.html',
+      tags: ['Interactive', 'Reveal', 'Animation', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
