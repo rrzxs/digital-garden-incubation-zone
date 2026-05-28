@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Scavenger 键盘拾荒者 - 沉浸式键盘寻宝体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Scavenger<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">键盘拾荒 · 快指寻宝</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-chip">
+                    <span class="stat-icon">⚡</span>
+                    <span class="stat-val" id="stat-score">0</span>
+                    <span class="stat-label">分数</span>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-icon">◎</span>
+                    <span class="stat-val" id="stat-combo">0</span>
+                    <span class="stat-label">连击</span>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-icon">∿</span>
+                    <span class="stat-val" id="stat-round">1</span>
+                    <span class="stat-label">关卡</span>
+                </div>
+            </div>
+            <button class="mode-btn glass-btn" id="mode-btn" title="切换模式">
+                <span class="mode-icon" id="mode-icon">⌨</span>
+            </button>
+        </header>
+
+        <section class="arena-section">
+            <div class="arena-panel glass-panel" id="arena-panel">
+                <canvas id="arena-canvas"></canvas>
+                <div class="target-word-container" id="target-container">
+                    <div class="target-label">TARGET</div>
+                    <div class="target-word" id="target-word"></div>
+                </div>
+                <div class="combo-flash" id="combo-flash"></div>
+            </div>
+        </section>
+
+        <section class="keyboard-section">
+            <div class="keyboard-panel glass-panel" id="keyboard-panel">
+                <div class="kb-row" data-row="0"></div>
+                <div class="kb-row" data-row="1"></div>
+                <div class="kb-row" data-row="2"></div>
+                <div class="kb-row" data-row="3"></div>
+            </div>
+        </section>
+
+        <section class="progress-section">
+            <div class="progress-bar-container glass-panel">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-labels">
+                    <span id="progress-text">进度 0 / 5</span>
+                    <span id="time-text">⏱ 00:00</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="round-overlay" id="round-overlay">
+        <div class="round-content glass-panel">
+            <div class="round-icon" id="round-icon">✨</div>
+            <h2 class="round-title" id="round-title">关卡完成!</h2>
+            <p class="round-subtitle" id="round-subtitle">准备进入下一关</p>
+            <div class="round-stats" id="round-stats"></div>
+            <button class="start-btn glass-btn" id="next-round-btn">继续</button>
+        </div>
+    </div>
+
+    <div class="start-overlay" id="start-overlay">
+        <div class="start-content glass-panel">
+            <div class="start-icon-wrap">
+                <span class="start-icon">⌨</span>
+                <div class="start-icon-ring"></div>
+            </div>
+            <h2 class="start-title">Keyboard Scavenger</h2>
+            <p class="start-desc">散落的字母漂浮在空间中，用键盘快速捕获它们，拼出目标单词。连击越快，分数越高。</p>
+            <div class="start-rules">
+                <div class="rule-item"><span class="rule-key">SPACE</span><span class="rule-text">暂停/继续</span></div>
+                <div class="rule-item"><span class="rule-key">A-Z</span><span class="rule-text">捕获字母</span></div>
+            </div>
+            <button class="start-btn glass-btn" id="start-btn">开始拾荒</button>
+        </div>
+    </div>
+
+    <div class="gameover-overlay" id="gameover-overlay">
+        <div class="gameover-content glass-panel">
+            <div class="gameover-icon">🏆</div>
+            <h2 class="gameover-title" id="gameover-title">游戏结束</h2>
+            <div class="gameover-stats" id="gameover-stats"></div>
+            <button class="start-btn glass-btn" id="restart-btn">再来一局</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

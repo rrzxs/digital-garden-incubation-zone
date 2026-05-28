@@ -56,3 +56,4 @@ color-story-scroller
 scene-slice-transition
 cinema-scroller
 raindrop-reveal
+keyboard-scavenger

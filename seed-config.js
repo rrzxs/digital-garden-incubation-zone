@@ -720,6 +720,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Keyboard Scavenger 键盘拾荒者',
+      description: '沉浸式键盘寻宝体验。漂浮字母在空间中飘动，快速击键捕获拼出目标单词。5关递进难度、Combo连击系统、涟漪粒子与键盘高亮提示，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/keyboard-scavenger/index.html',
+      tags: ['Interactive', 'Keyboard', 'Game', 'Micro-interaction'],
+      icon: '⌨',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
     }
   ]);
 

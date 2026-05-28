@@ -1,0 +1,6 @@
+gravity-trail - 鼠标拖尾图像瀑布式重力弹跳
+svg-journey-map - 滚动驱动SVG路径旅程动画生成器
+keyboard-scavenger - 键盘导航式信息发现微应用
+papercraft-folio - 纸艺风格3D立体折叠展示台
+recap-storyboard - 将事件流转化为可视化回顾短片
+rain-gallery - 雨滴交互式沉浸照片画廊

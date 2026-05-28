@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-28",
+  "name": "keyboard-scavenger",
+  "description": "键盘导航式信息发现微应用",
+  "tagline": "**Type to discover. Keyboard is your compass.**",
+  "interaction": "用户通过键盘输入字符来"导航"一片信息景观——每按下一个键，界面会过滤、揭示或跳转到匹配的内容节点，形成一种探索式的信息发现体验。页面可能以可视化地图、卡片墙或树状结构呈现内容，按键操作不仅仅是搜索，更像是寻宝——连续输入特定的字符组合可以解锁隐藏内容或触发彩蛋动画，鼓励用户用键盘"挖掘"信息。",
+  "directory": "seeds/keyboard-scavenger/",
+  "status": "incubated"
+}
