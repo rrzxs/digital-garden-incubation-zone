@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyflow Navigator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="ambient-layer">
+    <div class="glow-orb orb-a"></div>
+    <div class="glow-orb orb-b"></div>
+    <div class="glow-orb orb-c"></div>
+  </div>
+
+  <div class="noise-overlay"></div>
+
+  <div class="app">
+    <header class="app-header">
+      <div class="logo-area">
+        <span class="logo-icon">⌘</span>
+        <span class="logo-text">Keyflow</span>
+        <span class="logo-badge">Navigator</span>
+      </div>
+      <div class="header-actions">
+        <div class="theme-switcher">
+          <button class="theme-btn active" data-theme="aurora">Aurora</button>
+          <button class="theme-btn" data-theme="ember">Ember</button>
+          <button class="theme-btn" data-theme="ocean">Ocean</button>
+          <button class="theme-btn" data-theme="void">Void</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="nav-hint glass-panel">
+        <span class="hint-icon">⌨</span>
+        <span class="hint-text">Use <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd> to navigate &middot; <kbd>Space</kbd> pulse &middot; <kbd>1-4</kbd> switch theme</span>
+      </div>
+
+      <div class="nodes-viewport" id="nodes-viewport">
+        <div class="nodes-world" id="nodes-world">
+        </div>
+
+        <canvas id="links-canvas"></canvas>
+
+        <div class="cursor-glow" id="cursor-glow"></div>
+        <div class="cursor-ring" id="cursor-ring"></div>
+      </div>
+
+      <div class="bottom-bar">
+        <div class="focus-info glass-panel" id="focus-info">
+          <span class="focus-label">FOCUS</span>
+          <span class="focus-name" id="focus-name">None</span>
+        </div>
+        <div class="key-trail" id="key-trail"></div>
+        <div class="stats-panel glass-panel">
+          <div class="stat-item">
+            <span class="stat-label">Nodes</span>
+            <span class="stat-value" id="stat-nodes">12</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Keys</span>
+            <span class="stat-value" id="stat-keys">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Combo</span>
+            <span class="stat-value" id="stat-combo">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Flow</span>
+            <span class="stat-value" id="stat-flow">Idle</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

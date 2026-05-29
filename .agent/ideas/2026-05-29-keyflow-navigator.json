@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-29",
+  "name": "keyflow-navigator",
+  "description": "键盘驱动的沉浸式内容浏览",
+  "tagline": "**Type. Navigate. Immerse.**",
+  "interaction": "Users navigate a content landscape using only keyboard inputs — arrow keys shift focus between nodes, while modifier keys trigger depth transitions (zooming into topics or pulling back to overview). Each keystroke triggers subtle visual feedback — parallax shifts, ambient sound cues, and typographic animations — creating a fluid, game-like reading experience that keeps hands on the keyboard and eyes on the content.",
+  "directory": "seeds/keyflow-navigator/",
+  "status": "incubated"
+}

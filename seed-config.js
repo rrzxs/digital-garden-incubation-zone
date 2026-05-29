@@ -730,6 +730,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'game'
+    },
+    {
+      title: 'Keyflow Navigator 键流导航',
+      description: '沉浸式键盘驱动空间导航体验。WASD/方向键在互联节点间游走，脉冲冲击波、粒子流场、Combo连击系统与键轨追踪，4种氛围配色',
+      path: '/seed/seeds/keyflow-navigator/index.html',
+      tags: ['Interactive', 'Keyboard', 'Navigation', 'Micro-interaction'],
+      icon: '⌘',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
