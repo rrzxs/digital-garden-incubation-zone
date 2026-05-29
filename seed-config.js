@@ -740,6 +740,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Gravity Drop Trail 引力坠迹',
+      description: '沉浸式重力粒子轨迹体验场。点击创建引力源，观察粒子在重力场中坠落并留下流体轨迹。4种发射模式 × 可拖拽引力源 × 4种氛围配色',
+      path: '/seed/seeds/gravity-drop-trail/index.html',
+      tags: ['Interactive', 'Physics', 'Particle', 'Micro-interaction'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

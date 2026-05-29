@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-30",
+  "name": "gravity-drop-trail",
+  "description": "鼠标跟随重力弹跳图片瀑布",
+  "tagline": "Fall into the gravity playground.",
+  "interaction": "Images cascade from the cursor position, each one subject to simulated gravity and elastic bouncing as they collide with the viewport floor. The mouse acts as a continuous emitter — move it to redirect the waterfall, creating organic piles and scatter patterns of tumbling visuals. Every piece responds to physics in real time, turning casual cursor movement into a mesmerizing kinetic sculpture.",
+  "directory": "seeds/gravity-drop-trail/",
+  "status": "incubated"
+}

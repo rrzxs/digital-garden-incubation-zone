@@ -58,3 +58,4 @@ cinema-scroller
 raindrop-reveal
 keyboard-scavenger
 keyflow-navigator
+gravity-drop-trail

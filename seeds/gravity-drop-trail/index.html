@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity Drop Trail 引力坠迹 - 重力粒子轨迹体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Gravity Drop<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">引力坠迹 · 粒子轨迹体验场</p>
+            </div>
+            <div class="header-actions">
+                <div class="stats-group">
+                    <div class="stat-chip">
+                        <span class="stat-label">粒子</span>
+                        <span class="stat-value" id="stat-particles">0</span>
+                    </div>
+                    <div class="stat-chip">
+                        <span class="stat-label">FPS</span>
+                        <span class="stat-value" id="stat-fps">60</span>
+                    </div>
+                </div>
+                <div class="mode-toggle">
+                    <button class="mode-btn active" data-mode="drop" aria-label="坠滴模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L12 22M12 2L8 8M12 2L16 8"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="fountain" aria-label="喷泉模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22L12 6M12 6C12 6 6 10 6 14M12 6C12 6 18 10 18 14"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="orbit" aria-label="轨道模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="vortex" aria-label="漩涡模式">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12"/><path d="M12 18c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <div class="grid-lines"></div>
+            <canvas id="trail-canvas"></canvas>
+
+            <div class="attractor-zone" id="attractor-zone"></div>
+
+            <div class="attractor-handles" id="attractor-handles"></div>
+
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">点击画布创建引力源 · 观察粒子坠落轨迹</span>
+            </div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">引力</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-gravity" min="5" max="100" value="40" class="slider">
+                    <span class="slider-val" id="val-gravity">0.40</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">尾迹</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-trail" min="4" max="50" value="24" class="slider">
+                    <span class="slider-val" id="val-trail">24</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">弹性</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-bounce" min="10" max="95" value="60" class="slider">
+                    <span class="slider-val" id="val-bounce">0.60</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="cosmic" aria-label="宇宙">
+                    <span class="swatch" style="background:linear-gradient(135deg,#8b5cf6,#ec4899,#f97316)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ocean" aria-label="深海">
+                    <span class="swatch" style="background:linear-gradient(135deg,#0ea5e9,#6366f1,#8b5cf6)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+                </button>
+                <button class="palette-btn" data-palette="aurora" aria-label="极光">
+                    <span class="swatch" style="background:linear-gradient(135deg,#00d4ff,#a855f7,#00ff88)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btn-clear">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                    <span>清除</span>
+                </button>
+                <button class="action-btn" id="btn-spawn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                    <span>发射</span>
+                </button>
+                <button class="action-btn primary" id="btn-fullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+gravity-drop-trail - 鼠标跟随重力弹跳图片瀑布
+scroll-route-sketch - 滚动驱动SVG路径旅行图
+parallax-orbit - 无缝循环视差沉浸画廊
+focal-zoom-lens - 焦点径向缩放探索交互
+scene-flip-book - 滚动触发多场景无缝切换
+droplet-explorer - 点击水滴展开沉浸照片
