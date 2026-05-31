@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comfort Space - 你的舒适空间</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <main class="app">
+        <div class="ambient-controls">
+            <button class="ambient-btn active" data-mood="dawn" title="晨曦">
+                <span class="ambient-icon">🌅</span>
+                <span class="ambient-label">晨曦</span>
+            </button>
+            <button class="ambient-btn" data-mood="rain" title="雨声">
+                <span class="ambient-icon">🌧</span>
+                <span class="ambient-label">雨声</span>
+            </button>
+            <button class="ambient-btn" data-mood="night" title="星夜">
+                <span class="ambient-icon">✨</span>
+                <span class="ambient-label">星夜</span>
+            </button>
+            <button class="ambient-btn" data-mood="forest" title="森林">
+                <span class="ambient-icon">🌿</span>
+                <span class="ambient-label">森林</span>
+            </button>
+        </div>
+
+        <div class="comfort-zone" id="comfort-zone">
+            <div class="zone-orb">
+                <div class="orb-ring orb-ring-1"></div>
+                <div class="orb-ring orb-ring-2"></div>
+                <div class="orb-ring orb-ring-3"></div>
+                <div class="orb-core">
+                    <span class="orb-emoji" id="mood-emoji">🌤</span>
+                </div>
+            </div>
+            <div class="zone-text">
+                <h1 class="zone-title" id="mood-title">今日感受如何？</h1>
+                <p class="zone-subtitle" id="mood-subtitle">轻触气泡，倾诉你的心情</p>
+            </div>
+        </div>
+
+        <div class="mood-bubbles" id="mood-bubbles">
+            <button class="mood-bubble" data-mood="happy" data-emoji="😊" style="--delay: 0">
+                <span class="bubble-emoji">😊</span>
+                <span class="bubble-label">开心</span>
+            </button>
+            <button class="mood-bubble" data-mood="calm" data-emoji="😌" style="--delay: 1">
+                <span class="bubble-emoji">😌</span>
+                <span class="bubble-label">平静</span>
+            </button>
+            <button class="mood-bubble" data-mood="sad" data-emoji="😢" style="--delay: 2">
+                <span class="bubble-emoji">😢</span>
+                <span class="bubble-label">低落</span>
+            </button>
+            <button class="mood-bubble" data-mood="anxious" data-emoji="😰" style="--delay: 3">
+                <span class="bubble-emoji">😰</span>
+                <span class="bubble-label">焦虑</span>
+            </button>
+            <button class="mood-bubble" data-mood="tired" data-emoji="😴" style="--delay: 4">
+                <span class="bubble-emoji">😴</span>
+                <span class="bubble-label">疲惫</span>
+            </button>
+            <button class="mood-bubble" data-mood="grateful" data-emoji="🥰" style="--delay: 5">
+                <span class="bubble-emoji">🥰</span>
+                <span class="bubble-label">感恩</span>
+            </button>
+        </div>
+
+        <div class="breathe-widget glass-card" id="breathe-widget">
+            <div class="breathe-ring">
+                <svg viewBox="0 0 200 200" class="breathe-svg">
+                    <circle cx="100" cy="100" r="90" class="breathe-track"/>
+                    <circle cx="100" cy="100" r="90" class="breathe-progress" id="breathe-progress"/>
+                </svg>
+                <div class="breathe-text">
+                    <span class="breathe-phase" id="breathe-phase">呼吸</span>
+                    <span class="breathe-timer" id="breathe-timer">0:00</span>
+                </div>
+            </div>
+            <div class="breathe-controls">
+                <button class="breathe-btn" id="breathe-toggle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21"/>
+                    </svg>
+                    <span>开始呼吸</span>
+                </button>
+                <div class="breathe-pattern">
+                    <button class="pattern-btn active" data-pattern="478">4-7-8</button>
+                    <button class="pattern-btn" data-pattern="box">箱式</button>
+                    <button class="pattern-btn" data-pattern="calm">舒缓</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="affirmation-container glass-card" id="affirmation-card">
+            <div class="affirmation-icon">💫</div>
+            <p class="affirmation-text" id="affirmation-text">你值得被温柔以待</p>
+            <button class="affirmation-refresh" id="affirmation-refresh">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="sound-scape" id="sound-scape">
+            <div class="sound-header">
+                <span class="sound-label">环境声场</span>
+                <button class="sound-toggle" id="sound-toggle">
+                    <span class="sound-status">静音</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <line x1="23" y1="9" x2="17" y2="15"/>
+                        <line x1="17" y1="9" x2="23" y2="15"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="sound-mixer">
+                <div class="sound-channel">
+                    <span class="channel-icon">💧</span>
+                    <input type="range" class="channel-slider" min="0" max="100" value="40" data-sound="rain" data-color="hsl(210, 80%, 65%)">
+                    <span class="channel-name">雨声</span>
+                </div>
+                <div class="sound-channel">
+                    <span class="channel-icon">🔥</span>
+                    <input type="range" class="channel-slider" min="0" max="100" value="0" data-sound="fire" data-color="hsl(25, 80%, 55%)">
+                    <span class="channel-name">炉火</span>
+                </div>
+                <div class="sound-channel">
+                    <span class="channel-icon">🍃</span>
+                    <input type="range" class="channel-slider" min="0" max="100" value="0" data-sound="wind" data-color="hsl(140, 60%, 50%)">
+                    <span class="channel-name">微风</span>
+                </div>
+                <div class="sound-channel">
+                    <span class="channel-icon">🐦</span>
+                    <input type="range" class="channel-slider" min="0" max="100" value="0" data-sound="birds" data-color="hsl(45, 80%, 55%)">
+                    <span class="channel-name">鸟鸣</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="ripple-layer" id="ripple-layer"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

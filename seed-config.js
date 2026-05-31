@@ -750,6 +750,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Comfort Space 舒适空间',
+      description: '沉浸式情绪安抚微交互。6种情绪选择、3种呼吸模式、15条能量语句、Web Audio 环境声场、4种氛围配色、粒子流场与微晶玻璃态容器',
+      path: '/seed/seeds/comfort-space/index.html',
+      tags: ['Wellness', 'Breathing', 'Audio', 'Micro-interaction'],
+      icon: '🌤',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'wellness'
     }
   ]);
 

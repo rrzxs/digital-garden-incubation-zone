@@ -1,0 +1,9 @@
+{
+  "date": "2026-05-31",
+  "name": "comfort-space",
+  "description": "情绪疗愈个人空间生成器",
+  "tagline": "Your feelings, your space.",
+  "interaction": "用户通过选择当前情绪状态（如焦虑、悲伤、疲惫），系统实时生成一个个性化的3D沉浸式空间——色彩、粒子运动和音景都随情绪动态演变。用户可以通过鼠标移动与空间中的元素互动，如推动光球、拨开迷雾或触碰涟漪，获得即时的视觉与听觉反馈。随着时间推移，空间会从代表负面情绪的冷色调逐渐过渡到温暖的治愈色调，象征情绪的释放与转化。",
+  "directory": "seeds/comfort-space/",
+  "status": "incubated"
+}
