@@ -1,0 +1,13 @@
+comfort - space` — 已存在
+infinite-canvas - map` — 接近地图主题
+cinema - scroller`, `scroll-chapter`, `scroll-storyboard`, `editorial-scroller` — 滚动叙事已覆盖
+flowmap - text` — 流体图已覆盖
+raindrop - reveal` — 雨滴已覆盖
+clip-wipe - lab`, `shader-wipe-transitions` — 过渡效果已覆盖
+scroll - distortion` — 滚动效果已覆盖
+cube-gallery-driver - 滚轮驱动的3D旋转图片展台
+route-sketcher - 手绘风格SVG路径动画绘制器
+emotion-pocket - 个性化情绪急救小空间
+parallax-loop-stage - 无缝循环的视差沉浸展映
+mood-capsule - 收集生活碎片的情绪时光胶囊
+brand-motion-lab - 品牌微动效在线调试工坊

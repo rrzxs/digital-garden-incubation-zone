@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll · 滚动之境</title>
+    <meta name="description" content="沉浸式滚动微交互体验场。视差深度层、弹性物理卡片、滚动驱动形变、粒子流场与微晶玻璃态容器。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="particle-field"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void">◈</button>
+    </div>
+
+    <nav class="progress-rail" id="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="section-dots" id="section-dots"></div>
+    </nav>
+
+    <div class="scroll-velocity-bar" id="scroll-velocity-bar">
+        <div class="velocity-fill" id="velocity-fill"></div>
+        <span class="velocity-label mono" id="velocity-label">0.0</span>
+    </div>
+
+    <main id="main-content">
+
+        <section class="scroll-section hero-section" data-section="0">
+            <div class="parallax-layer" data-depth="0.15">
+                <div class="hero-deco-line deco-1"></div>
+                <div class="hero-deco-line deco-2"></div>
+                <div class="hero-deco-line deco-3"></div>
+            </div>
+            <div class="parallax-layer" data-depth="0.3">
+                <div class="section-inner hero-inner">
+                    <div class="hero-badge glass-pill">
+                        <span class="badge-dot"></span>
+                        <span>Scroll Experience</span>
+                    </div>
+                    <h1 class="hero-title reveal-text">
+                        <span class="line" data-delay="0">滚动</span>
+                        <span class="line accent" data-delay="140">即创造</span>
+                    </h1>
+                    <p class="hero-sub reveal-text" data-delay="280">
+                        <span class="line">每一次滚动，都是与数字空间的一次深度对话。</span>
+                        <span class="line">视差、弹性、扭曲、消隐——感受滚动的无限可能。</span>
+                    </p>
+                    <div class="scroll-hint reveal-text" data-delay="420">
+                        <span class="line">
+                            <span class="scroll-arrow">↓</span> 开始探索
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scroll-section" data-section="1">
+            <div class="parallax-layer" data-depth="0.1">
+                <div class="bg-glyph">&#x2736;</div>
+            </div>
+            <div class="parallax-layer" data-depth="0.25">
+                <div class="section-inner">
+                    <div class="section-number mono">001</div>
+                    <div class="section-label">Parallax Depth</div>
+                    <h2 class="section-title reveal-text">
+                        <span class="line" data-delay="0">视差深度层</span>
+                    </h2>
+                    <p class="section-desc reveal-text" data-delay="160">
+                        <span class="line">多层独立运动的元素以不同速率响应滚动，</span>
+                        <span class="line">创造出令人沉浸的空间纵深感。</span>
+                    </p>
+                    <div class="card-row">
+                        <div class="scroll-card glass-card depth-card" data-depth="0.05">
+                            <div class="card-shimmer"></div>
+                            <div class="card-content">
+                                <div class="card-icon">◇</div>
+                                <div class="card-title">前景层</div>
+                                <div class="card-meta mono">depth: 0.05</div>
+                            </div>
+                        </div>
+                        <div class="scroll-card glass-card depth-card" data-depth="0.2">
+                            <div class="card-shimmer"></div>
+                            <div class="card-content">
+                                <div class="card-icon">◈</div>
+                                <div class="card-title">中景层</div>
+                                <div class="card-meta mono">depth: 0.20</div>
+                            </div>
+                        </div>
+                        <div class="scroll-card glass-card depth-card" data-depth="0.45">
+                            <div class="card-shimmer"></div>
+                            <div class="card-content">
+                                <div class="card-icon">⊛</div>
+                                <div class="card-title">远景层</div>
+                                <div class="card-meta mono">depth: 0.45</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scroll-section" data-section="2">
+            <div class="parallax-layer" data-depth="0.15">
+                <div class="bg-glyph">&#x25C8;</div>
+            </div>
+            <div class="parallax-layer" data-depth="0.25">
+                <div class="section-inner">
+                    <div class="section-number mono">002</div>
+                    <div class="section-label">Spring Physics</div>
+                    <h2 class="section-title reveal-text">
+                        <span class="line" data-delay="0">弹性物理卡片</span>
+                    </h2>
+                    <p class="section-desc reveal-text" data-delay="160">
+                        <span class="line">卡片不随滚动直接移动，而是通过弹簧-阻尼模型</span>
+                        <span class="line">产生过冲与回弹，带来有机的物理质感。</span>
+                    </p>
+                    <div class="card-grid">
+                        <div class="scroll-card glass-card spring-card" data-spring="true">
+                            <div class="card-shimmer"></div>
+                            <div class="card-content">
+                                <div class="card-icon">∿</div>
+                                <div class="card-title">Stiffness</div>
+                                <div class="card-bar"><div class="bar-fill" style="width:80%"></div></div>
+                            </div>
+                        </div>
+                        <div class="scroll-card glass-card spring-card" data-spring="true">
+                            <div class="card-shimmer"></div>
+                            <div class="card-content">
+                                <div class="card-icon">≋</div>
+                                <div class="card-title">Damping</div>
+                                <div class="card-bar"><div class="bar-fill" style="width:55%"></div></div>
+                            </div>
+                        </div>
+                        <div class="scroll-card glass-card spring-card" data-spring="true">
+                            <div class="card-shimmer"></div>
+                            <div class="card-content">
+                                <div class="card-icon">⟐</div>
+                                <div class="card-title">Mass</div>
+                                <div class="card-bar"><div class="bar-fill" style="width:35%"></div></div>
+                            </div>
+                        </div>
+                        <div class="scroll-card glass-card spring-card" data-spring="true">
+                            <div class="card-shimmer"></div>
+                            <div class="card-content">
+                                <div class="card-icon">◉</div>
+                                <div class="card-title">Overshoot</div>
+                                <div class="card-bar"><div class="bar-fill" style="width:90%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scroll-section" data-section="3">
+            <div class="parallax-layer" data-depth="0.1">
+                <div class="bg-glyph">&#x29BF;</div>
+            </div>
+            <div class="parallax-layer" data-depth="0.25">
+                <div class="section-inner">
+                    <div class="section-number mono">003</div>
+                    <div class="section-label">Scroll Morph</div>
+                    <h2 class="section-title reveal-text">
+                        <span class="line" data-delay="0">滚动驱动形变</span>
+                    </h2>
+                    <p class="section-desc reveal-text" data-delay="160">
+                        <span class="line">滚动速度实时驱动元素的非线性形变——</span>
+                        <span class="line">拉伸、旋转、缩放、透明度随滚动速度流动。</span>
+                    </p>
+                    <div class="morph-demo">
+                        <div class="morph-target glass-card" id="morph-target">
+                            <div class="morph-shape" id="morph-shape"></div>
+                            <div class="morph-info mono">
+                                <span id="morph-speed">speed: 0.00</span>
+                                <span id="morph-scale">scale: 1.00</span>
+                                <span id="morph-rotate">rotate: 0.0°</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scroll-section" data-section="4">
+            <div class="parallax-layer" data-depth="0.12">
+                <div class="bg-glyph">&#x2606;</div>
+            </div>
+            <div class="parallax-layer" data-depth="0.25">
+                <div class="section-inner">
+                    <div class="section-number mono">004</div>
+                    <div class="section-label">Reveal & Fade</div>
+                    <h2 class="section-title reveal-text">
+                        <span class="line" data-delay="0">揭示与消隐</span>
+                    </h2>
+                    <p class="section-desc reveal-text" data-delay="160">
+                        <span class="line">内容在滚动中优雅地浮现与退场。</span>
+                        <span class="line">裁切、位移、透明度的非线性编排，讲述空间的叙事。</span>
+                    </p>
+                    <div class="reveal-demo">
+                        <div class="reveal-block glass-card" data-reveal="clip">
+                            <div class="card-shimmer"></div>
+                            <span class="reveal-text-inner">Clip Reveal</span>
+                        </div>
+                        <div class="reveal-block glass-card" data-reveal="slide">
+                            <div class="card-shimmer"></div>
+                            <span class="reveal-text-inner">Slide In</span>
+                        </div>
+                        <div class="reveal-block glass-card" data-reveal="scale">
+                            <div class="card-shimmer"></div>
+                            <span class="reveal-text-inner">Scale Up</span>
+                        </div>
+                        <div class="reveal-block glass-card" data-reveal="blur">
+                            <div class="card-shimmer"></div>
+                            <span class="reveal-text-inner">Focus Pull</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scroll-section footer-section" data-section="5">
+            <div class="parallax-layer" data-depth="0.1">
+                <div class="footer-glow"></div>
+            </div>
+            <div class="parallax-layer" data-depth="0.2">
+                <div class="section-inner footer-inner">
+                    <h2 class="footer-title reveal-text">
+                        <span class="line" data-delay="0">每一次滚动</span>
+                        <span class="line accent" data-delay="140">都是一场微小旅行</span>
+                    </h2>
+                    <p class="footer-sub reveal-text" data-delay="280">
+                        <span class="line">你已抵达旅途终点。但数字空间没有尽头——</span>
+                        <span class="line">向上滚动，重新体验每一个瞬间。</span>
+                    </p>
+                    <div class="footer-ring" id="footer-ring">
+                        <svg viewBox="0 0 120 120" width="120" height="120">
+                            <circle class="ring-track" cx="60" cy="60" r="54" fill="none" stroke-width="1.5"/>
+                            <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="54" fill="none" stroke-width="2"/>
+                        </svg>
+                        <span class="ring-label mono" id="ring-label">100%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

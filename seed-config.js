@@ -760,6 +760,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'wellness'
+    },
+    {
+      title: 'Scroll 滚动之境',
+      description: '沉浸式滚动微交互体验场。视差深度层、弹性物理卡片、滚动驱动形变、揭示消隐动画、粒子流场与微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/scroll/index.html',
+      tags: ['Interactive', 'Scroll', 'Animation', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

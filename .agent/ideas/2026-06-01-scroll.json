@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-01",
+  "name": "scroll",
+  "description": "distortion` — 滚动效果已覆盖",
+  "tagline": "**Reality Bends as You Scroll**",
+  "interaction": "As the user scrolls, page elements warp and distort fluidly, creating a disorienting yet mesmerizing visual flow. Text, images, and shapes stretch, twist, and ripple in response to scroll velocity, giving the feeling of peering through a lens that refracts the entire page. The distortion intensity maps directly to scroll speed — slow scrolls yield subtle warps, while fast scrolling shatters the layout into abstract geometry.",
+  "directory": "seeds/scroll/",
+  "status": "incubated"
+}
