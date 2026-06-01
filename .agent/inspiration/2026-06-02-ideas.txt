@@ -1,0 +1,6 @@
+route-cinema - 滚动驱动SVG路径旅行叙事器
+cube-orbit-gallery - 3D立方体轨迹滚动图库引擎
+emotion-terrain - 多维情绪景观自省空间
+infinite-parallax-drift - 无限视差漂移沉浸画布
+interface-signature-lab - 品牌数字签名微交互工坊
+route-sketch - SVG手绘路线故事卷轴

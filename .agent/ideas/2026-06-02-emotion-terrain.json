@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-02",
+  "name": "emotion-terrain",
+  "description": "多维情绪景观自省空间",
+  "tagline": "Feel your feelings, shape your landscape.",
+  "interaction": "Users navigate a procedurally-generated 3D terrain where each emotional dimension (joy, anxiety, calm, anger) maps to a distinct geographical feature — mountains, storms, meadows, volcanoes. By selecting and adjusting emotion intensities via intuitive sliders, the landscape morphs in real-time, creating a personal emotional topography. Users can walk through their terrain in first-person, discovering hidden reflective prompts that emerge at the intersections of conflicting emotions.",
+  "directory": "seeds/emotion-terrain/",
+  "status": "incubated"
+}

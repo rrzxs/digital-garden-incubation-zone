@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="abyss">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion Terrain · 情绪地形</title>
+  <meta name="description" content="沉浸式情绪地形交互体验。选择情绪，观察地形在 Simplex 噪声场中实时流变，鼠标力场扰动情绪粒子，4种氛围配色">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="gradient-orb orb-4"></div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <canvas id="terrain-canvas"></canvas>
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <a class="back-link" href="../../index.html">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <span>返回花园</span>
+  </a>
+
+  <div class="theme-switcher" id="theme-switcher">
+    <button class="theme-btn active" data-theme="abyss" title="深渊">◈</button>
+    <button class="theme-btn" data-theme="aurora" title="极光">◈</button>
+    <button class="theme-btn" data-theme="ember" title="熔岩">◈</button>
+    <button class="theme-btn" data-theme="verdant" title="翠林">◈</button>
+  </div>
+
+  <main class="app-shell">
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon">◺</span>
+        <h1 class="brand-title">Emotion Terrain</h1>
+      </div>
+      <div class="header-actions">
+        <div class="interaction-mode" id="interactionMode" role="button" tabindex="0" aria-label="切换交互模式">
+          <span class="mode-label active" data-mode="explore">探索</span>
+          <span class="mode-divider">/</span>
+          <span class="mode-label" data-mode="sculpt">雕塑</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="emotion-selector" id="emotionSelector">
+      <div class="emotion-track">
+        <button class="emotion-card active" data-emotion="serene" data-emoji="🌤">
+          <span class="emotion-emoji">🌤</span>
+          <span class="emotion-name">宁静</span>
+          <span class="emotion-hint">Serene</span>
+        </button>
+        <button class="emotion-card" data-emotion="joy" data-emoji="✨">
+          <span class="emotion-emoji">✨</span>
+          <span class="emotion-name">欢愉</span>
+          <span class="emotion-hint">Joy</span>
+        </button>
+        <button class="emotion-card" data-emotion="melancholy" data-emoji="🌧">
+          <span class="emotion-emoji">🌧</span>
+          <span class="emotion-name">忧郁</span>
+          <span class="emotion-hint">Melancholy</span>
+        </button>
+        <button class="emotion-card" data-emotion="fury" data-emoji="🔥">
+          <span class="emotion-emoji">🔥</span>
+          <span class="emotion-name">愤怒</span>
+          <span class="emotion-hint">Fury</span>
+        </button>
+        <button class="emotion-card" data-emotion="wonder" data-emoji="🌌">
+          <span class="emotion-emoji">🌌</span>
+          <span class="emotion-name">惊叹</span>
+          <span class="emotion-hint">Wonder</span>
+        </button>
+        <button class="emotion-card" data-emotion="fear" data-emoji="🌑">
+          <span class="emotion-emoji">🌑</span>
+          <span class="emotion-name">恐惧</span>
+          <span class="emotion-hint">Fear</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="terrain-viewport" id="terrainViewport">
+      <div class="viewport-frame">
+        <div class="viewport-corner tl"></div>
+        <div class="viewport-corner tr"></div>
+        <div class="viewport-corner bl"></div>
+        <div class="viewport-corner br"></div>
+        <div class="terrain-info" id="terrainInfo">
+          <div class="info-line">
+            <span class="info-label">情绪海拔</span>
+            <span class="info-value mono" id="altitudeValue">0.00</span>
+          </div>
+          <div class="info-line">
+            <span class="info-label">地形能量</span>
+            <span class="info-value mono" id="energyValue">0.00</span>
+          </div>
+          <div class="info-line">
+            <span class="info-label">情绪场强</span>
+            <span class="info-value mono" id="fieldValue">0.00</span>
+          </div>
+        </div>
+        <div class="terrain-label" id="terrainLabel">
+          <span class="label-emotion" id="labelEmotion">宁静</span>
+          <span class="label-morph">→</span>
+          <span class="label-state" id="labelState">连绵丘陵</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="controls-bar">
+      <div class="controls-group">
+        <div class="slider-control">
+          <label class="slider-label">地形振幅</label>
+          <input type="range" class="slider" id="sliderAmplitude" min="10" max="100" value="50" step="1">
+          <span class="slider-value mono" id="valAmplitude">50</span>
+        </div>
+        <div class="slider-control">
+          <label class="slider-label">噪声频率</label>
+          <input type="range" class="slider" id="sliderFrequency" min="5" max="60" value="25" step="1">
+          <span class="slider-value mono" id="valFrequency">25</span>
+        </div>
+        <div class="slider-control">
+          <label class="slider-label">演化速度</label>
+          <input type="range" class="slider" id="sliderSpeed" min="5" max="80" value="30" step="1">
+          <span class="slider-value mono" id="valSpeed">30</span>
+        </div>
+      </div>
+
+      <div class="controls-group">
+        <div class="palette-row" id="paletteRow">
+          <button class="palette-btn active" data-palette="abyss" aria-label="深渊配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #0f172a, #312e81, #6366f1)"></span>
+            <span class="palette-name">深渊</span>
+          </button>
+          <button class="palette-btn" data-palette="aurora" aria-label="极光配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #064e3b, #2dd4bf, #a7f3d0)"></span>
+            <span class="palette-name">极光</span>
+          </button>
+          <button class="palette-btn" data-palette="ember" aria-label="熔岩配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #450a0a, #dc2626, #fbbf24)"></span>
+            <span class="palette-name">熔岩</span>
+          </button>
+          <button class="palette-btn" data-palette="verdant" aria-label="翠林配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #052e16, #22c55e, #bbf7d0)"></span>
+            <span class="palette-name">翠林</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="controls-group">
+        <button class="action-btn" id="btnPulse" aria-label="情绪脉冲">
+          <span class="action-icon">◎</span>
+          <span class="action-label">脉冲</span>
+        </button>
+        <button class="action-btn" id="btnRegenerate" aria-label="重生成">
+          <span class="action-icon">⟲</span>
+          <span class="action-label">重生成</span>
+        </button>
+        <button class="action-btn" id="btnFullscreen" aria-label="全屏">
+          <span class="action-icon">⤢</span>
+          <span class="action-label">全屏</span>
+        </button>
+      </div>
+    </footer>
+
+    <div class="stats-bar">
+      <span class="stat"><span class="stat-label">FPS</span><span class="stat-value mono" id="statFps">60</span></span>
+      <span class="stat"><span class="stat-label">顶点</span><span class="stat-value mono" id="statVerts">0</span></span>
+      <span class="stat"><span class="stat-label">粒子</span><span class="stat-value mono" id="statParticles">0</span></span>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

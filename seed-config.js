@@ -770,6 +770,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Emotion Terrain 情绪地形',
+      description: '沉浸式情绪地形交互体验。6种情绪预设驱动 Simplex 噪声地形实时流变，鼠标力场扰动、粒子流场、情绪脉冲冲击波，4种氛围配色',
+      path: '/seed/seeds/emotion-terrain/index.html',
+      tags: ['Interactive', 'Emotion', 'Terrain', 'Micro-interaction'],
+      icon: '◺',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
