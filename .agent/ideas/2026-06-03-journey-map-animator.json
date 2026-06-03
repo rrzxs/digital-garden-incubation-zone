@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-03",
+  "name": "journey-map-animator",
+  "description": "滚动驱动SVG路径旅行动画生成器",
+  "tagline": "Scroll to animate your journey.",
+  "interaction": "Users draw or import an SVG path representing a travel route, then scroll the page to animate an icon (e.g., a plane, car, or pin) along the path with progress-based visual cues. Waypoints along the route reveal location details, photos, and milestones as the animated traveler reaches each point, creating an immersive scroll-driven storytelling experience.",
+  "directory": "seeds/journey-map-animator/",
+  "status": "incubated"
+}

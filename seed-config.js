@@ -780,6 +780,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Journey Map Animator 旅途地图',
+      description: '沉浸式旅途地图动画体验。Catmull-Rom 样条曲线路径、6个故事站点、旅行者轨迹绘制、粒子流场与微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/journey-map-animator/index.html',
+      tags: ['Interactive', 'Animation', 'Journey', 'Micro-interaction'],
+      icon: '🗺',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

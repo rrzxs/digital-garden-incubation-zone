@@ -1,0 +1,6 @@
+scroll-cube-gallery - 滚动驱动的3D立方体图片轮播
+journey-map-animator - 滚动驱动SVG路径旅行动画生成器
+comfort-letter-crafter - 疗愈情绪数字信笺生成器
+parallax-depth-loop - 无缝无限循环视差沉浸画廊
+brand-sound-signature - 品牌数字感官特征调试器
+emotion-bloom-journal - 情绪开花可视化日记本
