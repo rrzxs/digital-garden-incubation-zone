@@ -1,0 +1,6 @@
+dark-pattern-exposer - 揭示电商操纵套路的交互叙事
+comfort-space-builder - 构建个性化治愈数字空间
+infinite-parallax-loop - 无缝循环视差沉浸滚动体验
+cube-orbit-gallery - 滚动驱动3D立方体图片画廊
+halftone-portrait-studio - 线刻风格头像生成器
+motion-signature-lab - 为品牌调试独特运动签名

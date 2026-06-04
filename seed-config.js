@@ -790,6 +790,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Comfort Space Builder 舒适空间构建器',
+      description: '沉浸式舒适空间构建体验。拖拽布置8种舒适元素、4种氛围基调、Web Audio 环境声场、呼吸引导与能量语句，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/comfort-space-builder/index.html',
+      tags: ['Wellness', 'Interactive', 'Builder', 'Micro-interaction'],
+      icon: '⊛',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'wellness'
     }
   ]);
 

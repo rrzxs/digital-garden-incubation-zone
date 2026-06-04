@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comfort Space Builder - 舒适空间构建器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <main class="app">
+        <header class="app-header">
+            <div class="header-badge glass-pill">
+                <span class="badge-icon">⊛</span>
+                <span class="badge-text">Space Builder</span>
+            </div>
+            <h1 class="header-title">构建你的舒适空间</h1>
+            <p class="header-subtitle">选择元素，拖拽排列，创造属于你的安宁角落</p>
+        </header>
+
+        <div class="palette-bar glass-card" id="palette-bar">
+            <span class="palette-label">元素面板</span>
+            <div class="palette-items">
+                <button class="palette-item" data-type="pillow" draggable="true" title="靠枕">
+                    <span class="item-icon">🛋</span>
+                    <span class="item-name">靠枕</span>
+                </button>
+                <button class="palette-item" data-type="candle" draggable="true" title="蜡烛">
+                    <span class="item-icon">🕯</span>
+                    <span class="item-name">蜡烛</span>
+                </button>
+                <button class="palette-item" data-type="plant" draggable="true" title="植物">
+                    <span class="item-icon">🌿</span>
+                    <span class="item-name">植物</span>
+                </button>
+                <button class="palette-item" data-type="book" draggable="true" title="书本">
+                    <span class="item-icon">📖</span>
+                    <span class="item-name">书本</span>
+                </button>
+                <button class="palette-item" data-type="cup" draggable="true" title="茶杯">
+                    <span class="item-icon">🍵</span>
+                    <span class="item-name">茶杯</span>
+                </button>
+                <button class="palette-item" data-type="music" draggable="true" title="音乐">
+                    <span class="item-icon">♫</span>
+                    <span class="item-name">音乐</span>
+                </button>
+                <button class="palette-item" data-type="cat" draggable="true" title="猫咪">
+                    <span class="item-icon">🐱</span>
+                    <span class="item-name">猫咪</span>
+                </button>
+                <button class="palette-item" data-type="window" draggable="true" title="窗户">
+                    <span class="item-icon">🪟</span>
+                    <span class="item-name">窗户</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="workspace glass-card" id="workspace">
+            <div class="workspace-inner" id="workspace-inner">
+                <div class="workspace-hint" id="workspace-hint">
+                    <span class="hint-icon">⊹</span>
+                    <span>从上方面板拖入元素，或点击添加</span>
+                    <span class="hint-sub">双击元素移除 · 拖拽调整位置</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-row">
+            <div class="mood-selector glass-card" id="mood-selector">
+                <span class="control-label">氛围基调</span>
+                <div class="mood-options">
+                    <button class="mood-btn active" data-mood="warm" style="--mood-color: #f5a623">
+                        <span class="mood-dot" style="background: #f5a623"></span>
+                        <span>温暖</span>
+                    </button>
+                    <button class="mood-btn" data-mood="cool" style="--mood-color: #5ac8fa">
+                        <span class="mood-dot" style="background: #5ac8fa"></span>
+                        <span>清凉</span>
+                    </button>
+                    <button class="mood-btn" data-mood="dreamy" style="--mood-color: #bd93f9">
+                        <span class="mood-dot" style="background: #bd93f9"></span>
+                        <span>梦幻</span>
+                    </button>
+                    <button class="mood-btn" data-mood="zen" style="--mood-color: #50fa7b">
+                        <span class="mood-dot" style="background: #50fa7b"></span>
+                        <span>禅意</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sound-control glass-card" id="sound-control">
+                <span class="control-label">环境声</span>
+                <div class="sound-options">
+                    <button class="sound-btn" data-sound="rain" title="雨声">
+                        <span>🌧</span>
+                    </button>
+                    <button class="sound-btn" data-sound="fire" title="炉火">
+                        <span>🔥</span>
+                    </button>
+                    <button class="sound-btn" data-sound="wind" title="微风">
+                        <span>🍃</span>
+                    </button>
+                    <button class="sound-btn" data-sound="night" title="夜虫">
+                        <span>🦗</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn" id="btn-breathe" title="呼吸引导">
+                    <span>🌬</span>
+                    <span class="action-label">呼吸</span>
+                </button>
+                <button class="action-btn" id="btn-affirm" title="能量语句">
+                    <span>💫</span>
+                    <span class="action-label">语句</span>
+                </button>
+                <button class="action-btn danger" id="btn-clear" title="清空空间">
+                    <span>✕</span>
+                    <span class="action-label">清空</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="breathe-overlay" id="breathe-overlay">
+            <div class="breathe-container glass-card">
+                <div class="breathe-orb">
+                    <div class="breathe-ring breathe-ring-1"></div>
+                    <div class="breathe-ring breathe-ring-2"></div>
+                    <div class="breathe-ring breathe-ring-3"></div>
+                    <div class="breathe-core">
+                        <span class="breathe-phase-text" id="breathe-phase-text">吸气</span>
+                        <span class="breathe-counter" id="breathe-counter">4</span>
+                    </div>
+                </div>
+                <button class="breathe-close" id="breathe-close">完成</button>
+            </div>
+        </div>
+
+        <div class="affirm-overlay" id="affirm-overlay">
+            <div class="affirm-container glass-card">
+                <div class="affirm-glow"></div>
+                <p class="affirm-quote" id="affirm-quote">你值得被温柔以待</p>
+                <button class="affirm-close" id="affirm-close">感受</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
