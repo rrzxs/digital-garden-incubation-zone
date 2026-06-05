@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-05",
+  "name": "dark-pattern-exposer",
+  "description": "滚动叙事揭秘电商操控套路",
+  "tagline": "Scroll to Expose the Tricks",
+  "interaction": "As the user scrolls through a simulated e-commerce checkout flow, deceptive dark patterns—countdown timers, fake scarcity, hidden costs—visually peel apart layer by layer, revealing the manipulation mechanics beneath. Each scroll step dissects a specific dark pattern with annotated callouts, turning passive shopping habits into critical awareness through guided, story-driven exploration.",
+  "directory": "seeds/dark-pattern-exposer/",
+  "status": "incubated"
+}

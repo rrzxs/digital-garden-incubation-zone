@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Pattern Exposer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="ambient-bg">
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+    <div class="glow-orb glow-3"></div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="header-inner glass-bar">
+        <div class="brand">
+          <span class="brand-icon">&#x26A0;</span>
+          <span class="brand-title">Dark Pattern Exposer</span>
+        </div>
+        <div class="header-controls">
+          <button class="ctrl-btn active" data-mode="scan" id="btn-scan">
+            <span class="ctrl-dot"></span> Scan
+          </button>
+          <button class="ctrl-btn" data-mode="xray" id="btn-xray">
+            <span class="ctrl-dot"></span> X-Ray
+          </button>
+          <button class="ctrl-btn" data-mode="educate" id="btn-educate">
+            <span class="ctrl-dot"></span> Educate
+          </button>
+          <div class="palette-picker">
+            <button class="palette-dot active" data-palette="crimson" style="background:#ef4444" title="Crimson"></button>
+            <button class="palette-dot" data-palette="abyss" style="background:#3b82f6" title="Abyss"></button>
+            <button class="palette-dot" data-palette="venom" style="background:#22c55e" title="Venom"></button>
+            <button class="palette-dot" data-palette="void" style="background:#a855f7" title="Void"></button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-area">
+      <div class="hero-strip">
+        <div class="hero-badge">Interactive Awareness Tool</div>
+        <h1 class="hero-headline">
+          <span class="headline-static">Expose the</span>
+          <span class="headline-dynamic" id="hero-dynamic">Manipulation</span>
+        </h1>
+        <p class="hero-sub">Click on UI elements below to reveal hidden dark patterns. Each scene contains deceptive designs &mdash; your mission is to find them all.</p>
+        <div class="score-strip glass-pill">
+          <div class="score-item">
+            <span class="score-label">Found</span>
+            <span class="score-value" id="found-count">0</span>
+          </div>
+          <div class="score-divider"></div>
+          <div class="score-item">
+            <span class="score-label">Total</span>
+            <span class="score-value" id="total-count">0</span>
+          </div>
+          <div class="score-divider"></div>
+          <div class="score-item">
+            <span class="score-label">Scene</span>
+            <span class="score-value" id="scene-indicator">1 / 6</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scene-viewport" id="scene-viewport">
+        <!-- Scenes injected by JS -->
+      </div>
+
+      <div class="scene-nav">
+        <button class="nav-arrow" id="prev-scene" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="scene-dots" id="scene-dots"></div>
+        <button class="nav-arrow" id="next-scene">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      <div class="reveal-panel glass-card" id="reveal-panel" aria-live="polite">
+        <div class="reveal-icon" id="reveal-icon">&#x1F6A8;</div>
+        <div class="reveal-content">
+          <h3 class="reveal-title" id="reveal-title">Click a suspicious element</h3>
+          <p class="reveal-desc" id="reveal-desc">Hover over the simulated UI cards to find dark patterns. When you spot something fishy, click to expose it.</p>
+        </div>
+        <div class="reveal-meter">
+          <div class="meter-track">
+            <div class="meter-fill" id="meter-fill" style="width:0%"></div>
+          </div>
+          <span class="meter-label">Danger Level</span>
+        </div>
+      </div>
+
+      <div class="toast-container" id="toast-container"></div>
+    </main>
+
+    <footer class="app-footer">
+      <span class="footer-note">Built for awareness. Dark patterns harm trust. Design ethically.</span>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

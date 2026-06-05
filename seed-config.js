@@ -800,6 +800,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'wellness'
+    },
+    {
+      title: 'Dark Pattern Exposer 暗黑模式揭露器',
+      description: '沉浸式暗黑模式交互识别工具。6大场景覆盖24种暗黑设计模式（隐藏费用、确认羞耻、虚假紧迫感、隐私诱导等），3种交互模式 × 4种氛围配色，粒子流场 + 微晶玻璃态容器',
+      path: '/seed/seeds/dark-pattern-exposer/index.html',
+      tags: ['Interactive', 'Education', 'Dark Pattern', 'Micro-interaction'],
+      icon: '⚠',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

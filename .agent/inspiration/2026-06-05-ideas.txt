@@ -1,0 +1,6 @@
+dark-pattern-exposer - 滚动叙事揭秘电商操控套路
+flow-strip-gallery - 曲线轨迹展开的图片画廊
+comfort-garden - 可定制多场景情绪疗愈空间
+parallax-orbit - 无限循环视差沉浸画廊
+brand-motion-signature - 为品牌生成微交互动效指纹
+onboarding-wizard-flow - 交互式渐进引导问答组件
