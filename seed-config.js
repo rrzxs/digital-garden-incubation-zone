@@ -810,6 +810,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'MotionPath Gallery 运动轨迹画廊',
+      description: '沉浸式运动轨迹画廊。8种数学运动路径（轨道/无限/螺旋/波浪/利萨如/玫瑰线/内旋轮线/噪声场）以微晶玻璃态卡片呈现，弹簧物理轨迹绘制、粒子流场、曲线连接线与4种氛围配色',
+      path: '/seed/seeds/motionpath-gallery/index.html',
+      tags: ['Interactive', 'Motion Path', 'Animation', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

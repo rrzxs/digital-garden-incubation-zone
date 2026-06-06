@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-06",
+  "name": "motionpath-gallery",
+  "description": "曲线轨迹图片画廊",
+  "tagline": "Flow Through Your Gallery",
+  "interaction": "Images glide along hand-drawn SVG motion paths as the user scrolls or drags, creating a fluid, cinematic browsing experience. Each photo follows its own unique Bézier curve trajectory, with parallax depth and scale shifts triggered by cursor proximity. The result is a gallery that feels less like a grid and more like a visual journey through space.",
+  "directory": "seeds/motionpath-gallery/",
+  "status": "incubated"
+}

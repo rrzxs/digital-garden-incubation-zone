@@ -65,3 +65,4 @@ emotion-terrain
 journey-map-animator
 comfort-space-builder
 dark-pattern-exposer
+motionpath-gallery

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotionPath Gallery 运动轨迹画廊</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="header-left">
+                <h1 class="panel-title">MotionPath Gallery</h1>
+                <p class="panel-subtitle">运动轨迹画廊 — 点击卡片启动轨迹动画</p>
+            </div>
+            <div class="header-right">
+                <div class="speed-group">
+                    <span class="speed-label">SPEED</span>
+                    <input type="range" class="speed-slider" id="speed-slider" min="0.2" max="3" step="0.1" value="1">
+                    <span class="speed-value" id="speed-value">1.0x</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="gallery-stage" id="gallery-stage">
+            <canvas id="path-canvas"></canvas>
+            <div class="card-grid" id="card-grid"></div>
+            <div class="stage-hint" id="stage-hint">点击卡片 · 观察运动轨迹</div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="controls-left">
+                <button class="ctrl-btn" id="btn-clear" title="清除轨迹">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>
+                    <span>清除</span>
+                </button>
+                <button class="ctrl-btn" id="btn-all" title="全部启动">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <span>全部启动</span>
+                </button>
+                <button class="ctrl-btn" id="btn-random" title="随机脉冲">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span>随机脉冲</span>
+                </button>
+            </div>
+            <div class="controls-right">
+                <div class="theme-group" id="theme-group">
+                    <button class="theme-btn active" data-theme="obsidian">黑曜石</button>
+                    <button class="theme-btn" data-theme="aurora">极光</button>
+                    <button class="theme-btn" data-theme="ember">余烬</button>
+                    <button class="theme-btn" data-theme="void">虚空</button>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
