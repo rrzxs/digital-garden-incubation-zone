@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-07",
+  "name": "infinity-parallax-loop",
+  "description": "无缝无限循环视差深度滚动",
+  "tagline": "Scroll Into Infinity",
+  "interaction": "As the user scrolls, multiple parallax layers move at different speeds, creating an illusion of infinite depth that seamlessly loops back to its starting point without any visible seam. The continuous scroll triggers layered visual elements—foreground, midground, and background—that shift proportionally, producing a mesmerizing tunnel-like descent through an endlessly recurring spatial composition.",
+  "directory": "seeds/infinity-parallax-loop/",
+  "status": "incubated"
+}

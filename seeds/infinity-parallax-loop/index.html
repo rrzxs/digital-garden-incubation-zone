@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinity Parallax Loop 无限视差循环</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-symbol">∞</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Infinity Parallax Loop</h1>
+                    <span class="nav-subtitle">无限视差循环 · 沉浸式视觉体验</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-selector" id="theme-selector">
+                    <button class="theme-btn active" data-theme="cosmos" aria-label="宇宙">宇宙</button>
+                    <button class="theme-btn" data-theme="ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                </div>
+                <button class="control-btn" id="btn-pause" aria-label="暂停/播放">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect id="pause-icon-left" x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/><polygon id="play-icon" points="6,4 20,12 6,20" style="display:none"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <section class="parallax-viewport" id="parallax-viewport">
+            <div class="parallax-layer layer-stars" data-depth="0.05" id="layer-stars"></div>
+            <div class="parallax-layer layer-grid" data-depth="0.1"></div>
+            <div class="parallax-layer layer-rings" data-depth="0.2" id="layer-rings"></div>
+            <div class="parallax-layer layer-floaters" data-depth="0.35" id="layer-floaters"></div>
+            <div class="parallax-layer layer-orbiters" data-depth="0.5" id="layer-orbiters"></div>
+            <div class="parallax-layer layer-center" data-depth="0.0">
+                <div class="center-piece" id="center-piece">
+                    <div class="infinity-symbol">∞</div>
+                    <div class="center-label">INFINITE LOOP</div>
+                    <div class="orbit-ring orbit-ring-1"></div>
+                    <div class="orbit-ring orbit-ring-2"></div>
+                    <div class="orbit-ring orbit-ring-3"></div>
+                </div>
+            </div>
+            <div class="parallax-layer layer-particles" data-depth="0.6" id="layer-particles"></div>
+        </section>
+
+        <section class="info-panel glass" id="info-panel">
+            <div class="info-row">
+                <div class="info-stat">
+                    <span class="stat-label">循环深度</span>
+                    <span class="stat-value" id="stat-depth">0</span>
+                </div>
+                <div class="info-stat">
+                    <span class="stat-label">视差层数</span>
+                    <span class="stat-value">7</span>
+                </div>
+                <div class="info-stat">
+                    <span class="stat-label">粒子数</span>
+                    <span class="stat-value" id="stat-particles">0</span>
+                </div>
+                <div class="info-stat">
+                    <span class="stat-label">帧率</span>
+                    <span class="stat-value" id="stat-fps">60</span>
+                </div>
+            </div>
+            <div class="info-hint">移动鼠标扰动视差层 · 点击产生脉冲冲击波 · 滚轮调节视差深度</div>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

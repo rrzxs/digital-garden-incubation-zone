@@ -820,6 +820,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Infinity Parallax Loop 无限视差循环',
+      description: '沉浸式无限视差循环视觉体验。7层视差深度层响应鼠标位移，粒子流场、轨道运动、脉冲冲击波与流体渐变背景，营造无限纵深的宇宙级视觉空间。4种氛围配色',
+      path: '/seed/seeds/infinity-parallax-loop/index.html',
+      tags: ['Interactive', 'Parallax', 'Animation', 'Micro-interaction'],
+      icon: '∞',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
