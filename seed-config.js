@@ -830,6 +830,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'MotionPath Gallery Fold 折叠画廊',
+      description: '沉浸式折叠画廊交互体验。8种数学运动路径以3D透视折叠卡片呈现，弹簧-阻尼物理驱动的折叠/展开动效，3种折叠模式（扇形/级联/螺旋）× 4种氛围配色，粒子流场与脉冲冲击波',
+      path: '/seed/seeds/motionpath-gallery-fold/index.html',
+      tags: ['Interactive', 'Motion Path', '3D Fold', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

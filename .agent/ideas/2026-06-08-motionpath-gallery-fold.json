@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-08",
+  "name": "motionpath-gallery-fold",
+  "description": "曲线路径图像折叠展开画廊",
+  "tagline": "Unfold Memories Along the Curve",
+  "interaction": "Images are arranged along a curved motion path, folded like an accordion. As the user scrolls or drags, the gallery progressively unfolds along the path, revealing each image with a smooth rotation and scale transition. Folding back reverses the animation, creating a satisfying organic reveal-and-conceal rhythm.",
+  "directory": "seeds/motionpath-gallery-fold/",
+  "status": "incubated"
+}

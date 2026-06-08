@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotionPath Gallery Fold 折叠画廊</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="header-left">
+                <h1 class="panel-title">MotionPath Gallery Fold</h1>
+                <p class="panel-subtitle">折叠画廊 — 点击卡片展开，拖拽折叠，释放弹回</p>
+            </div>
+            <div class="header-right">
+                <div class="fold-group">
+                    <span class="fold-label">MODE</span>
+                    <button class="mode-btn active" data-mode="fan">扇形</button>
+                    <button class="mode-btn" data-mode="cascade">级联</button>
+                    <button class="mode-btn" data-mode="spiral">螺旋</button>
+                </div>
+                <div class="speed-group">
+                    <span class="speed-label">SPEED</span>
+                    <input type="range" class="speed-slider" id="speed-slider" min="0.2" max="3" step="0.1" value="1">
+                    <span class="speed-value" id="speed-value">1.0x</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="gallery-stage" id="gallery-stage">
+            <canvas id="path-canvas"></canvas>
+            <div class="fold-container" id="fold-container"></div>
+            <div class="stage-hint" id="stage-hint">点击卡片展开 · 拖拽折叠 · 释放弹回</div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="controls-left">
+                <button class="ctrl-btn" id="btn-collapse" title="全部折叠">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6"/><path d="M20 10h-6V4"/><path d="M14 10l7-7"/><path d="M3 21l7-7"/></svg>
+                    <span>全部折叠</span>
+                </button>
+                <button class="ctrl-btn" id="btn-expand" title="全部展开">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                    <span>全部展开</span>
+                </button>
+                <button class="ctrl-btn" id="btn-shuffle" title="随机洗牌">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                    <span>洗牌</span>
+                </button>
+                <button class="ctrl-btn" id="btn-pulse" title="脉冲冲击">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span>脉冲</span>
+                </button>
+            </div>
+            <div class="controls-right">
+                <div class="theme-group" id="theme-group">
+                    <button class="theme-btn active" data-theme="obsidian">黑曜石</button>
+                    <button class="theme-btn" data-theme="aurora">极光</button>
+                    <button class="theme-btn" data-theme="ember">余烬</button>
+                    <button class="theme-btn" data-theme="void">虚空</button>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

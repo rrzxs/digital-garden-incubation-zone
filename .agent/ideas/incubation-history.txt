@@ -67,3 +67,4 @@ comfort-space-builder
 dark-pattern-exposer
 motionpath-gallery
 infinity-parallax-loop
+motionpath-gallery-fold

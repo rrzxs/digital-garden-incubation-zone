@@ -1,0 +1,6 @@
+guilloche-portrait - 线刻肖像风格头像生成器
+scroll-manip-detector - 滚动操控手法交互识别器
+comfort-letter - 数字安慰信生成与空间体验
+motionpath-gallery-fold - 曲线路径图像折叠展开画廊
+parallax-depth-loop - 无缝视差深度循环画廊
+shape-poetry-builder - 图形排列驱动的视觉诗歌工具
