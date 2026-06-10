@@ -68,3 +68,5 @@ dark-pattern-exposer
 motionpath-gallery
 infinity-parallax-loop
 motionpath-gallery-fold
+data-chapter
+screenframe

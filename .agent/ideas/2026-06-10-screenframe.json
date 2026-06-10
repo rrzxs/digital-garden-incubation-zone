@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-10",
+  "name": "screenframe",
+  "description": "截图装裱工具，一键为截图添加精美设备边框和渐变背景",
+  "tagline": "Frame It. Ship It.",
+  "interaction": "将截图拖入画布，即刻自动套上设备边框（手机、笔记本、浏览器），配上渐变或纯色背景。支持一键导出高清 PNG，让每张截图都像产品海报。",
+  "directory": "seeds/screenframe/",
+  "status": "incubated"
+}

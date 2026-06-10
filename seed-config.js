@@ -840,6 +840,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'ScreenFrame 屏幕框架',
+      description: '沉浸式屏幕框架微交互体验。3D透视响应鼠标的显示器框架，3种交互模式（悬浮/轨道/故障）× 4种氛围配色，粒子流场、脉冲冲击波与流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/screenframe/index.html',
+      tags: ['Interactive', '3D', 'Screen Frame', 'Micro-interaction'],
+      icon: '◰',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

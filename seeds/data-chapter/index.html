@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Chapter · 数据篇章</title>
+    <meta name="description" content="沉浸式数据篇章叙事体验。6幕数据章节、滚动驱动数据可视化、文字揭示、粒子流场与微晶玻璃态容器。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="particle-field"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <nav class="progress-rail" id="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="chapter-dots" id="chapter-dots"></div>
+    </nav>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void">◈</button>
+    </div>
+
+    <main id="main-content">
+
+        <section class="chapter chapter-hero" data-chapter="0">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">001</div>
+                    <div class="chapter-label">Origin</div>
+                    <h1 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">数据是新时代的</span>
+                        <span class="line accent" data-delay="120">第一语言</span>
+                    </h1>
+                    <p class="chapter-body reveal-text" data-delay="300">
+                        <span class="line">每一个数字都承载着一段故事。它们沉默地排列在表格中，</span>
+                        <span class="line">等待一双发现美的眼睛，将冰冷的数值翻译为跳动的脉搏。</span>
+                    </p>
+                    <div class="data-pulse-hero reveal-text" data-delay="500">
+                        <span class="line">
+                            <div class="pulse-row" id="pulse-hero">
+                                <div class="pulse-bar" style="--h: 40%; --d: 0s"></div>
+                                <div class="pulse-bar" style="--h: 70%; --d: 0.1s"></div>
+                                <div class="pulse-bar" style="--h: 55%; --d: 0.2s"></div>
+                                <div class="pulse-bar" style="--h: 90%; --d: 0.3s"></div>
+                                <div class="pulse-bar" style="--h: 45%; --d: 0.4s"></div>
+                                <div class="pulse-bar" style="--h: 75%; --d: 0.5s"></div>
+                                <div class="pulse-bar" style="--h: 60%; --d: 0.6s"></div>
+                                <div class="pulse-bar" style="--h: 85%; --d: 0.7s"></div>
+                                <div class="pulse-bar" style="--h: 50%; --d: 0.8s"></div>
+                                <div class="pulse-bar" style="--h: 95%; --d: 0.9s"></div>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="scroll-hint reveal-text" data-delay="700">
+                        <span class="line">
+                            <span class="scroll-arrow">↓</span> 向下滚动，展开数据篇章
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="1">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">002</div>
+                    <div class="chapter-label">Collection</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">采集：</span>
+                        <span class="line accent" data-delay="120">万物皆可量化</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">传感器记录每一次心跳，摄像头捕捉每一帧光影，日志刻录每一次点击。</span>
+                        <span class="line">数据如同空气中的尘埃，无处不在，只需一个容器来收集。</span>
+                    </p>
+                    <div class="data-vis reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="scatter-field" id="scatter-field">
+                                <canvas id="scatter-canvas"></canvas>
+                            </div>
+                            <div class="data-stat-row">
+                                <div class="data-stat">
+                                    <span class="stat-value mono" id="stat-points">0</span>
+                                    <span class="stat-label">Data Points</span>
+                                </div>
+                                <div class="data-stat">
+                                    <span class="stat-value mono" id="stat-velocity">0</span>
+                                    <span class="stat-label">Ingestion/s</span>
+                                </div>
+                                <div class="data-stat">
+                                    <span class="stat-value mono" id="stat-purity">0%</span>
+                                    <span class="stat-label">Purity</span>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="2">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">003</div>
+                    <div class="chapter-label">Structure</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">结构：</span>
+                        <span class="line accent" data-delay="120">混沌中的秩序之美</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">原始数据是散落的星辰。当它们被结构化——分类、标注、关联——</span>
+                        <span class="line">便形成了星座。结构不是束缚，而是让意义浮出水面的引力。</span>
+                    </p>
+                    <div class="data-vis reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="matrix-grid" id="matrix-grid"></div>
+                            <div class="interaction-hint glass-pill">
+                                <span class="hint-dot"></span>
+                                移动鼠标扰动数据矩阵
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="3">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">004</div>
+                    <div class="chapter-label">Insight</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">洞察：</span>
+                        <span class="line accent" data-delay="120">信号穿透噪声的瞬间</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">在海量的噪声中，真正的信号如同深海中的光——微弱却真实。</span>
+                        <span class="line">洞察不是创造信息，而是过滤。当过滤达到临界点，真相便自行显现。</span>
+                    </p>
+                    <div class="data-vis reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="waveform-container" id="waveform-container">
+                                <canvas id="waveform-canvas"></canvas>
+                            </div>
+                            <div class="insight-meter">
+                                <div class="meter-label mono">Signal Clarity</div>
+                                <div class="meter-track">
+                                    <div class="meter-fill" id="meter-fill"></div>
+                                </div>
+                                <div class="meter-value mono" id="meter-value">0%</div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="4">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">005</div>
+                    <div class="chapter-label">Resonance</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">共振：</span>
+                        <span class="line accent" data-delay="120">数据与人的心跳同步</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">最好的数据可视化不是图表，而是共鸣。它让你感受到——</span>
+                        <span class="line">这不仅仅是数字，这是某个人的选择、某座城市的呼吸、某个时代的脉动。</span>
+                    </p>
+                    <div class="data-vis reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="heartbeat-container" id="heartbeat-container">
+                                <canvas id="heartbeat-canvas"></canvas>
+                                <div class="heartbeat-ring" id="heartbeat-ring"></div>
+                            </div>
+                            <div class="bpm-display">
+                                <span class="bpm-number mono" id="bpm-number">72</span>
+                                <span class="bpm-unit">BPM</span>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chapter" data-chapter="5">
+            <div class="chapter-inner">
+                <div class="scene-content">
+                    <div class="chapter-number mono">006</div>
+                    <div class="chapter-label">Epilogue</div>
+                    <h2 class="chapter-title reveal-text">
+                        <span class="line" data-delay="0">每一个数据点</span>
+                        <span class="line accent" data-delay="120">都是一个故事的起点</span>
+                    </h2>
+                    <p class="chapter-body reveal-text" data-delay="280">
+                        <span class="line">你刚刚见证了数据从采集到洞察的完整旅程。</span>
+                        <span class="line">而这仅仅是冰山一角。数据的故事永远在书写，而你，是它最忠实的读者。</span>
+                    </p>
+                    <div class="epilogue-vis reveal-text" data-delay="450">
+                        <span class="line">
+                            <div class="final-counter mono" id="final-counter">0</div>
+                            <div class="final-label">数据篇章已展开</div>
+                        </span>
+                    </div>
+                    <div class="epilogue-cta reveal-text" data-delay="600">
+                        <span class="line">
+                            <a href="../../index.html" class="cta-glass">
+                                <span>返回数字花园</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

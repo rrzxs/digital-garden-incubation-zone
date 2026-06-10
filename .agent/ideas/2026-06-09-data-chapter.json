@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-09",
+  "name": "data-chapter",
+  "description": "滚动驱动数据叙事生成器",
+  "tagline": "**Scroll Through Living Data Stories**",
+  "interaction": "用户通过垂直滚动浏览数据叙事章节，每一段滚动距离会逐步揭示数据可视化的不同层面——从宏观趋势到微观细节。章节之间通过流畅的过渡动画自然衔接，数据图表会在滚动驱动下动态生成、变形和重组，让用户像翻阅故事书一样探索数据背后的叙事脉络。",
+  "directory": "seeds/data-chapter/",
+  "status": "incubated"
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScreenFrame — 沉浸式屏幕框架交互</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Screen<span class="brand-dot">.</span>Frame</h1>
+                <p class="brand-subtitle">沉浸式屏幕框架微交互</p>
+            </div>
+            <div class="header-actions">
+                <div class="mode-toggle" id="modeToggle">
+                    <button class="mode-btn active" data-mode="float" title="悬浮">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="orbit" title="轨道">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1a11 11 0 0 1 0 22 11 11 0 0 1 0-22" stroke-dasharray="4 4"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="glitch" title="故障">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stageArea">
+            <div class="grid-lines"></div>
+            <div class="frame-viewport" id="frameViewport">
+                <div class="screen-frame" id="screenFrame">
+                    <div class="frame-bezel">
+                        <div class="bezel-notch"></div>
+                        <div class="frame-screen">
+                            <div class="screen-content" id="screenContent">
+                                <div class="screen-inner">
+                                    <div class="screen-nav">
+                                        <div class="screen-dots">
+                                            <span class="dot dot-red"></span>
+                                            <span class="dot dot-yellow"></span>
+                                            <span class="dot dot-green"></span>
+                                        </div>
+                                        <div class="screen-title-bar">digital-garden.seed</div>
+                                        <div class="screen-nav-actions"></div>
+                                    </div>
+                                    <div class="screen-body">
+                                        <div class="code-line" style="--i:0"><span class="code-keyword">const</span> <span class="code-var">seed</span> = <span class="code-string">"screenframe"</span>;</div>
+                                        <div class="code-line" style="--i:1"><span class="code-keyword">const</span> <span class="code-var">frame</span> = <span class="code-fn">createFrame</span>();</div>
+                                        <div class="code-line" style="--i:2"></div>
+                                        <div class="code-line" style="--i:3"><span class="code-var">frame</span>.<span class="code-fn">addEffect</span>(<span class="code-string">"glassmorphism"</span>);</div>
+                                        <div class="code-line" style="--i:4"><span class="code-var">frame</span>.<span class="code-fn">addEffect</span>(<span class="code-string">"parallax"</span>);</div>
+                                        <div class="code-line" style="--i:5"><span class="code-var">frame</span>.<span class="code-fn">addEffect</span>(<span class="code-string">"particle-trail"</span>);</div>
+                                        <div class="code-line" style="--i:6"></div>
+                                        <div class="code-line" style="--i:7"><span class="code-var">frame</span>.<span class="code-fn">onHover</span>(() => {</div>
+                                        <div class="code-line" style="--i:8">  <span class="code-fn">animate</span>({ <span class="code-var">tilt</span>: <span class="code-num">15</span> });</div>
+                                        <div class="code-line" style="--i:9">  <span class="code-fn">emitParticles</span>(<span class="code-num">128</span>);</div>
+                                        <div class="code-line" style="--i:10">});</div>
+                                        <div class="code-line" style="--i:11"></div>
+                                        <div class="code-line" style="--i:12"><span class="code-keyword">await</span> <span class="code-var">frame</span>.<span class="code-fn">render</span>();</div>
+                                    </div>
+                                    <div class="screen-status-bar">
+                                        <span class="status-item">UTF-8</span>
+                                        <span class="status-item">Vanilla JS</span>
+                                        <span class="status-item">Ln 12, Col 1</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="frame-base">
+                            <div class="base-notch"></div>
+                        </div>
+                    </div>
+                    <div class="frame-reflection" id="frameReflection"></div>
+                    <div class="frame-shadow" id="frameShadow"></div>
+                </div>
+            </div>
+
+            <div class="glitch-layers" id="glitchLayers">
+                <div class="glitch-slice glitch-slice-r"></div>
+                <div class="glitch-slice glitch-slice-g"></div>
+                <div class="glitch-slice glitch-slice-b"></div>
+            </div>
+
+            <div class="stage-hint" id="stageHint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">移动光标 · 悬浮框架 · 感受空间</span>
+            </div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">透视强度</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrlPerspective" min="400" max="2000" value="1000" class="slider">
+                    <span class="slider-val" id="valPerspective">1000</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">倾斜幅度</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrlTilt" min="3" max="30" value="15" class="slider">
+                    <span class="slider-val" id="valTilt">15</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">发光强度</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrlGlow" min="0" max="100" value="50" class="slider">
+                    <span class="slider-val" id="valGlow">50</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="abyss" aria-label="深渊">
+                    <span class="swatch" style="background:linear-gradient(135deg,#0f1729,#1a3a5c,#0ea5e9)"></span>
+                </button>
+                <button class="palette-btn" data-palette="aurora" aria-label="极光">
+                    <span class="swatch" style="background:linear-gradient(135deg,#0f2027,#2c5364,#64ffda)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#1a0a0a,#5c1a1a,#f97316)"></span>
+                </button>
+                <button class="palette-btn" data-palette="prism" aria-label="棱镜">
+                    <span class="swatch" style="background:linear-gradient(135deg,#1a0a2e,#4a1a6b,#e879f9)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btnPulse">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    <span>脉冲</span>
+                </button>
+                <button class="action-btn" id="btnReset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>重置</span>
+                </button>
+                <button class="action-btn primary" id="btnFullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
