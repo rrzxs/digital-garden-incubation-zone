@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-11",
+  "name": "text-pivot-scaler",
+  "description": "文字锚点缩放动效引擎",
+  "tagline": "Scale words from any anchor point.",
+  "interaction": "Users click on any character or word to set a pivot anchor, then use scroll or drag to scale the text with CSS transform-origin dynamically recalculated from the selected point. The engine supports multi-axis scaling, elastic easing curves, and chained pivot transitions — creating fluid typographic motion where text breathes, stretches, and contracts around user-defined focal points.",
+  "directory": "seeds/text-pivot-scaler/",
+  "status": "incubated"
+}

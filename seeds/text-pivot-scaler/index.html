@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Pivot Scaler — 文字枢纽缩放</title>
+    <meta name="description" content="沉浸式文字枢纽缩放交互体验。输入文字，光标作为枢纽驱动字符围绕缩放旋转，4种力场模式 × 4种氛围配色">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⋊</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@200..700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-aurora">
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+    <div class="cursor-glow"></div>
+    <a href="../../index.html" class="back-link" aria-label="返回花园">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    </a>
+    <div class="app-shell">
+        <header class="panel-header glass-panel">
+            <div class="header-brand">
+                <span class="brand-icon">⋊</span>
+                <div class="brand-text">
+                    <h1 class="brand-title">Text Pivot Scaler</h1>
+                    <p class="brand-sub">文字枢纽缩放 — 光标驱动字符缩放旋转</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn" id="btn-scramble" title="乱码揭示">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+                    <span>揭示</span>
+                </button>
+                <button class="action-btn" id="btn-pulse" title="脉冲冲击">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                    <span>脉冲</span>
+                </button>
+                <button class="action-btn" id="btn-reset" title="重置">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                    <span>重置</span>
+                </button>
+            </div>
+        </header>
+        <section class="stage">
+            <div class="text-input-area glass-panel" id="text-input-area">
+                <input type="text" id="text-input" class="text-input" placeholder="输入文字，观察枢纽缩放..." maxlength="50" value="DIGITAL GARDEN" autocomplete="off" spellcheck="false">
+                <div class="input-hint">
+                    <span class="hint-dot"></span>
+                    <span>键入文字 · 移动光标</span>
+                </div>
+            </div>
+            <div class="pivot-stage" id="pivot-stage"></div>
+            <div class="pivot-stats" id="pivot-stats">
+                <span class="stat-item" id="stat-distance">距离: 0</span>
+                <span class="stat-item" id="stat-angle">角度: 0°</span>
+                <span class="stat-item" id="stat-scale">缩放: 1.00</span>
+            </div>
+        </section>
+        <footer class="controls-bar glass-panel">
+            <div class="control-group">
+                <label class="control-label">力场模式</label>
+                <div class="mode-toggle" id="mode-toggle">
+                    <button class="mode-btn active" data-mode="scale">缩放</button>
+                    <button class="mode-btn" data-mode="orbit">轨道</button>
+                    <button class="mode-btn" data-mode="wave">波浪</button>
+                    <button class="mode-btn" data-mode="explode">爆炸</button>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">力度</label>
+                <input type="range" id="slider-force" class="slider" min="0.1" max="3" step="0.1" value="1">
+                <span class="slider-value" id="value-force">1.0</span>
+            </div>
+            <div class="control-group">
+                <label class="control-label">半径</label>
+                <input type="range" id="slider-radius" class="slider" min="80" max="400" step="10" value="200">
+                <span class="slider-value" id="value-radius">200</span>
+            </div>
+            <div class="control-group">
+                <label class="control-label">配色</label>
+                <div class="palette-toggle" id="palette-toggle">
+                    <button class="palette-btn active" data-palette="aurora" title="极光" style="background: linear-gradient(135deg, #7c3aed, #06b6d4)"></button>
+                    <button class="palette-btn" data-palette="ember" title="灼烬" style="background: linear-gradient(135deg, #f97316, #ef4444)"></button>
+                    <button class="palette-btn" data-palette="forest" title="森林" style="background: linear-gradient(135deg, #10b981, #06b6d4)"></button>
+                    <button class="palette-btn" data-palette="void" title="虚空" style="background: linear-gradient(135deg, #6b7280, #374151)"></button>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

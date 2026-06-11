@@ -1,0 +1,6 @@
+stamp-loupe - 着色器放大镜检视收藏品
+motionpath-deck - 曲线轨迹卡片流动画
+vitals-dashboard - 实时生物信号可视化面板
+data-scroll-report - 滚动驱动数据报告生成器
+text-pivot-scaler - 文字锚点缩放动效引擎
+genie-dialog - 精灵擦除过渡对话框组件

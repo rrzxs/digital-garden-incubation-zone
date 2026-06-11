@@ -70,3 +70,4 @@ infinity-parallax-loop
 motionpath-gallery-fold
 data-chapter
 screenframe
+text-pivot-scaler

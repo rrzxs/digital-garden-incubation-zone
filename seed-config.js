@@ -850,6 +850,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Text Pivot Scaler 文字枢纽缩放',
+      description: '沉浸式文字枢纽缩放交互体验。光标作为枢纽驱动字符缩放旋转，4种力场模式（缩放/轨道/波浪/爆炸）、乱码揭示、脉冲冲击波、弹簧物理归位，4种氛围配色',
+      path: '/seed/seeds/text-pivot-scaler/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: '⋊',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
