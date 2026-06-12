@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-12",
+  "name": "depth-feed-reveal",
+  "description": "卡片从Z轴深处飞入的动态信息流",
+  "tagline": "**Feed From The Deep**",
+  "interaction": "信息流卡片从Z轴深处以透视缩放动画飞入视野，随滚动逐一浮现，营造纵深感十足的空间叙事体验。每张卡片在接近视口中心时逐渐从虚焦过渡到清晰，远离时自然退回景深处，形成沉浸式的动态浏览节奏。",
+  "directory": "seeds/depth-feed-reveal/",
+  "status": "incubated"
+}

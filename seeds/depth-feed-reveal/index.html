@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depth Feed Reveal — 深度流揭示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bg-orb bg-orb--1"></div>
+  <div class="bg-orb bg-orb--2"></div>
+  <div class="bg-orb bg-orb--3"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="app-container">
+    <canvas id="particle-canvas"></canvas>
+
+    <section class="glass-panel header-area">
+      <h1 class="title">Depth Feed</h1>
+      <p class="subtitle">滚动探索深度信息流，内容在层次间浮现与隐没</p>
+    </section>
+
+    <section class="glass-panel depth-viewport">
+      <div class="depth-scene" id="depth-scene">
+        <div class="depth-layer depth-layer--0" data-depth="0">
+          <div class="feed-card" data-reveal="fade-up">
+            <span class="feed-tag">前 言</span>
+            <p class="feed-text">信息从深处涌来，像光穿过海水。每深入一层，便看见不同的色彩。</p>
+          </div>
+        </div>
+        <div class="depth-layer depth-layer--1" data-depth="1">
+          <div class="feed-card feed-card--wide" data-reveal="blur-in">
+            <span class="feed-tag">表面层</span>
+            <p class="feed-text">日光穿透水面，温暖而明亮。最浅的信息最先抵达。</p>
+            <div class="feed-meta">
+              <span class="meta-dot"></span>
+              <span class="meta-label">深度 0.2</span>
+            </div>
+          </div>
+        </div>
+        <div class="depth-layer depth-layer--2" data-depth="2">
+          <div class="feed-card" data-reveal="scale-up">
+            <span class="feed-tag">温跃层</span>
+            <p class="feed-text">温度开始变化。光线在这里弯曲，信息开始呈现新的形态。</p>
+            <div class="feed-meta">
+              <span class="meta-dot"></span>
+              <span class="meta-label">深度 0.5</span>
+            </div>
+          </div>
+          <div class="feed-card feed-card--accent" data-reveal="slide-right">
+            <span class="feed-tag">散射层</span>
+            <p class="feed-text">生物发光的区域。信息在这里自发光，不再依赖外部光源。</p>
+            <div class="feed-meta">
+              <span class="meta-dot"></span>
+              <span class="meta-label">深度 0.7</span>
+            </div>
+          </div>
+        </div>
+        <div class="depth-layer depth-layer--3" data-depth="3">
+          <div class="feed-card feed-card--wide" data-reveal="blur-in">
+            <span class="feed-tag">中层</span>
+            <p class="feed-text">阳光逐渐消逝。在黑暗中，信息以最纯粹的形态存在——只有结构和意义。</p>
+            <div class="feed-meta">
+              <span class="meta-dot"></span>
+              <span class="meta-label">深度 1.0</span>
+            </div>
+          </div>
+        </div>
+        <div class="depth-layer depth-layer--4" data-depth="4">
+          <div class="feed-card" data-reveal="fade-up">
+            <span class="feed-tag">深层</span>
+            <p class="feed-text">压力塑造一切。压缩后的信息密度极高，每个字节都承载深渊的重量。</p>
+            <div class="feed-meta">
+              <span class="meta-dot"></span>
+              <span class="meta-label">深度 2.0</span>
+            </div>
+          </div>
+          <div class="feed-card feed-card--accent" data-reveal="scale-up">
+            <span class="feed-tag">深渊层</span>
+            <p class="feed-text">在最深处，时间变得缓慢。信息的脉搏与海洋的节律合二为一。</p>
+            <div class="feed-meta">
+              <span class="meta-dot"></span>
+              <span class="meta-label">深度 4.0</span>
+            </div>
+          </div>
+        </div>
+        <div class="depth-layer depth-layer--5" data-depth="5">
+          <div class="feed-card feed-card--wide" data-reveal="blur-in">
+            <span class="feed-tag">海 底</span>
+            <p class="feed-text">你抵达了终点。所有信息在这里沉积，等待被发现。</p>
+            <div class="feed-meta">
+              <span class="meta-dot"></span>
+              <span class="meta-label">深度 ∞</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="depth-indicator" id="depth-indicator">
+        <div class="depth-track">
+          <div class="depth-fill" id="depth-fill"></div>
+          <div class="depth-marker" id="depth-marker">
+            <span class="depth-label" id="depth-label">0.0m</span>
+          </div>
+        </div>
+        <div class="depth-zones">
+          <span class="zone-label">水面</span>
+          <span class="zone-label">深渊</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass-panel controls-bar">
+      <div class="control-group">
+        <button class="ctrl-btn active" data-mode="scroll" aria-label="滚动模式">滚动揭示</button>
+        <button class="ctrl-btn" data-mode="hover" aria-label="悬停模式">悬停揭示</button>
+        <button class="ctrl-btn" data-mode="click" aria-label="点击模式">点击揭示</button>
+      </div>
+      <div class="control-group">
+        <div class="theme-dots">
+          <button class="theme-dot active" data-theme="abyss" aria-label="深渊主题" style="background: linear-gradient(135deg, #0a4a6e, #1a6fa0)"></button>
+          <button class="theme-dot" data-theme="aurora" aria-label="极光主题" style="background: linear-gradient(135deg, #1a5c3a, #2ecc71)"></button>
+          <button class="theme-dot" data-theme="ember" aria-label="熔岩主题" style="background: linear-gradient(135deg, #6e2a0a, #e67e22)"></button>
+          <button class="theme-dot" data-theme="nebula" aria-label="星云主题" style="background: linear-gradient(135deg, #3a1a5c, #9b59b6)"></button>
+        </div>
+      </div>
+      <div class="control-group">
+        <button class="ctrl-btn ctrl-btn--reset" id="btn-reset" aria-label="重置">重置深度</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="cursor-glow" id="cursor-glow"></div>
+  <div class="toast" id="toast"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

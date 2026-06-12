@@ -71,3 +71,4 @@ motionpath-gallery-fold
 data-chapter
 screenframe
 text-pivot-scaler
+depth-feed-reveal

@@ -1,0 +1,6 @@
+stamp-loupe - 可拖拽放大镜检视收藏品
+motionpath-unfold - 堆叠缩略图沿曲线展开为画廊
+vitals-dashboard - 实时可穿戴数据可视化面板
+event-whisper - 倒计时沉浸式活动信息页
+shader-paint-reveal - 手绘风格悬停着色器涂抹效果
+depth-feed-reveal - 卡片从Z轴深处飞入的动态信息流
