@@ -1,0 +1,6 @@
+stamp-loupe - 可拖拽放大镜检视图片细节
+vital-signs - 实时身体数据可视化仪表盘
+glyph-specimen-grid - 字形网格排列与动态检视
+motionpath-unfold - 图片沿曲线路径展开的动画交互
+corridor-walker - 手绘风格无限走廊沉浸探索
+paint-reveal-hover - 悬停触发涂色显现效果

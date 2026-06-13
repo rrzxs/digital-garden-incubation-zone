@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-13",
+  "name": "paint-reveal-hover",
+  "description": "悬停触发涂色显现效果",
+  "tagline": "悬停触发涂色显现效果",
+  "interaction": "围绕 paint-reveal-hover 构建完整的高阶微交互体验。",
+  "directory": "seeds/paint-reveal-hover/",
+  "status": "incubated"
+}

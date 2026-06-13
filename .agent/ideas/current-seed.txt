@@ -1,1 +1,1 @@
-depth-feed-reveal
+paint-reveal-hover

@@ -72,3 +72,4 @@ data-chapter
 screenframe
 text-pivot-scaler
 depth-feed-reveal
+paint-reveal-hover

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paint Reveal Hover — 涂料揭示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bg-orb bg-orb--1"></div>
+  <div class="bg-orb bg-orb--2"></div>
+  <div class="bg-orb bg-orb--3"></div>
+  <div class="noise-overlay"></div>
+
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="app-container">
+
+    <div class="glass-panel header-area">
+      <h1>Paint Reveal Hover</h1>
+      <p class="subtitle">// 悬停涂料刷，让色彩揭示隐藏的信息画廊</p>
+    </div>
+
+    <div class="reveal-grid" id="reveal-grid"></div>
+
+    <div class="glass-panel controls-bar">
+      <div class="control-group">
+        <span class="control-label">刷宽</span>
+        <input type="range" class="slider" id="brush-size" min="40" max="160" value="80">
+        <span class="control-value" id="brush-value">80px</span>
+      </div>
+      <div class="control-group">
+        <span class="control-label">涂料</span>
+        <button class="paint-btn active" data-paint="ink">墨韵</button>
+        <button class="paint-btn" data-paint="neon">霓虹</button>
+        <button class="paint-btn" data-paint="aurora">极光</button>
+        <button class="paint-btn" data-paint="ember">余烬</button>
+      </div>
+      <button class="reset-btn" id="reset-btn">
+        <span class="reset-icon">↻</span> 重置画布
+      </button>
+      <div class="progress-info">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-text" id="progress-text">0%</span>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

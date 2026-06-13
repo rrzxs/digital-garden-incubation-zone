@@ -870,6 +870,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Paint Reveal Hover 涂料揭示',
+      description: '沉浸式涂料揭示悬停交互体验。悬停并按下鼠标，色彩刷笔擦除迷雾揭示隐藏内容画廊，4种涂料风格 × 可调刷宽 × 粒子飞溅，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/paint-reveal-hover/index.html',
+      tags: ['Interactive', 'Paint', 'Reveal', 'Micro-interaction'],
+      icon: '🖌',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
