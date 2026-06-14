@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-14",
+  "name": "scroll-stitcher",
+  "description": "滚动驱动的叙事拼贴组合器",
+  "tagline": "Scroll to weave memories together.",
+  "interaction": "As the user scrolls, fragmented images and text snippets dynamically stitch together along a shared horizontal thread, building a cohesive visual narrative. Scroll speed controls the stitching rhythm — fast scrolls create rapid overlaps while slow scrolls reveal delicate connections between elements, making each journey through the page a unique collage.",
+  "directory": "seeds/scroll-stitcher/",
+  "status": "incubated"
+}

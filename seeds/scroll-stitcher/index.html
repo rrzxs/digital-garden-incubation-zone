@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Stitcher · 卷轴织纹</title>
+    <meta name="description" content="沉浸式滚动织纹体验。滚动驱动丝线穿梭缝合章节，弹簧-阻尼物理曲线、粒子流场与微晶玻璃态容器，流体渐变背景 + 非线性动效">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="thread-canvas"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <nav class="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="section-dots" id="section-dots"></div>
+    </nav>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void">◈</button>
+    </div>
+
+    <div class="scroll-speed-indicator" id="scroll-speed-indicator">
+        <div class="speed-bar-track">
+            <div class="speed-bar" id="speed-bar"></div>
+        </div>
+        <span class="speed-label mono">VELOCITY</span>
+    </div>
+
+    <div class="stitch-info" id="stitch-info">
+        <div class="stitch-row">
+            <span class="stitch-key mono">STITCHES</span>
+            <span class="stitch-val mono" id="stitch-count">0</span>
+        </div>
+        <div class="stitch-row">
+            <span class="stitch-key mono">TENSION</span>
+            <div class="tension-bar"><div class="tension-fill" id="tension-fill"></div></div>
+        </div>
+    </div>
+
+    <main id="main-content">
+
+        <section class="scene" data-section="0">
+            <div class="scene-inner">
+                <div class="glass-card hero-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">001</div>
+                        <div class="section-label">Origin</div>
+                        <h1 class="section-title">
+                            <span class="line stitch-line" data-delay="0">页面不是一叠纸</span>
+                            <span class="line accent stitch-line" data-delay="160">它是被织出来的织物</span>
+                        </h1>
+                        <p class="section-body">
+                            <span class="line stitch-line" data-delay="340">每一次滚动都是一针穿行。</span>
+                            <span class="line stitch-line" data-delay="440">丝线穿过经纬，将散落的章节缝合为连贯的纹理——</span>
+                            <span class="line stitch-line" data-delay="540">这是 Scroll Stitcher 的核心隐喻。</span>
+                        </p>
+                        <div class="scroll-hint">
+                            <span class="stitch-line" data-delay="680">
+                                <span class="scroll-arrow">↓</span> 向下滚动以穿针引线
+                            </span>
+                        </div>
+                    </div>
+                    <div class="anchor-point" data-anchor="anchor-0" data-x="50%" data-y="50%"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="1">
+            <div class="scene-inner">
+                <div class="weave-stage">
+                    <div class="weave-grid" id="weave-grid">
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                        <div class="weave-cell"></div>
+                    </div>
+                    <div class="weave-readout mono" id="weave-readout">WEFT · 0 / 12</div>
+                </div>
+                <div class="glass-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">002</div>
+                        <div class="section-label">Weft</div>
+                        <h2 class="section-title">
+                            <span class="line stitch-line" data-delay="0">纬线</span>
+                            <span class="line accent stitch-line" data-delay="160">穿越每一格的呼吸</span>
+                        </h2>
+                        <p class="section-body">
+                            <span class="line stitch-line" data-delay="320">纬线是横向的滚动。它穿过 12 个弹性单元，</span>
+                            <span class="line stitch-line" data-delay="420">每经过一格便留下一次脉冲——</span>
+                            <span class="line stitch-line" data-delay="520">像针尖刺入织物的瞬间，纤维微微弹起。</span>
+                        </p>
+                    </div>
+                    <div class="anchor-point" data-anchor="anchor-1" data-x="50%" data-y="50%"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="2">
+            <div class="scene-inner">
+                <div class="glass-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">003</div>
+                        <div class="section-label">Warp</div>
+                        <h2 class="section-title">
+                            <span class="line stitch-line" data-delay="0">经线</span>
+                            <span class="line accent stitch-line" data-delay="160">垂直贯穿的骨架</span>
+                        </h2>
+                        <p class="section-body">
+                            <span class="line stitch-line" data-delay="320">经线是纵向的卷轴骨架。它从第一幕贯穿到此刻，</span>
+                            <span class="line stitch-line" data-delay="420">即使你暂停滚动，它仍在缓慢脉动——</span>
+                            <span class="line stitch-line" data-delay="520">这是织物最底层的节律，永不静止。</span>
+                        </p>
+                    </div>
+                    <div class="anchor-point" data-anchor="anchor-2" data-x="50%" data-y="50%"></div>
+                </div>
+                <div class="knot-stage">
+                    <div class="knot-ring" id="knot-ring">
+                        <div class="knot-node" data-knot="0"></div>
+                        <div class="knot-node" data-knot="1"></div>
+                        <div class="knot-node" data-knot="2"></div>
+                        <div class="knot-node" data-knot="3"></div>
+                        <div class="knot-node" data-knot="4"></div>
+                        <div class="knot-node" data-knot="5"></div>
+                    </div>
+                    <div class="knot-readout mono" id="knot-readout">KNOTS · 6</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="3">
+            <div class="scene-inner">
+                <div class="thread-type-stage">
+                    <div class="thread-card" data-thread="silk">
+                        <div class="thread-preview silk"></div>
+                        <div class="thread-name">Silk</div>
+                        <div class="thread-desc mono">柔顺 · 低张力</div>
+                    </div>
+                    <div class="thread-card" data-thread="wire">
+                        <div class="thread-preview wire"></div>
+                        <div class="thread-name">Wire</div>
+                        <div class="thread-desc mono">硬朗 · 高张力</div>
+                    </div>
+                    <div class="thread-card" data-thread="ribbon">
+                        <div class="thread-preview ribbon"></div>
+                        <div class="thread-name">Ribbon</div>
+                        <div class="thread-desc mono">宽幅 · 波动</div>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">004</div>
+                        <div class="section-label">Thread</div>
+                        <h2 class="section-title">
+                            <span class="line stitch-line" data-delay="0">丝线的性格</span>
+                            <span class="line accent stitch-line" data-delay="160">决定织纹的气质</span>
+                        </h2>
+                        <p class="section-body">
+                            <span class="line stitch-line" data-delay="320">点击下方三种丝线，切换贯穿全页的织纹质感。</span>
+                            <span class="line stitch-line" data-delay="420">Silk 柔顺如雾，Wire 硬朗如线，Ribbon 宽幅如缎——</span>
+                            <span class="line stitch-line" data-delay="520">同一卷轴，三种肌理。</span>
+                        </p>
+                    </div>
+                    <div class="anchor-point" data-anchor="anchor-3" data-x="50%" data-y="50%"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="4">
+            <div class="scene-inner">
+                <div class="glass-card cta-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">005</div>
+                        <div class="section-label">Finis</div>
+                        <h2 class="section-title">
+                            <span class="line stitch-line" data-delay="0">此刻</span>
+                            <span class="line accent stitch-line" data-delay="160">织物已经完整</span>
+                        </h2>
+                        <p class="section-body">
+                            <span class="line stitch-line" data-delay="320">你从第一章滚到这里，留下了数百次穿针。</span>
+                            <span class="line stitch-line" data-delay="420">每一次滚动都被记录为针脚，编织成此刻的纹理。</span>
+                            <span class="line stitch-line" data-delay="520">这不是结束——只是这一匹织物的收边。</span>
+                        </p>
+                        <div class="final-stats" id="final-stats">
+                            <div class="stat-item">
+                                <div class="stat-value mono" id="final-stitch-count">0</div>
+                                <div class="stat-label">总针脚</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value mono" id="final-distance">0</div>
+                                <div class="stat-label">滚动距离</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value mono" id="final-thread">SILK</div>
+                                <div class="stat-label">丝线类型</div>
+                            </div>
+                        </div>
+                        <div class="epilogue-cta">
+                            <a href="../../index.html" class="cta-glass">
+                                <span>返回数字花园</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="anchor-point" data-anchor="anchor-4" data-x="50%" data-y="50%"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

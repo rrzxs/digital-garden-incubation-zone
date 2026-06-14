@@ -880,6 +880,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Stitcher 卷轴织纹',
+      description: '沉浸式滚动织纹体验。将滚动隐喻为穿针引线，Simplex 噪声驱动的丝线实时缝合5幕章节、纬线网格脉冲、经线结环共振、3种丝线质感切换，针脚计数与张力可视化，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/scroll-stitcher/index.html',
+      tags: ['Interactive', 'Scroll', 'Stitch', 'Micro-interaction'],
+      icon: '⊛',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

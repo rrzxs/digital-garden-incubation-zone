@@ -1,1 +1,1 @@
-paint-reveal-hover
+scroll-stitcher
