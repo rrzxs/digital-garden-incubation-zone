@@ -890,6 +890,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Postcard Feedback 明信片回声',
+      description: '沉浸式明信片反馈体验。手写墨迹实时同步至 3D 明信片、邮戳盖印弹性压印、翻面飞离投递、关键词词库驱动的情绪环共鸣分析与投递箱陈列，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/postcard-feedback/index.html',
+      tags: ['Interactive', 'Feedback', 'Micro-interaction', '3D'],
+      icon: '✉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

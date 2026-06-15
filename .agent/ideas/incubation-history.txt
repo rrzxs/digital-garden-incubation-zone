@@ -74,3 +74,4 @@ text-pivot-scaler
 depth-feed-reveal
 paint-reveal-hover
 scroll-stitcher
+postcard-feedback

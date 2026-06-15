@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-15",
+  "name": "postcard-feedback",
+  "description": "明信片交互反馈卡片",
+  "tagline": "Send a thought, keep a memory.",
+  "interaction": "用户在明信片背面写下反馈或留言，点击"投递"后，明信片翻转动画展示邮戳与寄出效果。收件方以翻页方式展开明信片阅读内容，营造手写书信的仪式感与温度。",
+  "directory": "seeds/postcard-feedback/",
+  "status": "incubated"
+}
