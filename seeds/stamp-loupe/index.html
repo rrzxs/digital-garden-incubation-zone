@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stamp Loupe · 邮政透镜</title>
+    <meta name="description" content="沉浸式邮票放大镜体验。移动光标即可用透镜揭示邮票的微晶细节、水印纹理与齿孔几何，6 枚限量邮集、4 种氛围配色，流体渐变背景 + 微晶玻璃态容器">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === Ambient Fluid Gradient Background === -->
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <!-- === Particle Flow Field Canvas === -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- === Back Link === -->
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === Theme Switcher === -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="ember" title="Ember"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="void" title="Void"><span class="theme-dot"></span></button>
+    </div>
+
+    <!-- === HUD: Stamp Index === -->
+    <div class="hud-panel hud-index">
+        <div class="hud-row">
+            <span class="hud-key mono">SERIES</span>
+            <span class="hud-val mono" id="hud-series">A-001</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">ZOOM</span>
+            <span class="hud-val mono" id="hud-zoom">×3.0</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">COLLECTED</span>
+            <span class="hud-val mono" id="hud-collected">0 / 6</span>
+        </div>
+    </div>
+
+    <main id="main-content">
+
+        <!-- === Hero === -->
+        <section class="scene scene-hero">
+            <div class="glass-card hero-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="section-number mono">001</div>
+                    <div class="section-label">Prologue</div>
+                    <h1 class="section-title">
+                        <span class="line ink-line" data-delay="0">每一枚邮票</span>
+                        <span class="line accent ink-line" data-delay="180">都藏着一个微观宇宙</span>
+                    </h1>
+                    <p class="section-body">
+                        <span class="line ink-line" data-delay="400">移动光标，让透镜贴近纸面——</span>
+                        <span class="line ink-line" data-delay="520">齿孔、水印、油墨颗粒与纤维纹路</span>
+                        <span class="line ink-line" data-delay="640">会在透镜下缓缓苏醒。</span>
+                    </p>
+                    <div class="scroll-hint">
+                        <span class="ink-line" data-delay="820">
+                            <span class="scroll-arrow">↓</span> 打开邮集
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Loupe Stage === -->
+        <section class="scene scene-loupe">
+            <div class="loupe-stage" id="loupe-stage">
+
+                <!-- Stamp Display -->
+                <div class="stamp-arena" id="stamp-arena">
+
+                    <!-- Stamp Sheet (base layer) -->
+                    <div class="stamp-sheet" id="stamp-sheet">
+                        <div class="sheet-perforations" id="sheet-perforations"></div>
+                        <div class="sheet-paper">
+                            <div class="watermark-layer" id="watermark-layer"></div>
+                            <div class="stamp-artwork" id="stamp-artwork">
+                                <!-- SVG artwork injected by JS -->
+                            </div>
+                            <div class="stamp-denomination">
+                                <span class="denom-symbol mono" id="denom-symbol">¥</span>
+                                <span class="denom-value serif" id="denom-value">10</span>
+                            </div>
+                            <div class="stamp-country serif" id="stamp-country">DIGITAL · GARDEN</div>
+                            <div class="stamp-serial mono" id="stamp-serial">No. 0001 / 2024</div>
+                            <div class="stamp-fiber"></div>
+                        </div>
+                    </div>
+
+                    <!-- Magnifier Loupe (follows cursor) -->
+                    <div class="loupe" id="loupe">
+                        <div class="loupe-glass">
+                            <div class="loupe-content" id="loupe-content">
+                                <div class="loupe-zoom-artwork" id="loupe-zoom-artwork"></div>
+                                <div class="loupe-zoom-denom">
+                                    <span class="loupe-denom-symbol mono" id="loupe-denom-symbol">¥</span>
+                                    <span class="loupe-denom-value serif" id="loupe-denom-value">10</span>
+                                </div>
+                                <div class="loupe-zoom-country serif" id="loupe-zoom-country">DIGITAL · GARDEN</div>
+                            </div>
+                            <div class="loupe-lens-flare"></div>
+                            <div class="loupe-scanline"></div>
+                            <div class="loupe-reticle">
+                                <div class="reticle-cross"></div>
+                                <div class="reticle-circle"></div>
+                            </div>
+                        </div>
+                        <div class="loupe-rim"></div>
+                        <div class="loupe-handle"></div>
+                    </div>
+
+                </div>
+
+                <!-- Loupe Controls -->
+                <div class="loupe-controls">
+                    <div class="glass-card control-card">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="section-number mono">002</div>
+                            <div class="section-label">Examine</div>
+                            <h2 class="card-title">
+                                <span class="ink-line" data-delay="0">邮政透镜</span>
+                                <span class="accent ink-line" data-delay="140">Inspect the micro-cosmos</span>
+                            </h2>
+                            <p class="section-body">
+                                <span class="line ink-line" data-delay="320">透镜会放大邮票上的一切——油墨的颗粒感、</span>
+                                <span class="line ink-line" data-delay="420">齿孔的咬合精度、水印的隐形深度。</span>
+                                <span class="line ink-line" data-delay="520">你也可以切换透镜模式，用紫外线或偏振光审视隐藏的图案。</span>
+                            </p>
+
+                            <div class="control-group">
+                                <label class="control-label mono">LOUPE MODE</label>
+                                <div class="mode-picker" id="mode-picker">
+                                    <button class="mode-chip active" data-mode="standard" type="button">
+                                        <span class="mode-glyph">○</span>
+                                        <span class="mode-name">标准</span>
+                                    </button>
+                                    <button class="mode-chip" data-mode="uv" type="button">
+                                        <span class="mode-glyph">◈</span>
+                                        <span class="mode-name">紫外</span>
+                                    </button>
+                                    <button class="mode-chip" data-mode="polarized" type="button">
+                                        <span class="mode-glyph">◐</span>
+                                        <span class="mode-name">偏振</span>
+                                    </button>
+                                    <button class="mode-chip" data-mode="thermal" type="button">
+                                        <span class="mode-glyph">◠</span>
+                                        <span class="mode-name">热感</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label mono">
+                                    ZOOM · <span id="zoom-readout">3.0×</span>
+                                </label>
+                                <div class="slider-shell">
+                                    <div class="slider-track">
+                                        <div class="slider-fill" id="zoom-fill" style="width: 40%"></div>
+                                    </div>
+                                    <input type="range" class="slider-input" id="zoom-slider" min="15" max="60" value="30" step="1">
+                                    <div class="slider-ticks mono">
+                                        <span>1.5×</span>
+                                        <span>3×</span>
+                                        <span>4.5×</span>
+                                        <span>6×</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label mono">LOUPE SIZE</label>
+                                <div class="size-picker" id="size-picker">
+                                    <button class="size-btn" data-size="140" type="button">S</button>
+                                    <button class="size-btn active" data-size="200" type="button">M</button>
+                                    <button class="size-btn" data-size="280" type="button">L</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- === Stamp Collection === -->
+        <section class="scene scene-collection">
+            <div class="scene-inner-wide">
+                <div class="glass-card collection-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">003</div>
+                        <div class="section-label">Archive</div>
+                        <h2 class="card-title">
+                            <span class="ink-line" data-delay="0">限量邮集</span>
+                            <span class="accent ink-line" data-delay="140">Six micro-worlds under glass</span>
+                        </h2>
+                        <p class="section-body">
+                            <span class="line ink-line" data-delay="320">每一枚邮票都是一座微缩宇宙——</span>
+                            <span class="line ink-line" data-delay="420">几何星图、深海生物、磷光航线、晶体花园。</span>
+                            <span class="line ink-line" data-delay="520">点击邮票将其放入透镜，开始你的检验。</span>
+                        </p>
+
+                        <div class="collection-grid" id="collection-grid">
+                            <!-- Stamp thumbnails injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Detail Panel === -->
+        <section class="scene scene-detail">
+            <div class="scene-inner-narrow">
+                <div class="glass-card detail-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">004</div>
+                        <div class="section-label">Provenance</div>
+                        <h2 class="card-title">
+                            <span class="ink-line" data-delay="0" id="detail-title-name">星图纪元</span>
+                        </h2>
+
+                        <div class="detail-meta-grid">
+                            <div class="meta-cell">
+                                <div class="meta-key mono">ISSUED</div>
+                                <div class="meta-val serif" id="detail-issued">2024</div>
+                            </div>
+                            <div class="meta-cell">
+                                <div class="meta-key mono">DENOM</div>
+                                <div class="meta-val serif" id="detail-denom">¥10</div>
+                            </div>
+                            <div class="meta-cell">
+                                <div class="meta-key mono">PRINT</div>
+                                <div class="meta-val serif" id="detail-print">Offset Litho</div>
+                            </div>
+                            <div class="meta-cell">
+                                <div class="meta-key mono">PERF</div>
+                                <div class="meta-val serif" id="detail-perf">P 13½</div>
+                            </div>
+                            <div class="meta-cell">
+                                <div class="meta-key mono">WATERMARK</div>
+                                <div class="meta-val serif" id="detail-watermark">Garden Cross</div>
+                            </div>
+                            <div class="meta-cell">
+                                <div class="meta-key mono">SERIAL</div>
+                                <div class="meta-val mono" id="detail-serial">A-001</div>
+                            </div>
+                        </div>
+
+                        <p class="section-body detail-body">
+                            <span class="line ink-line" data-delay="200" id="detail-desc-1">星图纪元系列以深空导航为题——</span>
+                            <span class="line ink-line" data-delay="320" id="detail-desc-2">邮票中央的同心圆罗盘在紫外光下会显露出隐藏的航线坐标。</span>
+                        </p>
+
+                        <div class="detail-actions">
+                            <button class="action-btn action-collect" id="btn-collect" type="button">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                                <span>收入图鉴</span>
+                            </button>
+                            <button class="action-btn action-flip" id="btn-flip" type="button">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+                                <span>翻转邮票</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Epilogue === -->
+        <section class="scene scene-epilogue">
+            <div class="scene-inner-narrow">
+                <div class="glass-card cta-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">005</div>
+                        <div class="section-label">Finis</div>
+                        <h2 class="card-title">
+                            <span class="ink-line" data-delay="0">当透镜移开</span>
+                            <span class="accent ink-line" data-delay="160">细节依然留在记忆里</span>
+                        </h2>
+                        <p class="section-body">
+                            <span class="line ink-line" data-delay="320">谢谢你用透镜审视了这些邮票。</span>
+                            <span class="line ink-line" data-delay="420">在数字花园，每一寸细节都被精心铸造——</span>
+                            <span class="line ink-line" data-delay="520">因为真正的美，需要被凝视才能显现。</span>
+                        </p>
+                        <div class="final-stats" id="final-stats">
+                            <div class="stat-item">
+                                <div class="stat-value mono" id="final-examined">0</div>
+                                <div class="stat-label">检视次数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value mono" id="final-collected">0</div>
+                                <div class="stat-label">已收入</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value mono" id="final-distance">0</div>
+                                <div class="stat-label">透镜行程 px</div>
+                            </div>
+                        </div>
+                        <div class="epilogue-cta">
+                            <a href="../../index.html" class="cta-glass">
+                                <span>返回数字花园</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- === Cursor Glow === -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- === Transition Flash === -->
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <!-- === Stamp Flip Canvas (back side reveal) === -->
+    <canvas id="flip-canvas"></canvas>
+
+    <script src="main.js"></script>
+</body>
+</html>

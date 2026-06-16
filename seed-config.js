@@ -900,6 +900,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Stamp Loupe 邮政透镜',
+      description: '沉浸式邮票放大镜体验。光标移动唤起透镜实时放大邮票微晶细节，4种透镜模式（标准/紫外/偏振/热感）显隐水印与纤维，6枚限量邮集、可调缩放、3D翻转与图鉴收藏，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/stamp-loupe/index.html',
+      tags: ['Interactive', 'Stamp', 'Magnifier', 'Micro-interaction'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-16",
+  "name": "stamp-loupe",
+  "description": "可拖拽邮票收藏带着色器放大镜交互",
+  "tagline": "*Zoom Into Tiny Worlds*",
+  "interaction": "用户拖动一块复古邮票在场景中漫游，跟随邮票移动的放大镜（loupe）通过自定义着色器实时放大并清晰呈现邮票下方的内容纹理。释放拖拽时，放大镜以弹性动画归位，邮票则带有微妙的物理惯性与光影反馈，营造出透过琉璃透镜收藏细节的质感。",
+  "directory": "seeds/stamp-loupe/",
+  "status": "incubated"
+}
