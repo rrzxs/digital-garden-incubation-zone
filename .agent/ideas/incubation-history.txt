@@ -76,3 +76,4 @@ paint-reveal-hover
 scroll-stitcher
 postcard-feedback
 stamp-loupe
+sky-archive

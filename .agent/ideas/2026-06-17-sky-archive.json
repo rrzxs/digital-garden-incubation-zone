@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-17",
+  "name": "sky-archive",
+  "description": "天空色彩每30分钟采样拼贴可视化",
+  "tagline": "The sky, archived in pixels.",
+  "interaction": "The visualization auto-samples sky color every 30 minutes, building a living color palette. Hover over any swatch to reveal the timestamp, weather, and exact hex value. Over time, a woven tapestry of days and seasons emerges.",
+  "directory": "seeds/sky-archive/",
+  "status": "incubated"
+}

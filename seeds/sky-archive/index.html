@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dawn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Archive · 天空档案</title>
+    <meta name="description" content="沉浸式天空档案体验。拖拽时间滑块穿越黎明的橙金、正午的钴蓝、黄昏的洋红与午夜的靛蓝，点击天空记录流星、候鸟群与云的观测，4 种氛围配色 + 流体渐变背景 + 微晶玻璃态容器">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === Ambient Fluid Orbs (atmospheric depth) === -->
+    <div class="ambient-orbs">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+    </div>
+
+    <!-- === Sky Stage (live canvas that morphs with time of day) === -->
+    <div class="sky-stage" id="sky-stage">
+        <div class="sky-gradient" id="sky-gradient"></div>
+        <div class="sky-glow" id="sky-glow"></div>
+        <div class="celestial-body" id="celestial-body">
+            <div class="celestial-core"></div>
+            <div class="celestial-halo"></div>
+        </div>
+        <canvas id="sky-canvas"></canvas>
+        <div class="horizon" id="horizon"></div>
+        <div class="grain-overlay"></div>
+    </div>
+
+    <!-- === Particle Flow Field Canvas === -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- === Custom Cursor === -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- === Back Link === -->
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === Theme Switcher === -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="dawn" title="Dawn · 黎明"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="ember" title="Ember · 炽光"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="abyss" title="Abyss · 深渊"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="mono" title="Mono · 单色"><span class="theme-dot"></span></button>
+    </div>
+
+    <!-- === HUD: Observation Panel === -->
+    <div class="hud-panel hud-archive">
+        <div class="hud-row">
+            <span class="hud-key mono">LOCAL TIME</span>
+            <span class="hud-val mono" id="hud-time">12:00</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">PHASE</span>
+            <span class="hud-val mono" id="hud-phase">NOON</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">ENTRIES</span>
+            <span class="hud-val mono" id="hud-entries">0 / 9</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">ALTITUDE</span>
+            <span class="hud-val mono" id="hud-altitude">— °</span>
+        </div>
+    </div>
+
+    <!-- === Time Control Dock === -->
+    <div class="time-dock glass-card" id="time-dock">
+        <div class="dock-label mono">TIME · SCRUB</div>
+        <div class="time-slider-track" id="time-track">
+            <div class="time-slider-fill" id="time-fill"></div>
+            <div class="time-slider-thumb" id="time-thumb"></div>
+            <div class="time-ticks">
+                <span class="tick" style="left:0%">00</span>
+                <span class="tick" style="left:25%">06</span>
+                <span class="tick" style="left:50%">12</span>
+                <span class="tick" style="left:75%">18</span>
+                <span class="tick" style="left:100%">24</span>
+            </div>
+        </div>
+        <div class="dock-readout">
+            <span class="readout-val mono" id="time-readout">12:00</span>
+            <span class="readout-phase mono" id="phase-readout">NOON</span>
+        </div>
+        <button class="auto-btn" id="auto-btn">
+            <span class="auto-icon"></span>
+            <span class="auto-label">AUTO</span>
+        </button>
+    </div>
+
+    <main id="main-content">
+
+        <!-- === Scene 01: Prologue === -->
+        <section class="scene scene-prologue">
+            <div class="glass-card hero-card" id="card-prologue">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="section-number mono">001 / PROLOGUE</div>
+                    <div class="section-label">An archive of skies</div>
+                    <h1 class="section-title">
+                        <span class="line ink-line" data-delay="0">天空值得被记住</span>
+                        <span class="line accent ink-line" data-delay="200">每一刻都不重复</span>
+                    </h1>
+                    <p class="section-body">
+                        <span class="line ink-line" data-delay="420">这是一座流动的天空档案馆。</span>
+                        <span class="line ink-line" data-delay="540">拖拽下方刻度，让黎明、正午、黄昏与午夜</span>
+                        <span class="line ink-line" data-delay="660">在你的指尖缓慢呼吸；</span>
+                        <span class="line ink-line" data-delay="780">点击天空，把一颗流星、一群候鸟、一片云</span>
+                        <span class="line ink-line" data-delay="900">收入只属于此刻的档案。</span>
+                    </p>
+                    <div class="scroll-hint">
+                        <span class="ink-line" data-delay="1080">
+                            <span class="scroll-arrow">↓</span> 开始观察
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Scene 02: Observation Theatre === -->
+        <section class="scene scene-theatre">
+            <div class="scene-inner-wide">
+                <div class="theatre-header">
+                    <div class="section-number mono">002 / OBSERVATION</div>
+                    <h2 class="scene-title">
+                        <span class="line ink-line" data-delay="0">观察 <span class="accent">剧场</span></span>
+                    </h2>
+                    <p class="scene-sub ink-line" data-delay="160">在天空任意位置点击——你的目光会被记录为一条档案条目。</p>
+                </div>
+
+                <!-- Phenomenon Picker -->
+                <div class="phenomenon-picker glass-card" id="phenomenon-picker">
+                    <div class="picker-label mono">CURRENT PHENOMENON</div>
+                    <div class="picker-options">
+                        <button class="phenom-chip active" data-phenom="meteor">
+                            <span class="phenom-glyph">☄</span>
+                            <span class="phenom-name">流星</span>
+                            <span class="phenom-name-en mono">METEOR</span>
+                        </button>
+                        <button class="phenom-chip" data-phenom="flock">
+                            <span class="phenom-glyph">⌒</span>
+                            <span class="phenom-name">候鸟群</span>
+                            <span class="phenom-name-en mono">FLOCK</span>
+                        </button>
+                        <button class="phenom-chip" data-phenom="cloud">
+                            <span class="phenom-glyph">▢</span>
+                            <span class="phenom-name">积雨云</span>
+                            <span class="phenom-name-en mono">CUMULUS</span>
+                        </button>
+                        <button class="phenom-chip" data-phenom="balloon">
+                            <span class="phenom-glyph">○</span>
+                            <span class="phenom-name">气球</span>
+                            <span class="phenom-name-en mono">BALLOON</span>
+                        </button>
+                        <button class="phenom-chip" data-phenom="ufo">
+                            <span class="phenom-glyph">◬</span>
+                            <span class="phenom-name">不明光体</span>
+                            <span class="phenom-name-en mono">ANOMALY</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Observation hint overlay -->
+                <div class="observe-hint" id="observe-hint">
+                    <span class="hint-pulse"></span>
+                    <span class="hint-text mono">CLICK THE SKY</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Scene 03: Archive Ledger === -->
+        <section class="scene scene-ledger">
+            <div class="scene-inner-narrow">
+                <div class="theatre-header">
+                    <div class="section-number mono">003 / LEDGER</div>
+                    <h2 class="scene-title">
+                        <span class="line ink-line" data-delay="0">档案 <span class="accent">台账</span></span>
+                    </h2>
+                    <p class="scene-sub ink-line" data-delay="160">你记录下的每一笔天空——按时间倒序排列，如同一卷观测日志。</p>
+                </div>
+
+                <div class="ledger glass-card" id="ledger">
+                    <div class="ledger-empty" id="ledger-empty">
+                        <div class="empty-glyph">⌖</div>
+                        <p class="empty-text">还没有条目。</p>
+                        <p class="empty-sub mono">CLICK THE SKY TO BEGIN ARCHIVING</p>
+                    </div>
+                    <div class="ledger-list" id="ledger-list"></div>
+                </div>
+
+                <div class="ledger-actions">
+                    <button class="ghost-btn" id="btn-clear">
+                        <span>清空档案</span>
+                    </button>
+                    <button class="ghost-btn" id="btn-replay">
+                        <span>重放观测</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Scene 04: Almanac === -->
+        <section class="scene scene-almanac">
+            <div class="scene-inner-wide">
+                <div class="theatre-header">
+                    <div class="section-number mono">004 / ALMANAC</div>
+                    <h2 class="scene-title">
+                        <span class="line ink-line" data-delay="0">相位 <span class="accent">年鉴</span></span>
+                    </h2>
+                    <p class="scene-sub ink-line" data-delay="160">天空在四个相位之间呼吸。点击任意相位可直接跳转。</p>
+                </div>
+
+                <div class="almanac-grid" id="almanac-grid">
+                    <button class="almanac-card glass-card" data-phase="dawn" data-hour="5.5">
+                        <div class="almanac-visual dawn-vis">
+                            <div class="vis-sun"></div>
+                            <div class="vis-band band-1"></div>
+                            <div class="vis-band band-2"></div>
+                        </div>
+                        <div class="almanac-meta">
+                            <div class="almanac-name">黎明 <span class="mono">DAWN</span></div>
+                            <div class="almanac-time mono">05:30</div>
+                            <div class="almanac-desc">橙金漫上地平线，露水尚未蒸发</div>
+                        </div>
+                    </button>
+
+                    <button class="almanac-card glass-card" data-phase="noon" data-hour="12">
+                        <div class="almanac-visual noon-vis">
+                            <div class="vis-sun"></div>
+                            <div class="vis-band band-1"></div>
+                            <div class="vis-band band-2"></div>
+                        </div>
+                        <div class="almanac-meta">
+                            <div class="almanac-name">正午 <span class="mono">NOON</span></div>
+                            <div class="almanac-time mono">12:00</div>
+                            <div class="almanac-desc">钴蓝垂直落下，影子缩成一点</div>
+                        </div>
+                    </button>
+
+                    <button class="almanac-card glass-card" data-phase="dusk" data-hour="18.5">
+                        <div class="almanac-visual dusk-vis">
+                            <div class="vis-sun"></div>
+                            <div class="vis-band band-1"></div>
+                            <div class="vis-band band-2"></div>
+                        </div>
+                        <div class="almanac-meta">
+                            <div class="almanac-name">黄昏 <span class="mono">DUSK</span></div>
+                            <div class="almanac-time mono">18:30</div>
+                            <div class="almanac-desc">洋红与琥珀交叠，城市开始发光</div>
+                        </div>
+                    </button>
+
+                    <button class="almanac-card glass-card" data-phase="night" data-hour="0">
+                        <div class="almanac-visual night-vis">
+                            <div class="vis-sun"></div>
+                            <div class="vis-band band-1"></div>
+                            <div class="vis-band band-2"></div>
+                            <div class="vis-stars"></div>
+                        </div>
+                        <div class="almanac-meta">
+                            <div class="almanac-name">午夜 <span class="mono">NIGHT</span></div>
+                            <div class="almanac-time mono">00:00</div>
+                            <div class="almanac-desc">靛蓝吞噬一切，只剩星图与回声</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Scene 05: Epilogue === -->
+        <section class="scene scene-epilogue">
+            <div class="glass-card cta-card" id="card-epilogue">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="section-number mono">005 / EPILOGUE</div>
+                    <h2 class="section-title">
+                        <span class="line ink-line" data-delay="0">此刻的天空</span>
+                        <span class="line accent ink-line" data-delay="180">已经不会再来</span>
+                    </h2>
+                    <p class="section-body">
+                        <span class="line ink-line" data-delay="400">你已经记录了</span>
+                        <span class="line ink-line" data-delay="500">
+                            <span class="stat-highlight" id="final-entries">0</span> 条档案条目，
+                            <span class="stat-highlight" id="final-meteors">0</span> 颗流星，
+                            <span class="stat-highlight" id="final-phases">1</span> 个相位。
+                        </span>
+                        <span class="line ink-line" data-delay="640">它们将被永远封存在这卷流动的档案里。</span>
+                    </p>
+                    <div class="signature mono">
+                        SKY ARCHIVE · MAINTAINED BY EDEN · <span id="final-ts">--:--</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- === Entry Modal (reveals archive entry detail) === -->
+    <div class="entry-modal" id="entry-modal">
+        <div class="entry-backdrop"></div>
+        <div class="entry-panel glass-card">
+            <button class="entry-close" id="entry-close">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="entry-glyph" id="entry-glyph">☄</div>
+            <div class="entry-cat mono" id="entry-cat">METEOR</div>
+            <div class="entry-title serif" id="entry-title">流星划过</div>
+            <div class="entry-meta mono" id="entry-meta">12:00 · NOON</div>
+            <div class="entry-note" id="entry-note">——</div>
+            <div class="entry-coords mono" id="entry-coords">N 0.000  E 0.000</div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

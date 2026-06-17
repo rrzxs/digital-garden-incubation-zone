@@ -910,6 +910,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Sky Archive 天空档案',
+      description: '沉浸式天空档案体验。拖拽时间刻度让天空在24小时间呼吸（黎明/正午/黄昏/午夜），点击天空记录流星、候鸟群、积雨云等5种现象为档案条目，AUTO昼夜循环、星群闪烁、云朵漂移与粒子流场，4种氛围配色',
+      path: '/seed/seeds/sky-archive/index.html',
+      tags: ['Interactive', 'Sky', 'Archive', 'Micro-interaction'],
+      icon: '☁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
