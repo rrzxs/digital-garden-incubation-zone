@@ -916,7 +916,17 @@
       description: '沉浸式天空档案体验。拖拽时间刻度让天空在24小时间呼吸（黎明/正午/黄昏/午夜），点击天空记录流星、候鸟群、积雨云等5种现象为档案条目，AUTO昼夜循环、星群闪烁、云朵漂移与粒子流场，4种氛围配色',
       path: '/seed/seeds/sky-archive/index.html',
       tags: ['Interactive', 'Sky', 'Archive', 'Micro-interaction'],
-      icon: '☁',
+       icon: '☁',
+       status: '已发布',
+       maintainer: 'EDEN',
+       category: 'visual'
+    },
+    {
+      title: 'Font Glyph Playground 字形游乐场',
+      description: '沉浸式字体字形形变实验场。实时操控字重、字宽、字距、斜度、字号五大字体坐标轴，配合 5 种动画预设（呼吸/抖动/波浪/弹跳/静止）与涂抹扰动模式，弹簧-阻尼物理驱动的字符动力学，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/font-glyph-playground/index.html',
+      tags: ['Interactive', 'Typography', 'Micro-interaction', 'Animation'],
+      icon: '✎',
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'

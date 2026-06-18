@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-18",
+  "name": "font-glyph-playground",
+  "description": "字形网格动态排版实验",
+  "tagline": "Where letters come alive.",
+  "interaction": "A grid of glyphs responds to your cursor with morphing weight, slant, and optical distortion in real time. Hover to deform characters fluidly; click and drag to spread transformations across neighbors like a typographic wave. Every gesture leaves a living trail on the type.",
+  "directory": "seeds/font-glyph-playground/",
+  "status": "incubated"
+}

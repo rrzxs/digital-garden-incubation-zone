@@ -77,3 +77,4 @@ scroll-stitcher
 postcard-feedback
 stamp-loupe
 sky-archive
+font-glyph-playground
