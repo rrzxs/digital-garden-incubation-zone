@@ -78,3 +78,4 @@ postcard-feedback
 stamp-loupe
 sky-archive
 font-glyph-playground
+scroll3d-rotate

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll 3D Rotate · 滚动三维旋转</title>
+    <meta name="description" content="沉浸式滚动三维旋转体验。滚动驱动的 3D 卡片旋转、翻转、翻滚、轨道与螺旋形变，流体渐变背景 + 微晶玻璃态容器 + 非线性动效">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 流体渐变背景 -->
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <!-- 粒子流场画布 -->
+    <canvas id="particle-field"></canvas>
+
+    <!-- 返回链接 -->
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 滚动进度轨道 -->
+    <nav class="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="section-dots" id="section-dots"></div>
+    </nav>
+
+    <!-- 滚动速度指示器 -->
+    <div class="scroll-speed-indicator" id="scroll-speed-indicator">
+        <div class="speed-bar-track">
+            <div class="speed-bar" id="speed-bar"></div>
+        </div>
+        <span class="speed-label mono">VELOCITY</span>
+    </div>
+
+    <!-- 旋转角度指示器 -->
+    <div class="rotation-readout" id="rotation-readout">
+        <div class="readout-row">
+            <span class="readout-label mono">ROT-X</span>
+            <span class="readout-value mono" id="rot-x-val">000°</span>
+        </div>
+        <div class="readout-row">
+            <span class="readout-label mono">ROT-Y</span>
+            <span class="readout-value mono" id="rot-y-val">000°</span>
+        </div>
+        <div class="readout-row">
+            <span class="readout-label mono">ROT-Z</span>
+            <span class="readout-value mono" id="rot-z-val">000°</span>
+        </div>
+    </div>
+
+    <!-- 配色切换 -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora 极光">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember 余烬">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean 深海">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void 虚空">◈</button>
+    </div>
+
+    <main id="main-content">
+
+        <!-- 场景 0: 序章 - 滚动即旋转 -->
+        <section class="scene" data-section="0" data-rotate-mode="tilt">
+            <div class="scene-inner">
+                <div class="glass-card hero-card" data-3d>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">001</div>
+                        <div class="section-label">Origin · 起点</div>
+                        <h1 class="section-title reveal-text">
+                            <span class="line" data-delay="0">滚动不再是位移</span>
+                            <span class="line accent" data-delay="140">而是空间的旋转</span>
+                        </h1>
+                        <p class="section-body reveal-text" data-delay="320">
+                            <span class="line">每一次滚动都是一次三维旋转。卡片在 X、Y、Z 轴上翻飞，</span>
+                            <span class="line">透视与景深让平面拥有了体积——这是滚动三维旋转的起点。</span>
+                        </p>
+                        <div class="scroll-hint reveal-text" data-delay="520">
+                            <span class="line">
+                                <span class="scroll-arrow">↓</span> 滚动以触发旋转
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-edge top"></div>
+                    <div class="card-edge bottom"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 场景 1: 翻转画廊 - 卡片沿 Y 轴翻转 -->
+        <section class="scene" data-section="1" data-rotate-mode="flip">
+            <div class="scene-inner">
+                <div class="flip-gallery" id="flip-gallery">
+                    <div class="flip-card" data-3d data-flip-index="0">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="flip-glyph mono">α</div>
+                                <div class="flip-label">Alpha</div>
+                            </div>
+                            <div class="flip-face flip-back">
+                                <div class="flip-glyph mono">Ω</div>
+                                <div class="flip-label">Omega</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-3d data-flip-index="1">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="flip-glyph mono">β</div>
+                                <div class="flip-label">Beta</div>
+                            </div>
+                            <div class="flip-face flip-back">
+                                <div class="flip-glyph mono">Σ</div>
+                                <div class="flip-label">Sigma</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-3d data-flip-index="2">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="flip-glyph mono">γ</div>
+                                <div class="flip-label">Gamma</div>
+                            </div>
+                            <div class="flip-face flip-back">
+                                <div class="flip-glyph mono">Δ</div>
+                                <div class="flip-label">Delta</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flip-card" data-3d data-flip-index="3">
+                        <div class="flip-inner">
+                            <div class="flip-face flip-front">
+                                <div class="flip-glyph mono">δ</div>
+                                <div class="flip-label">Delta</div>
+                            </div>
+                            <div class="flip-face flip-back">
+                                <div class="flip-glyph mono">Θ</div>
+                                <div class="flip-label">Theta</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" data-3d>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">002</div>
+                        <div class="section-label">Flip · 翻转</div>
+                        <h2 class="section-title reveal-text">
+                            <span class="line" data-delay="0">翻转：</span>
+                            <span class="line accent" data-delay="140">Y 轴上的正反两面</span>
+                        </h2>
+                        <p class="section-body reveal-text" data-delay="300">
+                            <span class="line">卡片沿 Y 轴旋转，正面与背面交替显现。滚动速度决定翻转角度，</span>
+                            <span class="line">慢速时优雅驻留，快速时连缀成动画——每个字符都是一个翻飞的镜面。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 场景 2: 翻滚塔 - 卡片沿 X 轴翻滚 + Z 轴扭转 -->
+        <section class="scene" data-section="2" data-rotate-mode="tumble">
+            <div class="scene-inner">
+                <div class="tumble-stack" id="tumble-stack">
+                    <div class="tumble-card" data-3d data-tumble-index="0">
+                        <div class="tumble-content">
+                            <span class="tumble-num mono">01</span>
+                            <span class="tumble-word">SPIN</span>
+                        </div>
+                    </div>
+                    <div class="tumble-card" data-3d data-tumble-index="1">
+                        <div class="tumble-content">
+                            <span class="tumble-num mono">02</span>
+                            <span class="tumble-word">TWIST</span>
+                        </div>
+                    </div>
+                    <div class="tumble-card" data-3d data-tumble-index="2">
+                        <div class="tumble-content">
+                            <span class="tumble-num mono">03</span>
+                            <span class="tumble-word">TUMBLE</span>
+                        </div>
+                    </div>
+                    <div class="tumble-card" data-3d data-tumble-index="3">
+                        <div class="tumble-content">
+                            <span class="tumble-num mono">04</span>
+                            <span class="tumble-word">SPIRAL</span>
+                        </div>
+                    </div>
+                    <div class="tumble-card" data-3d data-tumble-index="4">
+                        <div class="tumble-content">
+                            <span class="tumble-num mono">05</span>
+                            <span class="tumble-word">ORBIT</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" data-3d>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">003</div>
+                        <div class="section-label">Tumble · 翻滚</div>
+                        <h2 class="section-title reveal-text">
+                            <span class="line" data-delay="0">翻滚：</span>
+                            <span class="line accent" data-delay="140">X 轴与 Z 轴的复合旋转</span>
+                        </h2>
+                        <p class="section-body reveal-text" data-delay="300">
+                            <span class="line">卡片不再是静止的容器，而是翻滚的扑克牌。X 轴上下倾覆，Z 轴扭转偏移，</span>
+                            <span class="line">叠放的卡片群在滚动中如多米诺骨牌般次第翻转，形成立体的节奏感。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 场景 3: 轨道环 - 卡片沿圆轨道旋转 -->
+        <section class="scene" data-section="3" data-rotate-mode="orbit">
+            <div class="scene-inner">
+                <div class="orbit-stage" id="orbit-stage">
+                    <div class="orbit-ring"></div>
+                    <div class="orbit-ring orbit-ring-2"></div>
+                    <div class="orbit-core mono">CORE</div>
+                    <div class="orbit-node" data-3d data-orbit-index="0">
+                        <div class="orbit-node-inner mono">N01</div>
+                    </div>
+                    <div class="orbit-node" data-3d data-orbit-index="1">
+                        <div class="orbit-node-inner mono">N02</div>
+                    </div>
+                    <div class="orbit-node" data-3d data-orbit-index="2">
+                        <div class="orbit-node-inner mono">N03</div>
+                    </div>
+                    <div class="orbit-node" data-3d data-orbit-index="3">
+                        <div class="orbit-node-inner mono">N04</div>
+                    </div>
+                    <div class="orbit-node" data-3d data-orbit-index="4">
+                        <div class="orbit-node-inner mono">N05</div>
+                    </div>
+                    <div class="orbit-node" data-3d data-orbit-index="5">
+                        <div class="orbit-node-inner mono">N06</div>
+                    </div>
+                </div>
+                <div class="glass-card" data-3d>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">004</div>
+                        <div class="section-label">Orbit · 轨道</div>
+                        <h2 class="section-title reveal-text">
+                            <span class="line" data-delay="0">轨道：</span>
+                            <span class="line accent" data-delay="140">环绕中心的行星运动</span>
+                        </h2>
+                        <p class="section-body reveal-text" data-delay="300">
+                            <span class="line">六个节点沿椭圆轨道环绕核心旋转。滚动驱动公转速度，</span>
+                            <span class="line">每个节点同时自转——这是微观宇宙中引力的可视化舞蹈。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 场景 4: 螺旋柱 - 卡片沿螺旋路径旋转上升 -->
+        <section class="scene" data-section="4" data-rotate-mode="spiral">
+            <div class="scene-inner">
+                <div class="spiral-stage" id="spiral-stage">
+                    <div class="spiral-axis"></div>
+                    <div class="spiral-card" data-3d data-spiral-index="0"><span class="mono">◆</span></div>
+                    <div class="spiral-card" data-3d data-spiral-index="1"><span class="mono">◆</span></div>
+                    <div class="spiral-card" data-3d data-spiral-index="2"><span class="mono">◆</span></div>
+                    <div class="spiral-card" data-3d data-spiral-index="3"><span class="mono">◆</span></div>
+                    <div class="spiral-card" data-3d data-spiral-index="4"><span class="mono">◆</span></div>
+                    <div class="spiral-card" data-3d data-spiral-index="5"><span class="mono">◆</span></div>
+                    <div class="spiral-card" data-3d data-spiral-index="6"><span class="mono">◆</span></div>
+                    <div class="spiral-card" data-3d data-spiral-index="7"><span class="mono">◆</span></div>
+                </div>
+                <div class="glass-card" data-3d>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">005</div>
+                        <div class="section-label">Spiral · 螺旋</div>
+                        <h2 class="section-title reveal-text">
+                            <span class="line" data-delay="0">螺旋：</span>
+                            <span class="line accent" data-delay="140">DNA 双螺旋的旋转上升</span>
+                        </h2>
+                        <p class="section-body reveal-text" data-delay="300">
+                            <span class="line">八个节点沿螺旋路径盘旋上升。滚动驱动螺旋的旋转相位，</span>
+                            <span class="line">节点在前后、上下、左右三个维度上同时运动——这是生命结构的几何回响。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 场景 5: 终章 - 一切归于平静的立方体 -->
+        <section class="scene" data-section="5" data-rotate-mode="cube">
+            <div class="scene-inner">
+                <div class="cube-stage" id="cube-stage">
+                    <div class="cube-3d" id="cube-3d" data-3d>
+                        <div class="cube-face cube-front">
+                            <span class="cube-glyph mono">FIN</span>
+                            <span class="cube-sub">FRONT</span>
+                        </div>
+                        <div class="cube-face cube-back">
+                            <span class="cube-glyph mono">END</span>
+                            <span class="cube-sub">BACK</span>
+                        </div>
+                        <div class="cube-face cube-right">
+                            <span class="cube-glyph mono">→</span>
+                            <span class="cube-sub">RIGHT</span>
+                        </div>
+                        <div class="cube-face cube-left">
+                            <span class="cube-glyph mono">←</span>
+                            <span class="cube-sub">LEFT</span>
+                        </div>
+                        <div class="cube-face cube-top">
+                            <span class="cube-glyph mono">↑</span>
+                            <span class="cube-sub">TOP</span>
+                        </div>
+                        <div class="cube-face cube-bottom">
+                            <span class="cube-glyph mono">↓</span>
+                            <span class="cube-sub">BOTTOM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card cta-card" data-3d>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">006</div>
+                        <div class="section-label">Epilogue · 终章</div>
+                        <h2 class="section-title reveal-text">
+                            <span class="line" data-delay="0">六个面构成一个立方体</span>
+                            <span class="line accent" data-delay="140">滚动让它在掌心旋转</span>
+                        </h2>
+                        <p class="section-body reveal-text" data-delay="300">
+                            <span class="line">你刚刚穿越了五种旋转：倾斜、翻转、翻滚、轨道、螺旋，</span>
+                            <span class="line">最终汇聚为一个完整的三维立方体。旋转不是装饰，而是维度的语言。</span>
+                        </p>
+                        <div class="epilogue-cta reveal-text" data-delay="480">
+                            <span class="line">
+                                <a href="../../index.html" class="cta-glass">
+                                    <span>返回数字花园</span>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-19",
+  "name": "scroll3d-rotate",
+  "description": "滚动驱动的三维图像旋转微引擎",
+  "tagline": "Scroll. Rotate. Reveal depth.",
+  "interaction": "当用户滚动页面时，图像会基于滚动进度在三维空间中平滑旋转，展现出深度和体积感。滚动越深，旋转角度越大，创造出一种"正在翻转"的沉浸式视觉体验。该微引擎通过将滚动位置映射为 CSS 3D 变换参数来实现效果。",
+  "directory": "seeds/scroll3d-rotate/",
+  "status": "incubated"
+}

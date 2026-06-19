@@ -930,6 +930,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Scroll 3D Rotate 滚动三维旋转',
+      description: '沉浸式滚动三维旋转体验。滚动驱动的六种 3D 旋转模式（倾斜/翻转/翻滚/轨道/螺旋/立方体），透视景深、粒子流场、实时旋转角度 HUD 与微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/scroll3d-rotate/index.html',
+      tags: ['Interactive', 'Scroll', '3D Rotation', 'Micro-interaction'],
+      icon: '⬡',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

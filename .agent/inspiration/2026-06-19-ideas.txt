@@ -1,0 +1,6 @@
+sky-collage - 把定时采集的天空色拼成可视化色谱
+scroll3d-rotate - 滚动驱动的三维图像旋转微引擎
+stamp-loupe - 可拖拽印章与着色器放大镜收藏册
+shrink-cognitive - 渐进式信息降载阅读器
+loupe-corridor - 纯几何伪造的无限走廊漫游
+invoice-sculpt - 浏览器内可交互票据生成器
