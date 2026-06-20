@@ -1,0 +1,8 @@
+sky-color-collage - 定时采集天空色彩生成拼贴画
+scroll-3d-rotate - 滚动驱动的3D图片旋转展示
+infinite-corridor - 用平面几何构建无限走廊漫游
+hover-team-reveal - 悬停交互式团队成员展示
+scroll-motion-demo - 可滚动内嵌产品演示演示器
+invoice-craft - 浏览器端纯前端发票生成工具
+cognitive-load-scoring - 界面认知负荷可视化评分器
+flat-geometry-scene - 用平面几何构建伪3D场景编辑器

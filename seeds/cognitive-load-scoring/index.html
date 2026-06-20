@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Load Scoring · 认知负荷计分仪</title>
+    <meta name="description" content="沉浸式认知负荷评估工具。六维评分模型驱动实时雷达图与呼吸态负荷核心，给出量化的心智负担洞察。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">◈</span>
+            <div class="brand-text">
+                <span class="brand-title">Cognitive Load Scoring</span>
+                <span class="brand-sub">认知负荷计分仪 · 六维评估模型</span>
+            </div>
+        </div>
+        <div class="palette-picker" role="group" aria-label="氛围配色">
+            <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora"></button>
+            <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember"></button>
+            <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss"></button>
+            <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid"></button>
+        </div>
+    </header>
+
+    <main class="app">
+        <!-- 左侧:维度评分滑块 -->
+        <section class="panel panel-rubric glass-card" aria-label="维度评分">
+            <div class="panel-head">
+                <span class="panel-tag">DIMENSIONS</span>
+                <h2 class="panel-title">六个维度 · 拖动校准心智负担</h2>
+            </div>
+            <div class="rubric-list" id="rubric-list"><!-- JS 注入 --></div>
+            <div class="preset-row">
+                <span class="preset-label">预设场景</span>
+                <div class="preset-btns" id="preset-btns">
+                    <button class="preset-btn" data-preset="reading">阅读</button>
+                    <button class="preset-btn" data-preset="dashboard">仪表盘</button>
+                    <button class="preset-btn" data-preset="checkout">结账流</button>
+                    <button class="preset-btn" data-preset="calm">极简</button>
+                    <button class="preset-btn" data-preset="chaos">混乱</button>
+                </div>
+            </div>
+            <button class="reset-btn" id="reset-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"/>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                </svg>
+                <span>重置评估</span>
+            </button>
+        </section>
+
+        <!-- 中央:负荷核心 + 总分 -->
+        <section class="panel panel-core" aria-label="综合负荷核心">
+            <div class="core-wrap">
+                <div class="core-orb" id="core-orb">
+                    <div class="orb-ring orb-ring-1"></div>
+                    <div class="orb-ring orb-ring-2"></div>
+                    <div class="orb-ring orb-ring-3"></div>
+                    <svg class="orb-svg" viewBox="0 0 240 240" aria-hidden="true">
+                        <circle class="orb-track" cx="120" cy="120" r="104"/>
+                        <circle class="orb-progress" id="orb-progress" cx="120" cy="120" r="104"/>
+                    </svg>
+                    <div class="orb-readout">
+                        <span class="orb-score" id="orb-score">0</span>
+                        <span class="orb-score-unit">/ 100</span>
+                        <span class="orb-label" id="orb-label">待评估</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="verdict glass-pill" id="verdict">
+                <span class="verdict-grade" id="verdict-grade">—</span>
+                <div class="verdict-body">
+                    <span class="verdict-title" id="verdict-title">拖动左侧维度开始评估</span>
+                    <span class="verdict-desc" id="verdict-desc">每一次滑动都会即时重算综合认知负荷</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 右侧:雷达图 + 维度排名 + 洞察 -->
+        <section class="panel panel-radar glass-card" aria-label="维度雷达">
+            <div class="panel-head">
+                <span class="panel-tag">RADAR</span>
+                <h2 class="panel-title">维度拓扑 · 负荷形状</h2>
+            </div>
+            <div class="radar-stage">
+                <canvas id="radar-canvas" width="440" height="440"></canvas>
+            </div>
+            <div class="ranking" id="ranking"><!-- JS 注入 --></div>
+            <div class="insight glass-pill" id="insight">
+                <span class="insight-icon" id="insight-icon">◎</span>
+                <div class="insight-body">
+                    <span class="insight-title" id="insight-title">等待数据</span>
+                    <span class="insight-text" id="insight-text">设置维度后将给出针对性优化建议</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

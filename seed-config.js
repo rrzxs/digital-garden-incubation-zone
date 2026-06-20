@@ -940,6 +940,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Cognitive Load Scoring 认知负荷计分仪',
+      description: '沉浸式六维认知负荷评估工具。拖动维度滑块实时重算加权综合分，呼吸态负荷核心 + 雷达拓扑 + 首要瓶颈维度优化建议，5 个预设场景与 4 种氛围配色',
+      path: '/seed/seeds/cognitive-load-scoring/index.html',
+      tags: ['Interactive', 'Assessment', 'Data Visualization', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

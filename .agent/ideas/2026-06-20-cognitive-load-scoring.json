@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-20",
+  "name": "cognitive-load-scoring",
+  "description": "界面认知负荷可视化评分器",
+  "tagline": "Measure what your mind carries.",
+  "interaction": "实时追踪用户的鼠标犹豫、点击回撤和停留时长,为界面元素逐个打上认知负荷分数。分数以热力图叠加层呈现,让设计师直观发现"烧脑"区域并即时优化。",
+  "directory": "seeds/cognitive-load-scoring/",
+  "status": "incubated"
+}
