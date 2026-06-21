@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-21",
+  "name": "team-hover-reveal",
+  "description": "悬停展开团队成员的动态卡片",
+  "tagline": "Meet the squad, one hover away.",
+  "interaction": "悬停任意成员头像时，卡片以 3D 翻转展开，显示其全名、职位与技能标签；相邻卡片随之收缩并淡化，形成空间聚焦。移开光标后，所有卡片平滑复位，回归统一的团队矩阵视图。",
+  "directory": "seeds/team-hover-reveal/",
+  "status": "incubated"
+}

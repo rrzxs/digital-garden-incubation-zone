@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Hover Reveal · 悬浮揭示</title>
+    <meta name="description" content="沉浸式团队成员悬浮揭示体验。光标进入卡片即刻展开生平、技能谱与签名引语,3D 倾斜物理 + 粒子流场 + 微晶玻璃态容器,4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">◉</span>
+            <div class="brand-text">
+                <span class="brand-title">Team Hover Reveal</span>
+                <span class="brand-sub">悬浮揭示 · 光标即窗</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="hud" id="hud">
+                <span class="hud-dot" id="hud-dot"></span>
+                <span class="hud-text" id="hud-text">悬停任意卡片以揭示</span>
+            </div>
+            <div class="palette-picker" role="group" aria-label="氛围配色">
+                <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora"></button>
+                <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember"></button>
+                <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss"></button>
+                <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主舞台 -->
+    <main class="stage">
+        <!-- 序言 -->
+        <section class="preamble">
+            <span class="pre-tag">COLLECTIVE / 2026</span>
+            <h1 class="pre-title">
+                <span class="pre-line">We design the</span>
+                <span class="pre-line pre-italic">unseen spaces</span>
+                <span class="pre-line">between pixels.</span>
+            </h1>
+            <p class="pre-desc">将光标移至任意成员,他们的故事、技能光谱与签名引语将以非线性缓动从玻璃深处浮现。离开,则归于沉静。</p>
+        </section>
+
+        <!-- 成员网格 -->
+        <section class="crew-grid" id="crew-grid" aria-label="团队成员">
+            <!-- JS 注入成员卡片 -->
+        </section>
+
+        <!-- 脚注 -->
+        <footer class="stage-foot">
+            <span class="foot-glyph">⌁</span>
+            <span class="foot-text">Hover · Reveal · Recede — 三态之间是团队的呼吸。</span>
+            <span class="foot-counter"><span id="active-count">0</span> / <span id="total-count">0</span> revealed</span>
+        </footer>
+    </main>
+
+    <!-- 悬停跟随光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- 涟漪层 -->
+    <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

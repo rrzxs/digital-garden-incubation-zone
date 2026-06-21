@@ -1,0 +1,6 @@
+sky-collage - 定时采集天空色彩生成渐变拼贴
+scroll-3d-rotate - 滚动驱动3D图像旋转交互演示
+invoice-craft - 浏览器内可滚动演示的发票生成器
+team-hover-reveal - 悬停展开团队成员的动态卡片
+cognitive-load-checker - 检测界面认知负荷的设计审查工具
+infinite-corridor - 纯几何伪3D无限走廊漫游

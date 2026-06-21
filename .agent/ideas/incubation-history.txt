@@ -80,3 +80,4 @@ sky-archive
 font-glyph-playground
 scroll3d-rotate
 cognitive-load-scoring
+team-hover-reveal

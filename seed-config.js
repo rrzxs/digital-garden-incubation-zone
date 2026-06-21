@@ -950,6 +950,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Team Hover Reveal 悬浮揭示',
+      description: '沉浸式团队成员悬浮揭示体验。光标进入卡片即刻展开生平、技能光谱与签名引语，3D 倾斜物理 + 错峰揭示动画 + 光标跟随光晕，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/team-hover-reveal/index.html',
+      tags: ['Interactive', 'Team', 'Hover Reveal', 'Micro-interaction'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
