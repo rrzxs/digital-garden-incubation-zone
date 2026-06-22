@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-22",
+  "name": "robotics-signal-scope",
+  "description": "模拟机械关节信号波形遥测控制台",
+  "tagline": "*Where Machines Speak in Waves.*",
+  "interaction": "A retro-industrial telemetry console simulates real-time joint signals from a robotic arm. Users manipulate multi-axis sliders and toggle signal channels (position, velocity, torque) while a live oscilloscope renders the corresponding waveforms with CRT-style glow and scan artifacts. Triggering "fault injection" modes distorts the waveform in real time, accompanied by mechanical vibration feedback and system status alerts.",
+  "directory": "seeds/robotics-signal-scope/",
+  "status": "incubated"
+}

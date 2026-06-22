@@ -1,1 +1,1 @@
-team-hover-reveal
+robotics-signal-scope

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robotics Signal Scope · 信号示波器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="abyss">
+  <!-- ====== 流体渐变背景层 ====== -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="blob blob--1"></div>
+    <div class="blob blob--2"></div>
+    <div class="blob blob--3"></div>
+    <div class="blob blob--4"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ====== 顶部导航 ====== -->
+  <header class="top-bar glass">
+    <div class="top-bar__brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">ROBOTICS<br />SIGNAL SCOPE</span>
+    </div>
+    <nav class="top-bar__nav">
+      <button class="nav-chip is-active" data-mode="oscilloscope">示波器</button>
+      <button class="nav-chip" data-mode="spectrum">频谱</button>
+      <button class="nav-chip" data-mode="radar">雷达</button>
+      <button class="nav-chip" data-mode="telemetry">遥测</button>
+    </nav>
+    <div class="top-bar__themes">
+      <button class="theme-dot" data-theme="abyss" title="深渊"></button>
+      <button class="theme-dot" data-theme="plasma" title="等离子"></button>
+      <button class="theme-dot" data-theme="quantum" title="量子"></button>
+      <button class="theme-dot" data-theme="solar" title="日冕"></button>
+    </div>
+  </header>
+
+  <!-- ====== 主区域 ====== -->
+  <main class="stage">
+    <!-- 左侧：主示波器画布 -->
+    <section class="scope glass" id="scope">
+      <div class="scope__head">
+        <div class="scope__title">
+          <span class="scope__live" id="livePulse"></span>
+          <h2 id="scopeTitle">OSCILLOSCOPE</h2>
+          <span class="scope__sub" id="scopeSub">实时多通道波形 · 1.2 GSa/s</span>
+        </div>
+        <div class="scope__readout" id="readout">
+          <span class="readout-item"><b id="rdFreq">440.0</b><i>Hz</i></span>
+          <span class="readout-item"><b id="rdAmp">0.82</b><i>Vpp</i></span>
+          <span class="readout-item"><b id="rdPhase">12.4</b><i>°</i></span>
+        </div>
+      </div>
+      <canvas id="scopeCanvas" class="scope__canvas"></canvas>
+      <div class="scope__grid-overlay" aria-hidden="true"></div>
+      <div class="scope__hud">
+        <span class="hud-tag" id="hudMode">MODE · OSCILLOSCOPE</span>
+        <span class="hud-tag" id="hudT">T = 0.000s</span>
+      </div>
+    </section>
+
+    <!-- 右侧：通道控制 + 状态 -->
+    <aside class="panel glass">
+      <div class="panel__section">
+        <h3 class="panel__h">CHANNELS</h3>
+        <div class="channels" id="channels">
+          <!-- 由 JS 注入 -->
+        </div>
+      </div>
+
+      <div class="panel__section">
+        <h3 class="panel__h">WAVEFORM</h3>
+        <div class="wave-grid" id="waveGrid">
+          <button class="wave-btn is-active" data-wave="sine">SINE</button>
+          <button class="wave-btn" data-wave="square">SQUARE</button>
+          <button class="wave-btn" data-wave="triangle">TRI</button>
+          <button class="wave-btn" data-wave="sawtooth">SAW</button>
+          <button class="wave-btn" data-wave="noise">NOISE</button>
+          <button class="wave-btn" data-wave="pulse">PULSE</button>
+        </div>
+      </div>
+
+      <div class="panel__section">
+        <h3 class="panel__h">PARAMETERS</h3>
+        <label class="slider-row">
+          <span>Frequency</span>
+          <input type="range" id="freqSlider" min="0.5" max="8" step="0.1" value="2" />
+          <span class="slider-val" id="freqVal">2.0×</span>
+        </label>
+        <label class="slider-row">
+          <span>Amplitude</span>
+          <input type="range" id="ampSlider" min="0.1" max="1" step="0.02" value="0.7" />
+          <span class="slider-val" id="ampVal">0.70</span>
+        </label>
+        <label class="slider-row">
+          <span>Jitter</span>
+          <input type="range" id="jitterSlider" min="0" max="0.5" step="0.01" value="0.12" />
+          <span class="slider-val" id="jitterVal">0.12</span>
+        </label>
+        <label class="slider-row">
+          <span>Sweep</span>
+          <input type="range" id="sweepSlider" min="0" max="1" step="0.02" value="0.3" />
+          <span class="slider-val" id="sweepVal">0.30</span>
+        </label>
+      </div>
+
+      <div class="panel__section">
+        <h3 class="panel__h">SYSTEM</h3>
+        <div class="metrics" id="metrics">
+          <div class="metric"><span>CPU</span><div class="metric-bar"><i id="mCpu" style="width:34%"></i></div><b id="mCpuV">34%</b></div>
+          <div class="metric"><span>MEM</span><div class="metric-bar"><i id="mMem" style="width:58%"></i></div><b id="mMemV">58%</b></div>
+          <div class="metric"><span>NET</span><div class="metric-bar"><i id="mNet" style="width:21%"></i></div><b id="mNetV">21%</b></div>
+          <div class="metric"><span>BATT</span><div class="metric-bar"><i id="mBatt" style="width:87%"></i></div><b id="mBattV">87%</b></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ====== 底部 Ticker ====== -->
+  <footer class="ticker glass">
+    <div class="ticker__track" id="tickerTrack"></div>
+  </footer>
+
+  <!-- ====== 点击涟漪层 ====== -->
+  <div class="ripple-layer" id="rippleLayer" aria-hidden="true"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

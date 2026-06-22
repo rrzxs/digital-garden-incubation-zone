@@ -960,6 +960,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Robotics Signal Scope 信号示波器',
+      description: '沉浸式机器人信号示波器。四种可视化模式（示波器/频谱/雷达/遥测）、6种波形发生器、4通道管理、实时参数调制与系统监控，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/robotics-signal-scope/index.html',
+      tags: ['Interactive', 'Robotics', 'Signal', 'Micro-interaction'],
+      icon: '∿',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
