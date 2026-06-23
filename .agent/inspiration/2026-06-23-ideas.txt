@@ -1,0 +1,6 @@
+scroll-3d-rotator - 滚动驱动的三维图片旋转展示器
+cube-portfolio - 3D立方体旋转式作品集容器
+infinite-corridor - 伪3D无限走廊空间漫游体验
+mode-switcher - 极简与创意双模式一键切换器
+hover-team-grid - 悬停揭示式团队成员陈列墙
+mystery-unfold - 逐层展开的悬念式叙事卡片流

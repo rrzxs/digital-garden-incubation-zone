@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-23",
+  "name": "hover-team-grid",
+  "description": "悬停揭示式团队成员陈列墙",
+  "tagline": "**Faces Behind the Magic**",
+  "interaction": "**A clean grid of team silhouettes or monogram cards transforms on hover—each member's photo, role, and bio elegantly slides into view with a smooth depth-shifting animation. Neighboring cards subtly dim and scale back, creating a cinematic spotlight effect that draws full attention to the selected person.**",
+  "directory": "seeds/hover-team-grid/",
+  "status": "incubated"
+}

@@ -82,3 +82,4 @@ scroll3d-rotate
 cognitive-load-scoring
 team-hover-reveal
 robotics-signal-scope
+hover-team-grid

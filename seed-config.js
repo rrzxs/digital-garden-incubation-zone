@@ -970,6 +970,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Hover Team Grid 星阵团队网格',
+      description: '沉浸式团队网格悬浮微交互。光标进入单元即刻聚焦膨胀揭示肖像、技能光环与签名引语，邻近单元退入深空。flex-grow 聚焦物理 + 3D 倾斜 + 错峰揭示，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/hover-team-grid/index.html',
+      tags: ['Interactive', 'Team Grid', 'Hover Reveal', 'Micro-interaction'],
+      icon: '⊞',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
