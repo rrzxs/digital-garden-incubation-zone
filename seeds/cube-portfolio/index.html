@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cube Portfolio · 立方作品集</title>
+    <meta name="description" content="沉浸式 3D 立方体作品集。六个面承载六个项目，拖拽旋转、惯性物理、弹簧归位与微晶玻璃态容器，流体渐变背景 + 非线性动效，4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">⬢</span>
+            <div class="brand-text">
+                <span class="brand-title">Cube Portfolio</span>
+                <span class="brand-sub">立方作品集 · 六面叙事</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="hud" id="hud">
+                <span class="hud-dot" id="hud-dot"></span>
+                <span class="hud-text" id="hud-text">拖拽旋转立方体</span>
+            </div>
+            <div class="palette-picker" role="group" aria-label="氛围配色">
+                <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora" aria-label="极光配色"></button>
+                <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember" aria-label="余烬配色"></button>
+                <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss" aria-label="深渊配色"></button>
+                <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid" aria-label="兰若配色"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主舞台 -->
+    <main class="stage">
+        <!-- 序言 -->
+        <section class="preamble reveal">
+            <span class="pre-tag">HEXAFACE / 2026</span>
+            <h1 class="pre-title">
+                <span class="pre-line">Six faces,</span>
+                <span class="pre-line pre-italic">one universe</span>
+                <span class="pre-line">of craft.</span>
+            </h1>
+            <p class="pre-desc">拖拽这个立方体，让六个面在惯性中翻转。每一面都是一个独立的故事——项目、技能与签名时刻。松手后它会以弹簧曲线缓缓回正，像被磁石牵引。</p>
+        </section>
+
+        <!-- 立方体舞台 -->
+        <section class="cube-stage" aria-label="3D 立方体作品集">
+            <div class="cube-scene">
+                <div class="cube-tilt" id="cube-tilt">
+                    <div class="cube" id="cube">
+                        <!-- 六面由 JS 注入 -->
+                    </div>
+                </div>
+                <!-- 地面阴影 -->
+                <div class="cube-shadow" aria-hidden="true"></div>
+            </div>
+
+            <!-- 面导航 -->
+            <nav class="face-nav" id="face-nav" aria-label="面导航">
+                <!-- JS 注入 -->
+            </nav>
+        </section>
+
+        <!-- 详情面板 -->
+        <section class="detail-panel glass-bar reveal" id="detail-panel" aria-live="polite">
+            <div class="detail-index" id="detail-index">01</div>
+            <div class="detail-body">
+                <span class="detail-cat" id="detail-cat">PROJECT</span>
+                <h2 class="detail-title" id="detail-title">—</h2>
+                <p class="detail-desc" id="detail-desc">旋转立方体以查看详情</p>
+                <div class="detail-tags" id="detail-tags"></div>
+            </div>
+            <div class="detail-meta">
+                <div class="meta-row">
+                    <span class="meta-label">YEAR</span>
+                    <span class="meta-val" id="detail-year">2026</span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">STACK</span>
+                    <span class="meta-val" id="detail-stack">—</span>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">ROLE</span>
+                    <span class="meta-val" id="detail-role">—</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 脚注 -->
+        <footer class="stage-foot reveal">
+            <span class="foot-glyph">⬡</span>
+            <span class="foot-text">Drag · Release · Settle — 立方体的三段呼吸。</span>
+            <span class="foot-counter">FACE <span id="face-counter">1</span>/6</span>
+        </footer>
+    </main>
+
+    <!-- 光标跟随光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- 涟漪层 -->
+    <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-24",
+  "name": "cube-portfolio",
+  "description": "3D旋转立方体作品展示",
+  "tagline": "Spin Your Story in 3D",
+  "interaction": "A 3D cube where each face showcases a portfolio project with rich media and details. Users rotate the cube via drag, scroll, or arrow keys to explore projects organically. Clicking a face expands it into a full-screen project view with smooth transitions.",
+  "directory": "seeds/cube-portfolio/",
+  "status": "incubated"
+}

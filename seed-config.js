@@ -980,6 +980,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Cube Portfolio 立方作品集',
+      description: '沉浸式 3D 立方体作品集。六个面承载六个项目，拖拽旋转、惯性物理、弹簧归位与鼠标视差，点击面导航直接旋转聚焦，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/cube-portfolio/index.html',
+      tags: ['Interactive', '3D', 'Portfolio', 'Micro-interaction'],
+      icon: '⬢',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
