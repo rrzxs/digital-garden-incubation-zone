@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-25",
+  "name": "motion-card-flip",
+  "description": "3D卡片翻转作品陈列墙",
+  "tagline": "Flip to Reveal What's Within",
+  "interaction": "A masonry grid of project cards fills the viewport. On hover or click, each card performs a smooth 3D Y-axis flip (0.8s cubic-bezier), revealing project details, tech stack, and a "Visit" CTA on its back face. Cards stagger their entrance with a subtle scale-and-fade cascade, while neighboring cards gently blur and dim to spotlight the flipped card.",
+  "directory": "seeds/motion-card-flip/",
+  "status": "incubated"
+}

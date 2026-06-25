@@ -84,3 +84,4 @@ team-hover-reveal
 robotics-signal-scope
 hover-team-grid
 cube-portfolio
+motion-card-flip

@@ -1,0 +1,7 @@
+scroll-cinema - 滚动驱动的3D图像旋转叙事器
+logo-context-menu - 品牌标志右键菜单实时构建器
+minimal-mode-switch - 极简/创意双模式界面切换器
+masked-blur-hero - 遮罩模糊光效首屏生成器
+scroll-rhythm-story - 节奏化长滚动故事排版工具
+motion-card-flip - 3D卡片翻转作品陈列墙
+image-depth-tilt - 鼠标视差景深图片展示框

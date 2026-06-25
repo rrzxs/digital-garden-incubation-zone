@@ -990,6 +990,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Motion Card Flip 韵动翻转',
+      description: '沉浸式卡片翻转微交互体验场。弹簧-阻尼物理驱动的非线性 3D 翻转、三轴翻转（纵向/横向/对角折叠）、鼠标视差倾斜、粒子流场与翻转脉冲冲击波，4种氛围配色',
+      path: '/seed/seeds/motion-card-flip/index.html',
+      tags: ['Interactive', 'Card Flip', 'Physics', 'Micro-interaction'],
+      icon: '⟳',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

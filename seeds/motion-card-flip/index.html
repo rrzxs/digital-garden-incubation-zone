@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Card Flip 韵动翻转 - 高阶微交互体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Card Flip<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">韵动翻转 · 非线性卡片动力学</p>
+            </div>
+            <div class="header-actions">
+                <div class="axis-toggle" role="group" aria-label="翻转轴">
+                    <button class="axis-btn active" data-axis="y" aria-label="纵向翻转">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M8 6l4-4 4 4"/><path d="M8 18l4 4 4-4"/></svg>
+                    </button>
+                    <button class="axis-btn" data-axis="x" aria-label="横向翻转">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/><path d="M6 8l-4 4 4 4"/><path d="M18 8l4 4-4 4"/></svg>
+                    </button>
+                    <button class="axis-btn" data-axis="d" aria-label="对角翻转">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14"/><path d="M9 5H5v4"/><path d="M15 19h4v-4"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <div class="grid-lines"></div>
+            <canvas id="particle-canvas"></canvas>
+
+            <div class="cards-grid" id="cards-grid">
+
+                <div class="flip-card" data-spring="0.14" data-damping="0.72">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-violet">
+                            <div class="face-glyph">⟐</div>
+                            <div class="face-glow"></div>
+                            <span class="face-label">弹性翻转</span>
+                            <span class="face-tag">spring · 0.14</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-violet">
+                            <span class="back-title">SPRING DAMPER</span>
+                            <p class="back-desc">弹簧-阻尼物理驱动卡片非线性翻转，回弹带有自然的过冲与衰减。</p>
+                            <span class="back-mono">F = −kx − cv</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.10" data-damping="0.80">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-cyan">
+                            <div class="face-glyph">◎</div>
+                            <div class="face-glow"></div>
+                            <span class="face-label">惯性轨道</span>
+                            <span class="face-tag">spring · 0.10</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-cyan">
+                            <span class="back-title">ORBITAL DRIFT</span>
+                            <p class="back-desc">翻转时卡片沿弧线轨道漂移，惯性叠加在角度之上形成深度。</p>
+                            <span class="back-mono">θ′ = θ + ω·Δt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.18" data-damping="0.62">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-rose">
+                            <div class="face-glyph">◈</div>
+                            <div class="face-glow"></div>
+                            <span class="face-label">共振脉冲</span>
+                            <span class="face-tag">spring · 0.18</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-rose">
+                            <span class="back-title">PULSE RESONANCE</span>
+                            <p class="back-desc">高刚度低阻尼产生共振过冲，翻转瞬间迸发粒子脉冲冲击波。</p>
+                            <span class="back-mono">ζ = c / 2√(km)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.08" data-damping="0.88">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-emerald">
+                            <div class="face-glyph">✧</div>
+                            <div class="face-glow"></div>
+                            <span class="face-label">柔顺悬浮</span>
+                            <span class="face-tag">spring · 0.08</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-emerald">
+                            <span class="back-title">SOFT LEVITATION</span>
+                            <p class="back-desc">低刚度高阻尼带来丝绸般的柔顺翻转，几乎察觉不到过冲。</p>
+                            <span class="back-mono">ω₀ = √(k/m)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.16" data-damping="0.70">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-amber">
+                            <div class="face-glyph">⬡</div>
+                            <div class="face-glow"></div>
+                            <span class="face-label">晶体折叠</span>
+                            <span class="face-tag">spring · 0.16</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-amber">
+                            <span class="back-title">CRYSTAL FOLD</span>
+                            <p class="back-desc">对角轴翻转模拟晶面折叠，透视景深强化空间层级感。</p>
+                            <span class="back-mono">perspective: 1200px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.12" data-damping="0.78">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-indigo">
+                            <div class="face-glyph">◇</div>
+                            <div class="face-glow"></div>
+                            <span class="face-label">涟漪揭示</span>
+                            <span class="face-tag">spring · 0.12</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-indigo">
+                            <span class="back-title">RIPPLE REVEAL</span>
+                            <p class="back-desc">翻转同步触发涟漪扩散，背面内容从光晕中心逐层揭示。</p>
+                            <span class="back-mono">r(t) = c·t</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">点击卡片 · 感受非线性翻转动力学</span>
+            </div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">弹力</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-stiffness" min="4" max="28" value="12" class="slider">
+                    <span class="slider-val" id="val-stiffness">0.12</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">阻尼</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-damping" min="45" max="95" value="78" class="slider">
+                    <span class="slider-val" id="val-damping">0.78</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="obsidian" aria-label="黑曜石">
+                    <span class="swatch" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899)"></span>
+                </button>
+                <button class="palette-btn" data-palette="aurora" aria-label="极光">
+                    <span class="swatch" style="background:linear-gradient(135deg,#00d4ff,#a855f7,#00ff88)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+                </button>
+                <button class="palette-btn" data-palette="frost" aria-label="霜降">
+                    <span class="swatch" style="background:linear-gradient(135deg,#67e8f9,#a5b4fc,#e0e7ff)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btn-flip-all">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>全部翻转</span>
+                </button>
+                <button class="action-btn primary" id="btn-reset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                    <span>归位</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
