@@ -1000,6 +1000,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Motion Resume 韵动履历',
+      description: '沉浸式高阶微交互履历体验。流体粒子场 + 滚动进度轨 + 字符揭示 + 磁力按钮 + 3D 倾斜卡片 + 技能星座 + 编年时间线，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/motion-resume/index.html',
+      tags: ['Interactive', 'Resume', 'Scroll', 'Micro-interaction'],
+      icon: '✦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

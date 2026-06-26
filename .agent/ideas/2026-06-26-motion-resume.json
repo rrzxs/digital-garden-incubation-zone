@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-26",
+  "name": "motion-resume",
+  "description": "滚动节奏驱动的电影感简历生成器",
+  "tagline": "Cinematic resumes, choreographed by scroll.",
+  "interaction": "As users scroll through their resume, each section unfolds like a film sequence—elements fade, slide, and scale in perfect sync with scroll velocity, creating a cinematic pacing. Key moments trigger dramatic visual effects like parallax depth shifts and letterbox transitions between career chapters. The final scroll snaps into a poster-style summary page where the entire journey is revealed as a single cinematic frame.",
+  "directory": "seeds/motion-resume/",
+  "status": "incubated"
+}

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Resume 韵动履历 — 高阶微交互履历</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-obsidian">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- Fluid Mesh Gradient Background -->
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Particle Flow Field Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Scroll Progress Rail -->
+    <div class="progress-rail">
+        <div class="progress-fill" id="progress-fill"></div>
+        <div class="progress-marks">
+            <button class="mark active" data-target="hero" aria-label="顶部">
+                <span class="mark-dot"></span>
+                <span class="mark-label">序章</span>
+            </button>
+            <button class="mark" data-target="about" aria-label="关于">
+                <span class="mark-dot"></span>
+                <span class="mark-label">自述</span>
+            </button>
+            <button class="mark" data-target="experience" aria-label="经历">
+                <span class="mark-dot"></span>
+                <span class="mark-label">编年</span>
+            </button>
+            <button class="mark" data-target="skills" aria-label="技能">
+                <span class="mark-dot"></span>
+                <span class="mark-label">力场</span>
+            </button>
+            <button class="mark" data-target="projects" aria-label="作品">
+                <span class="mark-dot"></span>
+                <span class="mark-label">造物</span>
+            </button>
+            <button class="mark" data-target="contact" aria-label="联络">
+                <span class="mark-dot"></span>
+                <span class="mark-label">回响</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Palette Switcher -->
+    <div class="palette-switch">
+        <button class="palette-btn active" data-palette="obsidian" aria-label="黑曜石">
+            <span class="swatch" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899)"></span>
+        </button>
+        <button class="palette-btn" data-palette="aurora" aria-label="极光">
+            <span class="swatch" style="background:linear-gradient(135deg,#00d4ff,#a855f7,#00ff88)"></span>
+        </button>
+        <button class="palette-btn" data-palette="ember" aria-label="余烬">
+            <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+        </button>
+        <button class="palette-btn" data-palette="frost" aria-label="霜降">
+            <span class="swatch" style="background:linear-gradient(135deg,#67e8f9,#a5b4fc,#e0e7ff)"></span>
+        </button>
+    </div>
+
+    <main class="scroll-root">
+
+        <!-- === HERO === -->
+        <section class="section hero" id="hero" data-section="hero">
+            <div class="hero-inner">
+                <div class="hero-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text" data-scramble="AVAILABLE FOR COLLABORATION">AVAILABLE FOR COLLABORATION</span>
+                </div>
+
+                <h1 class="hero-name">
+                    <span class="name-line" data-split>EDEN</span>
+                    <span class="name-line ghost" data-split>DIGITAL</span>
+                    <span class="name-line accent" data-split>ARCHITECT</span>
+                </h1>
+
+                <p class="hero-tagline">
+                    以代码雕琢光与形，在像素间构筑有呼吸的数字生命。
+                </p>
+
+                <div class="hero-meta">
+                    <div class="meta-cell">
+                        <span class="meta-label">坐标</span>
+                        <span class="meta-value" data-mono>∞ · 数字花园</span>
+                    </div>
+                    <div class="meta-cell">
+                        <span class="meta-label">年限</span>
+                        <span class="meta-value" data-mono data-count="7">0</span>
+                    </div>
+                    <div class="meta-cell">
+                        <span class="meta-label">造物</span>
+                        <span class="meta-value" data-mono data-count="124">0</span>
+                    </div>
+                </div>
+
+                <div class="hero-cta">
+                    <a href="#projects" class="cta-btn primary" data-magnetic>
+                        <span>探索造物</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#contact" class="cta-btn ghost" data-magnetic>
+                        <span>建立回响</span>
+                    </a>
+                </div>
+
+                <div class="scroll-cue" id="scroll-cue">
+                    <span class="cue-line"></span>
+                    <span class="cue-text">SCROLL</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === ABOUT === -->
+        <section class="section about" id="about" data-section="about">
+            <div class="section-head reveal">
+                <span class="section-index" data-mono>01</span>
+                <h2 class="section-title">自述 <span class="title-sub">/ Manifesto</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="glass-card about-card reveal" data-tilt>
+                    <div class="card-glyph">◈</div>
+                    <h3 class="about-heading">设计哲学</h3>
+                    <p class="about-text">
+                        坚信界面的灵魂藏于<span class="hl">微交互的呼吸</span>之中。每一次悬停、每一次滚动，
+                        都应当拥有物理重量与情感温度。抵制生硬的属性突变，让光标成为创造而非操作的工具。
+                    </p>
+                </div>
+                <div class="glass-card about-card reveal" data-tilt>
+                    <div class="card-glyph">⟐</div>
+                    <h3 class="about-heading">技术审美</h3>
+                    <p class="about-text">
+                        擅长以 <span class="hl">Vanilla 之轻</span> 抵御构建流之重。流体网格渐变、
+                        微晶玻璃拟物态、弹簧-阻尼物理积分，构筑有呼吸感的硅谷级视觉。
+                    </p>
+                </div>
+                <div class="glass-card about-card reveal" data-tilt>
+                    <div class="card-glyph">≋</div>
+                    <h3 class="about-heading">领域深耕</h3>
+                    <p class="about-text">
+                        创意工程 · 生成艺术 · 沉浸叙事 · 疗愈体验。
+                        在<span class="hl">理性与诗意的交界</span>处，编织可触摸的数字氛围。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- === EXPERIENCE TIMELINE === -->
+        <section class="section experience" id="experience" data-section="experience">
+            <div class="section-head reveal">
+                <span class="section-index" data-mono>02</span>
+                <h2 class="section-title">编年 <span class="title-sub">/ Chronicle</span></h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-spine" id="timeline-spine"></div>
+
+                <div class="timeline-node reveal">
+                    <div class="node-marker"><span class="marker-pulse"></span></div>
+                    <div class="glass-card node-card" data-tilt>
+                        <span class="node-year" data-mono>2024 — NOW</span>
+                        <h3 class="node-role">首席创意工程师</h3>
+                        <span class="node-org">数字花园孵化区 · EDEN Labs</span>
+                        <p class="node-desc">主导 80+ 沉浸式微交互种子的设计与实现，建立流体美学与非线性动效的设计语言体系。</p>
+                        <div class="node-tags">
+                            <span class="tag">Creative Engineering</span>
+                            <span class="tag">Design System</span>
+                            <span class="tag">Generative Art</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-node reveal right">
+                    <div class="node-marker"><span class="marker-pulse"></span></div>
+                    <div class="glass-card node-card" data-tilt>
+                        <span class="node-year" data-mono>2021 — 2024</span>
+                        <h3 class="node-role">高级前端架构师</h3>
+                        <span class="node-org">深空交互工作室</span>
+                        <p class="node-desc">构建 WebGL 驱动的沉浸式品牌叙事，将物理模拟引入产品级界面，性能优化至 60fps。</p>
+                        <div class="node-tags">
+                            <span class="tag">WebGL</span>
+                            <span class="tag">Three.js</span>
+                            <span class="tag">Performance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-node reveal">
+                    <div class="node-marker"><span class="marker-pulse"></span></div>
+                    <div class="glass-card node-card" data-tilt>
+                        <span class="node-year" data-mono>2019 — 2021</span>
+                        <h3 class="node-role">交互设计师 / 工程师</h3>
+                        <span class="node-org">声光实验室</span>
+                        <p class="node-desc">探索声音、光与代码的跨界融合，开发实时音频可视化与生成式视觉装置。</p>
+                        <div class="node-tags">
+                            <span class="tag">Audio Reactive</span>
+                            <span class="tag">Installation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-node reveal right">
+                    <div class="node-marker"><span class="marker-pulse"></span></div>
+                    <div class="glass-card node-card" data-tilt>
+                        <span class="node-year" data-mono>2017 — 2019</span>
+                        <h3 class="node-role">前端工程师</h3>
+                        <span class="node-org">像素工坊</span>
+                        <p class="node-desc">从静态页面起步，沉迷于 CSS 的可能性边界，开始记录每一次灵感的微光。</p>
+                        <div class="node-tags">
+                            <span class="tag">CSS3</span>
+                            <span class="tag">Vanilla JS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === SKILLS CONSTELLATION === -->
+        <section class="section skills" id="skills" data-section="skills">
+            <div class="section-head reveal">
+                <span class="section-index" data-mono>03</span>
+                <h2 class="section-title">力场 <span class="title-sub">/ Skill Field</span></h2>
+            </div>
+            <div class="skills-wrap">
+                <div class="skill-constellation" id="skill-constellation">
+                    <div class="skill-orbit orbit-1"></div>
+                    <div class="skill-orbit orbit-2"></div>
+                    <div class="skill-orbit orbit-3"></div>
+                    <div class="skill-core">
+                        <span class="core-glyph">✦</span>
+                    </div>
+                    <div class="skill-chip" data-skill="0.95" style="--orbit:1;--theta:0deg;">CSS3</div>
+                    <div class="skill-chip" data-skill="0.92" style="--orbit:1;--theta:60deg;">Canvas</div>
+                    <div class="skill-chip" data-skill="0.88" style="--orbit:1;--theta:120deg;">SVG</div>
+                    <div class="skill-chip" data-skill="0.90" style="--orbit:1;--theta:180deg;">GSAP</div>
+                    <div class="skill-chip" data-skill="0.85" style="--orbit:1;--theta:240deg;">WebGL</div>
+                    <div class="skill-chip" data-skill="0.93" style="--orbit:1;--theta:300deg;">Vanilla JS</div>
+
+                    <div class="skill-chip" data-skill="0.80" style="--orbit:2;--theta:30deg;">Three.js</div>
+                    <div class="skill-chip" data-skill="0.78" style="--orbit:2;--theta:110deg;">GLSL</div>
+                    <div class="skill-chip" data-skill="0.86" style="--orbit:2;--theta:190deg;">Design</div>
+                    <div class="skill-chip" data-skill="0.82" style="--orbit:2;--theta:270deg;">Physics</div>
+
+                    <div class="skill-chip" data-skill="0.74" style="--orbit:3;--theta:45deg;">Audio</div>
+                    <div class="skill-chip" data-skill="0.76" style="--orbit:3;--theta:165deg;">Shader</div>
+                    <div class="skill-chip" data-skill="0.72" style="--orbit:3;--theta:285deg;">Motion</div>
+                </div>
+
+                <div class="skill-detail glass-card reveal" id="skill-detail">
+                    <span class="detail-label" data-mono>PROFICIENCY</span>
+                    <h3 class="detail-name" id="skill-name">悬停或点击技能</h3>
+                    <div class="detail-bar">
+                        <div class="bar-fill" id="skill-bar"></div>
+                    </div>
+                    <span class="detail-val" id="skill-val" data-mono>—</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PROJECTS === -->
+        <section class="section projects" id="projects" data-section="projects">
+            <div class="section-head reveal">
+                <span class="section-index" data-mono>04</span>
+                <h2 class="section-title">造物 <span class="title-sub">/ Selected Works</span></h2>
+            </div>
+            <div class="project-grid">
+
+                <article class="glass-card project-card reveal" data-tilt>
+                    <div class="project-cover" style="--c1:#8b5cf6;--c2:#ec4899;">
+                        <div class="cover-glyph">🪷</div>
+                        <div class="cover-grain"></div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-meta">
+                            <span class="project-cat" data-mono>WELLNESS</span>
+                            <span class="project-year" data-mono>2024</span>
+                        </div>
+                        <h3 class="project-name">Aura 灵韵</h3>
+                        <p class="project-desc">沉浸式呼吸冥想空间，流体网格渐变与微晶玻璃拟物态的极致审美体验。</p>
+                        <div class="project-tech">
+                            <span>Canvas</span><span>Glassmorphism</span><span>Audio</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="glass-card project-card reveal" data-tilt>
+                    <div class="project-cover" style="--c1:#00d4ff;--c2:#a855f7;">
+                        <div class="cover-glyph">≋</div>
+                        <div class="cover-grain"></div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-meta">
+                            <span class="project-cat" data-mono>SIMULATION</span>
+                            <span class="project-year" data-mono>2024</span>
+                        </div>
+                        <h3 class="project-name">Fluid 流体</h3>
+                        <p class="project-desc">基于 Navier-Stokes 方程的交互式流体模拟，多配色与物理参数实时调节。</p>
+                        <div class="project-tech">
+                            <span>Physics</span><span>GLSL</span><span>Interactive</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="glass-card project-card reveal" data-tilt>
+                    <div class="project-cover" style="--c1:#f97316;--c2:#fbbf24;">
+                        <div class="cover-glyph">◉</div>
+                        <div class="cover-grain"></div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-meta">
+                            <span class="project-cat" data-mono>INTERACTIVE</span>
+                            <span class="project-year" data-mono>2024</span>
+                        </div>
+                        <h3 class="project-name">Motion 韵动</h3>
+                        <p class="project-desc">高阶微交互体验场，弹簧-阻尼物理模型驱动的卡片动力学与粒子流场。</p>
+                        <div class="project-tech">
+                            <span>Spring Physics</span><span>Particles</span><span>Nonlinear</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="glass-card project-card reveal" data-tilt>
+                    <div class="project-cover" style="--c1:#6366f1;--c2:#22d3ee;">
+                        <div class="cover-glyph">📜</div>
+                        <div class="cover-grain"></div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-meta">
+                            <span class="project-cat" data-mono>NARRATIVE</span>
+                            <span class="project-year" data-mono>2024</span>
+                        </div>
+                        <h3 class="project-name">Cinematic 影像叙事</h3>
+                        <p class="project-desc">六幕电影叙事滚动体验，逐字揭示、明暗对照与蒙太奇文字拼贴。</p>
+                        <div class="project-tech">
+                            <span>Scroll</span><span>Storytelling</span><span>Parallax</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="glass-card project-card reveal" data-tilt>
+                    <div class="project-cover" style="--c1:#10b981;--c2:#67e8f9;">
+                        <div class="cover-glyph">🌧️</div>
+                        <div class="cover-grain"></div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-meta">
+                            <span class="project-cat" data-mono>VISUAL</span>
+                            <span class="project-year" data-mono>2024</span>
+                        </div>
+                        <h3 class="project-name">Code Rain 代码雨</h3>
+                        <p class="project-desc">Matrix 风格代码雨，落下的是真实的代码片段，支持自定义语言与流速。</p>
+                        <div class="project-tech">
+                            <span>Matrix</span><span>Terminal</span><span>Custom</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="glass-card project-card reveal" data-tilt>
+                    <div class="project-cover" style="--c1:#ec4899;--c2:#8b5cf6;">
+                        <div class="cover-glyph">◎</div>
+                        <div class="cover-grain"></div>
+                    </div>
+                    <div class="project-body">
+                        <div class="project-meta">
+                            <span class="project-cat" data-mono>TOOL</span>
+                            <span class="project-year" data-mono>2024</span>
+                        </div>
+                        <h3 class="project-name">Gradient Mesh 渐变</h3>
+                        <p class="project-desc">交互式 Mesh 渐变生成器，拖拽节点实时创造美丽渐变，CSS/PNG 双导出。</p>
+                        <div class="project-tech">
+                            <span>Design Tool</span><span>Export</span><span>Gradient</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- === CONTACT === -->
+        <section class="section contact" id="contact" data-section="contact">
+            <div class="contact-inner">
+                <span class="contact-pre reveal" data-mono>END OF SIGNAL</span>
+                <h2 class="contact-title reveal">
+                    <span class="title-line" data-split>建立</span>
+                    <span class="title-line accent" data-split>回响</span>
+                </h2>
+                <p class="contact-text reveal">
+                    若有共创的火花，或仅仅想交换一缕灵感 —— 信号始终在线。
+                </p>
+                <div class="contact-links reveal">
+                    <a href="mailto:hello@eden.garden" class="contact-link" data-magnetic>
+                        <span class="link-glyph">✉</span>
+                        <span class="link-text">hello@eden.garden</span>
+                    </a>
+                    <a href="#" class="contact-link" data-magnetic>
+                        <span class="link-glyph">⌘</span>
+                        <span class="link-text">GitHub</span>
+                    </a>
+                    <a href="#" class="contact-link" data-magnetic>
+                        <span class="link-glyph">◎</span>
+                        <span class="link-text">Dribbble</span>
+                    </a>
+                </div>
+                <footer class="contact-footer">
+                    <span data-mono>© 2024 · CRAFTED BY EDEN · MOTION AS LANGUAGE</span>
+                </footer>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
