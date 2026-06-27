@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-27",
+  "name": "dot-grid-scene",
+  "description": "点阵网格场景编辑器",
+  "tagline": "Where Dots Become Worlds.",
+  "interaction": "Click and drag across a responsive dot grid to paint living scenes that ripple, pulse, and react in real time. Each dot behaves as an autonomous agent — shifting color, scale, and position based on proximity rules and user input. The result is a tactile canvas where simple dots compose emergent, breathing landscapes.",
+  "directory": "seeds/dot-grid-scene/",
+  "status": "incubated"
+}

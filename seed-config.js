@@ -1010,6 +1010,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Dot Grid Scene 点阵场景',
+      description: '沉浸式弹簧物理驱动的点阵力场微交互体验。4种力场模式（排斥/吸引/漩涡/波场）、冲击波涟漪级联、邻近连接线、环境粒子流场、十字准星与实时力场遥测面板，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/dot-grid-scene/index.html',
+      tags: ['Interactive', 'Physics', 'Grid', 'Micro-interaction'],
+      icon: ' ⊙',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

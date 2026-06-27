@@ -86,3 +86,4 @@ hover-team-grid
 cube-portfolio
 motion-card-flip
 motion-resume
+dot-grid-scene
