@@ -1020,6 +1020,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Logo Context Menu 徽标语境菜单',
+      description: '沉浸式徽标语境菜单微交互体验。右键/长按唤起径向语境菜单，6种徽标形变（球体/晶片/绽放/波环/星辰/虚空）、SVG path 实时形变、多层涟漪环、连接线辐射、粒子流场冲击波与 HUD 状态面板，4种氛围配色',
+      path: '/seed/seeds/logo-context-menu/index.html',
+      tags: ['Interactive', 'Logo', 'Context Menu', 'Micro-interaction'],
+      icon: '⏣',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

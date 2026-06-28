@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Context Menu - 徽标语境菜单</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <main class="app-shell" id="app-shell">
+        <nav class="top-nav" id="top-nav">
+            <div class="nav-brand">
+                <span class="nav-icon" aria-hidden="true">⏣</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Logo Context Menu</h1>
+                    <span class="nav-subtitle">徽标语境菜单 · 右键唤起</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle" role="group" aria-label="氛围配色">
+                    <button class="theme-btn active" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="abyss" aria-label="深渊">深渊</button>
+                    <button class="theme-btn" data-theme="bloom" aria-label="绽放">绽放</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏" title="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <section class="logo-stage" id="logo-stage" aria-label="徽标交互舞台">
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-icon">⊞</span>
+                <span class="hint-text">右键点击徽标唤起语境菜单</span>
+                <span class="hint-sub">移动端：长按徽标</span>
+            </div>
+
+            <!-- 可形变徽标：多层 SVG 叠加 -->
+            <div class="logo-wrap" id="logo-wrap" role="button" tabindex="0" aria-label="徽标，右键唤起菜单">
+                <svg class="logo-svg" id="logo-svg" viewBox="-100 -100 200 200" aria-hidden="true">
+                    <defs>
+                        <radialGradient id="logo-grad" cx="35%" cy="30%" r="80%">
+                            <stop id="grad-stop-a" offset="0%" stop-color="#a5f3fc"/>
+                            <stop id="grad-stop-b" offset="55%" stop-color="#8b5cf6"/>
+                            <stop id="grad-stop-c" offset="100%" stop-color="#4c1d95"/>
+                        </radialGradient>
+                        <filter id="logo-glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="6" result="blur"/>
+                            <feMerge>
+                                <feMergeNode in="blur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- 外层旋转环 -->
+                    <g class="logo-ring-group" id="logo-ring-group">
+                        <circle class="logo-ring" cx="0" cy="0" r="84" />
+                        <circle class="logo-ring-dot" cx="0" cy="-84" r="2.4" />
+                    </g>
+
+                    <!-- 主形变体 -->
+                    <path class="logo-morph" id="logo-morph" d="" filter="url(#logo-glow)" />
+
+                    <!-- 中心核 -->
+                    <circle class="logo-core" cx="0" cy="0" r="6" id="logo-core" />
+                </svg>
+
+                <span class="logo-label" id="logo-label">AURORA</span>
+            </div>
+        </section>
+
+        <aside class="side-panel" id="side-panel" aria-label="徽标状态面板">
+            <div class="panel-row">
+                <span class="panel-key">FORM</span>
+                <span class="panel-val" id="panel-form">orb</span>
+            </div>
+            <div class="panel-row">
+                <span class="panel-key">MOOD</span>
+                <span class="panel-val" id="panel-mood">极光</span>
+            </div>
+            <div class="panel-row">
+                <span class="panel-key">SPIN</span>
+                <div class="panel-bar"><i class="panel-bar-fill" id="panel-spin"></i></div>
+            </div>
+            <div class="panel-row">
+                <span class="panel-key">PULSE</span>
+                <div class="panel-bar"><i class="panel-bar-fill" id="panel-pulse"></i></div>
+            </div>
+            <div class="panel-row panel-log">
+                <span class="panel-key">LOG</span>
+                <span class="panel-val mono" id="panel-log">awaiting context…</span>
+            </div>
+        </aside>
+
+        <footer class="app-footer">
+            <div class="footer-hint">
+                <span class="hint-key">R-Click</span>
+                <span class="hint-sep">·</span>
+                <span class="hint-key">Long-Press</span>
+                <span class="hint-sep">·</span>
+                <span class="hint-key">Esc</span>
+                <span class="hint-label">徽标语境交互</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+                <span class="meta-chip" id="action-count">0 唤起</span>
+            </div>
+        </footer>
+    </main>
+
+    <!-- 径向语境菜单将由 JS 动态注入 .logo-stage -->
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

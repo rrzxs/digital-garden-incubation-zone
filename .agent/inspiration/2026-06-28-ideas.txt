@@ -1,0 +1,7 @@
+rhythm-narrative - 将跑步数据化为节奏叙事卷轴
+genai-infograph-builder - 动画信息图自建生成器
+logo-context-menu - 站点Logo右键品牌菜单生成器
+blur-mask-identity - 模糊遮罩品牌标识微交互工具
+dot-grid-mockup - 点阵网格AI场景样机预览
+motion-storyboard - 滚动驱动电影感分镜编排器
+cinematic-scroll-restraint - 节制动效长滚动叙事编辑器
