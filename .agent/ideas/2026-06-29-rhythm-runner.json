@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-29",
+  "name": "rhythm-runner",
+  "description": "跑步节奏化故事可视化",
+  "tagline": "Run the Story, Feel the Beat",
+  "interaction": "用户通过键盘左右键（或触屏左右滑）模拟双脚交替奔跑的节奏，速度决定故事的播放速度和场景滚动。随着节奏稳定，画面会解锁逐帧展开的故事插画、动态文字和粒子特效；节奏断裂则画面褪色、音乐变调，故事暂停等待玩家重新找回步调。",
+  "directory": "seeds/rhythm-runner/",
+  "status": "incubated"
+}

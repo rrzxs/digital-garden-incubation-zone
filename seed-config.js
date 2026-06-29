@@ -1030,6 +1030,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Rhythm Runner 韵律奔跑',
+      description: '沉浸式节律微交互体验场。光球沿轨道飞驰，节拍节点滑入判定环，Perfect/Good/Miss 三级判定、连击倍率与能量系统，流体渐变背景 + 微晶玻璃态 HUD，4种氛围配色',
+      path: '/seed/seeds/rhythm-runner/index.html',
+      tags: ['Interactive', 'Rhythm', 'Game', 'Micro-interaction'],
+      icon: '↯',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
     }
   ]);
 

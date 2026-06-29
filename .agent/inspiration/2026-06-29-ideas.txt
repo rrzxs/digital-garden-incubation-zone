@@ -1,0 +1,6 @@
+scroll-cinema - 滚动驱动的电影叙事引擎
+genai-infographic - 动画信息图生成器
+logo-context-menu - 右键logo菜单构建器
+blur-mask-hero - 模糊遮罩动效hero组件
+rhythm-runner - 跑步节奏化故事可视化
+dot-grid-scene - 点阵网格场景编辑器

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Runner 韵律奔跑 — 沉浸式节律微交互</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="deep-ocean">
+
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- 粒子与轨道画布 -->
+    <canvas id="runner-canvas" aria-hidden="true"></canvas>
+
+    <!-- 光标光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- 节拍闪光层 -->
+    <div class="beat-flash" id="beat-flash" aria-hidden="true"></div>
+
+    <main class="app-shell">
+
+        <!-- 顶部导航 -->
+        <nav class="runner-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">↯</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Rhythm Runner</h1>
+                    <span class="nav-subtitle">韵律奔跑 · 沉浸式节律微交互</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle" role="group" aria-label="氛围配色">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主舞台 -->
+        <section class="stage" id="stage">
+
+            <!-- 左侧 HUD -->
+            <aside class="hud-panel hud-left glass">
+                <div class="hud-block">
+                    <span class="hud-label">分数</span>
+                    <span class="hud-value" id="score-value">0</span>
+                </div>
+                <div class="hud-divider"></div>
+                <div class="hud-block">
+                    <span class="hud-label">连击</span>
+                    <span class="hud-value combo-value" id="combo-value">0</span>
+                    <span class="hud-meta" id="combo-meta">x1.0</span>
+                </div>
+                <div class="hud-divider"></div>
+                <div class="hud-block">
+                    <span class="hud-label">最佳连击</span>
+                    <span class="hud-value hud-small" id="best-combo-value">0</span>
+                </div>
+                <div class="hud-divider"></div>
+                <div class="hud-block">
+                    <span class="hud-label">精准度</span>
+                    <div class="accuracy-bar">
+                        <div class="accuracy-fill" id="accuracy-fill"></div>
+                    </div>
+                    <span class="hud-meta" id="accuracy-value">100%</span>
+                </div>
+            </aside>
+
+            <!-- 中央节拍轨道（视觉化呈现） -->
+            <div class="track-viewport" id="track-viewport">
+                <div class="lane-indicator" id="lane-indicator">
+                    <div class="hit-zone" id="hit-zone">
+                        <span class="hit-zone-pulse"></span>
+                    </div>
+                </div>
+                <div class="runner-orb" id="runner-orb">
+                    <span class="orb-core"></span>
+                    <span class="orb-trail"></span>
+                </div>
+
+                <!-- 即将到来的判定文字 -->
+                <div class="judgement-layer" id="judgement-layer" aria-live="polite"></div>
+            </div>
+
+            <!-- 右侧 HUD -->
+            <aside class="hud-panel hud-right glass">
+                <div class="hud-block">
+                    <span class="hud-label">BPM</span>
+                    <span class="hud-value" id="bpm-value">90</span>
+                </div>
+                <div class="hud-divider"></div>
+                <div class="hud-block">
+                    <span class="hud-label">能量</span>
+                    <div class="energy-bar">
+                        <div class="energy-fill" id="energy-fill"></div>
+                    </div>
+                    <span class="hud-meta" id="energy-meta">0 / 100</span>
+                </div>
+                <div class="hud-divider"></div>
+                <div class="hud-block">
+                    <span class="hud-label">判定统计</span>
+                    <div class="judge-stats">
+                        <span class="judge-chip perfect" id="stat-perfect">0</span>
+                        <span class="judge-chip good" id="stat-good">0</span>
+                        <span class="judge-chip miss" id="stat-miss">0</span>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <!-- 底部控制区 -->
+        <footer class="runner-footer">
+            <div class="footer-hint">
+                <span class="hint-key">Space</span>
+                <span class="hint-sep">/</span>
+                <span class="hint-key">Click</span>
+                <span class="hint-label">在节拍到达判定环时点击</span>
+            </div>
+
+            <div class="footer-actions">
+                <button class="action-btn" id="speed-btn" aria-label="调整速度">
+                    <span class="action-label">速度</span>
+                    <span class="action-value" id="speed-value">1.0x</span>
+                </button>
+                <button class="action-btn primary" id="start-btn" aria-label="开始或暂停">
+                    <span class="action-label" id="start-label">开始</span>
+                </button>
+                <button class="action-btn" id="reset-btn" aria-label="重置">
+                    <span class="action-label">重置</span>
+                </button>
+            </div>
+
+            <div class="footer-meta">
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+                <span class="meta-chip" id="state-indicator">待机</span>
+            </div>
+        </footer>
+    </main>
+
+    <!-- 开场提示遮罩 -->
+    <div class="intro-overlay" id="intro-overlay">
+        <div class="intro-card glass">
+            <div class="intro-icon">↯</div>
+            <h2 class="intro-title">Rhythm Runner</h2>
+            <p class="intro-desc">让光球沿着节律轨道飞驰，<br>在它进入判定环的瞬间，按下空格或点击屏幕。</p>
+            <p class="intro-hint">越精准 · 连击越长 · 能量越足</p>
+            <button class="intro-btn" id="intro-start-btn">
+                <span class="intro-btn-text">开始奔跑</span>
+                <span class="intro-btn-arrow">→</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
