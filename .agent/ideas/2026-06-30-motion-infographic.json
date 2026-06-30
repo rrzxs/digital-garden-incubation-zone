@@ -1,0 +1,9 @@
+{
+  "date": "2026-06-30",
+  "name": "motion-infographic",
+  "description": "动画数据信息图制作器",
+  "tagline": "Numbers That Move Minds.",
+  "interaction": "Feed in raw stats and watch them bloom into animated bar charts, counting dials, and morphing shapes that ease into view as you scroll. Each data point reacts to hover with spring-driven micro-animations, turning dry figures into a kinetic storytelling experience.",
+  "directory": "seeds/motion-infographic/",
+  "status": "incubated"
+}

@@ -89,3 +89,4 @@ motion-resume
 dot-grid-scene
 logo-context-menu
 rhythm-runner
+motion-infographic

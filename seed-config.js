@@ -1040,6 +1040,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'game'
+    },
+    {
+      title: 'Motion Infographic 动效信息图',
+      description: '沉浸式数据脉动信息图。流体粒子流场驱动的指标卡数字递增、环形贡献星图、脉冲柱阵与事件时间线，双交互模式（悬浮/轨道）× 4种氛围配色，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/motion-infographic/index.html',
+      tags: ['Interactive', 'Data Visualization', 'Animation', 'Micro-interaction'],
+      icon: '⟐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
