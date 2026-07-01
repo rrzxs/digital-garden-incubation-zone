@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Char Splitter — 像素字符裂解器</title>
+    <meta name="description" content="沉浸式像素字符裂解实验室。输入文字采样为像素场，弹簧-阻尼物理驱动的5种裂解模式实时拆解与重组字符，鼠标力场扰动、脉冲冲击波与粒子流场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23070713'/%3E%3Cg fill='%2334f5c5'%3E%3Crect x='14' y='14' width='6' height='6'/%3E%3Crect x='24' y='14' width='6' height='6'/%3E%3Crect x='34' y='14' width='6' height='6'/%3E%3Crect x='14' y='24' width='6' height='6'/%3E%3Crect x='44' y='24' width='6' height='6'/%3E%3Crect x='24' y='34' width='6' height='6'/%3E%3Crect x='34' y='44' width='6' height='6'/%3E%3Crect x='44' y='44' width='6' height='6'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-cyber">
+    <!-- Fluid Mesh Background -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain"></div>
+    </div>
+
+    <!-- Particle Flow Field Canvas -->
+    <canvas class="particle-layer" id="particle-layer" aria-hidden="true"></canvas>
+
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="app-shell">
+        <!-- Header -->
+        <header class="panel-header glass-panel">
+            <div class="brand-group">
+                <div class="brand-mark" aria-hidden="true">
+                    <span class="mark-pixel"></span>
+                    <span class="mark-pixel"></span>
+                    <span class="mark-pixel"></span>
+                    <span class="mark-pixel"></span>
+                </div>
+                <div class="brand-text">
+                    <h1 class="brand-title">Pixel<span class="brand-dot">·</span>Split</h1>
+                    <p class="brand-subtitle">像素字符裂解器 — 文字的解构与重构</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="btn-shuffle" title="随机乱序 (S)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-burst" title="裂解脉冲 (Space)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-reset" title="重置 (R)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Stage -->
+        <section class="stage" id="stage">
+            <div class="stage-inner">
+                <div class="split-canvas glass-panel" id="split-canvas">
+                    <!-- Hidden sampling canvas for pixel extraction -->
+                    <canvas class="sample-canvas" id="sample-canvas" aria-hidden="true"></canvas>
+                    <!-- Pixel particle layer (DOM-driven for crispness) -->
+                    <div class="pixel-field" id="pixel-field" aria-hidden="true"></div>
+                    <!-- Residual ring overlays -->
+                    <div class="canvas-rings" id="canvas-rings" aria-hidden="true">
+                        <span class="ring ring-1"></span>
+                        <span class="ring ring-2"></span>
+                        <span class="ring ring-3"></span>
+                    </div>
+                    <!-- Ghost placeholder text shown when empty -->
+                    <div class="ghost-text" id="ghost-text">TYPE&nbsp;TO&nbsp;DISSOLVE</div>
+                </div>
+                <div class="telemetry" id="telemetry">
+                    <span class="tel-item"><span class="tel-label">PIXELS</span><span class="tel-value" id="tel-pixels">0</span></span>
+                    <span class="tel-sep"></span>
+                    <span class="tel-item"><span class="tel-label">MODE</span><span class="tel-value" id="tel-mode">SCATTER</span></span>
+                    <span class="tel-sep"></span>
+                    <span class="tel-item"><span class="tel-label">FORCE</span><span class="tel-value" id="tel-force">0.0</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controls -->
+        <footer class="controls-bar glass-panel">
+            <div class="controls-scroll">
+                <div class="ctrl-group">
+                    <label class="ctrl-label">输入文字</label>
+                    <div class="text-input-wrap">
+                        <input type="text" id="input-text" class="text-input" value="PIXEL" maxlength="12" placeholder="输入文字..." autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">像素密度 <span class="ctrl-value" id="val-density">7</span></label>
+                    <input type="range" id="ctrl-density" class="range-input" min="3" max="14" value="7" step="1">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">裂解强度 <span class="ctrl-value" id="val-intensity">60</span></label>
+                    <input type="range" id="ctrl-intensity" class="range-input" min="0" max="100" value="60">
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">裂解模式</label>
+                    <div class="mode-toggle" id="mode-toggle">
+                        <button class="mode-btn active" data-mode="scatter" aria-label="散布">Scatter</button>
+                        <button class="mode-btn" data-mode="orbit" aria-label="轨道">Orbit</button>
+                        <button class="mode-btn" data-mode="wave" aria-label="波浪">Wave</button>
+                        <button class="mode-btn" data-mode="shatter" aria-label="碎裂">Shatter</button>
+                        <button class="mode-btn" data-mode="dissolve" aria-label="溶解">Dissolve</button>
+                    </div>
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">光标力场</label>
+                    <div class="field-toggle" id="field-toggle">
+                        <button class="mode-btn active" data-field="repel" aria-label="排斥">Repel</button>
+                        <button class="mode-btn" data-field="attract" aria-label="吸引">Attract</button>
+                        <button class="mode-btn" data-field="none" aria-label="关闭">Off</button>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">氛围配色</label>
+                    <div class="palette-toggle" id="palette-toggle">
+                        <button class="palette-btn active" data-palette="cyber" aria-label="赛博">
+                            <span class="swatch" style="background: linear-gradient(135deg, #34f5c5, #7c5cff)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="ember" aria-label="灼烬">
+                            <span class="swatch" style="background: linear-gradient(135deg, #ffb347, #ff4d6d)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="ocean" aria-label="深海">
+                            <span class="swatch" style="background: linear-gradient(135deg, #38e8ff, #4d7cff)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="void" aria-label="虚空">
+                            <span class="swatch" style="background: linear-gradient(135deg, #9aa4b8, #475569)"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+scroll-rhythm-sequencer - 滚动节奏驱动的电影化叙事编辑器
+grain-trail-canvas - 鼠标轨迹扰动颗粒质感画布
+infograph-motion-builder - 滚动联动动画信息图生成器
+page-transition-lab - GPU驱动无缝页面过渡实验室
+pixel-char-splitter - 逐字符随机顺序文字揭示工具
+parallax-scene-pinner - 视差滚动分层场景钉合器

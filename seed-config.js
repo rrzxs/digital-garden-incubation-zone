@@ -1050,6 +1050,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Pixel Char Splitter 像素字符裂解器',
+      description: '沉浸式像素字符裂解实验室。文字采样为像素场，弹簧-阻尼物理驱动的5种裂解模式（散布/轨道/波浪/碎裂/溶解）实时解构与重组字符，光标力场扰动、脉冲冲击波与粒子流场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/pixel-char-splitter/index.html',
+      tags: ['Interactive', 'Pixel', 'Physics', 'Micro-interaction'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

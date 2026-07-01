@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-01",
+  "name": "pixel-char-splitter",
+  "description": "逐字符随机顺序文字揭示工具",
+  "tagline": "Watch Words Shatter Into Pixels",
+  "interaction": "Characters render one-by-one in randomized sequence, each exploding from scattered pixels into cohesive glyphs with staggered timing. Hover or click any revealed character to trigger a re-scramble ripple that cascades outward to neighbors. The final reassembly delivers a satisfying snap-to-read moment as all pieces lock into place.",
+  "directory": "seeds/pixel-char-splitter/",
+  "status": "incubated"
+}
