@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-02",
+  "name": "data-center-tour",
+  "description": "3D数据中心组件巡览交互",
+  "tagline": "Step Inside the Data",
+  "interaction": "一张可旋转缩放的 3D 数据中心场景中，用户拖拽视角自由巡览，点击高亮的服务器机柜弹出组件详情与实时运行数据。视角平滑过渡伴随光效指引，营造沉浸式数字基础设施探索体验。",
+  "directory": "seeds/data-center-tour/",
+  "status": "incubated"
+}

@@ -91,3 +91,4 @@ logo-context-menu
 rhythm-runner
 motion-infographic
 pixel-char-splitter
+data-center-tour

@@ -1,0 +1,6 @@
+spin-a-tale - 可视化分支叙事旋转阅读器
+data-center-tour - 3D数据中心组件巡览交互
+cinematic-storyboard - 电影感分镜编辑器
+parallax-release-notes - 视差滚动版本发布展示页
+gpu-page-transition - WebGPU无缝页面切换演示
+ai-prompt-infographic - 动画AI信息图生成器

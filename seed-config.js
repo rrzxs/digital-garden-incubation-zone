@@ -1060,6 +1060,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Data Center Tour 数据中心漫游',
+      description: '沉浸式等距数据中心漫游体验。3D 等距机架场 + 实时遥测面板（CPU/内存/PUE）+ 四种视图模式（总览/机架/热力/网络），机架点击聚焦 24U 单元详情，三层楼栋切换，粒子流场背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/data-center-tour/index.html',
+      tags: ['Interactive', '3D Isometric', 'Telemetry', 'Micro-interaction'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
