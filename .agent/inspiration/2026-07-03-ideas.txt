@@ -1,0 +1,9 @@
+spin - story — 滚动驱动的叙事编织器
+shelf - curator — 游戏藏品可交互展示柜
+scene - mockup — AI 样机场景构图工具
+datacenter - builder — 数据中心可视化搭建沙盘
+motion - storybook — 帧表照片转动态GIF生成器
+scroll - essay — 沉浸式长滚动编辑器
+ds - extractor — 网站设计令牌提取工具
+dot-grid - hero — 点阵网格交互动画构造器
+gif-theme - studio — Canvas 主题GIF动画工坊

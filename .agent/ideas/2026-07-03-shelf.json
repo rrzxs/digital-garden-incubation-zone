@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-03",
+  "name": "shelf",
+  "description": "curator — 游戏藏品可交互展示柜",
+  "tagline": "Curate Your Trophy Vault.",
+  "interaction": "Browse a dimly lit gallery where each game collectible rests on its own illuminated shelf. Hover to bring an item forward with detail-enlarged lighting, click to spin and inspect rare pieces from every angle. Rearrange shelves in real time to curate your personal hall of legends.",
+  "directory": "seeds/shelf/",
+  "status": "incubated"
+}

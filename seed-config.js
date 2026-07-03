@@ -1070,6 +1070,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Shelf 灵感书架',
+      description: '沉浸式 3D 灵感书架。书脊透视视差、拖拽惯性平移、悬停抽出、点击展开微晶玻璃详情面板，弹簧物理与粒子流场，4种氛围配色',
+      path: '/seed/seeds/shelf/index.html',
+      tags: ['Interactive', '3D', 'Shelf', 'Micro-interaction'],
+      icon: '▤',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
