@@ -1,0 +1,6 @@
+collection-shelf - 物理收藏数字陈列柜交互
+mockup-scene-composer - AI风格样机场景组合器
+gpu-page-transitions - WebGPU无缝页面过渡实验室
+editorial-cgi-spotlight - 影视CGI编辑式聚焦展示
+data-center-builder - 数据中心可视化搭建沙盘
+spectral-field-viz - 频谱场域音频可视化

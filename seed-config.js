@@ -1080,6 +1080,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Data Center Builder 数据中心构建器',
+      description: '沉浸式数据中心布局构建器。拖拽机架、服务器、冷却、电源、交换机、存储到 12×8 网格平面图，实时计算 PUE 能效、供电平衡与散热指标，预设/随机布局、粒子流场背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/data-center-builder/index.html',
+      tags: ['Interactive', 'Builder', 'Data Center', 'Micro-interaction'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

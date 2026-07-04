@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-04",
+  "name": "data-center-builder",
+  "description": "数据中心可视化搭建沙盘",
+  "tagline": "Drag, drop, power up the grid.",
+  "interaction": "Drag server racks, cooling units, and power nodes onto an isometric sandbox floor. Connect components with animated power/network cables that pulse with live throughput. Watch rack temps, load, and efficiency metrics update in real time as you scale your facility.",
+  "directory": "seeds/data-center-builder/",
+  "status": "incubated"
+}

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Center Builder · 数据中心构建器</title>
+    <meta name="description" content="沉浸式数据中心布局构建器。拖拽机架、冷却、电源、服务器规划你的数据堡垒，实时容量、PUE 与散热指标，流体渐变背景 + 微晶玻璃态容器。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="abyss">
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === 流体网格渐变背景 === -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+
+    <!-- === 粒子流场画布 === -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <main class="app">
+        <!-- === 顶部标题 === -->
+        <header class="app-header reveal">
+            <div class="header-badge glass-pill">
+                <span class="badge-dot"></span>
+                <span class="badge-text">Data Center Builder</span>
+            </div>
+            <h1 class="header-title">构建你的<em>数据堡垒</em></h1>
+            <p class="header-subtitle">从元件库拖入机架、冷却与电源，规划你的数据中心拓扑。容量、散热与能效将实时浮现。</p>
+        </header>
+
+        <!-- === 主题切换 === -->
+        <div class="theme-switcher glass-pill reveal" role="group" aria-label="氛围配色">
+            <button class="theme-btn active" data-theme="abyss" title="深渊">
+                <span class="theme-swatch sw-abyss"></span>
+                <span class="theme-label">深渊</span>
+            </button>
+            <button class="theme-btn" data-theme="plasma" title="等离子">
+                <span class="theme-swatch sw-plasma"></span>
+                <span class="theme-label">等离子</span>
+            </button>
+            <button class="theme-btn" data-theme="quantum" title="量子">
+                <span class="theme-swatch sw-quantum"></span>
+                <span class="theme-label">量子</span>
+            </button>
+            <button class="theme-btn" data-theme="corona" title="日冕">
+                <span class="theme-swatch sw-corona"></span>
+                <span class="theme-label">日冕</span>
+            </button>
+        </div>
+
+        <!-- === 主工作区 === -->
+        <div class="workspace reveal">
+            <!-- 左侧元件库 -->
+            <aside class="palette glass-panel" id="palette">
+                <div class="panel-head">
+                    <h2 class="panel-title">元件库</h2>
+                    <span class="panel-hint">拖入网格</span>
+                </div>
+                <div class="palette-grid" id="palette-grid">
+                    <button class="palette-item" data-type="rack" draggable="true">
+                        <span class="pi-glyph">▥</span>
+                        <span class="pi-name">机架</span>
+                        <span class="pi-meta">10U · 2kW</span>
+                    </button>
+                    <button class="palette-item" data-type="server" draggable="true">
+                        <span class="pi-glyph">⊟</span>
+                        <span class="pi-name">服务器</span>
+                        <span class="pi-meta">2U · 0.4kW</span>
+                    </button>
+                    <button class="palette-item" data-type="cooler" draggable="true">
+                        <span class="pi-glyph">❄</span>
+                        <span class="pi-name">冷却</span>
+                        <span class="pi-meta">-3kW 散热</span>
+                    </button>
+                    <button class="palette-item" data-type="power" draggable="true">
+                        <span class="pi-glyph">⚡</span>
+                        <span class="pi-name">电源</span>
+                        <span class="pi-meta">+8kW 供电</span>
+                    </button>
+                    <button class="palette-item" data-type="network" draggable="true">
+                        <span class="pi-glyph">⌬</span>
+                        <span class="pi-name">交换机</span>
+                        <span class="pi-meta">0.2kW</span>
+                    </button>
+                    <button class="palette-item" data-type="storage" draggable="true">
+                        <span class="pi-glyph">▤</span>
+                        <span class="pi-name">存储</span>
+                        <span class="pi-meta">4U · 0.6kW</span>
+                    </button>
+                </div>
+
+                <div class="panel-divider"></div>
+
+                <div class="tool-row">
+                    <button class="tool-btn" id="btn-clear" title="清空网格">
+                        <span class="tool-icon">⌫</span>
+                        <span>清空</span>
+                    </button>
+                    <button class="tool-btn" id="btn-preset" title="加载示例布局">
+                        <span class="tool-icon">✦</span>
+                        <span>示例</span>
+                    </button>
+                    <button class="tool-btn" id="btn-random" title="随机布局">
+                        <span class="tool-icon">⚄</span>
+                        <span>随机</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- 中间构建网格 -->
+            <section class="builder-zone">
+                <div class="builder-head glass-pill">
+                    <div class="zone-label">
+                        <span class="zone-icon">▦</span>
+                        <span>机柜平面图 · 12 × 8</span>
+                    </div>
+                    <div class="zone-stat" id="cell-count">已放置 0</div>
+                </div>
+
+                <div class="grid-wrap glass-panel">
+                    <div class="builder-grid" id="builder-grid"></div>
+                    <div class="drop-ghost" id="drop-ghost" aria-hidden="true"></div>
+                </div>
+
+                <div class="builder-foot">
+                    <span class="foot-hint">提示：拖入元件 · 点击已放置元件移除 · 双击清空单元</span>
+                </div>
+            </section>
+
+            <!-- 右侧遥测面板 -->
+            <aside class="telemetry glass-panel" id="telemetry">
+                <div class="panel-head">
+                    <h2 class="panel-title">实时遥测</h2>
+                    <span class="live-dot"></span>
+                </div>
+
+                <!-- 核心 PUE 大数 -->
+                <div class="pue-block">
+                    <span class="pue-label">PUE 能效比</span>
+                    <span class="pue-value" id="pue-value">1.00</span>
+                    <span class="pue-grade" id="pue-grade">待机</span>
+                </div>
+
+                <!-- 能量条 -->
+                <div class="meter">
+                    <div class="meter-row">
+                        <span class="meter-name"><span class="meter-ico">⚡</span> 供电</span>
+                        <span class="meter-val" id="power-val">0 / 0 kW</span>
+                    </div>
+                    <div class="meter-bar"><div class="meter-fill meter-power" id="power-fill"></div></div>
+                </div>
+
+                <div class="meter">
+                    <div class="meter-row">
+                        <span class="meter-name"><span class="meter-ico">🔥</span> 负载</span>
+                        <span class="meter-val" id="load-val">0 kW</span>
+                    </div>
+                    <div class="meter-bar"><div class="meter-fill meter-load" id="load-fill"></div></div>
+                </div>
+
+                <div class="meter">
+                    <div class="meter-row">
+                        <span class="meter-name"><span class="meter-ico">❄</span> 散热</span>
+                        <span class="meter-val" id="cool-val">0 kW</span>
+                    </div>
+                    <div class="meter-bar"><div class="meter-fill meter-cool" id="cool-fill"></div></div>
+                </div>
+
+                <div class="panel-divider"></div>
+
+                <!-- 元件统计 -->
+                <div class="stat-grid" id="stat-grid">
+                    <div class="stat-chip"><span class="chip-glyph">▥</span><span class="chip-name">机架</span><span class="chip-num" data-type="rack">0</span></div>
+                    <div class="stat-chip"><span class="chip-glyph">⊟</span><span class="chip-name">服务器</span><span class="chip-num" data-type="server">0</span></div>
+                    <div class="stat-chip"><span class="chip-glyph">❄</span><span class="chip-name">冷却</span><span class="chip-num" data-type="cooler">0</span></div>
+                    <div class="stat-chip"><span class="chip-glyph">⚡</span><span class="chip-name">电源</span><span class="chip-num" data-type="power">0</span></div>
+                    <div class="stat-chip"><span class="chip-glyph">⌬</span><span class="chip-name">交换机</span><span class="chip-num" data-type="network">0</span></div>
+                    <div class="stat-chip"><span class="chip-glyph">▤</span><span class="chip-name">存储</span><span class="chip-num" data-type="storage">0</span></div>
+                </div>
+
+                <div class="panel-divider"></div>
+
+                <!-- 状态徽章 -->
+                <div class="status-zone" id="status-zone">
+                    <span class="status-badge status-ok">● 系统就绪</span>
+                </div>
+            </aside>
+        </div>
+
+        <!-- === 底部信息 === -->
+        <footer class="app-foot reveal">
+            <span>Maintainer · <strong>EDEN</strong></span>
+            <span class="foot-sep">·</span>
+            <span>Vanilla JS · Zero Build</span>
+            <span class="foot-sep">·</span>
+            <span id="foot-coord">grid [ — ]</span>
+        </footer>
+    </main>
+
+    <!-- 拖拽浮层（拖动时跟随光标） -->
+    <div class="drag-ghost" id="drag-ghost" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
