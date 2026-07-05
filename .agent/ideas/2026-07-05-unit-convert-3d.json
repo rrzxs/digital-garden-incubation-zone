@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-05",
+  "name": "unit-convert-3d",
+  "description": "三维单位换算可视化器",
+  "tagline": "Visualize unit conversion in 3D space.",
+  "interaction": "A 3D interface where users select source and target units (length, weight, temperature, etc.) and see the conversion ratio represented as scaled 3D objects side by side. Sliders or drag gestures let users scrub through values in real time, with the 3D models dynamically resizing to reflect the proportional difference between units.",
+  "directory": "seeds/unit-convert-3d/",
+  "status": "incubated"
+}

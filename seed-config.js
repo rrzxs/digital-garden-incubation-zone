@@ -1090,6 +1090,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Unit Convert 3D 三维单位转换器',
+      description: '沉浸式三维单位转换器。3D 翻牌切换源/目标单位，类别轨道探索长度/质量/温度/时间/数据/速度六大量纲域共 40+ 单位，精确函数转换引擎、数字滚动动画、粒子流场背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/unit-convert-3d/index.html',
+      tags: ['Interactive', '3D', 'Converter', 'Micro-interaction'],
+      icon: '⬡',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

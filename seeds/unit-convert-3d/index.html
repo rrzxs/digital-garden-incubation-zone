@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit Convert 3D · 三维单位转换器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-palette="aurora">
+
+  <!-- 流体渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+    <span class="blob blob-d"></span>
+    <span class="grain"></span>
+  </div>
+
+  <!-- 粒子层 -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- 光标光晕 -->
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <!-- 返回链接 -->
+  <a class="back-link" href="../../index.html">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 19l-7-7 7-7" />
+    </svg>
+    <span>返回花园</span>
+  </a>
+
+  <!-- 顶栏 -->
+  <header class="topbar glass-bar">
+    <div class="brand">
+      <span class="brand-glyph">⬡</span>
+      <div class="brand-text">
+        <strong>Unit Convert 3D</strong>
+        <small>三维单位转换器</small>
+      </div>
+    </div>
+    <div class="hud" id="hud">
+      <span class="hud-item"><b id="hud-cat">长度</b><i>当前类别</i></span>
+      <span class="hud-item"><b id="hud-count">9</b><i>单位数</i></span>
+      <span class="hud-item"><b id="hud-history">0</b><i>转换记录</i></span>
+    </div>
+    <div class="palette-picker" role="group" aria-label="主题配色">
+      <button class="palette-dot" data-palette="aurora" aria-label="极光配色"></button>
+      <button class="palette-dot" data-palette="ember" aria-label="余烬配色"></button>
+      <button class="palette-dot" data-palette="abyss" aria-label="深渊配色"></button>
+      <button class="palette-dot" data-palette="orchid" aria-label="兰科配色"></button>
+    </div>
+  </header>
+
+  <!-- 主舞台 -->
+  <main class="stage">
+
+    <section class="preamble reveal">
+      <span class="pre-tag">Interactive · 3D · Conversion</span>
+      <h1 class="pre-title">
+        <span class="pre-line">三维空间里的</span>
+        <span class="pre-line">单位流转</span>
+      </h1>
+      <p class="pre-desc">拖拽 3D 翻牌切换源/目标单位，滚动类别轨道探索六大量纲域，实时数值将以粒子流与数字滚动的方式跃然其上。</p>
+    </section>
+
+    <!-- 类别轨道 -->
+    <section class="category-rail glass-bar reveal" aria-label="单位类别">
+      <button class="rail-arrow" data-dir="-1" aria-label="上一类别">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="rail-track" id="rail-track">
+        <!-- 类别芯片由 JS 注入 -->
+      </div>
+      <button class="rail-arrow" data-dir="1" aria-label="下一类别">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </section>
+
+    <!-- 3D 转换舞台 -->
+    <section class="convert-stage reveal">
+
+      <!-- 源面板（3D 翻牌） -->
+      <div class="flip-card from-card" id="from-card">
+        <div class="flip-inner" id="from-inner">
+          <div class="flip-face flip-front">
+            <span class="face-label">FROM · 源</span>
+            <button class="unit-pick" id="from-pick">
+              <span class="unit-glyph" id="from-glyph">m</span>
+              <span class="unit-name" id="from-name">米</span>
+              <svg class="unit-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="value-row">
+              <input class="value-input" id="from-value" type="number" inputmode="decimal" value="1" autocomplete="off" />
+              <span class="value-unit" id="from-unit-badge">m</span>
+            </div>
+          </div>
+          <div class="flip-face flip-back" id="from-back">
+            <span class="face-label">选择源单位</span>
+            <div class="unit-list" id="from-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 中央交换 / 结果 -->
+      <div class="convert-core">
+        <button class="swap-btn" id="swap-btn" aria-label="交换源与目标">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 16V4M7 4L3 8M7 4l4 4M17 8v12M17 20l4-4M17 20l-4-4"/>
+          </svg>
+        </button>
+        <div class="equal-flow" aria-hidden="true">
+          <span class="flow-dot"></span>
+          <span class="flow-dot"></span>
+          <span class="flow-dot"></span>
+        </div>
+        <div class="result-readout" id="result-readout">
+          <span class="result-num" id="result-num">1.0000</span>
+          <span class="result-unit" id="result-unit">m</span>
+        </div>
+        <div class="core-foot">
+          <span class="core-formula" id="core-formula">1 m = 1 m</span>
+        </div>
+      </div>
+
+      <!-- 目标面板（3D 翻牌） -->
+      <div class="flip-card to-card" id="to-card">
+        <div class="flip-inner" id="to-inner">
+          <div class="flip-face flip-front">
+            <span class="face-label">TO · 目标</span>
+            <button class="unit-pick" id="to-pick">
+              <span class="unit-glyph" id="to-glyph">m</span>
+              <span class="unit-name" id="to-name">米</span>
+              <svg class="unit-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="value-row">
+              <span class="value-display" id="to-value">1.0000</span>
+              <span class="value-unit" id="to-unit-badge">m</span>
+            </div>
+          </div>
+          <div class="flip-face flip-back" id="to-back">
+            <span class="face-label">选择目标单位</span>
+            <div class="unit-list" id="to-list"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 预设速选 -->
+    <section class="preset-strip glass-bar reveal">
+      <span class="strip-title">常用速换</span>
+      <div class="preset-row" id="preset-row"></div>
+    </section>
+
+    <!-- 历史记录 -->
+    <section class="history-panel glass-bar reveal">
+      <div class="history-head">
+        <span class="history-title">转换记录</span>
+        <button class="history-clear" id="history-clear">清空</button>
+      </div>
+      <ul class="history-list" id="history-list">
+        <li class="history-empty">暂无记录 · 开始你的第一次转换</li>
+      </ul>
+    </section>
+
+    <footer class="stage-foot reveal">
+      <span>Maintainer · EDEN</span>
+      <span>Vanilla JS + CSS3 · Zero Build</span>
+    </footer>
+
+  </main>
+
+  <!-- 涟漪层 -->
+  <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

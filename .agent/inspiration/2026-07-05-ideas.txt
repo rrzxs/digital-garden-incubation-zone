@@ -1,0 +1,6 @@
+page-flow - WebGPU驱动的页面转场编排器
+catalog-glider - 极简作品集滚动浏览交互
+data-center-builder - 可视化数据中心搭建模拟器
+unit-convert-3d - 三维单位换算可视化器
+motion-bakery - 动画缓动曲线调色台
+character-sculpt - 数字角色旋转展示交互
