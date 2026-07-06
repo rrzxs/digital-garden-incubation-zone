@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-06",
+  "name": "page-transition-studio",
+  "description": "WebGPU无缝转场预览台",
+  "tagline": "Transitions That Feel Like Magic",
+  "interaction": "Drag between two web canvases and watch them morph seamlessly via WebGPU shaders. Tweak transition presets, duration, and easing in real time with live split-screen preview. Export your favorite as copy-pasteable GLSL/WGSL code.",
+  "directory": "seeds/page-transition-studio/",
+  "status": "incubated"
+}

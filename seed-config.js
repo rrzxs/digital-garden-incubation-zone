@@ -1100,6 +1100,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Page Transition Studio 页面过渡实验室',
+      description: '沉浸式页面过渡动效剧场。6 种电影级过渡模式（液态形变/裁切揭示/尺度纵深/故障溶解/幕帘裂分/轨道流转）实时切换预览，5 幕叙事内容、流体粒子场、专属缓动曲线 HUD，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/page-transition-studio/index.html',
+      tags: ['Interactive', 'Transition', 'Animation', 'Micro-interaction'],
+      icon: '↬',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
