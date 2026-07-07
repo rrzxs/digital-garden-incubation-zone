@@ -1,0 +1,8 @@
+page-morph - WebGPU驱动的页面转场实验室
+catalog-flow - 极简作品集浏览滚动体验
+collection-vault - 个人藏品数字陈列柜
+gift-finder - 对话式礼物推荐向导
+story-shaper - 品牌叙事长滚动编排器
+digital-sculpture - 3D数字角色定格展示
+overlay-nav - 叠层式导航过渡微交互
+editorial-canvas - 电影级CGI编辑排版器

@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-07",
+  "name": "overlay-nav",
+  "description": "叠层式导航过渡微交互",
+  "tagline": "Layered navigation that unfolds with depth.",
+  "interaction": "导航项以叠层卡片形式展开，点击时新页面从底层向上滑入并带有轻微缩放与视差效果。各层级保持半透明堆叠，用户可通过侧边深度指示器感知当前位置。切换时配合方向性运动，形成空间连贯的层级递进感。",
+  "directory": "seeds/overlay-nav/",
+  "status": "incubated"
+}

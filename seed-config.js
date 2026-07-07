@@ -1110,6 +1110,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Overlay Nav 叠层导航',
+      description: '沉浸式叠层导航微交互。四种流体展开模式（液态形变/径向绽放/幕帘裂分/故障切片）驱动全屏覆盖式导航，弹簧-阻尼菜单动力学、错峰入场、冲击波涟漪与粒子流场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/overlay-nav/index.html',
+      tags: ['Interactive', 'Navigation', 'Animation', 'Micro-interaction'],
+      icon: '⊞',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
