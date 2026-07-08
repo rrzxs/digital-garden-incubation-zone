@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-08",
+  "name": "scroll-cinema",
+  "description": "滚动驱动的电影式画册叙事器",
+  "tagline": "Scroll Becomes Story",
+  "interaction": "As the user scrolls, the page transforms into a cinematic sequence—frames scale, crossfade, and pan in sync with scroll velocity, while captions fade in like film subtitles. Scrubbing up or down reverses the film, giving full directorial control over the narrative pacing.",
+  "directory": "seeds/scroll-cinema/",
+  "status": "incubated"
+}

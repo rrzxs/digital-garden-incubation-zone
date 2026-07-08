@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Cinema | 滚动影院</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- === FLUID GRADIENT BACKGROUND === -->
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <canvas class="particle-canvas" id="particle-canvas"></canvas>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- === FILM GRAIN (scroll-velocity reactive) === -->
+    <div class="grain-overlay" id="grain-overlay"></div>
+
+    <!-- === VIGNETTE === -->
+    <div class="vignette"></div>
+
+    <!-- === BACK LINK === -->
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <!-- === THEME SWITCHER === -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="0" aria-label="Noir"></button>
+        <button class="theme-btn" data-theme="1" aria-label="Sunset"></button>
+        <button class="theme-btn" data-theme="2" aria-label="Ocean"></button>
+        <button class="theme-btn" data-theme="3" aria-label="Forest"></button>
+    </div>
+
+    <!-- === PROGRESS RAIL === -->
+    <nav class="progress-rail">
+        <div class="reel-counter">
+            <span class="reel-current" id="reel-current">01</span>
+            <span class="reel-divider">/</span>
+            <span class="reel-total" id="reel-total">07</span>
+        </div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="fps-readout" id="fps-readout">24 FPS</div>
+    </nav>
+
+    <!-- === SCENE INDICATORS === -->
+    <aside class="scene-indicators" id="scene-indicators"></aside>
+
+    <!-- === HUD: SCROLL VELOCITY === -->
+    <div class="scroll-hud" id="scroll-hud">
+        <div class="hud-label">SCROLL VELOCITY</div>
+        <div class="hud-bar">
+            <div class="hud-bar-fill" id="hud-bar-fill"></div>
+        </div>
+        <div class="hud-value" id="hud-value">0.0</div>
+    </div>
+
+    <!-- === CINEMA STAGE === -->
+    <main class="cinema-stage" id="cinema-stage">
+
+        <!-- ACT 0: OVERTURE -->
+        <section class="scene scene-cover" data-scene="0">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">000</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">OVERTURE</span>
+                    <span class="scene-tc">序章</span>
+                </div>
+                <h1 class="cover-title">
+                    <span class="title-line" data-delay="0">Scroll</span>
+                    <span class="title-line accent" data-delay="200">Cinema</span>
+                </h1>
+                <p class="cover-sub reveal-chars" data-text="Your scroll wheel is the projector. Seven acts unfold as you descend — each frame painted by your motion through the reel.">Your scroll wheel is the projector. Seven acts unfold as you descend — each frame painted by your motion through the reel.</p>
+                <div class="scroll-cue" id="scroll-cue">
+                    <div class="scroll-cue-track">
+                        <div class="scroll-cue-dot"></div>
+                    </div>
+                    <span class="scroll-cue-text">Scroll to project</span>
+                </div>
+            </div>
+            <!-- Letterbox bars -->
+            <div class="letterbox top"></div>
+            <div class="letterbox bottom"></div>
+        </section>
+
+        <!-- ACT 1: THE APERTURE -->
+        <section class="scene" data-scene="1">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">001</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE APERTURE</span>
+                    <span class="scene-tc">光圈</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">A pinhole of light</span>
+                    <span class="heading-line">becomes a universe</span>
+                    <span class="heading-line accent-line">when you let it breathe.</span>
+                </h2>
+                <p class="body-text reveal-chars" data-text="The camera obscura taught us: constrain the light and the world pours in, inverted, alive. Every aperture is a negotiation between what enters and what is held back.">The camera obscura taught us: constrain the light and the world pours in, inverted, alive. Every aperture is a negotiation between what enters and what is held back.</p>
+                <div class="scene-visual aperture-stage">
+                    <div class="aperture-ring" id="aperture-ring">
+                        <div class="aperture-blade blade-1"></div>
+                        <div class="aperture-blade blade-2"></div>
+                        <div class="aperture-blade blade-3"></div>
+                        <div class="aperture-blade blade-4"></div>
+                        <div class="aperture-blade blade-5"></div>
+                        <div class="aperture-blade blade-6"></div>
+                        <div class="aperture-core"></div>
+                    </div>
+                    <div class="aperture-readout">
+                        <span class="readout-label">f/</span>
+                        <span class="readout-value" id="aperture-value">1.4</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT 2: THE SHOT -->
+        <section class="scene" data-scene="2">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">002</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE SHOT</span>
+                    <span class="scene-tc">镜头</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">The dolly glides,</span>
+                    <span class="heading-line">the crane ascends,</span>
+                    <span class="heading-line accent-line">gravity forgets the lens.</span>
+                </h2>
+                <p class="body-text reveal-chars" data-text="Kubrick pushed the camera through corridors of the Overlook and we felt dread in the movement itself. The shot is not what it sees — it is how it moves through space.">Kubrick pushed the camera through corridors of the Overlook and we felt dread in the movement itself. The shot is not what it sees — it is how it moves through space.</p>
+                <div class="scene-visual shot-track">
+                    <div class="track-rail"></div>
+                    <div class="track-rail shadow"></div>
+                    <div class="camera-rig" id="camera-rig">
+                        <div class="camera-body"></div>
+                        <div class="camera-lens"></div>
+                        <div class="camera-light"></div>
+                    </div>
+                    <div class="track-markers">
+                        <span class="marker" style="left:0%">CU</span>
+                        <span class="marker" style="left:25%">MCU</span>
+                        <span class="marker" style="left:50%">MS</span>
+                        <span class="marker" style="left:75%">MLS</span>
+                        <span class="marker" style="left:100%">WS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT 3: THE COLOR GRADE -->
+        <section class="scene" data-scene="3">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">003</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE GRADE</span>
+                    <span class="scene-tc">调色</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">Teal pushes shadows deep,</span>
+                    <span class="heading-line">orange lifts skin warm,</span>
+                    <span class="heading-line accent-line">between them lives the mood.</span>
+                </h2>
+                <p class="body-text reveal-chars" data-text="Deakins baths his frames in sodium amber or steel cyan, and we feel the temperature of the story before a word is spoken. Color grading is silent dialogue.">Deakins baths his frames in sodium amber or steel cyan, and we feel the temperature of the story before a word is spoken. Color grading is silent dialogue.</p>
+                <div class="scene-visual grade-stage">
+                    <div class="grade-swatch grade-before" id="grade-before">
+                        <span class="grade-tag">BEFORE</span>
+                    </div>
+                    <div class="grade-divider" id="grade-divider">
+                        <div class="grade-handle"></div>
+                    </div>
+                    <div class="grade-swatch grade-after" id="grade-after">
+                        <span class="grade-tag">AFTER</span>
+                    </div>
+                    <div class="grade-luts">
+                        <button class="lut-btn active" data-lut="0">Teal &amp; Orange</button>
+                        <button class="lut-btn" data-lut="1">Bleach Bypass</button>
+                        <button class="lut-btn" data-lut="2">Cross Process</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT 4: THE MONTAGE -->
+        <section class="scene" data-scene="4">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">004</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE MONTAGE</span>
+                    <span class="scene-tc">蒙太奇</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">Cut. Cut. Cut.</span>
+                    <span class="heading-line">Each collision births</span>
+                    <span class="heading-line accent-line">a third invisible image.</span>
+                </h2>
+                <p class="body-text reveal-chars" data-text="Eisenstein proved it: place two frames in conflict and the mind generates a synthesis neither contains. Montage is not assembly — it is alchemy performed at twenty-four collisions per second.">Eisenstein proved it: place two frames in conflict and the mind generates a synthesis neither contains. Montage is not assembly — it is alchemy performed at twenty-four collisions per second.</p>
+                <div class="scene-visual montage-grid" id="montage-grid">
+                    <div class="montage-frame" data-color="1"><span class="frame-num">A</span></div>
+                    <div class="montage-frame" data-color="2"><span class="frame-num">B</span></div>
+                    <div class="montage-frame" data-color="3"><span class="frame-num">C</span></div>
+                    <div class="montage-frame" data-color="1"><span class="frame-num">A&prime;</span></div>
+                    <div class="montage-frame" data-color="2"><span class="frame-num">B&prime;</span></div>
+                    <div class="montage-frame" data-color="3"><span class="frame-num">C&prime;</span></div>
+                </div>
+                <div class="montage-meter">
+                    <span class="meter-label">CUTS / SEC</span>
+                    <span class="meter-value" id="montage-value">24</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT 5: THE SCORE -->
+        <section class="scene" data-scene="5">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">005</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">THE SCORE</span>
+                    <span class="scene-tc">配乐</span>
+                </div>
+                <h2 class="scene-heading reveal-lines">
+                    <span class="heading-line">Strings swell beneath</span>
+                    <span class="heading-line">the silence between</span>
+                    <span class="heading-line accent-line">two held breaths.</span>
+                </h2>
+                <p class="body-text reveal-chars" data-text="Zimmer lets a single pedal tone drone for ninety seconds before the brass arrives, and when it does, the room vibrates with accumulated longing. The score manipulates time itself.">Zimmer lets a single pedal tone drone for ninety seconds before the brass arrives, and when it does, the room vibrates with accumulated longing. The score manipulates time itself.</p>
+                <div class="scene-visual score-wave" id="score-wave">
+                    <canvas id="wave-canvas" class="wave-canvas"></canvas>
+                    <div class="wave-controls">
+                        <button class="wave-btn active" data-wave="0">Strings</button>
+                        <button class="wave-btn" data-wave="1">Brass</button>
+                        <button class="wave-btn" data-wave="2">Pulse</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT 6: FIN -->
+        <section class="scene scene-finale" data-scene="6">
+            <div class="scene-inner glass-panel">
+                <div class="scene-meta">
+                    <span class="scene-number">006</span>
+                    <span class="scene-divider">//</span>
+                    <span class="scene-label">FIN</span>
+                    <span class="scene-tc">终</span>
+                </div>
+                <h2 class="finale-title reveal-lines">
+                    <span class="heading-line">The projector cools.</span>
+                    <span class="heading-line accent-line">The reel is yours.</span>
+                </h2>
+                <p class="finale-sub reveal-chars" data-text="You were not the audience — you were the cinematographer. Every scroll was a pan, every pause a held frame. The cinema lives in the space between your decisions.">You were not the audience — you were the cinematographer. Every scroll was a pan, every pause a held frame. The cinema lives in the space between your decisions.</p>
+                <div class="credits-roll" id="credits-roll">
+                    <div class="credit-line">Directed by <span class="credit-name">The Scroller</span></div>
+                    <div class="credit-line">Cinematography <span class="credit-name">Your Scroll Wheel</span></div>
+                    <div class="credit-line">Color by <span class="credit-name">Light &amp; Shadow</span></div>
+                    <div class="credit-line">Score <span class="credit-name">The Sound of Pixels</span></div>
+                    <div class="credit-line">Special Thanks <span class="credit-name">You</span></div>
+                </div>
+                <div class="replay-btn" id="replay-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="1 4 1 10 7 10"/>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                    <span>Reproject from Start</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- === CURSOR LENS === -->
+    <div class="cursor-lens" id="cursor-lens">
+        <div class="lens-inner"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

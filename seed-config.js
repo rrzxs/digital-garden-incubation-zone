@@ -1120,6 +1120,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Cinema 滚动影院',
+      description: '沉浸式滚动影院体验。7 幕场景（光圈/运镜/调色/蒙太奇/配乐）由滚动轮驱动放映，光圈联动、轨道运镜、调色滑块、蒙太奇碰撞、配乐波形，信箱遮幅 + 颗粒噪点 + 自定义光标透镜 + 4种氛围配色，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/scroll-cinema/index.html',
+      tags: ['Interactive', 'Scroll', 'Cinema', 'Micro-interaction'],
+      icon: '⋪',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
