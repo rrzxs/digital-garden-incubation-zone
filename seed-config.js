@@ -1130,6 +1130,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Gift Finder Quiz 礼物寻觅器',
+      description: '沉浸式礼物推荐问答体验。六步温柔问答（收礼者/年纪/气质/场合/预算/心意）驱动标签匹配引擎，从 16 件候选礼物中加权评分输出 Top 推荐，终端式分析日志序列、氛围配色随进度动态迁移、结果卡片含契合度/心意指数/惊喜度与推荐理由，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/gift-finder-quiz/index.html',
+      tags: ['Interactive', 'Quiz', 'Recommendation', 'Micro-interaction'],
+      icon: '🎁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

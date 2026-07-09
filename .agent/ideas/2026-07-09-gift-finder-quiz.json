@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-09",
+  "name": "gift-finder-quiz",
+  "description": "问答式礼物推荐决策器",
+  "tagline": "Find the Gift That Clicks.",
+  "interaction": "使用者回答 5-7 个轻量问题（收礼人关系、场合、性格、预算等），系统根据回答实时匹配并展示最契合的礼物推荐卡片。滑动到最终结果页时附带一段个性化推荐理由，同时提供"再试一次"和"直接购买"两个出口，让从探索到下单的路径一气呵成。",
+  "directory": "seeds/gift-finder-quiz/",
+  "status": "incubated"
+}

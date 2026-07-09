@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Finder Quiz - 礼物寻觅器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <!-- Fluid Mesh Gradient Background -->
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+
+    <!-- Particle Flow Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <main class="app">
+        <!-- Quiz Container -->
+        <div class="quiz-shell glass-card" id="quiz-shell">
+
+            <!-- Progress Header -->
+            <header class="quiz-header">
+                <div class="header-top">
+                    <div class="brand">
+                        <div class="brand-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 12 20 22 4 22 4 12"/>
+                                <rect x="2" y="7" width="20" height="5"/>
+                                <line x1="12" y1="22" x2="12" y2="7"/>
+                                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+                                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                            </svg>
+                        </div>
+                        <div class="brand-text">
+                            <span class="brand-name">Gift Finder</span>
+                            <span class="brand-tag">礼物寻觅器</span>
+                        </div>
+                    </div>
+                    <div class="step-indicator" id="step-indicator">
+                        <span class="step-current">01</span>
+                        <span class="step-divider">/</span>
+                        <span class="step-total">06</span>
+                    </div>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </header>
+
+            <!-- Stage: Questions / Result -->
+            <div class="stage" id="stage">
+
+                <!-- Welcome Screen -->
+                <section class="screen screen-welcome" data-screen="welcome">
+                    <div class="welcome-orb">
+                        <div class="orb-ring orb-ring-1"></div>
+                        <div class="orb-ring orb-ring-2"></div>
+                        <div class="orb-ring orb-ring-3"></div>
+                        <div class="orb-core">
+                            <span class="orb-emoji">🎁</span>
+                        </div>
+                    </div>
+                    <h1 class="screen-title">寻找那份<br>刚刚好的礼物</h1>
+                    <p class="screen-subtitle">六个温柔的问题，将替你聆听收礼者<br>未曾说出口的期待</p>
+                    <button class="cta-btn" id="start-btn">
+                        <span class="cta-label">开始寻觅</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </section>
+
+                <!-- Question Screens (injected by JS) -->
+                <section class="screen screen-question" data-screen="question" hidden>
+                    <div class="question-meta">
+                        <span class="meta-tag" id="meta-tag">关于 TA</span>
+                    </div>
+                    <h2 class="question-title" id="question-title"></h2>
+                    <div class="options-grid" id="options-grid"></div>
+                </section>
+
+                <!-- Analyzing Screen -->
+                <section class="screen screen-analyzing" data-screen="analyzing" hidden>
+                    <div class="analyze-rings">
+                        <div class="ar ar-1"></div>
+                        <div class="ar ar-2"></div>
+                        <div class="ar ar-3"></div>
+                        <div class="ar-core">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h2 class="screen-title analyze-title" id="analyze-title">正在聆听心意</h2>
+                    <div class="analyze-log" id="analyze-log"></div>
+                </section>
+
+                <!-- Result Screen -->
+                <section class="screen screen-result" data-screen="result" hidden>
+                    <div class="result-eyebrow" id="result-eyebrow">为你挑选了</div>
+                    <h2 class="result-title" id="result-title"></h2>
+                    <p class="result-subtitle" id="result-subtitle"></p>
+
+                    <div class="result-card" id="result-card">
+                        <div class="card-glow"></div>
+                        <div class="card-emoji" id="result-emoji">🎁</div>
+                        <div class="card-body">
+                            <div class="card-name" id="result-name"></div>
+                            <div class="card-desc" id="result-desc"></div>
+                            <div class="card-tags" id="result-tags"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-meta-row">
+                        <div class="meta-item">
+                            <span class="meta-key">预算区间</span>
+                            <span class="meta-val" id="result-budget">—</span>
+                        </div>
+                        <div class="meta-divider"></div>
+                        <div class="meta-item">
+                            <span class="meta-key">心意指数</span>
+                            <span class="meta-val" id="result-warmth">—</span>
+                        </div>
+                        <div class="meta-divider"></div>
+                        <div class="meta-item">
+                            <span class="meta-key">惊喜度</span>
+                            <span class="meta-val" id="result-surprise">—</span>
+                        </div>
+                    </div>
+
+                    <div class="reasoning glass-sub" id="reasoning">
+                        <div class="reasoning-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.468V19a2 2 0 1 1-4 0v-.532c0-.895-.356-1.754-.988-2.386z"/>
+                            </svg>
+                        </div>
+                        <p class="reasoning-text" id="reasoning-text"></p>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="action-btn action-primary" id="restart-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 4 23 10 17 10"/>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                            </svg>
+                            <span>再来一次</span>
+                        </button>
+                        <button class="action-btn action-ghost" id="reroll-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+                            </svg>
+                            <span>换一个推荐</span>
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Hint Footer -->
+        <div class="hint-footer" id="hint-footer">
+            <span class="hint-dot"></span>
+            <span class="hint-text">点击选项即可继续</span>
+        </div>
+    </main>
+
+    <!-- Ripple Layer -->
+    <div class="ripple-layer" id="ripple-layer"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

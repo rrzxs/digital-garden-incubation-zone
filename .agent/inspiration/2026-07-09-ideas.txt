@@ -1,0 +1,8 @@
+scroll-cinema - 滚动驱动的沉浸式叙事画布
+gpu-page-transition - WebGPU无缝页面转场演示
+camera-path-gallery - 摄影机轨迹三维滚动画廊
+interactive-comic-builder - 滚动交互式漫画生成器
+gift-finder-quiz - 问答式礼物推荐决策器
+lost-species-tribute - 灭绝物种纪念交互图册
+terminal-persona - 终端风格个人介绍页生成器
+menu-overlay-transition - 全屏遮罩导航过渡微交互
