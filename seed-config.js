@@ -1140,6 +1140,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Catalog 策展陈列室',
+      description: '沉浸式策展产品陈列室。磁吸标签筛选、3D 倾斜卡片物理、光泽跟随、展开式详情覆盖层与粒子流场，12 件器物 × 4 个分类，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/catalog/index.html',
+      tags: ['Interactive', 'Catalog', '3D Tilt', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

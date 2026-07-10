@@ -1,0 +1,6 @@
+catalog - drift — 鼠标驱动的极简目录流式浏览体验
+scroll - cinematic — 滚动驱动的3D相机漫游画廊
+wave-grid - playground — 可调参的3D波动网格生成器
+persistent-transition - demo — 无刷新页面转场动画引擎
+lost-species - tribute — 滚动叙事式已消亡物种纪念页
+audio-commentary - narrator — 带语音解说的滚动式作品呈现器

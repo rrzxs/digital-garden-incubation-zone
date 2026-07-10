@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-10",
+  "name": "catalog",
+  "description": "drift — 鼠标驱动的极简目录流式浏览体验",
+  "tagline": "Drift through your catalog, effortlessly.",
+  "interaction": "Move your mouse to glide horizontally through a minimalist card catalog — momentum carries you forward as you drift, inertia eases you to a halt. Hover any card to expand its detail; flick away to keep flowing.",
+  "directory": "seeds/catalog/",
+  "status": "incubated"
+}

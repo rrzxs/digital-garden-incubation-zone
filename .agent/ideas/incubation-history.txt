@@ -99,3 +99,4 @@ page-transition-studio
 overlay-nav
 scroll-cinema
 gift-finder-quiz
+catalog
