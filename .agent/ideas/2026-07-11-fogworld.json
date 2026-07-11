@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-11",
+  "name": "fogworld",
+  "description": "轻量WebGL雾气无限世界生成器",
+  "tagline": "Drift Through Endless Mist",
+  "interaction": "Drag to glide through an infinite fog-shrouded landscape that procedurally generates as you explore. Adjust density sliders to shift the atmosphere from ethereal wisps to a thick impenetrable haze. The world rebuilds itself in real-time via lightweight WebGL noise fields, ensuring seamless infinite traversal.",
+  "directory": "seeds/fogworld/",
+  "status": "incubated"
+}

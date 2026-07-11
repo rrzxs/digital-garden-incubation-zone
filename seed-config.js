@@ -1150,6 +1150,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Fogworld 雾境',
+      description: '沉浸式雾境探索体验。Simplex 噪声驱动流体雾场，移动光标拨开迷雾揭示隐藏发光节点，罗盘导航、粒子流场、实时遥测与参数调节，4种氛围配色',
+      path: '/seed/seeds/fogworld/index.html',
+      tags: ['Interactive', 'Fog', 'Exploration', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="mist">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fogworld 雾境 — 数字花园</title>
+    <meta name="description" content="沉浸式雾境探索体验。移动光标拨开迷雾，揭示隐藏的发光节点与古老符文。Simplex 噪声驱动雾场流体动力学，4种氛围配色。">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === Fluid Gradient Background === -->
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <!-- === Fog Canvas === -->
+    <canvas id="fog-canvas"></canvas>
+
+    <!-- === Particle Canvas === -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- === Cursor Glow === -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- === Back Link === -->
+    <a class="back-link" href="../../index.html">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === Theme Switcher === -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="mist" title="晨雾">
+            <span class="theme-dot mist-dot"></span>
+        </button>
+        <button class="theme-btn" data-theme="ember" title="余烬">
+            <span class="theme-dot ember-dot"></span>
+        </button>
+        <button class="theme-btn" data-theme="abyss" title="深渊">
+            <span class="theme-dot abyss-dot"></span>
+        </button>
+        <button class="theme-btn" data-theme="verdant" title="翠野">
+            <span class="theme-dot verdant-dot"></span>
+        </button>
+    </div>
+
+    <!-- === Main Content === -->
+    <main class="app">
+
+        <!-- === HUD: Top Bar === -->
+        <header class="hud-top">
+            <div class="hud-brand glass">
+                <div class="brand-icon">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <circle cx="14" cy="14" r="5" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+                        <circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="0.8" opacity="0.35"/>
+                        <circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+                        <circle cx="14" cy="14" r="2" fill="currentColor" opacity="0.8"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1 class="brand-title">Fogworld</h1>
+                    <span class="brand-subtitle">雾境探索 · Fog Realm Exploration</span>
+                </div>
+            </div>
+
+            <div class="hud-stats glass">
+                <div class="stat-block">
+                    <span class="stat-label">已揭示</span>
+                    <span class="stat-value" id="stat-revealed">0</span>
+                    <span class="stat-unit">%</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-block">
+                    <span class="stat-label">节点</span>
+                    <span class="stat-value" id="stat-nodes">0</span>
+                    <span class="stat-unit">/ <span id="stat-total-nodes">7</span></span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-block">
+                    <span class="stat-label">能见度</span>
+                    <span class="stat-value" id="stat-visibility">12</span>
+                    <span class="stat-unit">m</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- === Center Stage === -->
+        <section class="stage" id="stage">
+
+            <!-- Intro Overlay -->
+            <div class="intro-overlay" id="intro-overlay">
+                <div class="intro-content glass">
+                    <div class="intro-icon-ring">
+                        <div class="ring-pulse r1"></div>
+                        <div class="ring-pulse r2"></div>
+                        <div class="ring-pulse r3"></div>
+                        <span class="intro-glyph">◈</span>
+                    </div>
+                    <h2 class="intro-title">迷雾深处，光芒初现</h2>
+                    <p class="intro-desc">移动你的光标，拨开笼罩世界的浓雾。<br>隐藏在雾中的古老节点等待被揭示。</p>
+                    <button class="intro-btn" id="intro-btn">
+                        <span class="btn-text">踏入雾境</span>
+                        <span class="btn-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Discovery Notification -->
+            <div class="discovery-toast" id="discovery-toast">
+                <div class="toast-icon" id="toast-icon">◈</div>
+                <div class="toast-body">
+                    <span class="toast-label">节点已揭示</span>
+                    <span class="toast-name" id="toast-name">Unknown</span>
+                </div>
+            </div>
+
+            <!-- Compass -->
+            <div class="compass glass" id="compass">
+                <div class="compass-ring"></div>
+                <div class="compass-needle" id="compass-needle"></div>
+                <div class="compass-center"></div>
+                <span class="compass-label">N</span>
+            </div>
+        </section>
+
+        <!-- === HUD: Bottom Panel === -->
+        <footer class="hud-bottom">
+            <div class="panel-left glass">
+                <div class="panel-header">
+                    <span class="panel-title">探索日志</span>
+                    <span class="panel-meta" id="explore-time">00:00</span>
+                </div>
+                <div class="log-list" id="log-list">
+                    <div class="log-entry log-empty">
+                        <span class="log-time">--:--</span>
+                        <span class="log-text">等待探索开始...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-center glass">
+                <div class="visibility-bar">
+                    <div class="bar-track">
+                        <div class="bar-fill" id="visibility-bar"></div>
+                        <div class="bar-marks">
+                            <span class="bar-mark"></span>
+                            <span class="bar-mark"></span>
+                            <span class="bar-mark"></span>
+                            <span class="bar-mark"></span>
+                        </div>
+                    </div>
+                    <div class="bar-labels">
+                        <span>浓雾</span>
+                        <span>薄雾</span>
+                        <span>晴朗</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-right glass">
+                <div class="panel-header">
+                    <span class="panel-title">雾场参数</span>
+                </div>
+                <div class="param-list">
+                    <div class="param-row">
+                        <span class="param-name">密度</span>
+                        <input type="range" class="param-slider" id="param-density" min="0.3" max="1.0" step="0.05" value="0.72">
+                        <span class="param-val" id="param-density-val">0.72</span>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-name">扩散</span>
+                        <input type="range" class="param-slider" id="param-spread" min="40" max="180" step="5" value="90">
+                        <span class="param-val" id="param-spread-val">90</span>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-name">流场</span>
+                        <input type="range" class="param-slider" id="param-flow" min="0" max="100" step="5" value="40">
+                        <span class="param-val" id="param-flow-val">40</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- === Completion Overlay === -->
+        <div class="completion-overlay" id="completion-overlay">
+            <div class="completion-content glass">
+                <div class="completion-aura"></div>
+                <div class="completion-ring">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"/>
+                        <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-dasharray="339.292" stroke-dashoffset="0" class="completion-circle" id="completion-circle"/>
+                    </svg>
+                    <span class="completion-glyph">✦</span>
+                </div>
+                <h2 class="completion-title">雾境已散</h2>
+                <p class="completion-desc">所有节点已被揭示。世界在你眼前展开。</p>
+                <button class="completion-btn" id="completion-btn">
+                    <span class="btn-text">重新笼罩</span>
+                    <span class="btn-arrow">↻</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

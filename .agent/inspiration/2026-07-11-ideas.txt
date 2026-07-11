@@ -1,0 +1,6 @@
+moonlog - 月球日志沉浸式滚动叙事工具
+wavegrid - 波纹立方体阵列生成器
+dragmockup - 拖拽式线框图排版器
+scrollcomic - 滚动驱动交互漫画编辑器
+audionarrate - 页内音频旁白播放控件
+fogworld - 轻量WebGL雾气无限世界生成器
