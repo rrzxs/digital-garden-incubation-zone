@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Cube Grid 波态立方阵列 - 沉浸式3D波纹立方体微交互</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Wave<span class="brand-dot">·</span>Cube<span class="brand-dot">·</span>Grid</h1>
+                <p class="brand-subtitle">沉浸式3D波纹立方体微交互</p>
+            </div>
+            <div class="header-actions">
+                <div class="mode-toggle" role="group" aria-label="交互模式">
+                    <button class="mode-btn active" data-mode="ripple" aria-label="涟漪模式" title="涟漪">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6" opacity="0.6"/><circle cx="12" cy="12" r="10" opacity="0.3"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="wave" aria-label="波浪模式" title="波浪">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/><path d="M2 18c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0" opacity="0.5"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="vortex" aria-label="漩涡模式" title="漩涡">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6a6 6 0 0 1 6 6"/><path d="M12 10a2 2 0 0 1 2 2"/><path d="M2 12A10 10 0 0 1 12 2" opacity="0.5"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="pulse" aria-label="脉冲模式" title="脉冲">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l2-7 4 14 2-7h8"/></svg>
+                    </button>
+                    <button class="mode-btn" data-mode="auto" aria-label="自动模式" title="自动">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.8 1 6.5 2.6L21 8"/><path d="M21 3v5h-5"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <div class="cube-grid" id="cube-grid"></div>
+            <canvas id="trail-canvas"></canvas>
+            <div class="stage-hud" id="stage-hud">
+                <div class="hud-row">
+                    <span class="hud-label">MODE</span>
+                    <span class="hud-val" id="hud-mode">RIPPLE</span>
+                </div>
+                <div class="hud-row">
+                    <span class="hud-label">CUBES</span>
+                    <span class="hud-val" id="hud-cubes">0</span>
+                </div>
+                <div class="hud-row">
+                    <span class="hud-label">FPS</span>
+                    <span class="hud-val" id="hud-fps">60</span>
+                </div>
+                <div class="hud-row">
+                    <span class="hud-label">ENERGY</span>
+                    <div class="hud-bar"><div class="hud-bar-fill" id="hud-energy"></div></div>
+                </div>
+            </div>
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">移动鼠标 · 唤醒立方体 · 点击触发脉冲</span>
+            </div>
+        </section>
+
+        <footer class="controls-bar">
+            <div class="control-group">
+                <label class="control-label">波纹半径</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-radius" min="80" max="360" value="180" class="slider">
+                    <span class="slider-val" id="val-radius">180</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">弹性强度</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-strength" min="10" max="100" value="55" class="slider">
+                    <span class="slider-val" id="val-strength">0.55</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">阻尼系数</label>
+                <div class="slider-wrap">
+                    <input type="range" id="ctrl-damping" min="60" max="95" value="80" class="slider">
+                    <span class="slider-val" id="val-damping">0.80</span>
+                </div>
+            </div>
+
+            <div class="palette-group">
+                <button class="palette-btn active" data-palette="aurora" aria-label="极光">
+                    <span class="swatch" style="background:linear-gradient(135deg,#34d399,#06b6d4,#818cf8)"></span>
+                </button>
+                <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                    <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+                </button>
+                <button class="palette-btn" data-palette="bloom" aria-label="绽放">
+                    <span class="swatch" style="background:linear-gradient(135deg,#ec4899,#a855f7,#6366f1)"></span>
+                </button>
+                <button class="palette-btn" data-palette="frost" aria-label="霜晶">
+                    <span class="swatch" style="background:linear-gradient(135deg,#e0e7ff,#bae6fd,#a5f3fc)"></span>
+                </button>
+            </div>
+
+            <div class="action-group">
+                <button class="action-btn" id="btn-pulse">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" opacity="0.5"/><circle cx="12" cy="12" r="12" opacity="0.2"/></svg>
+                    <span>脉冲</span>
+                </button>
+                <button class="action-btn" id="btn-reset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>重置</span>
+                </button>
+                <button class="action-btn primary" id="btn-fullscreen">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                    <span>全屏</span>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

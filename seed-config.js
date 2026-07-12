@@ -1160,6 +1160,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Wave Cube Grid 波态立方阵列',
+      description: '沉浸式3D波纹立方体微交互体验场。弹簧-阻尼物理驱动的3D透视立方体网格，5种力场模式（涟漪/波浪/漩涡/脉冲/自动）、点击涟漪环传播、粒子轨迹流与HUD遥测面板，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/wave-cube-grid/index.html',
+      tags: ['Interactive', '3D', 'Physics', 'Micro-interaction'],
+      icon: '▣',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

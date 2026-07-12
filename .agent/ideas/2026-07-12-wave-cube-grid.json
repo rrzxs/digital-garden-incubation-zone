@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-12",
+  "name": "wave-cube-grid",
+  "description": "三维波浪传播可视化交互背景",
+  "tagline": "Ride the wave in 3D space.",
+  "interaction": "A grid of cubes in 3D space ripples with wave physics as users move their cursor across the surface. Each cube's height and rotation respond to the propagating wave, creating a fluid, organic motion field. Click to drop a new wave source and watch multiple ripples interfere in real time.",
+  "directory": "seeds/wave-cube-grid/",
+  "status": "incubated"
+}

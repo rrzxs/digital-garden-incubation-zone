@@ -1,0 +1,6 @@
+moon-journey - 沉浸式月球探索滚动叙事体验
+wave-cube-grid - 三维波浪传播可视化交互背景
+scroll-comic - 滚动驱动的交互式漫画阅读器
+drag-wireframe - 拖拽式UI线框原型生成与导出
+audio-comment - 带语音批注的作品集叠加展示层
+fog-realm - 轻量WebGL雾气氛围生成器
