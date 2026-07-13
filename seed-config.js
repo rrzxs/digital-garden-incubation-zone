@@ -1170,6 +1170,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Moon Phase Orbit 月相轨道',
+      description: '沉浸式天体律动体验。基于真实天文算法的月相计算，月球沿轨道环绕中心天体，clip-path 实时渲染月相明暗面，拖拽月球调节月相，8 个标准月相节点跳转，日期选择与速度控制，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/moon-phase-orbit/index.html',
+      tags: ['Interactive', 'Astronomy', 'Animation', 'Micro-interaction'],
+      icon: '☾',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

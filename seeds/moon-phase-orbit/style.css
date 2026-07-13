@@ -1,0 +1,1061 @@
+/* ==========================================================================
+   Moon Phase Orbit — 月相轨道
+   沉浸式天体律动 · 流体渐变 + 微晶玻璃态 + 非线性动效
+   ========================================================================== */
+
+/* === Theme Variables === */
+:root {
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: 20px;
+
+    --moon-size: 120px;
+    --core-size: 80px;
+    --orbit-radius: 200px;
+}
+
+/* === Theme: Lunar (Default — 深海银月) === */
+[data-theme="lunar"] {
+    --bg-1: #0a0e27;
+    --bg-2: #131a3e;
+    --blob-1: #1e3a8a;
+    --blob-2: #3730a3;
+    --blob-3: #1e293b;
+    --blob-4: #0f172a;
+    --blob-5: #312e81;
+
+    --accent: #c7d2fe;
+    --accent-2: #818cf8;
+    --accent-3: #e0e7ff;
+    --moon-light: #f8fafc;
+    --moon-dark: #1e293b;
+    --text-primary: rgba(248, 250, 252, 0.95);
+    --text-secondary: rgba(199, 210, 254, 0.6);
+    --text-dim: rgba(199, 210, 254, 0.35);
+    --glow: rgba(199, 210, 254, 0.4);
+    --ring-color: rgba(199, 210, 254, 0.08);
+    --track-color: rgba(199, 210, 254, 0.12);
+}
+
+/* === Theme: Eclipse (月蚀 — 血月深红) === */
+[data-theme="eclipse"] {
+    --bg-1: #1a0511;
+    --bg-2: #2d0a1f;
+    --blob-1: #881337;
+    --blob-2: #9f1239;
+    --blob-3: #4c0519;
+    --blob-4: #1a0511;
+    --blob-5: #6b0f2e;
+
+    --accent: #fda4af;
+    --accent-2: #f43f5e;
+    --accent-3: #fecdd3;
+    --moon-light: #fff1f2;
+    --moon-dark: #4c0519;
+    --text-primary: rgba(255, 241, 242, 0.95);
+    --text-secondary: rgba(253, 164, 175, 0.6);
+    --text-dim: rgba(253, 164, 175, 0.35);
+    --glow: rgba(244, 63, 94, 0.4);
+    --ring-color: rgba(253, 164, 175, 0.08);
+    --track-color: rgba(253, 164, 175, 0.12);
+}
+
+/* === Theme: Cosmos (星海 — 深空紫蓝) === */
+[data-theme="cosmos"] {
+    --bg-1: #050414;
+    --bg-2: #0d0a2e;
+    --blob-1: #6d28d9;
+    --blob-2: #4c1d95;
+    --blob-3: #1e1b4b;
+    --blob-4: #050414;
+    --blob-5: #5b21b6;
+
+    --accent: #c4b5fd;
+    --accent-2: #a78bfa;
+    --accent-3: #ddd6fe;
+    --moon-light: #faf5ff;
+    --moon-dark: #1e1b4b;
+    --text-primary: rgba(250, 245, 255, 0.95);
+    --text-secondary: rgba(196, 181, 253, 0.6);
+    --text-dim: rgba(196, 181, 253, 0.35);
+    --glow: rgba(167, 139, 250, 0.4);
+    --ring-color: rgba(196, 181, 253, 0.08);
+    --track-color: rgba(196, 181, 253, 0.12);
+}
+
+/* === Theme: Amber (琥珀 — 暖金秋夜) === */
+[data-theme="amber"] {
+    --bg-1: #1a1206;
+    --bg-2: #2a1e0e;
+    --blob-1: #b45309;
+    --blob-2: #92400e;
+    --blob-3: #451a03;
+    --blob-4: #1a1206;
+    --blob-5: #78350f;
+
+    --accent: #fcd34d;
+    --accent-2: #f59e0b;
+    --accent-3: #fef3c7;
+    --moon-light: #fffbeb;
+    --moon-dark: #451a03;
+    --text-primary: rgba(255, 251, 235, 0.95);
+    --text-secondary: rgba(252, 211, 77, 0.6);
+    --text-dim: rgba(252, 211, 77, 0.35);
+    --glow: rgba(245, 158, 11, 0.4);
+    --ring-color: rgba(252, 211, 77, 0.08);
+    --track-color: rgba(252, 211, 77, 0.12);
+}
+
+/* === Reset & Base === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-1);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background 1.5s var(--ease-out-expo), color 0.8s var(--ease-out-expo);
+    cursor: none;
+}
+
+/* === Fluid Mesh Gradient Background === */
+.mesh-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.mesh-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    z-index: -1;
+    transition: background 1.5s var(--ease-out-expo);
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    mix-blend-mode: screen;
+    opacity: 0.5;
+    will-change: transform;
+    transition: background 1.5s var(--ease-out-expo);
+}
+
+.blob-1 {
+    width: 600px;
+    height: 600px;
+    background: var(--blob-1);
+    top: -10%;
+    left: -5%;
+    animation: blob-drift-1 25s var(--ease-in-out-soft) infinite alternate;
+}
+
+.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: var(--blob-2);
+    bottom: -10%;
+    right: -5%;
+    animation: blob-drift-2 30s var(--ease-in-out-soft) infinite alternate;
+}
+
+.blob-3 {
+    width: 400px;
+    height: 400px;
+    background: var(--blob-3);
+    top: 40%;
+    left: 30%;
+    animation: blob-drift-3 20s var(--ease-in-out-soft) infinite alternate;
+}
+
+.blob-4 {
+    width: 450px;
+    height: 450px;
+    background: var(--blob-4);
+    top: 60%;
+    left: 5%;
+    animation: blob-drift-4 28s var(--ease-in-out-soft) infinite alternate;
+}
+
+.blob-5 {
+    width: 350px;
+    height: 350px;
+    background: var(--blob-5);
+    top: 5%;
+    right: 15%;
+    animation: blob-drift-5 22s var(--ease-in-out-soft) infinite alternate;
+}
+
+@keyframes blob-drift-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(120px, 80px) scale(1.15); }
+}
+@keyframes blob-drift-2 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-100px, -60px) scale(1.2); }
+}
+@keyframes blob-drift-3 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-80px, 100px) scale(0.85); }
+}
+@keyframes blob-drift-4 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(90px, -70px) scale(1.1); }
+}
+@keyframes blob-drift-5 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-60px, 90px) scale(1.25); }
+}
+
+/* === Starfield Canvas === */
+#starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+#orbit-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* === Custom Cursor Glow === */
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 3;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out-expo);
+    will-change: transform;
+}
+
+body:hover .cursor-glow {
+    opacity: 1;
+}
+
+/* === Back Link === */
+.back-link {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.back-link:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-2);
+    transform: translateX(-4px);
+}
+
+.back-link svg {
+    transition: transform 0.4s var(--ease-out-expo);
+}
+
+.back-link:hover svg {
+    transform: translateX(-3px);
+}
+
+/* === App Shell === */
+.app-shell {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "nav nav"
+        "stage info"
+        "footer footer";
+    gap: 16px;
+    padding: 88px 32px 24px;
+}
+
+/* === Glass Utility === */
+.glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* === Top Navigation === */
+.top-nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nav-icon {
+    font-size: 32px;
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--glow);
+    animation: moon-pulse 4s var(--ease-in-out-soft) infinite;
+}
+
+@keyframes moon-pulse {
+    0%, 100% { text-shadow: 0 0 20px var(--glow); }
+    50% { text-shadow: 0 0 40px var(--glow), 0 0 60px var(--glow); }
+}
+
+.nav-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.nav-subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+}
+
+.nav-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.theme-toggle {
+    display: flex;
+    gap: 2px;
+    padding: 4px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.theme-btn {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    border-radius: 10px;
+    cursor: none;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.theme-btn:hover {
+    color: var(--text-primary);
+}
+
+.theme-btn.active {
+    background: var(--accent-2);
+    color: var(--moon-light);
+    box-shadow: 0 0 20px var(--glow);
+}
+
+/* === Orbit Stage === */
+.orbit-stage {
+    grid-area: stage;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+/* Orbit Rings (decorative) */
+.orbit-ring {
+    position: absolute;
+    border: 1px solid var(--ring-color);
+    border-radius: 50%;
+    animation: ring-rotate 60s linear infinite;
+}
+
+.orbit-ring-1 {
+    width: calc(var(--orbit-radius) * 2);
+    height: calc(var(--orbit-radius) * 2);
+}
+
+.orbit-ring-2 {
+    width: calc(var(--orbit-radius) * 2.6);
+    height: calc(var(--orbit-radius) * 2.6);
+    border-style: dashed;
+    animation: ring-rotate 90s linear infinite reverse;
+    opacity: 0.6;
+}
+
+.orbit-ring-3 {
+    width: calc(var(--orbit-radius) * 3.2);
+    height: calc(var(--orbit-radius) * 3.2);
+    animation: ring-rotate 120s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes ring-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Central Body (Earth indicator) */
+.central-body {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.central-glow {
+    position: absolute;
+    width: calc(var(--core-size) * 3);
+    height: calc(var(--core-size) * 3);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 60%);
+    animation: glow-breathe 6s var(--ease-in-out-soft) infinite;
+    pointer-events: none;
+}
+
+@keyframes glow-breathe {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 0.9; }
+}
+
+.central-core {
+    width: var(--core-size);
+    height: var(--core-size);
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-3), var(--accent-2), var(--moon-dark));
+    box-shadow:
+        0 0 40px var(--glow),
+        inset -10px -10px 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    transition: all 0.6s var(--ease-out-expo);
+}
+
+.central-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--moon-light);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    opacity: 0.8;
+}
+
+.central-percent {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--moon-light);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    opacity: 0.9;
+}
+
+/* Moon Orbit Container */
+.moon-orbit {
+    position: absolute;
+    width: calc(var(--orbit-radius) * 2);
+    height: calc(var(--orbit-radius) * 2);
+    pointer-events: none;
+    will-change: transform;
+}
+
+.moon-body {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--moon-size);
+    height: var(--moon-size);
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    cursor: none;
+    will-change: transform;
+}
+
+.moon-surface {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--moon-light), #d4d4d8 70%, #a1a1aa);
+    box-shadow:
+        0 0 60px var(--glow),
+        0 0 120px var(--glow),
+        inset -8px -8px 25px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: box-shadow 0.6s var(--ease-out-expo);
+}
+
+.moon-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--moon-dark);
+    will-change: clip-path;
+    transition: clip-path 0.1s linear;
+}
+
+.moon-crater {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.crater-1 {
+    width: 18px;
+    height: 18px;
+    top: 25%;
+    left: 30%;
+}
+
+.crater-2 {
+    width: 12px;
+    height: 12px;
+    top: 55%;
+    left: 55%;
+}
+
+.crater-3 {
+    width: 8px;
+    height: 8px;
+    top: 40%;
+    left: 65%;
+}
+
+/* === Info Panel === */
+.info-panel {
+    grid-area: info;
+    width: 280px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-self: center;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.info-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    padding: 4px 12px;
+    border: 1px solid var(--accent-2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.info-illumination {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--accent-3);
+    text-shadow: 0 0 20px var(--glow);
+}
+
+.info-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+}
+
+.info-value {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: color 0.3s var(--ease-out-expo);
+}
+
+.info-value.mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+.info-lunar-date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.lunar-icon {
+    font-size: 14px;
+    color: var(--accent-2);
+    font-weight: 600;
+}
+
+.lunar-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* === Timeline Section === */
+.timeline-section {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(900px, calc(100% - 64px));
+    padding: 20px 28px 16px;
+    z-index: 15;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.timeline-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+}
+
+.timeline-subtitle {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+}
+
+.phase-timeline {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.phase-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: none;
+    transition: all 0.4s var(--ease-out-expo);
+    flex: 1;
+}
+
+.node-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--moon-dark);
+    border: 1.5px solid var(--glass-border);
+    transition: all 0.4s var(--ease-out-expo);
+    position: relative;
+    overflow: hidden;
+}
+
+.phase-node:hover .node-circle {
+    border-color: var(--accent-2);
+    transform: scale(1.2);
+}
+
+.phase-node.active .node-circle {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--glow);
+    transform: scale(1.3);
+}
+
+.node-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    transition: color 0.4s var(--ease-out-expo);
+    white-space: nowrap;
+}
+
+.phase-node:hover .node-label,
+.phase-node.active .node-label {
+    color: var(--text-primary);
+}
+
+.timeline-track {
+    height: 4px;
+    background: var(--track-color);
+    border-radius: 2px;
+    position: relative;
+    margin-top: 4px;
+}
+
+.track-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent-3));
+    box-shadow: 0 0 12px var(--glow);
+    transition: width 0.3s var(--ease-out-expo);
+}
+
+.track-handle {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-3);
+    border: 2px solid var(--accent);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px var(--glow);
+    cursor: none;
+    transition: left 0.3s var(--ease-out-expo);
+}
+
+.track-handle:hover {
+    transform: translate(-50%, -50%) scale(1.3);
+}
+
+/* === Control Panel === */
+.control-panel {
+    position: fixed;
+    top: 88px;
+    right: 32px;
+    z-index: 15;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    min-width: 32px;
+}
+
+.speed-buttons {
+    display: flex;
+    gap: 2px;
+}
+
+.speed-btn {
+    padding: 6px 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    border-radius: 8px;
+    cursor: none;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.speed-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--glass-border);
+}
+
+.speed-btn.active {
+    background: var(--accent-2);
+    color: var(--moon-light);
+    box-shadow: 0 0 12px var(--glow);
+}
+
+.date-input {
+    padding: 6px 10px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    cursor: none;
+    outline: none;
+    transition: border-color 0.4s var(--ease-out-expo);
+    color-scheme: dark;
+}
+
+.date-input:hover,
+.date-input:focus {
+    border-color: var(--accent-2);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 400;
+    cursor: none;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.action-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-2);
+    transform: translateY(-2px);
+}
+
+.action-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* === Footer === */
+.reel-footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.footer-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-dim);
+    font-size: 12px;
+}
+
+.hint-key {
+    padding: 3px 8px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.06em;
+}
+
+.hint-sep {
+    color: var(--text-dim);
+    opacity: 0.5;
+}
+
+.hint-label {
+    margin-left: 4px;
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+
+.footer-meta {
+    display: flex;
+    gap: 8px;
+}
+
+.meta-chip {
+    padding: 4px 10px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+}
+
+.meta-chip.mono {
+    font-family: var(--font-mono);
+}
+
+/* === Responsive === */
+@media (max-width: 900px) {
+    :root {
+        --moon-size: 90px;
+        --core-size: 60px;
+        --orbit-radius: 150px;
+    }
+
+    .app-shell {
+        padding: 80px 16px 16px;
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "nav"
+            "stage"
+            "footer";
+    }
+
+    .info-panel {
+        display: none;
+    }
+
+    .control-panel {
+        top: 76px;
+        right: 16px;
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .speed-btn {
+        padding: 5px 7px;
+        font-size: 10px;
+    }
+
+    .nav-subtitle {
+        display: none;
+    }
+
+    .timeline-section {
+        bottom: 60px;
+        width: calc(100% - 32px);
+        padding: 14px 18px 12px;
+    }
+
+    .node-label {
+        font-size: 9px;
+    }
+
+    .back-link span {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --moon-size: 70px;
+        --orbit-radius: 110px;
+    }
+
+    .theme-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .control-panel {
+        flex-direction: row;
+        flex-wrap: wrap;
+        max-width: calc(100% - 32px);
+    }
+
+    .phase-node:nth-child(even) .node-label {
+        display: none;
+    }
+}
+
+/* === Entry Animation === */
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.top-nav { animation: fade-up 0.8s var(--ease-out-expo) both; }
+.orbit-stage { animation: scale-in 1.2s var(--ease-out-expo) 0.2s both; }
+.info-panel { animation: fade-up 0.8s var(--ease-out-expo) 0.4s both; }
+.timeline-section { animation: fade-up 0.8s var(--ease-out-expo) 0.6s both; }
+.control-panel { animation: fade-in 0.8s var(--ease-out-expo) 0.8s both; }
+.reel-footer { animation: fade-in 0.8s var(--ease-out-expo) 1s both; }

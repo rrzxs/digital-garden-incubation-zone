@@ -1,0 +1,6 @@
+moon-phase-orbit - 月相追踪与轨道可视化交互体验
+wave-cube-field - 3D波纹立方体网格交互背景生成器
+scroll-cinematic - 滚动驱动电影感3D相机画廊
+audio-soundscape-walker - 带语音解说的交互式作品集叙事
+wireframe-print-kits - 拖拽式UI线框图构建与打印导出
+fog-mesh-wanderer - 轻量WebGL雾气网格无限漫游体验

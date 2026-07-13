@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Phase Orbit 月相轨道 - 沉浸式天体律动</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="lunar">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+    </div>
+
+    <canvas id="starfield"></canvas>
+    <canvas id="orbit-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">☾</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Moon Phase Orbit</h1>
+                    <span class="nav-subtitle">月相轨道 · 沉浸式天体律动</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="lunar" aria-label="月华">月华</button>
+                    <button class="theme-btn" data-theme="eclipse" aria-label="月蚀">月蚀</button>
+                    <button class="theme-btn" data-theme="cosmos" aria-label="星海">星海</button>
+                    <button class="theme-btn" data-theme="amber" aria-label="琥珀">琥珀</button>
+                </div>
+            </div>
+        </nav>
+
+        <section class="orbit-stage" id="orbit-stage">
+            <div class="orbit-ring orbit-ring-1"></div>
+            <div class="orbit-ring orbit-ring-2"></div>
+            <div class="orbit-ring orbit-ring-3"></div>
+
+            <div class="central-body">
+                <div class="central-glow" id="central-glow"></div>
+                <div class="central-core" id="central-core">
+                    <span class="central-label" id="central-label">FULL MOON</span>
+                    <span class="central-percent" id="central-percent">100%</span>
+                </div>
+            </div>
+
+            <div class="moon-orbit" id="moon-orbit">
+                <div class="moon-body" id="moon-body">
+                    <div class="moon-surface"></div>
+                    <div class="moon-shadow" id="moon-shadow"></div>
+                    <div class="moon-crater crater-1"></div>
+                    <div class="moon-crater crater-2"></div>
+                    <div class="moon-crater crater-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="info-panel glass">
+            <div class="info-header">
+                <span class="info-badge" id="phase-badge">FULL MOON</span>
+                <span class="info-illumination" id="illumination">100.0%</span>
+            </div>
+            <div class="info-body">
+                <div class="info-row">
+                    <span class="info-label">月相名称</span>
+                    <span class="info-value" id="phase-name">满月</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">轨道角度</span>
+                    <span class="info-value mono" id="orbit-angle">0.0°</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">照亮率</span>
+                    <span class="info-value mono" id="illum-percent">100.0%</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">月龄</span>
+                    <span class="info-value mono" id="moon-age">14.8 天</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">距离</span>
+                    <span class="info-value mono" id="moon-distance">384,400 km</span>
+                </div>
+            </div>
+            <div class="info-lunar-date" id="lunar-date">
+                <span class="lunar-icon">初一</span>
+                <span class="lunar-text" id="lunar-text">农历 · 望</span>
+            </div>
+        </aside>
+
+        <section class="timeline-section glass">
+            <div class="timeline-header">
+                <h2 class="timeline-title">月相周期</h2>
+                <span class="timeline-subtitle">29.53 天 · 朔望月</span>
+            </div>
+            <div class="phase-timeline" id="phase-timeline">
+                <div class="phase-node" data-phase="0" data-name="新月" data-en="NEW MOON">
+                    <div class="node-circle"></div>
+                    <span class="node-label">新月</span>
+                </div>
+                <div class="phase-node" data-phase="0.125" data-name="蛾眉月" data-en="WAXING CRESCENT">
+                    <div class="node-circle"></div>
+                    <span class="node-label">蛾眉月</span>
+                </div>
+                <div class="phase-node" data-phase="0.25" data-name="上弦月" data-en="FIRST QUARTER">
+                    <div class="node-circle"></div>
+                    <span class="node-label">上弦月</span>
+                </div>
+                <div class="phase-node" data-phase="0.375" data-name="盈凸月" data-en="WAXING GIBBOUS">
+                    <div class="node-circle"></div>
+                    <span class="node-label">盈凸月</span>
+                </div>
+                <div class="phase-node" data-phase="0.5" data-name="满月" data-en="FULL MOON">
+                    <div class="node-circle"></div>
+                    <span class="node-label">满月</span>
+                </div>
+                <div class="phase-node" data-phase="0.625" data-name="亏凸月" data-en="WANING GIBBOUS">
+                    <div class="node-circle"></div>
+                    <span class="node-label">亏凸月</span>
+                </div>
+                <div class="phase-node" data-phase="0.75" data-name="下弦月" data-en="LAST QUARTER">
+                    <div class="node-circle"></div>
+                    <span class="node-label">下弦月</span>
+                </div>
+                <div class="phase-node" data-phase="0.875" data-name="残月" data-en="WANING CRESCENT">
+                    <div class="node-circle"></div>
+                    <span class="node-label">残月</span>
+                </div>
+            </div>
+            <div class="timeline-track">
+                <div class="track-fill" id="track-fill"></div>
+                <div class="track-handle" id="track-handle"></div>
+            </div>
+        </section>
+
+        <section class="control-panel glass">
+            <div class="control-group">
+                <span class="control-label">速度</span>
+                <div class="speed-buttons" id="speed-buttons">
+                    <button class="speed-btn" data-speed="0">暂停</button>
+                    <button class="speed-btn active" data-speed="1">1×</button>
+                    <button class="speed-btn" data-speed="5">5×</button>
+                    <button class="speed-btn" data-speed="20">20×</button>
+                    <button class="speed-btn" data-speed="100">100×</button>
+                </div>
+            </div>
+            <div class="control-group">
+                <span class="control-label">日期</span>
+                <input type="date" class="date-input" id="date-input" />
+            </div>
+            <div class="control-group">
+                <button class="action-btn" id="reset-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                        <path d="M3 3v5h5"/>
+                    </svg>
+                    <span>今日</span>
+                </button>
+                <button class="action-btn" id="auto-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3" id="auto-play-icon"/>
+                    </svg>
+                    <span>自动</span>
+                </button>
+            </div>
+        </section>
+
+        <footer class="reel-footer">
+            <div class="footer-hint">
+                <span class="hint-key">Drag</span>
+                <span class="hint-sep">·</span>
+                <span class="hint-key">Scroll</span>
+                <span class="hint-label">调节月相</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip mono" id="fps-counter">60 FPS</span>
+                <span class="meta-chip mono" id="cycle-counter">Cycle 0</span>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
