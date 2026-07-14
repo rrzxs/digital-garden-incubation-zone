@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Morph Canvas 材质形变画布 - 沉浸式材质形变体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="morph-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">◈</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Material Morph</h1>
+                    <span class="nav-subtitle">沉浸式材质形变画布</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <div class="morph-stage" id="morph-stage">
+            <canvas id="render-canvas"></canvas>
+            <div class="stage-overlay">
+                <div class="overlay-label" id="overlay-label">LIQUID</div>
+                <div class="overlay-hint" id="overlay-hint">移动光标扰动材质 · 点击切换形变</div>
+            </div>
+        </div>
+
+        <div class="controls-bar">
+            <div class="material-panel glass">
+                <span class="panel-label">材质</span>
+                <div class="material-buttons" id="material-buttons">
+                    <button class="material-btn active" data-material="liquid">
+                        <span class="mat-icon">●</span>
+                        <span class="mat-name">液态</span>
+                    </button>
+                    <button class="material-btn" data-material="glass">
+                        <span class="mat-icon">◇</span>
+                        <span class="mat-name">玻璃</span>
+                    </button>
+                    <button class="material-btn" data-material="crystal">
+                        <span class="mat-icon">◈</span>
+                        <span class="mat-name">晶体</span>
+                    </button>
+                    <button class="material-btn" data-material="plasma">
+                        <span class="mat-icon">◉</span>
+                        <span class="mat-name">等离子</span>
+                    </button>
+                    <button class="material-btn" data-material="fabric">
+                        <span class="mat-icon">▦</span>
+                        <span class="mat-name">织物</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="param-panel glass">
+                <span class="panel-label">参数</span>
+                <div class="param-group">
+                    <label class="param-label">张力</label>
+                    <input type="range" class="param-slider" id="param-tension" min="1" max="10" value="5" step="0.5">
+                    <span class="param-value" id="val-tension">5.0</span>
+                </div>
+                <div class="param-group">
+                    <label class="param-label">粘度</label>
+                    <input type="range" class="param-slider" id="param-viscosity" min="1" max="10" value="4" step="0.5">
+                    <span class="param-value" id="val-viscosity">4.0</span>
+                </div>
+                <div class="param-group">
+                    <label class="param-label">噪声</label>
+                    <input type="range" class="param-slider" id="param-noise" min="0" max="10" value="3" step="0.5">
+                    <span class="param-value" id="val-noise">3.0</span>
+                </div>
+            </div>
+
+            <div class="action-panel glass">
+                <span class="panel-label">操作</span>
+                <div class="action-buttons">
+                    <button class="action-btn" id="btn-pulse" aria-label="脉冲">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        脉冲
+                    </button>
+                    <button class="action-btn" id="btn-randomize" aria-label="随机">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20l16-16M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                        随机
+                    </button>
+                    <button class="action-btn" id="btn-reset" aria-label="重置">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="hud-bar glass" id="hud-bar">
+            <div class="hud-item">
+                <span class="hud-label">MATERIAL</span>
+                <span class="hud-value" id="hud-material">LIQUID</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">VERTICES</span>
+                <span class="hud-value" id="hud-vertices">0</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">PARTICLES</span>
+                <span class="hud-value" id="hud-particles">0</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">FPS</span>
+                <span class="hud-value" id="hud-fps">0</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">ENERGY</span>
+                <span class="hud-value" id="hud-energy">0.00</span>
+            </div>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

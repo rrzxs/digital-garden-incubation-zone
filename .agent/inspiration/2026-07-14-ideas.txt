@@ -1,0 +1,7 @@
+moon-path-tracker - 追踪月相与日夜轨迹的沉浸式天体可视化
+drag-wireframe-kit - 拖拽式线框原型生成与打印工具
+scroll-comic-engine - 滚动驱动的交互式漫画叙事引擎
+wave-cube-field - 可交互的3D波纹立方体网格背景
+material-morph-canvas - 滚动驱动的3D材质形变展示
+fog-world-walker - 轻量WebGL雾气无限世界漫游体验
+ma-negative-space - 以留白叙事的滚动交互实验

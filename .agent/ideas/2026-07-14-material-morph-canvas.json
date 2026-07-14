@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-14",
+  "name": "material-morph-canvas",
+  "description": "滚动驱动的3D材质形变展示",
+  "tagline": "Scroll Through Matter, Reshaped.",
+  "interaction": "As the user scrolls, a central 3D form fluidly morphs between distinct physical materials—glass, metal, fabric, stone—driven by scroll progress as the morph driver. Velocity and direction influence surface displacement and luminance, making the transformation feel tactile and responsive rather than linear.",
+  "directory": "seeds/material-morph-canvas/",
+  "status": "incubated"
+}

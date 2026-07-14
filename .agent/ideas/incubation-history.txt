@@ -103,3 +103,4 @@ catalog
 fogworld
 wave-cube-grid
 moon-phase-orbit
+material-morph-canvas

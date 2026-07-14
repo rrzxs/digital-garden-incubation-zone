@@ -1180,6 +1180,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Material Morph Canvas 材质形变画布',
+      description: '沉浸式材质形变交互体验场。弹簧-阻尼物理驱动的顶点网格在五种材质形态（液态/玻璃/晶体/等离子/织物）间实时形变，光标力场扰动、点击冲击波涟漪、粒子流场与参数调节，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/material-morph-canvas/index.html',
+      tags: ['Interactive', 'Physics', 'Morphing', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
