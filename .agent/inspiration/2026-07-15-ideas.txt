@@ -1,0 +1,6 @@
+sky-clock - 二十四小时天空渐变时钟，将日照与云量映射为色彩长条
+wave-cube-grid - 可交互三维波浪网格，鼠标扰动立方体阵列模拟传播
+scroll-comic - 滚动驱动的分镜漫画阅读器，翻页触发挥墨与视差动效
+blender-camera-fly - 导入Blender相机路径做滚动巡游式三维展厅
+fog-atmosphere - 轻量WebGL雾气氛围生成器，可调色温与能见度做沉浸背景
+morphing-hero - 滚动驱动的主视觉物体形变器，物体随页面进度连续变形

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Comic | 滚动漫画</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === AMBIENT BACKGROUND === -->
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <canvas class="particle-canvas" id="particle-canvas"></canvas>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- === CURSOR GLOW === -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- === BACK LINK === -->
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === TOP HUD === -->
+    <header class="top-hud glass-pill">
+        <div class="hud-left">
+            <span class="hud-dot"></span>
+            <span class="hud-label">SCROLL COMIC</span>
+        </div>
+        <div class="hud-center">
+            <span class="hud-chapter" id="hud-chapter">CHAPTER 01</span>
+        </div>
+        <div class="hud-right">
+            <span class="hud-page" id="hud-page">PANEL 00 / 07</span>
+        </div>
+    </header>
+
+    <!-- === SIDE PROGRESS RAIL === -->
+    <nav class="progress-rail" id="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="panel-dots" id="panel-dots"></div>
+    </nav>
+
+    <!-- === COMIC STAGE === -->
+    <main class="comic-stage" id="comic-stage">
+
+        <!-- === COVER === -->
+        <section class="panel panel-cover" data-panel="0">
+            <div class="cover-inner">
+                <div class="cover-meta">
+                    <span class="meta-issue">ISSUE #001</span>
+                    <span class="meta-divider">/</span>
+                    <span class="meta-date">SIGNAL FROM THE VOID</span>
+                </div>
+                <h1 class="cover-title">
+                    <span class="title-line" data-delay="0">SCROLL</span>
+                    <span class="title-line title-accent" data-delay="200">COMIC</span>
+                </h1>
+                <div class="cover-tagline reveal-chars" data-text="A story told not in pages — but in the act of scrolling itself. Every gesture reveals the next frame.">
+                    A story told not in pages — but in the act of scrolling itself. Every gesture reveals the next frame.
+                </div>
+                <div class="scroll-cue" id="scroll-cue">
+                    <div class="scroll-cue-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </div>
+                    <span class="scroll-cue-text">向下滚动开始</span>
+                </div>
+            </div>
+            <div class="cover-glow"></div>
+        </section>
+
+        <!-- === PANEL 1: THE SIGNAL === -->
+        <section class="panel" data-panel="1">
+            <div class="panel-grid panel-grid-split">
+                <div class="panel-art glass-panel" data-parallax="0.15">
+                    <div class="art-scene art-signal">
+                        <div class="signal-tower">
+                            <div class="tower-base"></div>
+                            <div class="tower-mast"></div>
+                            <div class="tower-beacon"></div>
+                            <div class="signal-wave wave-1"></div>
+                            <div class="signal-wave wave-2"></div>
+                            <div class="signal-wave wave-3"></div>
+                        </div>
+                        <div class="art-stars" id="stars-1"></div>
+                    </div>
+                    <div class="panel-number">01</div>
+                </div>
+                <div class="panel-narrative glass-panel" data-parallax="0.05">
+                    <div class="panel-label">CHAPTER I</div>
+                    <h2 class="panel-heading reveal-lines">
+                        <span class="heading-line">The signal</span>
+                        <span class="heading-line heading-accent">arrived at midnight.</span>
+                    </h2>
+                    <div class="dialogue-bubble">
+                        <p class="dialogue-text reveal-chars" data-text="It wasn't sound. It wasn't light. It was something in between — a vibration in the bones of the world itself.">
+                            It wasn't sound. It wasn't light. It was something in between — a vibration in the bones of the world itself.
+                        </p>
+                        <div class="dialogue-tail"></div>
+                    </div>
+                    <div class="panel-caption">
+                        <span class="caption-label">SFX</span>
+                        <span class="caption-text">VWOOOM — VWOOOM — VWOOOM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PANEL 2: THE AWAKENING === -->
+        <section class="panel" data-panel="2">
+            <div class="panel-grid panel-grid-stacked">
+                <div class="panel-art panel-art-wide glass-panel" data-parallax="0.2">
+                    <div class="art-scene art-awakening">
+                        <div class="eye-container">
+                            <div class="eye-glow"></div>
+                            <div class="eye-shape">
+                                <div class="eye-iris"></div>
+                                <div class="eye-pupil"></div>
+                            </div>
+                            <div class="eye-lid eye-lid-top"></div>
+                            <div class="eye-lid eye-lid-bottom"></div>
+                        </div>
+                        <div class="art-stars art-stars-sparse" id="stars-2"></div>
+                    </div>
+                    <div class="panel-number">02</div>
+                </div>
+                <div class="panel-narrative-below glass-panel" data-parallax="0.08">
+                    <div class="panel-label">CHAPTER II</div>
+                    <h2 class="panel-heading reveal-lines">
+                        <span class="heading-line">Something</span>
+                        <span class="heading-line heading-accent">opened its eye.</span>
+                    </h2>
+                    <div class="dual-dialogue">
+                        <div class="dialogue-bubble dialogue-left">
+                            <p class="dialogue-text reveal-chars" data-text="Do you see it? The sky is... breathing.">Do you see it? The sky is... breathing.</p>
+                            <div class="dialogue-tail"></div>
+                        </div>
+                        <div class="dialogue-bubble dialogue-right">
+                            <p class="dialogue-text reveal-chars" data-text="Don't look directly at it. Whatever you do — don't look.">Don't look directly at it. Whatever you do — don't look.</p>
+                            <div class="dialogue-tail"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PANEL 3: THE DESCENT === -->
+        <section class="panel" data-panel="3">
+            <div class="panel-grid panel-grid-full">
+                <div class="panel-art panel-art-tall glass-panel" data-parallax="0.12">
+                    <div class="art-scene art-descent">
+                        <div class="descent-tunnel">
+                            <div class="tunnel-ring tunnel-ring-1"></div>
+                            <div class="tunnel-ring tunnel-ring-2"></div>
+                            <div class="tunnel-ring tunnel-ring-3"></div>
+                            <div class="tunnel-ring tunnel-ring-4"></div>
+                            <div class="tunnel-ring tunnel-ring-5"></div>
+                            <div class="tunnel-core"></div>
+                            <div class="descent-figure" id="descent-figure"></div>
+                        </div>
+                    </div>
+                    <div class="panel-number">03</div>
+                </div>
+                <div class="panel-narrative-overlay glass-panel" data-parallax="0.04">
+                    <div class="panel-label">CHAPTER III</div>
+                    <h2 class="panel-heading reveal-lines">
+                        <span class="heading-line">Down and down</span>
+                        <span class="heading-line heading-accent">into the silence.</span>
+                    </h2>
+                    <p class="panel-body reveal-chars" data-text="Gravity reversed. The ground became sky. The sky became memory. And still the signal pulsed — calling, always calling, deeper into the dark.">
+                        Gravity reversed. The ground became sky. The sky became memory. And still the signal pulsed — calling, always calling, deeper into the dark.
+                    </p>
+                    <div class="panel-caption">
+                        <span class="caption-label">NARRATION</span>
+                        <span class="caption-text">They say the void listens back.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PANEL 4: THE ENCOUNTER === -->
+        <section class="panel" data-panel="4">
+            <div class="panel-grid panel-grid-split-reverse">
+                <div class="panel-narrative glass-panel" data-parallax="0.06">
+                    <div class="panel-label">CHAPTER IV</div>
+                    <h2 class="panel-heading reveal-lines">
+                        <span class="heading-line">It was not</span>
+                        <span class="heading-line heading-accent">what she expected.</span>
+                    </h2>
+                    <div class="dialogue-bubble dialogue-bubble-large">
+                        <p class="dialogue-text reveal-chars" data-text="You took your time. I've been waiting here since before your sun learned how to burn.">
+                            You took your time. I've been waiting here since before your sun learned how to burn.
+                        </p>
+                        <div class="dialogue-tail"></div>
+                    </div>
+                    <div class="panel-caption">
+                        <span class="caption-label">REACTION</span>
+                        <span class="caption-text">Her heart forgot how to beat for exactly three seconds.</span>
+                    </div>
+                </div>
+                <div class="panel-art glass-panel" data-parallax="0.18">
+                    <div class="art-scene art-encounter">
+                        <div class="entity-figure">
+                            <div class="entity-aura"></div>
+                            <div class="entity-body">
+                                <div class="entity-core"></div>
+                                <div class="entity-ring entity-ring-1"></div>
+                                <div class="entity-ring entity-ring-2"></div>
+                                <div class="entity-ring entity-ring-3"></div>
+                                <div class="entity-shard shard-1"></div>
+                                <div class="entity-shard shard-2"></div>
+                                <div class="entity-shard shard-3"></div>
+                                <div class="entity-shard shard-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-number">04</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PANEL 5: THE CHOICE === -->
+        <section class="panel" data-panel="5">
+            <div class="panel-grid panel-grid-full">
+                <div class="panel-art panel-art-split-2 glass-panel" data-parallax="0.1">
+                    <div class="art-scene art-choice">
+                        <div class="choice-left">
+                            <div class="choice-orb choice-orb-warm"></div>
+                            <div class="choice-label">RETURN</div>
+                        </div>
+                        <div class="choice-divider"></div>
+                        <div class="choice-right">
+                            <div class="choice-orb choice-orb-cool"></div>
+                            <div class="choice-label">CONTINUE</div>
+                        </div>
+                        <div class="choice-figure"></div>
+                    </div>
+                    <div class="panel-number">05</div>
+                </div>
+                <div class="panel-narrative-below glass-panel" data-parallax="0.05">
+                    <div class="panel-label">CHAPTER V</div>
+                    <h2 class="panel-heading reveal-lines">
+                        <span class="heading-line">Two paths.</span>
+                        <span class="heading-line heading-accent">One impossible decision.</span>
+                    </h2>
+                    <div class="dual-dialogue">
+                        <div class="dialogue-bubble dialogue-left">
+                            <p class="dialogue-text reveal-chars" data-text="Go back. Forget any of this happened. Live your life.">Go back. Forget any of this happened. Live your life.</p>
+                            <div class="dialogue-tail"></div>
+                        </div>
+                        <div class="dialogue-bubble dialogue-right">
+                            <p class="dialogue-text reveal-chars" data-text="Or stay. Learn what the universe has been trying to tell you.">Or stay. Learn what the universe has been trying to tell you.</p>
+                            <div class="dialogue-tail"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PANEL 6: THE MERGING === -->
+        <section class="panel" data-panel="6">
+            <div class="panel-grid panel-grid-stacked">
+                <div class="panel-art panel-art-wide glass-panel" data-parallax="0.16">
+                    <div class="art-scene art-merge">
+                        <div class="merge-core">
+                            <div class="merge-spiral spiral-1"></div>
+                            <div class="merge-spiral spiral-2"></div>
+                            <div class="merge-spiral spiral-3"></div>
+                            <div class="merge-center"></div>
+                            <div class="merge-particle mp-1"></div>
+                            <div class="merge-particle mp-2"></div>
+                            <div class="merge-particle mp-3"></div>
+                            <div class="merge-particle mp-4"></div>
+                            <div class="merge-particle mp-5"></div>
+                            <div class="merge-particle mp-6"></div>
+                        </div>
+                    </div>
+                    <div class="panel-number">06</div>
+                </div>
+                <div class="panel-narrative-below glass-panel" data-parallax="0.07">
+                    <div class="panel-label">CHAPTER VI</div>
+                    <h2 class="panel-heading reveal-lines">
+                        <span class="heading-line">She chose</span>
+                        <span class="heading-line heading-accent">to become.</span>
+                    </h2>
+                    <p class="panel-body reveal-chars" data-text="Not return. Not continue. Something else entirely. She reached out — and the void reached back. Two became one. The signal became a voice. The voice became a name.">
+                        Not return. Not continue. Something else entirely. She reached out — and the void reached back. Two became one. The signal became a voice. The voice became a name.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- === PANEL 7: FINALE === -->
+        <section class="panel panel-finale" data-panel="7">
+            <div class="finale-inner glass-panel">
+                <div class="panel-label">EPILOGUE</div>
+                <h2 class="finale-title reveal-lines">
+                    <span class="heading-line">And the signal</span>
+                    <span class="heading-line heading-accent">never stopped.</span>
+                </h2>
+                <p class="finale-text reveal-chars" data-text="Somewhere, in the space between stars, a new beacon pulses. It speaks in a voice that was once human — and is now something far more. It waits. It calls. And somewhere, on a small blue world, someone looks up at the night sky... and begins to listen.">
+                    Somewhere, in the space between stars, a new beacon pulses. It speaks in a voice that was once human — and is now something far more. It waits. It calls. And somewhere, on a small blue world, someone looks up at the night sky... and begins to listen.
+                </p>
+                <div class="finale-beacon">
+                    <div class="beacon-core"></div>
+                    <div class="beacon-ring beacon-ring-1"></div>
+                    <div class="beacon-ring beacon-ring-2"></div>
+                    <div class="beacon-ring beacon-ring-3"></div>
+                </div>
+                <div class="finale-credits" id="finale-credits">
+                    <div class="credit-line">STORY <span class="credit-name">The Void</span></div>
+                    <div class="credit-line">ART <span class="credit-name">Light & Shadow</span></div>
+                    <div class="credit-line">LETTERS <span class="credit-name">Silence Itself</span></div>
+                    <div class="credit-line">EDITOR <span class="credit-name">Time</span></div>
+                    <div class="credit-line">SPECIAL THANKS <span class="credit-name">You, the Reader</span></div>
+                </div>
+                <button class="replay-btn" id="replay-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="1 4 1 10 7 10"/>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+                    </svg>
+                    <span>从头阅读</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

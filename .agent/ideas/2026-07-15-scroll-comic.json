@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-15",
+  "name": "scroll-comic",
+  "description": "滚动驱动的分镜漫画阅读器，翻页触发挥墨与视差动效",
+  "tagline": "Scroll the Story Alive",
+  "interaction": "当用户向下滚动页面时，漫画分镜以电影般的节奏依次激活——每一格画面通过挥墨式遮罩动画显形，伴随前景与背景的视差位移产生纵深感。滚动速度与墨迹扩散动态绑定，快滚触发飞溅特效，慢滚则让墨色温柔晕染，整个阅读过程像亲手揭开一幅流动的水墨长卷。",
+  "directory": "seeds/scroll-comic/",
+  "status": "incubated"
+}

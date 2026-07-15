@@ -1190,6 +1190,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Comic 滚动漫画',
+      description: '沉浸式滚动漫画叙事体验。7幕科幻故事分镜随滚动逐一展开，纯 CSS 艺术场景（信号塔脉冲/巨眼觉醒/深渊隧道/实体碎片/抉择双球/螺旋融合）、逐字对话揭示、视差深度层与粒子流场，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/scroll-comic/index.html',
+      tags: ['Interactive', 'Scroll', 'Comic', 'Micro-interaction'],
+      icon: '◧',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
