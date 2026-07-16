@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-16",
+  "name": "blender-camera-gallery",
+  "description": "滚动驱动的相机路径三维画廊",
+  "tagline": "Scroll the Depth, Frame the World",
+  "interaction": "用户的滚动行为驱动相机沿预定义的三维路径穿行于立体画廊空间，深度感与透视变化随滚轮节奏实时呈现。作品以悬浮于空间中的"画框"形式陈列，相机经过时自动聚焦并触发展示动画，营造电影般的沉浸式浏览体验。滚动速度影响相机的运动流畅度与景深效果，让用户仿佛导演自己的三维艺术漫游。",
+  "directory": "seeds/blender-camera-gallery/",
+  "status": "incubated"
+}

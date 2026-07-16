@@ -1,0 +1,6 @@
+sky-gradient-clock - 二十四小时天空色彩渐变时钟
+scroll-comic-builder - 滚动驱动交互式漫画生成器
+wave-cube-grid - 波纹传播立方体网格背景生成器
+blender-camera-gallery - 滚动驱动的相机路径三维画廊
+fog-atmosphere-scene - 轻量WebGL雾气氛围场景生成器
+material-morph-hero - 滚动驱动材质变形主视觉生成器

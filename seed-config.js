@@ -1200,6 +1200,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Blender Camera Gallery 景别画廊',
+      description: '沉浸式相机景别画廊。模拟 Blender 视口的镜头切换体验——六组相机角度在 3D 轨道上飞行，拖拽旋转视角、点击聚焦景别、景深参数联动，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/blender-camera-gallery/index.html',
+      tags: ['Interactive', '3D', 'Camera', 'Micro-interaction'],
+      icon: '◷',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

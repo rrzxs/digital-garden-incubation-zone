@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blender Camera Gallery · 景别画廊</title>
+    <meta name="description" content="沉浸式相机景别画廊。模拟 Blender 视口的镜头切换体验——六组相机角度在 3D 轨道上轨道飞行，拖拽旋转视角、点击聚焦景别、景深模糊与曝光联动，流体渐变背景 + 微晶玻璃态容器，4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">◷</span>
+            <div class="brand-text">
+                <span class="brand-title">Camera Gallery</span>
+                <span class="brand-sub">景别画廊 · 视口轨道</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="hud" id="hud">
+                <span class="hud-dot" id="hud-dot"></span>
+                <span class="hud-text" id="hud-text">拖拽轨道 · 切换镜头</span>
+            </div>
+            <div class="palette-picker" role="group" aria-label="氛围配色">
+                <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora" aria-label="极光配色"></button>
+                <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember" aria-label="余烬配色"></button>
+                <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss" aria-label="深渊配色"></button>
+                <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid" aria-label="兰若配色"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主舞台 -->
+    <main class="stage">
+        <!-- 序言 -->
+        <section class="preamble reveal">
+            <span class="pre-tag">VIEWPORT / 2026</span>
+            <h1 class="pre-title">
+                <span class="pre-line">Six lenses,</span>
+                <span class="pre-line pre-italic">one orbit</span>
+                <span class="pre-line">of light.</span>
+            </h1>
+            <p class="pre-desc">六组相机悬浮在轨道上。拖拽让它们围绕中心旋转，点击任意镜头即可聚焦——景深会自动收缩，光圈将随之呼吸。这是一座关于"凝视方式"的微缩画廊。</p>
+        </section>
+
+        <!-- 相机轨道舞台 -->
+        <section class="viewport-stage" aria-label="相机景别轨道">
+            <div class="viewport-scene" id="viewport-scene">
+                <div class="orbit-ring orbit-ring-outer" aria-hidden="true"></div>
+                <div class="orbit-ring orbit-ring-mid" aria-hidden="true"></div>
+                <div class="orbit-ring orbit-ring-inner" aria-hidden="true"></div>
+                <div class="orbit-core" aria-hidden="true">
+                    <span class="core-glyph">◷</span>
+                </div>
+                <div class="orbit-tilt" id="orbit-tilt">
+                    <div class="orbit-carousel" id="orbit-carousel">
+                        <!-- 相机卡片由 JS 注入 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 轨道控制 -->
+            <div class="orbit-controls">
+                <button class="orbit-btn" id="orbit-prev" aria-label="上一个镜头">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="orbit-meta">
+                    <span class="orbit-index" id="orbit-index">01</span>
+                    <span class="orbit-divider">/</span>
+                    <span class="orbit-total" id="orbit-total">06</span>
+                </div>
+                <button class="orbit-btn" id="orbit-next" aria-label="下一个镜头">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- 镜头详情面板 -->
+        <section class="lens-panel glass-bar reveal" id="lens-panel" aria-live="polite">
+            <div class="lens-panel-left">
+                <span class="lens-id" id="lens-id">CAM_01</span>
+                <h2 class="lens-title" id="lens-title">—</h2>
+                <p class="lens-desc" id="lens-desc">拖拽轨道以查看镜头详情</p>
+                <div class="lens-tags" id="lens-tags"></div>
+            </div>
+            <div class="lens-panel-right">
+                <div class="param-row">
+                    <span class="param-label">FOCAL</span>
+                    <span class="param-val mono" id="lens-focal">—</span>
+                    <div class="param-bar"><div class="param-fill" id="bar-focal"></div></div>
+                </div>
+                <div class="param-row">
+                    <span class="param-label">APERTURE</span>
+                    <span class="param-val mono" id="lens-aperture">—</span>
+                    <div class="param-bar"><div class="param-fill" id="bar-aperture"></div></div>
+                </div>
+                <div class="param-row">
+                    <span class="param-label">EXPOSURE</span>
+                    <span class="param-val mono" id="lens-exposure">—</span>
+                    <div class="param-bar"><div class="param-fill" id="bar-exposure"></div></div>
+                </div>
+                <div class="param-row">
+                    <span class="param-label">ANGLE</span>
+                    <span class="param-val mono" id="lens-angle">—</span>
+                    <div class="param-bar"><div class="param-fill" id="bar-angle"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 景别选择器 -->
+        <section class="shot-selector reveal" id="shot-selector" aria-label="景别选择">
+            <!-- JS 注入 -->
+        </section>
+
+        <!-- 脚注 -->
+        <footer class="stage-foot reveal">
+            <span class="foot-glyph">◷</span>
+            <span class="foot-text">Orbit · Focus · Breathe — 相机的三段呼吸。</span>
+            <span class="foot-counter">SHOT <span id="shot-counter">1</span>/6</span>
+        </footer>
+    </main>
+
+    <!-- 光标跟随光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- 涟漪层 -->
+    <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,885 @@
+/* ==========================================================================
+   Blender Camera Gallery · 景别画廊
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ========================================================================== */
+
+/* === 设计令牌 / Design Tokens === */
+:root {
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+    --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-display: 'Outfit', system-ui, sans-serif;
+    --font-mono: 'Share Tech Mono', 'JetBrains Mono', monospace;
+
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-highlight: rgba(255, 255, 255, 0.18);
+    --glass-blur: 24px;
+
+    /* Aurora palette (default) */
+    --accent-1: #7af0c8;
+    --accent-2: #6a9cf0;
+    --accent-3: #c4a8f0;
+    --bg-deep: #060912;
+    --bg-mid: #0a1020;
+    --text-primary: rgba(255, 255, 255, 0.92);
+    --text-secondary: rgba(255, 255, 255, 0.56);
+    --text-tertiary: rgba(255, 255, 255, 0.32);
+}
+
+/* === Palettes === */
+body[data-palette="aurora"] {
+    --accent-1: #7af0c8;
+    --accent-2: #6a9cf0;
+    --accent-3: #c4a8f0;
+    --bg-deep: #060912;
+    --bg-mid: #0a1020;
+}
+
+body[data-palette="ember"] {
+    --accent-1: #f0a07a;
+    --accent-2: #f0c44a;
+    --accent-3: #f06a6a;
+    --bg-deep: #0f0806;
+    --bg-mid: #1a0e08;
+}
+
+body[data-palette="abyss"] {
+    --accent-1: #7aa8f0;
+    --accent-2: #4ac8f0;
+    --accent-3: #7af0d8;
+    --bg-deep: #040810;
+    --bg-mid: #080f1a;
+}
+
+body[data-palette="orchid"] {
+    --accent-1: #b488f0;
+    --accent-2: #f088d0;
+    --accent-3: #88b8f0;
+    --bg-deep: #0a0612;
+    --bg-mid: #120a1a;
+}
+
+/* === Reset === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+    transition: background 1.2s var(--ease-out-expo);
+}
+
+::selection {
+    background: var(--accent-1);
+    color: var(--bg-deep);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* === 流体网格渐变背景 === */
+.mesh-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: radial-gradient(ellipse at top, var(--bg-mid), var(--bg-deep) 70%);
+    transition: background 1.2s var(--ease-out-expo);
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    mix-blend-mode: screen;
+    opacity: 0.55;
+    will-change: transform;
+}
+
+.blob-1 {
+    width: 600px; height: 600px;
+    background: var(--accent-1);
+    top: -10%; left: -5%;
+    animation: drift-1 22s var(--ease-in-out-quint) infinite alternate;
+}
+.blob-2 {
+    width: 500px; height: 500px;
+    background: var(--accent-2);
+    bottom: -15%; right: -8%;
+    animation: drift-2 28s var(--ease-in-out-quint) infinite alternate;
+}
+.blob-3 {
+    width: 400px; height: 400px;
+    background: var(--accent-3);
+    top: 40%; left: 50%;
+    animation: drift-3 18s var(--ease-in-out-quint) infinite alternate;
+}
+.blob-4 {
+    width: 350px; height: 350px;
+    background: var(--accent-1);
+    bottom: 10%; left: 20%;
+    animation: drift-4 25s var(--ease-in-out-quint) infinite alternate;
+}
+.blob-5 {
+    width: 300px; height: 300px;
+    background: var(--accent-2);
+    top: 15%; right: 25%;
+    animation: drift-5 20s var(--ease-in-out-quint) infinite alternate;
+}
+
+@keyframes drift-1 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(120px, 80px) scale(1.2); }
+}
+@keyframes drift-2 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-100px, -60px) scale(0.85); }
+}
+@keyframes drift-3 {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-60%, -40%) scale(1.3); }
+}
+@keyframes drift-4 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(80px, -100px) scale(1.15); }
+}
+@keyframes drift-5 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-120px, 60px) scale(0.9); }
+}
+
+/* 噪点颗粒 */
+.grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+}
+
+/* === 粒子画布 === */
+#particle-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* === 微晶玻璃态基础 === */
+.glass-bar {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* === 返回链接 === */
+.back-link {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--text-secondary);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    transition: all 0.5s var(--ease-out-expo);
+}
+.back-link:hover {
+    color: var(--text-primary);
+    border-color: var(--glass-highlight);
+    transform: translateX(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* === 顶部控制条 === */
+.topbar {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 14px 28px;
+    border-radius: 100px;
+    max-width: calc(100vw - 48px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.brand-glyph {
+    font-size: 1.5rem;
+    color: var(--accent-1);
+    text-shadow: 0 0 20px var(--accent-1);
+    animation: spin-slow 12s linear infinite;
+    display: inline-block;
+}
+@keyframes spin-slow {
+    to { transform: rotate(360deg); }
+}
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.brand-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    line-height: 1;
+}
+.brand-sub {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.hud {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+}
+.hud-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    box-shadow: 0 0 12px var(--accent-1);
+    animation: pulse-dot 2s var(--ease-in-out-quint) infinite;
+}
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+}
+.hud-text {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.palette-picker {
+    display: flex;
+    gap: 8px;
+}
+.palette-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--dot);
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.5;
+    transition: all 0.5s var(--ease-out-expo);
+}
+.palette-dot:hover {
+    opacity: 0.85;
+    transform: scale(1.15);
+}
+.palette-dot.active {
+    opacity: 1;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 16px var(--dot);
+    transform: scale(1.1);
+}
+
+/* === 主舞台 === */
+.stage {
+    position: relative;
+    z-index: 10;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 140px 48px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+/* === 序言 === */
+.preamble {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.pre-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--accent-1);
+    text-transform: uppercase;
+}
+.pre-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    display: flex;
+    flex-direction: column;
+}
+.pre-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s var(--ease-out-expo), transform 1.2s var(--ease-out-expo);
+    transition-delay: calc(var(--reveal-i, 0) * 120ms);
+}
+.preamble.reveal.active .pre-line { opacity: 1; transform: translateY(0); }
+.preamble.reveal.active .pre-line:nth-child(1) { --reveal-i: 0; }
+.preamble.reveal.active .pre-line:nth-child(2) { --reveal-i: 1; }
+.preamble.reveal.active .pre-line:nth-child(3) { --reveal-i: 2; }
+.pre-italic {
+    font-style: italic;
+    font-weight: 300;
+    background: linear-gradient(120deg, var(--accent-1), var(--accent-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.pre-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s var(--ease-out-expo) 0.5s, transform 1.2s var(--ease-out-expo) 0.5s;
+}
+.preamble.reveal.active .pre-desc { opacity: 1; transform: translateY(0); }
+
+/* === 视口舞台 === */
+.viewport-stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    perspective: 1400px;
+    user-select: none;
+}
+
+.viewport-scene {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    transform-style: preserve-3d;
+    cursor: grab;
+}
+.viewport-scene.dragging { cursor: grabbing; }
+
+/* 轨道环 */
+.orbit-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    transform: translate(-50%, -50%) rotateX(72deg);
+    pointer-events: none;
+}
+.orbit-ring-outer {
+    width: 760px; height: 760px;
+    opacity: 0.25;
+    border-style: dashed;
+}
+.orbit-ring-mid {
+    width: 560px; height: 560px;
+    opacity: 0.18;
+}
+.orbit-ring-inner {
+    width: 360px; height: 360px;
+    opacity: 0.12;
+    border-style: dotted;
+}
+
+/* 中心核心 */
+.orbit-core {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+    pointer-events: none;
+}
+.core-glyph {
+    font-size: 2.2rem;
+    color: var(--accent-1);
+    text-shadow: 0 0 30px var(--accent-1);
+    animation: spin-slow 20s linear infinite reverse;
+    opacity: 0.6;
+}
+
+/* 轨道倾斜容器 */
+.orbit-tilt {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.8s var(--ease-out-expo);
+}
+
+/* 轮播 */
+.orbit-carousel {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    transform-style: preserve-3d;
+}
+
+/* === 相机卡片 === */
+.cam-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 260px;
+    margin: -130px 0 0 -100px;
+    border-radius: 20px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 20px 50px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition:
+        transform 0.6s var(--ease-out-expo),
+        box-shadow 0.6s var(--ease-out-expo),
+        opacity 0.6s var(--ease-out-expo),
+        border-color 0.6s var(--ease-out-expo);
+    will-change: transform;
+}
+
+.cam-card:hover {
+    border-color: var(--glass-highlight);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(var(--accent-rgb, 122, 240, 200), 0.2);
+}
+
+.cam-card.focused {
+    border-color: var(--accent-1);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 30px 80px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(var(--accent-rgb, 122, 240, 200), 0.4);
+}
+
+.cam-preview {
+    position: relative;
+    height: 140px;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+}
+.cam-preview svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.cam-preview::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.4));
+    pointer-events: none;
+}
+.cam-id {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    background: rgba(0,0,0,0.35);
+    padding: 3px 8px;
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+.cam-corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--accent-1);
+    opacity: 0.6;
+}
+.cam-corner.tl { top: 8px; right: 8px; border-right: none; border-bottom: none; }
+.cam-corner.br { bottom: 8px; left: 8px; border-left: none; border-top: none; }
+
+.cam-info {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.cam-shot {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+.cam-focal {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+}
+
+/* === 轨道控制 === */
+.orbit-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.orbit-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.5s var(--ease-out-expo);
+}
+.orbit-btn:hover {
+    color: var(--accent-1);
+    border-color: var(--glass-highlight);
+    box-shadow: 0 0 24px rgba(var(--accent-rgb, 122, 240, 200), 0.3);
+    transform: scale(1.08);
+}
+.orbit-btn:active { transform: scale(0.95); }
+.orbit-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: var(--font-mono);
+}
+.orbit-index {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--accent-1);
+    min-width: 36px;
+    text-align: center;
+    transition: color 0.5s var(--ease-out-expo);
+}
+.orbit-divider {
+    color: var(--text-tertiary);
+    font-size: 1rem;
+}
+.orbit-total {
+    color: var(--text-tertiary);
+    font-size: 1rem;
+}
+
+/* === 镜头详情面板 === */
+.lens-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    padding: 36px 44px;
+    border-radius: 24px;
+    min-height: 220px;
+}
+.lens-panel-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.lens-id {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-1);
+}
+.lens-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    transition: opacity 0.4s var(--ease-out-expo);
+}
+.lens-title.fading { opacity: 0; }
+.lens-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    max-width: 400px;
+    transition: opacity 0.4s var(--ease-out-expo);
+}
+.lens-desc.fading { opacity: 0; }
+.lens-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+.lens-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(var(--accent-rgb, 122, 240, 200), 0.1);
+    border: 1px solid rgba(var(--accent-rgb, 122, 240, 200), 0.2);
+    color: var(--accent-1);
+}
+
+.lens-panel-right {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-content: center;
+}
+.param-row {
+    display: grid;
+    grid-template-columns: 90px 80px 1fr;
+    align-items: center;
+    gap: 16px;
+}
+.param-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+}
+.param-val {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    transition: opacity 0.4s var(--ease-out-expo);
+}
+.param-val.fading { opacity: 0; }
+.mono { font-family: var(--font-mono); letter-spacing: 0.04em; }
+.param-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+}
+.param-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    width: 0%;
+    transition: width 0.8s var(--ease-out-expo);
+    box-shadow: 0 0 10px var(--accent-1);
+}
+
+/* === 景别选择器 === */
+.shot-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+.shot-chip {
+    padding: 10px 20px;
+    border-radius: 100px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.5s var(--ease-out-expo);
+    font-family: var(--font-sans);
+    font-weight: 500;
+}
+.shot-chip:hover {
+    color: var(--text-primary);
+    border-color: var(--glass-highlight);
+    transform: translateY(-3px);
+}
+.shot-chip.active {
+    color: var(--bg-deep);
+    background: var(--accent-1);
+    border-color: var(--accent-1);
+    box-shadow: 0 8px 30px rgba(var(--accent-rgb, 122, 240, 200), 0.4);
+}
+
+/* === 脚注 === */
+.stage-foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+    color: var(--text-tertiary);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+}
+.foot-glyph {
+    color: var(--accent-1);
+    font-size: 1.1rem;
+    opacity: 0.7;
+}
+.foot-text { font-family: var(--font-mono); }
+.foot-counter {
+    font-family: var(--font-mono);
+    color: var(--accent-1);
+}
+
+/* === 光标光晕 === */
+.cursor-glow {
+    position: fixed;
+    top: 0; left: 0;
+    width: 400px;
+    height: 400px;
+    margin: -200px 0 0 -200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--accent-rgb, 122, 240, 200), 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out-expo);
+    will-change: transform;
+}
+body:hover .cursor-glow { opacity: 1; }
+
+/* === 涟漪层 === */
+.ripple-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    overflow: hidden;
+}
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--accent-1);
+    transform: translate(-50%, -50%);
+    animation: ripple-expand 1.2s var(--ease-out-expo) forwards;
+    pointer-events: none;
+}
+@keyframes ripple-expand {
+    0% {
+        width: 0; height: 0;
+        opacity: 0.8;
+        border-width: 3px;
+    }
+    100% {
+        width: 400px; height: 400px;
+        opacity: 0;
+        border-width: 0.5px;
+    }
+}
+
+/* === 入场动画 === */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s var(--ease-out-expo), transform 1.2s var(--ease-out-expo);
+}
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === 响应式 === */
+@media (max-width: 900px) {
+    .topbar {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 20px;
+        border-radius: 24px;
+    }
+    .stage { padding: 200px 24px 100px; gap: 60px; }
+    .viewport-scene { height: 420px; }
+    .cam-card { width: 160px; height: 210px; margin: -105px 0 0 -80px; }
+    .cam-preview { height: 110px; }
+    .lens-panel {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 28px;
+    }
+    .param-row { grid-template-columns: 80px 70px 1fr; gap: 12px; }
+    .orbit-ring-outer { width: 560px; height: 560px; }
+    .orbit-ring-mid { width: 420px; height: 420px; }
+    .orbit-ring-inner { width: 280px; height: 280px; }
+}
+
+@media (max-width: 560px) {
+    .back-link span { display: none; }
+    .pre-title { font-size: 2.2rem; }
+    .viewport-scene { height: 360px; }
+    .cam-card { width: 130px; height: 175px; margin: -87px 0 0 -65px; }
+    .cam-preview { height: 90px; }
+    .cam-info { padding: 10px 12px; }
+    .cam-shot { font-size: 0.8rem; }
+    .hud-text { display: none; }
+    .topbar-right { gap: 12px; }
+    .orbit-ring-outer { width: 420px; height: 420px; }
+    .orbit-ring-mid { width: 320px; height: 320px; }
+    .orbit-ring-inner { width: 220px; height: 220px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+    .blob { animation: none !important; }
+}
