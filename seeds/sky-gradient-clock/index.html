@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Gradient Clock 天空渐变时钟</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 返回链接 -->
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="sky-bg" id="sky-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="starfield" id="starfield"></div>
+        <div class="sun-moon" id="sun-moon"></div>
+    </div>
+
+    <!-- 主容器 -->
+    <main class="container">
+        <!-- 顶部品牌区 -->
+        <header class="panel-header">
+            <div class="brand-row">
+                <h1 class="brand-title">Sky Gradient Clock</h1>
+                <div class="phase-pill" id="phase-pill">
+                    <span class="phase-dot"></span>
+                    <span id="phase-name">DAWN</span>
+                </div>
+            </div>
+            <p class="brand-subtitle" id="date-display">Loading...</p>
+        </header>
+
+        <!-- 时钟核心区 -->
+        <section class="clock-area">
+            <!-- 外圈刻度环 -->
+            <svg class="tick-ring" viewBox="0 0 400 400" id="tick-ring">
+                <defs>
+                    <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" id="grad-stop-1" style="stop-color:#ffd6a5"/>
+                        <stop offset="50%" id="grad-stop-2" style="stop-color:#ff9a8b"/>
+                        <stop offset="100%" id="grad-stop-3" style="stop-color:#a18cd1"/>
+                    </linearGradient>
+                    <filter id="ringGlow">
+                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <circle class="ring-bg" cx="200" cy="200" r="180"></circle>
+                <circle class="ring-progress" id="ring-progress" cx="200" cy="200" r="180" filter="url(#ringGlow)"></circle>
+                <g id="ticks-group"></g>
+            </svg>
+
+            <!-- 时间核心 -->
+            <div class="clock-core">
+                <div class="time-display">
+                    <span class="time-hour" id="time-hour">00</span><span class="time-sep">:</span><span class="time-min" id="time-min">00</span>
+                </div>
+                <div class="seconds-row">
+                    <span class="time-sec" id="time-sec">00</span>
+                    <span class="meridiem" id="meridiem">AM</span>
+                </div>
+                <div class="greeting" id="greeting">Good morning</div>
+            </div>
+
+            <!-- 太阳/月亮轨道指针 -->
+            <div class="orbit-pointer" id="orbit-pointer">
+                <div class="pointer-body"></div>
+            </div>
+        </section>
+
+        <!-- 底部时间轴 -->
+        <section class="timeline-section glass-card">
+            <div class="timeline-label">
+                <span>DAY ARC · 日轨</span>
+                <span id="day-progress-text">0%</span>
+            </div>
+            <div class="timeline-track" id="timeline-track">
+                <div class="timeline-fill" id="timeline-fill"></div>
+                <div class="timeline-marker" id="timeline-marker"></div>
+                <div class="timeline-stops">
+                    <span style="left:0%">00:00</span>
+                    <span style="left:25%">06:00</span>
+                    <span style="left:50%">12:00</span>
+                    <span style="left:75%">18:00</span>
+                    <span style="left:100%">24:00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 阶段切换 -->
+        <section class="phases-section">
+            <button class="phase-btn active" data-phase="auto">
+                <span class="phase-btn-icon">◐</span>
+                <span class="phase-btn-label">AUTO</span>
+            </button>
+            <button class="phase-btn" data-phase="dawn">
+                <span class="phase-btn-icon">🌅</span>
+                <span class="phase-btn-label">DAWN</span>
+            </button>
+            <button class="phase-btn" data-phase="noon">
+                <span class="phase-btn-icon">☀</span>
+                <span class="phase-btn-label">NOON</span>
+            </button>
+            <button class="phase-btn" data-phase="dusk">
+                <span class="phase-btn-icon">🌆</span>
+                <span class="phase-btn-label">DUSK</span>
+            </button>
+            <button class="phase-btn" data-phase="night">
+                <span class="phase-btn-icon">☾</span>
+                <span class="phase-btn-label">NIGHT</span>
+            </button>
+        </section>
+
+        <!-- 信息面板 -->
+        <section class="info-section">
+            <div class="info-card glass-card">
+                <span class="info-label">SUNRISE</span>
+                <span class="info-value" id="sunrise-time">06:12</span>
+            </div>
+            <div class="info-card glass-card">
+                <span class="info-label">SUNSET</span>
+                <span class="info-value" id="sunset-time">18:48</span>
+            </div>
+            <div class="info-card glass-card">
+                <span class="info-label">DAYLIGHT</span>
+                <span class="info-value" id="daylight-text">12h 36m</span>
+            </div>
+            <div class="info-card glass-card">
+                <span class="info-label">TIMEZONE</span>
+                <span class="info-value" id="timezone-text">UTC+8</span>
+            </div>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

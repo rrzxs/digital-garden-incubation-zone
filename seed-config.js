@@ -1210,6 +1210,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Sky Gradient Clock 天空渐变时钟',
+      description: '沉浸式天空渐变时钟体验。时间驱动流体渐变背景在四态（黎明/正午/黄昏/深夜）间呼吸流转，太阳/月亮沿天体抛物线轨道运行、12 小时发光进度环、轨道指针、可拖拽日轨时间轴与星空闪烁，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/sky-gradient-clock/index.html',
+      tags: ['Interactive', 'Clock', 'Sky Gradient', 'Micro-interaction'],
+      icon: '⚈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

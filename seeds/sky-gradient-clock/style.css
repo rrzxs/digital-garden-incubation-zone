@@ -1,0 +1,722 @@
+/* ==========================================================================
+   Sky Gradient Clock · 天空渐变时钟
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ========================================================================== */
+
+/* === Design Tokens · 默认 (DAWN 黎明) === */
+:root {
+    /* 背景色块 */
+    --color-bg: #0d0a1f;
+    --color-blob-1: #ff6b6b;
+    --color-blob-2: #ffa07a;
+    --color-blob-3: #ffd6a5;
+    --color-blob-4: #c471ed;
+
+    /* 强调色 */
+    --color-accent-1: #ffd6a5;
+    --color-accent-2: #ff9a8b;
+    --color-accent-3: #a18cd1;
+
+    /* 文本色 */
+    --color-text-main: rgba(255, 255, 255, 0.96);
+    --color-text-sub: rgba(255, 255, 255, 0.55);
+    --color-text-mute: rgba(255, 255, 255, 0.35);
+
+    /* 玻璃态 */
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+
+    /* 星空透明度 */
+    --star-opacity: 0.1;
+
+    /* 太阳/月亮颜色 */
+    --celestial-color: #ffe5b4;
+    --celestial-glow: rgba(255, 229, 180, 0.6);
+
+    /* 非线性缓动 */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+    /* 字体 */
+    --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+/* === 阶段切换 · 通过 body data-phase 控制 === */
+body[data-phase="dawn"] {
+    --color-bg: #1a0e2e;
+    --color-blob-1: #ff6b6b;
+    --color-blob-2: #ffa07a;
+    --color-blob-3: #ffd6a5;
+    --color-blob-4: #c471ed;
+    --color-accent-1: #ffd6a5;
+    --color-accent-2: #ff9a8b;
+    --color-accent-3: #a18cd1;
+    --star-opacity: 0.25;
+    --celestial-color: #ffe5b4;
+    --celestial-glow: rgba(255, 229, 180, 0.6);
+}
+
+body[data-phase="noon"] {
+    --color-bg: #0a1a3e;
+    --color-blob-1: #4facfe;
+    --color-blob-2: #00f2fe;
+    --color-blob-3: #43e97b;
+    --color-blob-4: #38f9d7;
+    --color-accent-1: #f6d365;
+    --color-accent-2: #fda085;
+    --color-accent-3: #4facfe;
+    --star-opacity: 0;
+    --celestial-color: #fffacd;
+    --celestial-glow: rgba(255, 250, 205, 0.8);
+}
+
+body[data-phase="dusk"] {
+    --color-bg: #1a0814;
+    --color-blob-1: #ee9ca7;
+    --color-blob-2: #ff7e5f;
+    --color-blob-3: #6a3093;
+    --color-blob-4: #a044ff;
+    --color-accent-1: #ffecd2;
+    --color-accent-2: #fcb69f;
+    --color-accent-3: #ff6a88;
+    --star-opacity: 0.3;
+    --celestial-color: #ffb88c;
+    --celestial-glow: rgba(255, 184, 140, 0.6);
+}
+
+body[data-phase="night"] {
+    --color-bg: #05071a;
+    --color-blob-1: #0f2027;
+    --color-blob-2: #203a43;
+    --color-blob-3: #2c5364;
+    --color-blob-4: #614385;
+    --color-accent-1: #a8c0ff;
+    --color-accent-2: #3f2b96;
+    --color-accent-3: #e0c3fc;
+    --star-opacity: 1;
+    --celestial-color: #e8f0ff;
+    --celestial-glow: rgba(232, 240, 255, 0.5);
+}
+
+/* === Reset === */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 2s var(--ease-in-out-quint);
+}
+
+/* === Back Link === */
+.back-link {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-sub);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    z-index: 100;
+    opacity: 0.75;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.back-link:hover {
+    opacity: 1;
+    color: var(--color-text-main);
+    transform: translateX(-4px);
+}
+
+/* === Sky Background · 流体网格渐变 === */
+.sky-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.blob {
+    position: absolute;
+    filter: blur(110px);
+    border-radius: 50%;
+    opacity: 0.7;
+    mix-blend-mode: screen;
+    animation: float 28s infinite ease-in-out;
+    transition: background-color 2.5s var(--ease-in-out-quint);
+}
+
+.blob-1 {
+    top: -20%;
+    left: -15%;
+    width: 60vw;
+    height: 60vw;
+    background-color: var(--color-blob-1);
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    bottom: -25%;
+    right: -20%;
+    width: 55vw;
+    height: 55vw;
+    background-color: var(--color-blob-2);
+    animation-delay: -8s;
+    animation-direction: alternate-reverse;
+}
+
+.blob-3 {
+    top: 35%;
+    left: 45%;
+    width: 45vw;
+    height: 45vw;
+    background-color: var(--color-blob-3);
+    animation-delay: -16s;
+}
+
+.blob-4 {
+    top: 5%;
+    right: 5%;
+    width: 40vw;
+    height: 40vw;
+    background-color: var(--color-blob-4);
+    animation-delay: -22s;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes float {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25%  { transform: translate(8%, -10%) scale(1.1) rotate(6deg); }
+    50%  { transform: translate(-6%, 8%) scale(0.92) rotate(-4deg); }
+    75%  { transform: translate(12%, 6%) scale(1.08) rotate(8deg); }
+    100% { transform: translate(-10%, -6%) scale(1) rotate(0deg); }
+}
+
+/* === Starfield · 星空 === */
+.starfield {
+    position: absolute;
+    inset: 0;
+    opacity: var(--star-opacity);
+    transition: opacity 2.5s var(--ease-in-out-quint);
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.4); }
+}
+
+/* === Sun/Moon Body === */
+.sun-moon {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, var(--celestial-color), rgba(255, 255, 255, 0.3));
+    box-shadow: 0 0 60px var(--celestial-glow), 0 0 120px var(--celestial-glow);
+    transition: background 2s var(--ease-in-out-quint), box-shadow 2s var(--ease-in-out-quint);
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* === Container === */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 90px 24px 48px;
+    gap: 28px;
+}
+
+/* === Header === */
+.panel-header {
+    text-align: center;
+    animation: fadeInDown 1s var(--ease-out-expo);
+}
+
+.brand-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.brand-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--color-accent-1) 0%, var(--color-accent-2) 50%, var(--color-accent-3) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: background 2s var(--ease-in-out-quint);
+}
+
+.phase-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    color: var(--color-text-sub);
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.phase-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent-1);
+    box-shadow: 0 0 8px var(--color-accent-1);
+    animation: phasePulse 2s infinite ease-in-out;
+    transition: background 2s var(--ease-in-out-quint), box-shadow 2s var(--ease-in-out-quint);
+}
+
+@keyframes phasePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.8); }
+}
+
+.brand-subtitle {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-sub);
+    letter-spacing: 1px;
+}
+
+/* === Clock Area === */
+.clock-area {
+    position: relative;
+    width: 380px;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1.2s var(--ease-out-expo) 0.2s both;
+}
+
+.tick-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.05);
+    stroke-width: 2;
+}
+
+.ring-progress {
+    fill: none;
+    stroke: url(#ringGradient);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 1130.97;
+    stroke-dashoffset: 1130.97;
+    transition: stroke-dashoffset 0.6s var(--ease-out-expo);
+}
+
+.tick-line {
+    stroke: rgba(255, 255, 255, 0.25);
+    stroke-width: 1;
+    transition: stroke 0.6s var(--ease-out-expo), stroke-width 0.6s var(--ease-out-expo);
+}
+
+.tick-line.major {
+    stroke: rgba(255, 255, 255, 0.55);
+    stroke-width: 2;
+}
+
+.tick-line.active {
+    stroke: var(--color-accent-1);
+    stroke-width: 2.5;
+}
+
+.tick-num {
+    fill: var(--color-text-mute);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    transition: fill 0.6s var(--ease-out-expo);
+}
+
+/* === Clock Core === */
+.clock-core {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    pointer-events: none;
+}
+
+.time-display {
+    font-family: var(--font-display);
+    font-size: 4.5rem;
+    font-weight: 200;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-main);
+    text-shadow: 0 0 40px var(--celestial-glow);
+    transition: text-shadow 2s var(--ease-in-out-quint);
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.time-hour, .time-min {
+    display: inline-block;
+    min-width: 1.2em;
+    text-align: center;
+}
+
+.time-sep {
+    color: var(--color-accent-1);
+    animation: blink 2s infinite ease-in-out;
+    transition: color 2s var(--ease-in-out-quint);
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+}
+
+.seconds-row {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+}
+
+.time-sec {
+    font-size: 1rem;
+    color: var(--color-accent-2);
+    font-variant-numeric: tabular-nums;
+    transition: color 2s var(--ease-in-out-quint);
+}
+
+.meridiem {
+    font-size: 0.72rem;
+    color: var(--color-text-sub);
+    letter-spacing: 2px;
+    padding: 2px 8px;
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+}
+
+.greeting {
+    margin-top: 18px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--color-text-sub);
+    letter-spacing: 1px;
+    font-style: italic;
+}
+
+/* === Orbit Pointer === */
+.orbit-pointer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.pointer-body {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-accent-1);
+    box-shadow: 0 0 20px var(--color-accent-1), 0 0 40px var(--color-accent-2);
+    transition: background 2s var(--ease-in-out-quint), box-shadow 2s var(--ease-in-out-quint);
+}
+
+/* === Glass Card · 微晶玻璃态 === */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow);
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+/* === Timeline Section === */
+.timeline-section {
+    width: 100%;
+    max-width: 520px;
+    padding: 20px 28px;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.4s both;
+}
+
+.timeline-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    color: var(--color-text-sub);
+    margin-bottom: 16px;
+}
+
+.timeline-track {
+    position: relative;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.timeline-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent-3), var(--color-accent-1), var(--color-accent-2));
+    border-radius: 3px;
+    transition: width 0.6s var(--ease-out-expo), background 2s var(--ease-in-out-quint);
+}
+
+.timeline-marker {
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--color-accent-1);
+    box-shadow: 0 0 16px var(--color-accent-1), inset 0 0 4px rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: left 0.6s var(--ease-out-expo), background 2s var(--ease-in-out-quint), box-shadow 2s var(--ease-in-out-quint);
+}
+
+.timeline-stops {
+    position: relative;
+    margin-top: 14px;
+    height: 14px;
+}
+
+.timeline-stops span {
+    position: absolute;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--color-text-mute);
+}
+
+/* === Phases Section === */
+.phases-section {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.6s both;
+}
+
+.phase-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 18px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    cursor: pointer;
+    color: var(--color-text-sub);
+    font-family: var(--font-body);
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.phase-btn:hover {
+    transform: translateY(-3px);
+    color: var(--color-text-main);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.phase-btn:active {
+    transform: translateY(-1px) scale(0.97);
+}
+
+.phase-btn.active {
+    color: var(--color-text-main);
+    border-color: var(--color-accent-1);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 24px rgba(255, 214, 165, 0.2);
+}
+
+.phase-btn-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.phase-btn-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+}
+
+/* === Info Section === */
+.info-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 520px;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.8s both;
+}
+
+.info-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 8px;
+}
+
+.info-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+.info-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    color: var(--color-text-mute);
+}
+
+.info-value {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+    font-variant-numeric: tabular-nums;
+}
+
+/* === Animations === */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsive === */
+@media (max-width: 560px) {
+    .container {
+        padding: 80px 16px 32px;
+        gap: 22px;
+    }
+
+    .back-link {
+        top: 20px;
+        left: 20px;
+    }
+
+    .brand-title {
+        font-size: 1.5rem;
+    }
+
+    .clock-area {
+        width: 300px;
+        height: 300px;
+    }
+
+    .time-display {
+        font-size: 3.4rem;
+    }
+
+    .timeline-section {
+        padding: 16px 20px;
+    }
+
+    .info-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .phase-btn {
+        padding: 10px 12px;
+    }
+
+    .timeline-stops span:nth-child(2),
+    .timeline-stops span:nth-child(4) {
+        display: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .clock-area {
+        width: 260px;
+        height: 260px;
+    }
+
+    .time-display {
+        font-size: 2.8rem;
+    }
+}
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+    .blob, .star, .phase-dot, .time-sep {
+        animation: none;
+    }
+    * {
+        transition-duration: 0.1s !important;
+    }
+}

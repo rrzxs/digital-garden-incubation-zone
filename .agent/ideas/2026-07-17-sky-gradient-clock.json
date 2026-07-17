@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-17",
+  "name": "sky-gradient-clock",
+  "description": "全天候天空色温渐变可视化",
+  "tagline": "Time Painted Across the Sky",
+  "interaction": "As the hours pass, a horizontal gradient bar shifts through the full spectrum of natural daylight—from pre-dawn indigo through golden sunrise, midday azure, amber sunset, and deep twilight. The current time is marked by a luminous sun/moon indicator that travels along the gradient, while hovering reveals the precise color temperature (in Kelvin) and a poetic name for that moment of sky. Clicking any point on the bar scrubs through the 24-hour cycle, letting users explore how the sky's chromatic mood evolves minute by minute.",
+  "directory": "seeds/sky-gradient-clock/",
+  "status": "incubated"
+}

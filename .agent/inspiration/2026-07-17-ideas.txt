@@ -1,0 +1,6 @@
+sky-gradient-clock - 全天候天空色温渐变可视化
+wave-grid-playground - 三维波浪网格交互生成器
+hero-morph-scroller - 滚动驱动主体物形变展示
+scroll-comic-engine - 滚动叙事互动漫画引擎
+ma-negative-space - 负空间留白构图冥想器
+fog-world-wanderer - 轻量WebGL雾境无限漫游
