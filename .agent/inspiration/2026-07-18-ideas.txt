@@ -1,0 +1,6 @@
+sky-gradient-clock - 24小时天空渐变时钟
+scroll-morph-hero - 滚动驱动主视觉形变
+wave-grid-bg - Three.js波动立方体网格背景
+webgl-fog-scene - 轻量WebGL雾气氛围场景
+interactive-narrative - 滚动驱动WebGL叙事体验
+faq-accordion-toggle - 创作者访客双视角折叠面板

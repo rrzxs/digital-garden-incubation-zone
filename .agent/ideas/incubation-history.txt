@@ -107,3 +107,4 @@ material-morph-canvas
 scroll-comic
 blender-camera-gallery
 sky-gradient-clock
+interactive-narrative

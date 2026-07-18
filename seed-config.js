@@ -1220,6 +1220,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Interactive Narrative 回声残响',
+      description: '沉浸式分支交互叙事体验。选择驱动的非线性故事图（9 节点 + 2 结局），五种 mood 实时调色板形变（dormant/stirring/descent/remembered/transcend）、打字机标题、段落级联揭示、鼠标感应选择卡、SVG 路径星图与粒子流场，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/interactive-narrative/index.html',
+      tags: ['Interactive', 'Narrative', 'Branching', 'Micro-interaction'],
+      icon: '◐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

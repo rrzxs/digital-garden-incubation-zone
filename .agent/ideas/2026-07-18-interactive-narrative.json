@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-18",
+  "name": "interactive-narrative",
+  "description": "滚动驱动WebGL叙事体验",
+  "tagline": "Scroll Through Living Stories",
+  "interaction": "As users scroll through the page, WebGL scenes dynamically transform and animate in response to scroll position, creating a cinematic narrative flow. 3D elements, lighting, and camera movements are choreographed to reveal story beats at precise scroll thresholds. Text and visual layers blend seamlessly to immerse readers in a spatial storytelling journey.",
+  "directory": "seeds/interactive-narrative/",
+  "status": "incubated"
+}
