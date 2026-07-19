@@ -1230,6 +1230,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Demo Activator 唤醒之触',
+      description: '沉浸式高阶微交互剧场。中央长按蓄能唤醒体 + 6 大交互模块（脉冲蓄能/磁力漂移/弹簧拖拽/模板揭示/流体轨迹/级联迸发），弹簧-阻尼物理、SVG 蓄能环、CSS mask 遮罩、Canvas 流场粒子与级联点亮，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/demo-activator/index.html',
+      tags: ['Interactive', 'Micro-interaction', 'Physics', 'Animation'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

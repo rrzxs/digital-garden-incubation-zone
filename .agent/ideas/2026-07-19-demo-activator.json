@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-19",
+  "name": "demo-activator",
+  "description": "滚动激活的产品演示",
+  "tagline": "Scroll. Reveal. Activate.",
+  "interaction": "产品特性节点随滚动逐个激活，每个节点以 3D 翻转或光效点亮的方式呈现，配合进度条同步展示当前位置。激活后的节点保持高亮态，形成完整的演示路径，用户可随时回滚查看已激活内容。整体营造"逐步解锁产品力"的渐进式叙事节奏。",
+  "directory": "seeds/demo-activator/",
+  "status": "incubated"
+}

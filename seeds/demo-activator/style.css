@@ -1,0 +1,1266 @@
+/* =====================================================================
+   Demo Activator · 唤醒之触
+   Style layer · 流体渐变 + 微晶玻璃态 + 非线性动效
+   ===================================================================== */
+
+/* === 1. Design Tokens ============================================== */
+
+:root {
+    --color-bg: #070710;
+    --color-blob-1: #1a0a3e;
+    --color-blob-2: #0d2847;
+    --color-blob-3: #2d1040;
+    --color-blob-4: #0a2540;
+
+    --color-text-main: rgba(255, 255, 255, 0.95);
+    --color-text-sub: rgba(255, 255, 255, 0.62);
+    --color-text-muted: rgba(255, 255, 255, 0.32);
+    --color-text-faint: rgba(255, 255, 255, 0.16);
+    --color-accent: #6366f1;
+    --color-accent-soft: rgba(99, 102, 241, 0.35);
+    --color-warn: #f43f5e;
+
+    --glass-bg: rgba(12, 14, 26, 0.38);
+    --glass-bg-strong: rgba(14, 16, 30, 0.62);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-strong: rgba(255, 255, 255, 0.16);
+    --glass-highlight: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 32px 80px 0 rgba(0, 0, 0, 0.55);
+    --glass-shadow-sm: 0 12px 32px 0 rgba(0, 0, 0, 0.4);
+
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+    --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-spring: cubic-bezier(0.34, 1.8, 0.64, 1);
+
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+
+    --nav-height: 84px;
+    --footer-height: 64px;
+}
+
+[data-theme="aurora"] {
+    --color-bg: #040d08;
+    --color-blob-1: #0a3e1a;
+    --color-blob-2: #1a2a47;
+    --color-blob-3: #10402d;
+    --color-blob-4: #0a4030;
+    --color-accent: #10b981;
+    --color-accent-soft: rgba(16, 185, 129, 0.35);
+    --glass-bg: rgba(8, 18, 12, 0.38);
+    --glass-bg-strong: rgba(10, 22, 14, 0.62);
+}
+
+[data-theme="ember"] {
+    --color-bg: #100804;
+    --color-blob-1: #3e1a0a;
+    --color-blob-2: #3e2a0d;
+    --color-blob-3: #402010;
+    --color-blob-4: #3e1a1a;
+    --color-accent: #f59e0b;
+    --color-accent-soft: rgba(245, 158, 11, 0.35);
+    --glass-bg: rgba(18, 10, 6, 0.38);
+    --glass-bg-strong: rgba(20, 12, 8, 0.62);
+}
+
+[data-theme="void"] {
+    --color-bg: #060608;
+    --color-blob-1: #1a0a3e;
+    --color-blob-2: #2a0a40;
+    --color-blob-3: #0a1a3e;
+    --color-blob-4: #200a3a;
+    --color-accent: #a855f7;
+    --color-accent-soft: rgba(168, 85, 247, 0.35);
+    --glass-bg: rgba(10, 8, 14, 0.42);
+    --glass-bg-strong: rgba(12, 10, 18, 0.64);
+}
+
+/* === 2. Reset & Base =============================================== */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--color-bg);
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    transition: background 0.8s var(--ease-out-expo);
+}
+
+a { color: inherit; }
+button { font-family: inherit; }
+
+/* === 3. Back Link =================================================== */
+
+.back-link {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text-sub);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 400;
+    z-index: 200;
+    opacity: 0.62;
+    transition: all 0.5s var(--ease-out-expo);
+}
+
+.back-link svg {
+    transition: transform 0.5s var(--ease-out-expo);
+}
+
+.back-link:hover {
+    opacity: 1;
+    color: var(--color-text-main);
+}
+
+.back-link:hover svg {
+    transform: translateX(-6px);
+}
+
+/* === 4. Mesh Gradient Background ==================================== */
+
+.mesh-bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.5;
+    mix-blend-mode: screen;
+    animation: blobFloat 32s ease-in-out infinite alternate;
+    transition: background 0.8s var(--ease-out-expo);
+}
+
+.blob-1 {
+    top: -20%;
+    left: -15%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(ellipse at center, var(--color-blob-1) 0%, transparent 70%);
+}
+
+.blob-2 {
+    bottom: -25%;
+    right: -18%;
+    width: 55vw;
+    height: 55vw;
+    background: radial-gradient(ellipse at center, var(--color-blob-2) 0%, transparent 70%);
+    animation-delay: -8s;
+    animation-direction: alternate-reverse;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 50%;
+    width: 45vw;
+    height: 45vw;
+    background: radial-gradient(ellipse at center, var(--color-blob-3) 0%, transparent 70%);
+    animation-delay: -16s;
+}
+
+.blob-4 {
+    top: 10%;
+    right: 25%;
+    width: 35vw;
+    height: 35vw;
+    background: radial-gradient(ellipse at center, var(--color-blob-4) 0%, transparent 70%);
+    animation-delay: -24s;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes blobFloat {
+    0%   { transform: translate(0, 0) scale(1); }
+    25%  { transform: translate(8vw, -6vh) scale(1.08); }
+    50%  { transform: translate(-5vw, 10vh) scale(0.95); }
+    75%  { transform: translate(6vw, 4vh) scale(1.05); }
+    100% { transform: translate(-3vw, -8vh) scale(1.02); }
+}
+
+/* 噪点纹理叠加 */
+.grain {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 25% 30%, rgba(255, 255, 255, 0.02) 0.5px, transparent 1px),
+        radial-gradient(circle at 75% 70%, rgba(255, 255, 255, 0.015) 0.5px, transparent 1px);
+    background-size: 3px 3px, 5px 5px;
+    opacity: 0.6;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* === 5. Flow Canvas & Cursor Glow =================================== */
+
+#flow-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cursor-glow {
+    position: fixed;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.6s var(--ease-out-expo), background 0.8s var(--ease-out-expo);
+    filter: blur(40px);
+    will-change: transform;
+}
+
+/* === 6. App Shell =================================================== */
+
+.app-shell {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* === 7. Top Navigation ============================================== */
+
+.top-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 40px;
+    z-index: 20;
+    flex-shrink: 0;
+    height: var(--nav-height);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nav-glyph {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    color: var(--color-accent);
+    animation: glyphPulse 3s ease-in-out infinite;
+    transition: color 0.8s var(--ease-out-expo);
+    text-shadow: 0 0 24px var(--color-accent-soft);
+}
+
+@keyframes glyphPulse {
+    0%, 100% { opacity: 0.78; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.08); }
+}
+
+.nav-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.18rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.nav-subtitle {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.theme-toggle {
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: var(--radius-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.theme-btn {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+.theme-btn.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-main);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-btn:not(.active):hover {
+    color: var(--color-text-sub);
+}
+
+.charge-readout {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    font-family: var(--font-mono);
+}
+
+.readout-label {
+    font-size: 0.62rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.18em;
+}
+
+.readout-value {
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    min-width: 32px;
+    text-align: right;
+    letter-spacing: 0.05em;
+    transition: color 0.4s var(--ease-out-expo);
+}
+
+.readout-value.is-surging {
+    color: var(--color-accent);
+    text-shadow: 0 0 12px var(--color-accent-soft);
+}
+
+.readout-unit {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+}
+
+/* === 8. Stage Layout ================================================ */
+
+.stage {
+    flex: 1;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "core    pulse    magnet"
+        "core    spring   reveal"
+        "core    flow     burst";
+    grid-template-rows: repeat(3, 1fr);
+    gap: 18px;
+    padding: 6px 40px 18px;
+    min-height: 0;
+}
+
+/* 屏幕不够宽时退化为更紧凑的布局 */
+@media (max-width: 1280px) {
+    .stage {
+        grid-template-columns: 1.1fr 1fr 1fr;
+        gap: 14px;
+        padding: 6px 24px 16px;
+    }
+}
+
+/* === 9. Core Zone (中央唤醒体) ====================================== */
+
+.core-zone {
+    grid-area: core;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.core-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: border-color 0.6s var(--ease-out-expo);
+}
+
+.core-ring-outer {
+    width: min(42vw, 480px);
+    height: min(42vw, 480px);
+    animation: ringSpin 60s linear infinite;
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.core-ring-mid {
+    width: min(34vw, 380px);
+    height: min(34vw, 380px);
+    animation: ringSpin 40s linear infinite reverse;
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.core-ring-inner {
+    width: min(26vw, 290px);
+    height: min(26vw, 290px);
+    animation: ringSpin 28s linear infinite;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+@keyframes ringSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.core-body {
+    position: relative;
+    width: min(22vw, 240px);
+    height: min(22vw, 240px);
+    border-radius: 50%;
+    border: 1px solid var(--glass-border-strong);
+    background:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at center, var(--glass-bg-strong) 0%, rgba(10, 10, 20, 0.4) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+        var(--glass-shadow),
+        inset 0 1px 0 var(--glass-highlight),
+        inset 0 0 80px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--color-text-main);
+    transition:
+        transform 0.5s var(--ease-out-expo),
+        box-shadow 0.6s var(--ease-out-expo),
+        border-color 0.6s var(--ease-out-expo);
+    z-index: 2;
+}
+
+.core-body:hover {
+    transform: scale(1.03);
+    border-color: var(--color-accent-soft);
+}
+
+.core-body:active,
+.core-body.is-pressed {
+    transform: scale(0.96);
+}
+
+.core-body.is-charged {
+    border-color: var(--color-accent);
+    box-shadow:
+        var(--glass-shadow),
+        0 0 80px var(--color-accent-soft),
+        inset 0 1px 0 var(--glass-highlight),
+        inset 0 0 80px var(--color-accent-soft);
+}
+
+.core-pulse {
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.core-body.is-released .core-pulse {
+    animation: corePulse 1.2s var(--ease-out-expo) forwards;
+}
+
+.core-body.is-released .core-pulse-2 {
+    animation: corePulse 1.2s var(--ease-out-expo) 0.18s forwards;
+}
+
+@keyframes corePulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+.core-glyph {
+    font-family: var(--font-mono);
+    font-size: 2.8rem;
+    color: var(--color-text-main);
+    line-height: 1;
+    transition:
+        color 0.4s var(--ease-out-expo),
+        text-shadow 0.4s var(--ease-out-expo),
+        transform 0.4s var(--ease-out-expo);
+}
+
+.core-body.is-charged .core-glyph {
+    color: var(--color-accent);
+    text-shadow: 0 0 24px var(--color-accent-soft);
+    transform: scale(1.08);
+}
+
+.core-state {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.28em;
+    transition: color 0.4s var(--ease-out-expo);
+}
+
+.core-body.is-charged .core-state,
+.core-body.is-pressed .core-state {
+    color: var(--color-text-sub);
+}
+
+.core-hint {
+    font-size: 0.62rem;
+    color: var(--color-text-faint);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.core-readout {
+    position: absolute;
+    bottom: 8%;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.2em;
+    transition: color 0.4s var(--ease-out-expo);
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+.core-readout.is-surging {
+    color: var(--color-accent);
+}
+
+/* === 10. Module Glass Container ===================================== */
+
+.module {
+    position: relative;
+    border-radius: var(--radius-lg);
+    min-height: 0;
+    min-width: 0;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: moduleEnter 0.9s var(--ease-out-expo) forwards;
+}
+
+.module-pulse   { grid-area: pulse;  animation-delay: 0.05s; }
+.module-magnet  { grid-area: magnet; animation-delay: 0.12s; }
+.module-spring  { grid-area: spring; animation-delay: 0.20s; }
+.module-reveal  { grid-area: reveal; animation-delay: 0.28s; }
+.module-flow    { grid-area: flow;   animation-delay: 0.36s; }
+.module-burst   { grid-area: burst;  animation-delay: 0.44s; }
+
+@keyframes moduleEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.module-glass {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 22px 24px 20px;
+    border-radius: var(--radius-lg);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    box-shadow: var(--glass-shadow-sm);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition:
+        border-color 0.5s var(--ease-out-expo),
+        transform 0.5s var(--ease-out-expo),
+        box-shadow 0.6s var(--ease-out-expo);
+}
+
+/* 玻璃高光斜纹 */
+.module-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--glass-highlight) 0%, transparent 35%);
+    pointer-events: none;
+}
+
+.module:hover .module-glass {
+    border-color: var(--glass-border-strong);
+    transform: translateY(-3px);
+    box-shadow: var(--glass-shadow);
+}
+
+.module-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+}
+
+.module-index {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-accent);
+    letter-spacing: 0.12em;
+    transition: color 0.8s var(--ease-out-expo);
+}
+
+.module-name {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: var(--color-text-main);
+}
+
+.module-desc {
+    margin-top: auto;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    padding-top: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+/* === 11. Module 01 · Pulse Charge ================================== */
+
+.pulse-stage {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+
+.pulse-button {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+}
+
+.pulse-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.pulse-ring-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 3;
+}
+
+.pulse-ring-fg {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 339.292;
+    stroke-dashoffset: 339.292;
+    filter: drop-shadow(0 0 6px var(--color-accent-soft));
+    transition: stroke 0.8s var(--ease-out-expo), filter 0.4s var(--ease-out-expo);
+}
+
+.pulse-core {
+    position: relative;
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.22em;
+    color: var(--color-text-sub);
+    background:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.14) 0%, transparent 60%),
+        radial-gradient(circle at center, var(--glass-bg-strong) 0%, rgba(8, 8, 16, 0.6) 100%);
+    border: 1px solid var(--glass-border-strong);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition:
+        color 0.4s var(--ease-out-expo),
+        transform 0.5s var(--ease-out-expo),
+        box-shadow 0.5s var(--ease-out-expo),
+        border-color 0.5s var(--ease-out-expo);
+    z-index: 2;
+}
+
+.pulse-button:hover .pulse-core {
+    color: var(--color-text-main);
+    border-color: var(--color-accent-soft);
+}
+
+.pulse-button.is-charging .pulse-core {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 24px var(--color-accent-soft), inset 0 0 18px var(--color-accent-soft);
+}
+
+.pulse-button.is-charging .pulse-core {
+    animation: pulseCoreThrob 0.9s ease-in-out infinite;
+}
+
+@keyframes pulseCoreThrob {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+}
+
+.pulse-wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-accent);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.pulse-wave.is-burst {
+    animation: pulseBurst 1.4s var(--ease-out-expo) forwards;
+}
+
+@keyframes pulseBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.9;
+        border-width: 3px;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0;
+        border-width: 0.5px;
+    }
+}
+
+/* === 12. Module 02 · Magnetic Drift ================================ */
+
+.magnet-field {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 8px;
+}
+
+.magnet-shard {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 12px;
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    color: var(--color-text-sub);
+    transition:
+        color 0.5s var(--ease-out-expo),
+        border-color 0.5s var(--ease-out-expo),
+        box-shadow 0.5s var(--ease-out-expo);
+    will-change: transform;
+}
+
+.magnet-shard:nth-child(1) { transform: translate(0, 0); }
+.magnet-shard:nth-child(2) { transform: translate(0, 0); }
+.magnet-shard:nth-child(3) { transform: translate(0, 0); }
+.magnet-shard:nth-child(4) { transform: translate(0, 0); }
+
+.magnet-shard:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent-soft);
+    box-shadow: 0 0 24px var(--color-accent-soft);
+}
+
+/* === 13. Module 03 · Spring Drag =================================== */
+
+.spring-stage {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spring-tether {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.tether-shadow {
+    stroke: rgba(0, 0, 0, 0.4);
+    stroke-width: 4;
+    stroke-linecap: round;
+    opacity: 0.3;
+    filter: blur(4px);
+}
+
+.tether-line {
+    stroke: var(--color-accent);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 3 6;
+    opacity: 0.6;
+    filter: drop-shadow(0 0 4px var(--color-accent-soft));
+    transition: stroke 0.8s var(--ease-out-expo), opacity 0.4s var(--ease-out-expo);
+}
+
+.spring-node {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.16) 0%, transparent 55%),
+        radial-gradient(circle at center, var(--glass-bg-strong) 0%, rgba(10, 12, 22, 0.6) 100%);
+    border: 1px solid var(--glass-border-strong);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--glass-shadow-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: grab;
+    will-change: transform;
+    transition:
+        box-shadow 0.4s var(--ease-out-expo),
+        border-color 0.4s var(--ease-out-expo);
+    z-index: 2;
+}
+
+.spring-node.is-dragging {
+    cursor: grabbing;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 32px var(--color-accent-soft), var(--glass-shadow-sm);
+}
+
+.spring-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 12px var(--color-accent-soft);
+    transition: background 0.8s var(--ease-out-expo);
+}
+
+.spring-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.2em;
+}
+
+/* === 14. Module 04 · Reveal Stencil ================================ */
+
+.reveal-stage {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.25);
+    cursor: none;
+}
+
+.reveal-base,
+.reveal-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.32em;
+    text-align: center;
+    padding: 0 16px;
+    line-height: 1.8;
+}
+
+.reveal-base {
+    color: var(--color-text-faint);
+    user-select: none;
+}
+
+.reveal-stencil {
+    position: absolute;
+    inset: 0;
+    -webkit-mask-image: radial-gradient(circle 90px at 50% 50%, #000 0%, #000 70%, transparent 100%);
+    mask-image: radial-gradient(circle 90px at 50% 50%, #000 0%, #000 70%, transparent 100%);
+    transition: -webkit-mask-image 0s linear;
+    will-change: -webkit-mask-image;
+}
+
+.reveal-layer {
+    color: var(--color-accent);
+    text-shadow: 0 0 12px var(--color-accent-soft);
+    transition: color 0.8s var(--ease-out-expo), text-shadow 0.4s var(--ease-out-expo);
+}
+
+.reveal-hint {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-faint);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    pointer-events: none;
+    transition: opacity 0.5s var(--ease-out-expo);
+}
+
+.reveal-stage.is-active .reveal-hint {
+    opacity: 0;
+}
+
+/* === 15. Module 05 · Flow Trail ==================================== */
+
+.flow-stage {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.flow-mini {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.flow-hint {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-faint);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+
+/* === 16. Module 06 · Sequence Burst ================================ */
+
+.burst-stage {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 8px 0;
+}
+
+.burst-trigger {
+    position: relative;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border-strong);
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--color-text-main);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.26em;
+    cursor: pointer;
+    overflow: hidden;
+    transition:
+        color 0.4s var(--ease-out-expo),
+        border-color 0.4s var(--ease-out-expo),
+        box-shadow 0.5s var(--ease-out-expo),
+        transform 0.5s var(--ease-out-expo);
+}
+
+.burst-trigger::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--color-accent-soft) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out-expo);
+    pointer-events: none;
+}
+
+.burst-trigger:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 24px var(--color-accent-soft);
+    transform: translateY(-2px);
+}
+
+.burst-trigger:hover::before {
+    opacity: 1;
+}
+
+.burst-trigger:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.burst-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+    width: 100%;
+    max-width: 220px;
+}
+
+.burst-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    transition:
+        background 0.45s var(--ease-out-expo),
+        box-shadow 0.45s var(--ease-out-expo),
+        transform 0.45s var(--ease-back);
+    will-change: transform;
+}
+
+.burst-cell.is-lit {
+    background: var(--color-accent);
+    box-shadow: 0 0 12px var(--color-accent-soft);
+    transform: scale(1.1);
+}
+
+/* === 17. Footer ==================================================== */
+
+.stage-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--footer-height);
+    padding: 0 40px 18px;
+    z-index: 20;
+    flex-shrink: 0;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.footer-hint {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.hint-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.66rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+}
+
+.hint-chip kbd {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text-sub);
+    letter-spacing: 0.08em;
+}
+
+.footer-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.meta-chip {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--color-text-sub);
+    letter-spacing: 0.18em;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: color 0.4s var(--ease-out-expo);
+}
+
+#signal-counter.is-active {
+    color: var(--color-accent);
+    border-color: var(--color-accent-soft);
+}
+
+.meta-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text-faint);
+    letter-spacing: 0.28em;
+}
+
+/* === 18. Flash Layer =============================================== */
+
+.flash-layer {
+    position: fixed;
+    inset: 0;
+    background: var(--color-accent);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 300;
+    mix-blend-mode: screen;
+}
+
+.flash-layer.is-flashing {
+    animation: flashBurst 0.7s var(--ease-out-expo) forwards;
+}
+
+@keyframes flashBurst {
+    0%   { opacity: 0; }
+    18%  { opacity: 0.45; }
+    100% { opacity: 0; }
+}
+
+/* === 19. Responsive 小屏退化为单列 ================================== */
+
+@media (max-width: 900px) {
+    .stage {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "core"
+            "pulse"
+            "magnet"
+            "spring"
+            "reveal"
+            "flow"
+            "burst";
+        grid-template-rows: auto;
+        overflow-y: auto;
+    }
+
+    html, body {
+        overflow: auto;
+    }
+
+    .core-zone {
+        min-height: 380px;
+    }
+
+    .module {
+        min-height: 260px;
+    }
+}
+
+/* === 20. 减弱动效 (无障碍) ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .blob,
+    .core-ring-outer,
+    .core-ring-mid,
+    .core-ring-inner,
+    .nav-glyph {
+        animation: none !important;
+    }
+}

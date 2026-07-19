@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Activator 唤醒之触 - 高阶微交互剧场</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="deep-ocean">
+
+    <!-- 返回链接 -->
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- 流体渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain"></div>
+    </div>
+
+    <!-- 粒子流场画布 -->
+    <canvas id="flow-canvas" aria-hidden="true"></canvas>
+
+    <!-- 自定义光标光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- 主框架 -->
+    <main class="app-shell">
+
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-glyph" aria-hidden="true">◉</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Demo Activator</h1>
+                    <span class="nav-subtitle">唤醒之触 · 高阶微交互剧场</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle" role="group" aria-label="氛围配色切换">
+                    <button class="theme-btn active" data-theme="deep-ocean">深海</button>
+                    <button class="theme-btn" data-theme="aurora">极光</button>
+                    <button class="theme-btn" data-theme="ember">余烬</button>
+                    <button class="theme-btn" data-theme="void">虚空</button>
+                </div>
+                <div class="charge-readout" id="charge-readout">
+                    <span class="readout-label">CHARGE</span>
+                    <span class="readout-value" id="readout-value">000</span>
+                    <span class="readout-unit">%</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 剧场舞台 -->
+        <section class="stage" id="stage">
+
+            <!-- 中央核心 · 唤醒体 -->
+            <div class="core-zone" id="core-zone">
+                <div class="core-ring core-ring-outer"></div>
+                <div class="core-ring core-ring-mid"></div>
+                <div class="core-ring core-ring-inner"></div>
+                <button class="core-body" id="core-body" aria-label="长按唤醒核心">
+                    <span class="core-pulse"></span>
+                    <span class="core-pulse core-pulse-2"></span>
+                    <span class="core-glyph" id="core-glyph">⟐</span>
+                    <span class="core-state" id="core-state">DORMANT</span>
+                    <span class="core-hint">按住唤醒</span>
+                </button>
+                <div class="core-readout" id="core-readout" aria-hidden="true">能量等级 0.000</div>
+            </div>
+
+            <!-- 01 脉冲蓄能 -->
+            <article class="module module-pulse" data-module="01">
+                <div class="module-glass">
+                    <div class="module-head">
+                        <span class="module-index">01</span>
+                        <span class="module-name">Pulse Charge</span>
+                    </div>
+                    <div class="pulse-stage">
+                        <button class="pulse-button" id="pulse-button" aria-label="按住蓄能">
+                            <svg class="pulse-ring" viewBox="0 0 120 120" aria-hidden="true">
+                                <circle class="pulse-ring-bg" cx="60" cy="60" r="54" />
+                                <circle class="pulse-ring-fg" id="pulse-ring-fg" cx="60" cy="60" r="54" />
+                            </svg>
+                            <span class="pulse-core" id="pulse-core">HOLD</span>
+                        </button>
+                        <div class="pulse-wave" id="pulse-wave" aria-hidden="true"></div>
+                    </div>
+                    <p class="module-desc">按住越久，能量越足。释放瞬间化为冲击波，蓄能环以非线性曲线呼吸。</p>
+                </div>
+            </article>
+
+            <!-- 02 磁力漂移 -->
+            <article class="module module-magnet" data-module="02">
+                <div class="module-glass">
+                    <div class="module-head">
+                        <span class="module-index">02</span>
+                        <span class="module-name">Magnetic Drift</span>
+                    </div>
+                    <div class="magnet-field" id="magnet-field">
+                        <div class="magnet-shard" data-depth="0.35">UI</div>
+                        <div class="magnet-shard" data-depth="0.55">UX</div>
+                        <div class="magnet-shard" data-depth="0.75">MOTION</div>
+                        <div class="magnet-shard" data-depth="0.95">FORCE</div>
+                    </div>
+                    <p class="module-desc">移动光标，碎片被磁力牵引又因惯性滑过，弹簧物理让它们柔顺归位。</p>
+                </div>
+            </article>
+
+            <!-- 03 弹簧拖拽 -->
+            <article class="module module-spring" data-module="03">
+                <div class="module-glass">
+                    <div class="module-head">
+                        <span class="module-index">03</span>
+                        <span class="module-name">Spring Drag</span>
+                    </div>
+                    <div class="spring-stage" id="spring-stage">
+                        <svg class="spring-tether" id="spring-tether" aria-hidden="true">
+                            <line class="tether-shadow" x1="50%" y1="50%" x2="50%" y2="50%" />
+                            <line class="tether-line" x1="50%" y1="50%" x2="50%" y2="50%" />
+                        </svg>
+                        <div class="spring-node" id="spring-node" aria-grabbed="false">
+                            <span class="spring-dot"></span>
+                            <span class="spring-label">DRAG</span>
+                        </div>
+                    </div>
+                    <p class="module-desc">拖拽节点离开原点，松手后弹簧-阻尼系统将其缓慢唤回，越界时还会颤动。</p>
+                </div>
+            </article>
+
+            <!-- 04 模板揭示 -->
+            <article class="module module-reveal" data-module="04">
+                <div class="module-glass">
+                    <div class="module-head">
+                        <span class="module-index">04</span>
+                        <span class="module-name">Reveal Stencil</span>
+                    </div>
+                    <div class="reveal-stage" id="reveal-stage">
+                        <div class="reveal-base">HIDDEN · SIGNAL · NOISE · LATENT · CIPHER</div>
+                        <div class="reveal-stencil" id="reveal-stencil">
+                            <div class="reveal-layer">AWAKEN · GLOW · PULSE · RADIANT · SIGIL</div>
+                        </div>
+                        <div class="reveal-hint">移动光标揭示真相</div>
+                    </div>
+                    <p class="module-desc">上层文字以光标为遮罩切开迷雾，半径内的字符被唤醒，离开后回归沉寂。</p>
+                </div>
+            </article>
+
+            <!-- 05 流体轨迹 -->
+            <article class="module module-flow" data-module="05">
+                <div class="module-glass">
+                    <div class="module-head">
+                        <span class="module-index">05</span>
+                        <span class="module-name">Flow Trail</span>
+                    </div>
+                    <div class="flow-stage" id="flow-stage">
+                        <canvas class="flow-mini" id="flow-mini"></canvas>
+                        <div class="flow-hint">光标即笔触</div>
+                    </div>
+                    <p class="module-desc">光标轨迹被记录为流场粒子，每一粒微尘都拥有自己的寿命与速度衰减。</p>
+                </div>
+            </article>
+
+            <!-- 06 级联迸发 -->
+            <article class="module module-burst" data-module="06">
+                <div class="module-glass">
+                    <div class="module-head">
+                        <span class="module-index">06</span>
+                        <span class="module-name">Sequence Burst</span>
+                    </div>
+                    <div class="burst-stage" id="burst-stage">
+                        <button class="burst-trigger" id="burst-trigger">SEQUENCE</button>
+                        <div class="burst-grid" id="burst-grid" aria-hidden="true"></div>
+                    </div>
+                    <p class="module-desc">点击触发，单元按错峰延迟级联点亮，像多米诺骨牌在视觉上释放能量。</p>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- 底部信息条 -->
+        <footer class="stage-footer">
+            <div class="footer-hint">
+                <span class="hint-chip"><kbd>按住</kbd> 中央核心</span>
+                <span class="hint-chip"><kbd>拖拽</kbd> 弹簧节点</span>
+                <span class="hint-chip"><kbd>移动</kbd> 光标</span>
+                <span class="hint-chip"><kbd>点击</kbd> 触发级联</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+                <span class="meta-chip" id="signal-counter">SIGNAL · IDLE</span>
+                <span class="meta-tag">EDEN · DEMO ACTIVATOR</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- 闪光过渡层 -->
+    <div class="flash-layer" id="flash-layer" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
