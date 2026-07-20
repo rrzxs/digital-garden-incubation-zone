@@ -1240,6 +1240,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Glitch Pulse Mixer 故障脉冲合成器',
+      description: '沉浸式故障脉冲视觉合成器。拖拽脉冲节点跨故障画布实时混合色差、扫描线与 datamosh 数据损毁，BPM 心跳节律同步视觉脉冲，点击波形热点触发微故障瓦解重建，可选 Web Audio 底鼓节拍，4种氛围配色',
+      path: '/seed/seeds/glitch-pulse-mixer/index.html',
+      tags: ['Interactive', 'Glitch', 'Audio', 'Micro-interaction'],
+      icon: '⌁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

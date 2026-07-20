@@ -109,3 +109,4 @@ blender-camera-gallery
 sky-gradient-clock
 interactive-narrative
 demo-activator
+glitch-pulse-mixer

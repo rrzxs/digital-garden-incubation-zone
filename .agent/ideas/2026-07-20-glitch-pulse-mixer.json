@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-20",
+  "name": "glitch-pulse-mixer",
+  "description": "故障脉冲视觉合成器",
+  "tagline": "Disrupt the signal, own the noise.",
+  "interaction": "Drag pulse nodes across a glitch canvas to blend chromatic aberration, scanlines, and datamosh effects in real time. Adjust frequency sliders to sync visual distortions with an audio-reactive heartbeat. Trigger micro-glitches by clicking waveform hotspots to rupture and rebuild the composition.",
+  "directory": "seeds/glitch-pulse-mixer/",
+  "status": "incubated"
+}

@@ -1,0 +1,8 @@
+sky-gradient-clock - 24小时天空渐变可视化
+scroll-morph-viewer - 滚动驱动3D形态变换展示器
+wave-grid-playground - 三维波浪网格生成器
+fog-world-walker - WebGL雾境无限世界漫游
+settings-share-studio - 可分享的页面定制工坊
+cube-reaction-field - 触觉反馈立方体阵列
+glitch-pulse-mixer - 故障脉冲视觉合成器
+honey-texture-lab - 黏稠流体纹理实验台
