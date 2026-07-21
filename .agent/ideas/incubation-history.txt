@@ -110,3 +110,4 @@ sky-gradient-clock
 interactive-narrative
 demo-activator
 glitch-pulse-mixer
+ar-art-placer

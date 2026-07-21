@@ -1250,6 +1250,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'AR Art Placer 空间策展',
+      description: '沉浸式空间策展体验。从展藏架拖出雕塑/装置/灯具放入透视画廊空间，实时投影、悬浮弹簧物理与光源角度联动，8 件预设展品 × 网格吸附/自由放置双模式 × 随机布局，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/ar-art-placer/index.html',
+      tags: ['Interactive', 'AR', 'Spatial', 'Micro-interaction'],
+      icon: '⦿',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

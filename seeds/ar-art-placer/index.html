@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Art Placer · 空间策展</title>
+    <meta name="description" content="沉浸式空间策展体验。从展藏架拖出雕塑/装置/灯具，放置进透视画廊空间，实时投影、光照与悬浮物理，4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">⦿</span>
+            <div class="brand-text">
+                <span class="brand-title">AR Art Placer</span>
+                <span class="brand-sub">空间策展 · Spatial Curation</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="hud" id="hud">
+                <span class="hud-dot" id="hud-dot"></span>
+                <span class="hud-text" id="hud-text">从展藏架拖出作品</span>
+            </div>
+            <div class="palette-picker" role="group" aria-label="氛围配色">
+                <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora" aria-label="极光配色"></button>
+                <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember" aria-label="余烬配色"></button>
+                <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss" aria-label="深渊配色"></button>
+                <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid" aria-label="兰若配色"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主舞台 -->
+    <main class="stage">
+        <!-- 序言 -->
+        <section class="preamble reveal">
+            <span class="pre-tag">SPATIAL / 2026</span>
+            <h1 class="pre-title">
+                <span class="pre-line">Place art</span>
+                <span class="pre-line pre-italic">into thin air.</span>
+            </h1>
+            <p class="pre-desc">从左侧展藏架拖出雕塑、装置与灯具，让它们悬浮在透视画廊空间中。每一件都会被赋予实时投影、光照与重心，松手后以弹簧曲线悬浮归位——像被空气托住的展品。</p>
+        </section>
+
+        <!-- 工作区 -->
+        <section class="workspace">
+            <!-- 展藏架 -->
+            <aside class="shelf glass-bar reveal" aria-label="展藏架">
+                <div class="shelf-head">
+                    <span class="shelf-label">COLLECTION</span>
+                    <span class="shelf-count" id="shelf-count">0 · placed</span>
+                </div>
+                <div class="shelf-grid" id="shelf-grid">
+                    <!-- JS 注入展品卡 -->
+                </div>
+                <div class="shelf-foot">
+                    <button class="shelf-btn" id="btn-clear" type="button">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                        <span>清空展厅</span>
+                    </button>
+                    <button class="shelf-btn" id="btn-shuffle" type="button">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                        <span>随机布局</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- 透视画廊空间 -->
+            <div class="gallery-wrap reveal">
+                <div class="gallery" id="gallery" data-mode="place">
+                    <!-- 透视房间 -->
+                    <div class="room" aria-hidden="true">
+                        <div class="room-floor"></div>
+                        <div class="room-wall room-wall-back"></div>
+                        <div class="room-wall room-wall-left"></div>
+                        <div class="room-wall room-wall-right"></div>
+                        <div class="room-grid"></div>
+                        <div class="room-vanish"></div>
+                    </div>
+                    <!-- 光源 -->
+                    <div class="light-source" id="light-source" aria-hidden="true">
+                        <span class="light-core"></span>
+                        <span class="light-ring"></span>
+                    </div>
+                    <!-- 放置层 -->
+                    <div class="placement-layer" id="placement-layer"></div>
+                    <!-- 引导十字 -->
+                    <div class="cursor-cross" id="cursor-cross" aria-hidden="true">
+                        <span class="cross-h"></span>
+                        <span class="cross-v"></span>
+                        <span class="cross-label" id="cross-label">0.00 · 0.00</span>
+                    </div>
+                    <!-- 放置落点指示 -->
+                    <div class="drop-indicator" id="drop-indicator" aria-hidden="true"></div>
+                </div>
+
+                <!-- 参数控制条 -->
+                <div class="controls glass-bar">
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">GRID</span>
+                        <div class="seg" role="group" aria-label="网格吸附">
+                            <button class="seg-btn active" data-snap="1" type="button">SNAP</button>
+                            <button class="seg-btn" data-snap="0" type="button">FREE</button>
+                        </div>
+                    </div>
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">LIGHT</span>
+                        <input type="range" id="light-angle" min="0" max="100" value="62" class="ctrl-range" aria-label="光源角度">
+                    </div>
+                    <div class="ctrl-group">
+                        <span class="ctrl-label">FLOAT</span>
+                        <input type="range" id="float-amp" min="0" max="100" value="55" class="ctrl-range" aria-label="悬浮幅度">
+                    </div>
+                    <div class="ctrl-group ctrl-stats">
+                        <span class="stat"><b id="stat-count">0</b><i>items</i></span>
+                        <span class="stat"><b id="stat-load">0%</b><i>load</i></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 详情面板 -->
+        <section class="detail-panel glass-bar reveal" id="detail-panel" aria-live="polite">
+            <div class="detail-swatch" id="detail-swatch"></div>
+            <div class="detail-body">
+                <span class="detail-cat" id="detail-cat">— SELECT —</span>
+                <h2 class="detail-title" id="detail-title">未选择展品</h2>
+                <p class="detail-desc" id="detail-desc">点击展厅中的展品查看详情，或从展藏架拖出新作品放入空间。</p>
+            </div>
+            <div class="detail-meta">
+                <div class="meta-row"><span class="meta-label">YEAR</span><span class="meta-val" id="detail-year">—</span></div>
+                <div class="meta-row"><span class="meta-label">SIZE</span><span class="meta-val" id="detail-size">—</span></div>
+                <div class="meta-row"><span class="meta-label">MAT</span><span class="meta-val" id="detail-mat">—</span></div>
+            </div>
+        </section>
+
+        <!-- 脚注 -->
+        <footer class="stage-foot reveal">
+            <span class="foot-glyph">⦿</span>
+            <span class="foot-text">Drag · Drop · Float — 展品的三段呼吸。</span>
+            <span class="foot-counter">PLACE <span id="place-counter">0</span></span>
+        </footer>
+    </main>
+
+    <!-- 光标跟随光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- 涟漪层 -->
+    <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
