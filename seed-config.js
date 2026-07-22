@@ -1260,6 +1260,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Cursor Grit 光标砂砾',
+      description: '沉浸式光标砂砾微交互物理场。弹簧-阻尼物理驱动的砂砾粒子对光标产生挖掘、扫动、漩涡与静电四种响应，粒子堆积回弹、刀切裂沟、漩涡引力、环形冲击波涟漪与参数调节，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/cursor-grit/index.html',
+      tags: ['Interactive', 'Physics', 'Particle', 'Micro-interaction'],
+      icon: '⊛',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

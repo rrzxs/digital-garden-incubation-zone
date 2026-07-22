@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-22",
+  "name": "cursor-grit",
+  "description": "颗粒噪点质感光标轨迹画布",
+  "tagline": "Gritty Cursor Trails",
+  "interaction": "Move your cursor across the canvas to scatter grainy, gritty particle trails that accumulate and dissipate over time. The noise-textured particles respond to cursor velocity — faster strokes fling finer grit, while slow drags deposit denser, chunkier clusters. Every gesture leaves a raw, tactile residue that slowly fades like chalk dust on weathered concrete.",
+  "directory": "seeds/cursor-grit/",
+  "status": "incubated"
+}

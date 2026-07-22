@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Grit 光标砂砾</title>
+    <meta name="description" content="沉浸式光标砂砾微交互体验。弹簧-阻尼物理驱动的砂砾粒子对光标产生挖掘、扫动、漩涡与摩擦响应，粒子堆积、刀切裂沟、漩涡引力与静电吸附，流体渐变背景 + 微晶玻璃态容器，4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-ember" data-mode="excavate">
+
+    <!-- ====== MESH GRADIENT BACKGROUND ====== -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- ====== MAIN CANVAS ====== -->
+    <canvas id="grit-canvas" aria-label="砂砾交互画布"></canvas>
+
+    <!-- ====== CUSTOM CURSOR ====== -->
+    <div class="cursor-shell" aria-hidden="true">
+        <div class="cursor-core"></div>
+        <div class="cursor-ring"></div>
+        <div class="cursor-aura"></div>
+    </div>
+
+    <!-- ====== HUD: TITLE ====== -->
+    <header class="hud-header">
+        <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span>Garden</span>
+        </a>
+        <div class="brand">
+            <h1 class="brand-title">CURSOR <span class="accent-word">GRIT</span></h1>
+            <p class="brand-sub">光标砂砾 · 高阶微交互物理场</p>
+        </div>
+        <div class="palette-row" role="group" aria-label="氛围配色">
+            <button class="palette-btn active" data-palette="ember" aria-label="余烬">
+                <span class="swatch sw-ember"></span>
+            </button>
+            <button class="palette-btn" data-palette="abyss" aria-label="深渊">
+                <span class="swatch sw-abyss"></span>
+            </button>
+            <button class="palette-btn" data-palette="bloom" aria-label="绽放">
+                <span class="swatch sw-bloom"></span>
+            </button>
+            <button class="palette-btn" data-palette="frost" aria-label="霜降">
+                <span class="swatch sw-frost"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ====== CONTROL PANEL ====== -->
+    <aside class="control-panel" role="complementary" aria-label="控制面板">
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>INTERACTION MODE</span>
+            </div>
+            <div class="mode-grid">
+                <button class="mode-btn active" data-mode="excavate">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18M5 21V11l7-7 7 7v10M9 21v-6h6v6"/>
+                    </svg>
+                    <span class="mode-name">挖掘</span>
+                    <span class="mode-tag">EXCAVATE</span>
+                </button>
+                <button class="mode-btn" data-mode="sweep">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12c3-4 6-4 9 0s6 4 9 0M3 18c3-4 6-4 9 0s6 4 9 0"/>
+                    </svg>
+                    <span class="mode-name">扫动</span>
+                    <span class="mode-tag">SWEEP</span>
+                </button>
+                <button class="mode-btn" data-mode="vortex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10M12 6a6 6 0 1 0 6 6M12 10a2 2 0 1 0 2 2"/>
+                    </svg>
+                    <span class="mode-name">漩涡</span>
+                    <span class="mode-tag">VORTEX</span>
+                </button>
+                <button class="mode-btn" data-mode="static">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                    <span class="mode-name">静电</span>
+                    <span class="mode-tag">STATIC</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>GRAIN PARAMETERS</span>
+            </div>
+            <div class="slider-stack">
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">砂砾数量</span>
+                        <span class="slider-val" id="val-count">2400</span>
+                    </div>
+                    <input type="range" min="800" max="5000" step="100" value="2400" id="slider-count" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">力场半径</span>
+                        <span class="slider-val" id="val-radius">140</span>
+                    </div>
+                    <input type="range" min="40" max="320" step="5" value="140" id="slider-radius" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">摩擦系数</span>
+                        <span class="slider-val" id="val-friction">0.86</span>
+                    </div>
+                    <input type="range" min="70" max="98" step="1" value="86" id="slider-friction" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">归位弹性</span>
+                        <span class="slider-val" id="val-elastic">0.012</span>
+                    </div>
+                    <input type="range" min="0" max="50" step="1" value="12" id="slider-elastic" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">砂砾尺寸</span>
+                        <span class="slider-val" id="val-size">1.6</span>
+                    </div>
+                    <input type="range" min="6" max="40" step="1" value="16" id="slider-size" class="range-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>ACTIONS</span>
+            </div>
+            <div class="action-row">
+                <button class="action-btn" id="btn-reset">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>
+                    </svg>
+                    <span>重置砂床</span>
+                </button>
+                <button class="action-btn" id="btn-scatter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="2"/>
+                        <path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/>
+                    </svg>
+                    <span>冲击波</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ====== TELEMETRY HUD ====== -->
+    <div class="telemetry" role="status" aria-live="polite">
+        <div class="tele-block">
+            <span class="tele-key">FPS</span>
+            <span class="tele-val" id="tele-fps">60</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">GRAINS</span>
+            <span class="tele-val" id="tele-grains">2400</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">VEL</span>
+            <span class="tele-val" id="tele-vel">0.00</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">MODE</span>
+            <span class="tele-val" id="tele-mode">EXCAVATE</span>
+        </div>
+    </div>
+
+    <!-- ====== HINT ====== -->
+    <div class="hint" id="hint">
+        <span class="hint-pulse"></span>
+        <span>移动光标挖掘砂砾 · 点击触发冲击波 · 切换模式探索不同物理</span>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
