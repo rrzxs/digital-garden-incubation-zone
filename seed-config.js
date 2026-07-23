@@ -1270,6 +1270,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Dragonfly Hover Trail 蜻蜓悬停轨迹',
+      description: '沉浸式蜻蜓悬停轨迹微交互体验。弹簧-阻尼物理驱动的蜻蜓群追随光标悬停飞舞，留下流体光痕轨迹，4种飞行模式（追随/环绕/编队/散逸）、脉冲冲击波、漂浮花粉粒子流场与微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/dragonfly-hover-trail/index.html',
+      tags: ['Interactive', 'Physics', 'Particle', 'Micro-interaction'],
+      icon: '☙',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

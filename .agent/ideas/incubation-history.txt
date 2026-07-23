@@ -112,3 +112,4 @@ demo-activator
 glitch-pulse-mixer
 ar-art-placer
 cursor-grit
+dragonfly-hover-trail
