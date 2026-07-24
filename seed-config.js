@@ -1280,6 +1280,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Glitch Lab 故障实验室',
+      description: '沉浸式故障艺术实验室。输入文字实时探索五种故障模式（RGB色差/数据损毁/扫描线撕裂/像素排序/乱码揭示），光标扰动色差方向、脉冲冲击波、粒子流场与参数调节，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/glitch-lab/index.html',
+      tags: ['Interactive', 'Glitch', 'Text Effect', 'Micro-interaction'],
+      icon: '⌁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

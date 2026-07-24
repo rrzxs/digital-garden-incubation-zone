@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-24",
+  "name": "glitch-lab",
+  "description": "故障艺术图像生成与参数调节器",
+  "tagline": "Embrace the glitch, craft the chaos.",
+  "interaction": "使用滑动条调节失真度、扫描线、色彩偏移等故障参数，把任意图像实时转化为故障艺术作品。系统支持随机种子，让你在混乱中发现意外之美，并一键导出像素被「破坏」过的图片。",
+  "directory": "seeds/glitch-lab/",
+  "status": "incubated"
+}

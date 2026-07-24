@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitch Lab 故障实验室</title>
+    <meta name="description" content="沉浸式故障艺术实验室。输入文字实时探索 RGB 色差、扫描线偏移、数据损毁、像素排序与乱码揭示五种故障模式，参数调节、脉冲冲击波与微晶玻璃态容器，4种氛围配色">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080810'/%3E%3Crect x='12' y='22' width='40' height='6' fill='%23ff2d75' opacity='0.8'/%3E%3Crect x='12' y='30' width='40' height='6' fill='%2300f0ff' opacity='0.8'/%3E%3Crect x='14' y='38' width='36' height='6' fill='%23fff0a0' opacity='0.6'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-acid" data-mode="chromatic">
+
+    <!-- ====== AMBIENT FLUID BACKGROUND ====== -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="grain-layer"></div>
+        <div class="scanline-overlay"></div>
+    </div>
+
+    <!-- ====== MAIN CANVAS (glitch particle field) ====== -->
+    <canvas id="field-canvas" aria-label="故障粒子流场画布"></canvas>
+
+    <!-- ====== CUSTOM CURSOR ====== -->
+    <div class="cursor-shell" aria-hidden="true">
+        <div class="cursor-core"></div>
+        <div class="cursor-ring"></div>
+        <div class="cursor-cross"></div>
+    </div>
+
+    <!-- ====== HEADER ====== -->
+    <header class="hud-header">
+        <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span>Garden</span>
+        </a>
+        <div class="brand">
+            <h1 class="brand-title">GLITCH <span class="accent-word">LAB</span></h1>
+            <p class="brand-sub">故障实验室 · 五种故障模式的实时形变实验场</p>
+        </div>
+        <div class="palette-row" role="group" aria-label="氛围配色">
+            <button class="palette-btn active" data-palette="acid" aria-label="酸性">
+                <span class="swatch sw-acid"></span>
+            </button>
+            <button class="palette-btn" data-palette="void" aria-label="虚空">
+                <span class="swatch sw-void"></span>
+            </button>
+            <button class="palette-btn" data-palette="solar" aria-label="日蚀">
+                <span class="swatch sw-solar"></span>
+            </button>
+            <button class="palette-btn" data-palette="frost" aria-label="霜降">
+                <span class="swatch sw-frost"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ====== GLITCH STAGE ====== -->
+    <main class="glitch-stage glass-panel" id="glitch-stage">
+
+        <!-- Stage HUD overlays -->
+        <div class="stage-hud hud-tl">
+            <span class="hud-key">MODE</span>
+            <span class="hud-val" id="hud-mode">CHROMATIC</span>
+        </div>
+        <div class="stage-hud hud-tr">
+            <span class="hud-key">INTENSITY</span>
+            <span class="hud-val" id="hud-intensity">0.50</span>
+        </div>
+        <div class="stage-hud hud-bl">
+            <span class="hud-key">FPS</span>
+            <span class="hud-val" id="hud-fps">60</span>
+        </div>
+        <div class="stage-hud hud-br">
+            <span class="hud-key">DISRUPTIONS</span>
+            <span class="hud-val" id="hud-disruptions">0</span>
+        </div>
+
+        <!-- The glitch text layers -->
+        <div class="glitch-display" id="glitch-display">
+            <div class="glitch-layer glitch-layer-r" id="layer-r" aria-hidden="true">GLITCH LAB</div>
+            <div class="glitch-layer glitch-layer-g" id="layer-g" aria-hidden="true">GLITCH LAB</div>
+            <div class="glitch-layer glitch-layer-b" id="layer-b" aria-hidden="true">GLITCH LAB</div>
+            <div class="glitch-layer glitch-layer-main" id="layer-main">GLITCH LAB</div>
+            <div class="glitch-layer glitch-layer-scramble" id="layer-scramble" aria-hidden="true"></div>
+        </div>
+
+        <!-- Burst flash -->
+        <div class="burst-flash" id="burst-flash" aria-hidden="true"></div>
+
+        <!-- Stage hint -->
+        <div class="stage-hint" id="stage-hint">
+            <span class="hint-glyph">⌁</span>
+            <span class="hint-text">点击画面触发故障冲击波 · 移动光标扰动色差 · 输入文字即时预览</span>
+        </div>
+
+        <!-- Scanline bars -->
+        <div class="scan-bars" id="scan-bars" aria-hidden="true"></div>
+    </main>
+
+    <!-- ====== CONTROL PANEL ====== -->
+    <aside class="control-panel glass-panel" role="complementary" aria-label="控制面板">
+
+        <!-- Text input -->
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>SOURCE TEXT</span>
+            </div>
+            <div class="text-input-wrap">
+                <input type="text" id="text-input" class="text-input" value="GLITCH LAB" maxlength="24" placeholder="输入文字..." autocomplete="off" spellcheck="false">
+                <button class="randomize-btn" id="btn-randomize" aria-label="随机文字" title="随机文字">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 3h5v5M4 20l16.5-16.5M21 16v5h-5M4 4l5 5M15 15l6 6"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Glitch mode selector -->
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>GLITCH MODE</span>
+            </div>
+            <div class="mode-grid">
+                <button class="mode-btn active" data-mode="chromatic">
+                    <div class="mode-icon icon-chromatic"></div>
+                    <span class="mode-name">色差</span>
+                    <span class="mode-tag">RGB</span>
+                </button>
+                <button class="mode-btn" data-mode="datamosh">
+                    <div class="mode-icon icon-datamosh"></div>
+                    <span class="mode-name">损毁</span>
+                    <span class="mode-tag">MOSH</span>
+                </button>
+                <button class="mode-btn" data-mode="scanline">
+                    <div class="mode-icon icon-scanline"></div>
+                    <span class="mode-name">扫描</span>
+                    <span class="mode-tag">SCAN</span>
+                </button>
+                <button class="mode-btn" data-mode="sort">
+                    <div class="mode-icon icon-sort"></div>
+                    <span class="mode-name">排序</span>
+                    <span class="mode-tag">SORT</span>
+                </button>
+                <button class="mode-btn" data-mode="scramble">
+                    <div class="mode-icon icon-scramble"></div>
+                    <span class="mode-name">乱码</span>
+                    <span class="mode-tag">SCRAM</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Parameter sliders -->
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>PARAMETERS</span>
+            </div>
+            <div class="slider-stack">
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">故障强度</span>
+                        <span class="slider-val" id="val-intensity">50</span>
+                    </div>
+                    <input type="range" min="0" max="100" step="1" value="50" id="slider-intensity" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">色差偏移</span>
+                        <span class="slider-val" id="val-offset">8</span>
+                    </div>
+                    <input type="range" min="0" max="40" step="1" value="8" id="slider-offset" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">扫描速度</span>
+                        <span class="slider-val" id="val-speed">30</span>
+                    </div>
+                    <input type="range" min="0" max="100" step="1" value="30" id="slider-speed" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">乱码密度</span>
+                        <span class="slider-val" id="val-density">40</span>
+                    </div>
+                    <input type="range" min="0" max="100" step="1" value="40" id="slider-density" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">自动脉冲</span>
+                        <span class="slider-val" id="val-pulse">20</span>
+                    </div>
+                    <input type="range" min="0" max="100" step="1" value="20" id="slider-pulse" class="range-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>ACTIONS</span>
+            </div>
+            <div class="action-row">
+                <button class="action-btn" id="btn-burst">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9z"/>
+                    </svg>
+                    <span>冲击</span>
+                </button>
+                <button class="action-btn" id="btn-record">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"/>
+                        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                    </svg>
+                    <span>录制</span>
+                </button>
+                <button class="action-btn" id="btn-export">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    <span>导出</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ====== TELEMETRY HUD ====== -->
+    <div class="telemetry" role="status" aria-live="polite">
+        <div class="tele-block">
+            <span class="tele-key">OFFSET</span>
+            <span class="tele-val" id="tele-offset">8.0</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">GLITCH</span>
+            <span class="tele-val" id="tele-glitch">0.50</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">STATUS</span>
+            <span class="tele-val status-live">
+                <span class="pulse-dot"></span>LIVE
+            </span>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+typetester - 字体预览与排版参数实时调试工具
+scroll-narrative - 滚动驱动的交互叙事页面构建器
+magnetic-cursor - 磁吸光标与微交互动效演示台
+glitch-lab - 故障艺术图像生成与参数调节器
+cube-portfolio - 可旋转3D立方体作品陈列引擎
+terrain-flythrough - 程序化地形实时漫游渲染器
