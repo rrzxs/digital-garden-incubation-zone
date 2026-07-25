@@ -1290,6 +1290,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Glitch Shader 故障着色器',
+      description: '沉浸式 WebGL 故障着色器体验场。GPU 片元着色器实时驱动六种故障模式（色差/损毁/扫描/像素/波纹/风暴），输入文字即刻化为故障艺术，光标扰动色差方向、脉冲冲击波触发数据崩塌、PNG 截图导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/glitch-shader/index.html',
+      tags: ['Interactive', 'WebGL', 'Glitch', 'Micro-interaction'],
+      icon: '⌁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

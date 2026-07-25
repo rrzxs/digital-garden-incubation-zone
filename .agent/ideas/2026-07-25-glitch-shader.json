@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-25",
+  "name": "glitch-shader",
+  "description": "实时故障艺术图像扭曲生成器",
+  "tagline": "Break Reality Pixel by Pixel",
+  "interaction": "Drag your cursor across the canvas to smear, slice, and corrupt the image in real time using GPU fragment shaders. Scroll to intensify the glitch frequency, and press spacebar to randomly reseed the noise seed for fresh corruption patterns. Each interaction produces a unique, non-repeating digital artifact you can export.",
+  "directory": "seeds/glitch-shader/",
+  "status": "incubated"
+}

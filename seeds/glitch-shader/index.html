@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitch Shader 故障着色器</title>
+    <meta name="description" content="沉浸式 WebGL 故障着色器体验场。GPU 片元着色器实时驱动五种故障模式（RGB 色差/数据损毁/扫描线撕裂/像素排序/故障波纹），输入文字即刻化为故障艺术，光标扰动色差方向、脉冲冲击波触发瞬时数据崩塌，流体渐变背景 + 微晶玻璃态容器，4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-acid" data-mode="chroma">
+
+    <!-- ====== MESH GRADIENT BACKGROUND ====== -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain" aria-hidden="true"></div>
+    </div>
+
+    <!-- ====== GLITCH WEBGL CANVAS ====== -->
+    <canvas id="glitch-canvas" aria-label="WebGL 故障着色器画布"></canvas>
+
+    <!-- ====== FALLBACK (visible if WebGL unsupported) ====== -->
+    <div class="fallback" id="fallback" hidden>
+        <div class="fallback-card">
+            <h2>WebGL 不可用</h2>
+            <p>本体验需要 WebGL 支持以在 GPU 上运行故障片元着色器。请更换至支持 WebGL 的现代浏览器。</p>
+        </div>
+    </div>
+
+    <!-- ====== CUSTOM CURSOR (glitch reticle) ====== -->
+    <div class="cursor-shell" aria-hidden="true">
+        <div class="cursor-core"></div>
+        <div class="cursor-crosshair-h"></div>
+        <div class="cursor-crosshair-v"></div>
+        <div class="cursor-ring"></div>
+        <div class="cursor-aura"></div>
+    </div>
+
+    <!-- ====== HUD: TITLE ====== -->
+    <header class="hud-header">
+        <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span>Garden</span>
+        </a>
+        <div class="brand">
+            <h1 class="brand-title">GLITCH <span class="accent-word">SHADER</span></h1>
+            <p class="brand-sub">故障着色器 · GPU 片元实时失真引擎</p>
+        </div>
+        <div class="palette-row" role="group" aria-label="氛围配色">
+            <button class="palette-btn active" data-palette="acid" aria-label="酸性">
+                <span class="swatch sw-acid"></span>
+            </button>
+            <button class="palette-btn" data-palette="blood" aria-label="血色">
+                <span class="swatch sw-blood"></span>
+            </button>
+            <button class="palette-btn" data-palette="ice" aria-label="冰晶">
+                <span class="swatch sw-ice"></span>
+            </button>
+            <button class="palette-btn" data-palette="void" aria-label="虚空">
+                <span class="swatch sw-void"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ====== TEXT INPUT (left floating glass panel) ====== -->
+    <aside class="text-panel" aria-label="文字输入">
+        <div class="section-label">
+            <span class="dot"></span>
+            <span>SOURCE TEXT</span>
+        </div>
+        <textarea id="text-input" class="text-input" rows="2" maxlength="32" spellcheck="false">GLITCH</textarea>
+        <div class="text-meta">
+            <span><span id="char-count">6</span> / 32 字符</span>
+            <span class="text-hint">输入文字将被着色器实时失真</span>
+        </div>
+
+        <div class="section-label" style="margin-top:22px">
+            <span class="dot"></span>
+            <span>QUICK PHRASES</span>
+        </div>
+        <div class="phrase-grid">
+            <button class="phrase-btn" data-phrase="GLITCH">GLITCH</button>
+            <button class="phrase-btn" data-phrase="NO SIGNAL">NO SIGNAL</button>
+            <button class="phrase-btn" data-phrase="404">404</button>
+            <button class="phrase-btn" data-phrase="EDEN">EDEN</button>
+            <button class="phrase-btn" data-phrase="SYSTEM FAILURE">SYSTEM FAILURE</button>
+            <button class="phrase-btn" data-phrase="█████">█████</button>
+        </div>
+    </aside>
+
+    <!-- ====== CONTROL PANEL ====== -->
+    <aside class="control-panel" role="complementary" aria-label="控制面板">
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>GLITCH MODE</span>
+            </div>
+            <div class="mode-grid">
+                <button class="mode-btn active" data-mode="chroma">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                        <path d="M6 4l-2 2 2 2M18 16l2 2-2 2" opacity="0.55"/>
+                    </svg>
+                    <span class="mode-name">色差</span>
+                    <span class="mode-tag">CHROMA</span>
+                </button>
+                <button class="mode-btn" data-mode="datamosh">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="4"/>
+                        <rect x="3" y="10" width="18" height="4" opacity="0.7"/>
+                        <rect x="3" y="16" width="18" height="4" opacity="0.4"/>
+                    </svg>
+                    <span class="mode-name">损毁</span>
+                    <span class="mode-tag">DATAMOSH</span>
+                </button>
+                <button class="mode-btn" data-mode="scanline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 7h18M3 12h18M3 17h18"/>
+                        <path d="M5 4l3 3M14 16l3 3" opacity="0.6"/>
+                    </svg>
+                    <span class="mode-name">扫描</span>
+                    <span class="mode-tag">SCANLINE</span>
+                </button>
+                <button class="mode-btn" data-mode="pixel">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="4" width="6" height="6"/>
+                        <rect x="14" y="4" width="6" height="6" opacity="0.7"/>
+                        <rect x="4" y="14" width="6" height="6" opacity="0.5"/>
+                        <rect x="14" y="14" width="6" height="6" opacity="0.85"/>
+                    </svg>
+                    <span class="mode-name">像素</span>
+                    <span class="mode-tag">PIXEL</span>
+                </button>
+                <button class="mode-btn" data-mode="wave">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/>
+                        <path d="M3 18c2-4 4-4 6 0s4 4 6 0 4-4 6 0" opacity="0.5"/>
+                    </svg>
+                    <span class="mode-name">波纹</span>
+                    <span class="mode-tag">WAVE</span>
+                </button>
+                <button class="mode-btn" data-mode="storm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2L4 14h7l-2 8 9-12h-7z"/>
+                    </svg>
+                    <span class="mode-name">风暴</span>
+                    <span class="mode-tag">STORM</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>SHADER PARAMETERS</span>
+            </div>
+            <div class="slider-stack">
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">故障强度</span>
+                        <span class="slider-val" id="val-intensity">0.55</span>
+                    </div>
+                    <input type="range" min="0" max="100" step="1" value="55" id="slider-intensity" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">色差偏移</span>
+                        <span class="slider-val" id="val-chroma">0.40</span>
+                    </div>
+                    <input type="range" min="0" max="100" step="1" value="40" id="slider-chroma" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">撕裂频率</span>
+                        <span class="slider-val" id="val-tear">0.30</span>
+                    </div>
+                    <input type="range" min="0" max="100" step="1" value="30" id="slider-tear" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">抖动速度</span>
+                        <span class="slider-val" id="val-speed">1.00</span>
+                    </div>
+                    <input type="range" min="0" max="300" step="5" value="100" id="slider-speed" class="range-input">
+                </div>
+                <div class="slider-row">
+                    <div class="slider-head">
+                        <span class="slider-label">字号</span>
+                        <span class="slider-val" id="val-size">1.00</span>
+                    </div>
+                    <input type="range" min="40" max="180" step="5" value="100" id="slider-size" class="range-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <div class="section-label">
+                <span class="dot"></span>
+                <span>ACTIONS</span>
+            </div>
+            <div class="action-row">
+                <button class="action-btn" id="btn-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9z"/>
+                    </svg>
+                    <span>脉冲</span>
+                </button>
+                <button class="action-btn" id="btn-random">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="3"/>
+                        <circle cx="8" cy="8" r="1.2" fill="currentColor"/>
+                        <circle cx="16" cy="16" r="1.2" fill="currentColor"/>
+                        <circle cx="16" cy="8" r="1.2" fill="currentColor"/>
+                        <circle cx="8" cy="16" r="1.2" fill="currentColor"/>
+                    </svg>
+                    <span>随机</span>
+                </button>
+                <button class="action-btn" id="btn-snapshot">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                        <circle cx="12" cy="13" r="4"/>
+                    </svg>
+                    <span>截图</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ====== TELEMETRY HUD ====== -->
+    <div class="telemetry" role="status" aria-live="polite">
+        <div class="tele-block">
+            <span class="tele-key">FPS</span>
+            <span class="tele-val" id="tele-fps">60</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">GPU</span>
+            <span class="tele-val" id="tele-gpu">OK</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">SEED</span>
+            <span class="tele-val" id="tele-seed">0x0000</span>
+        </div>
+        <div class="tele-divider"></div>
+        <div class="tele-block">
+            <span class="tele-key">MODE</span>
+            <span class="tele-val" id="tele-mode">CHROMA</span>
+        </div>
+    </div>
+
+    <!-- ====== HINT ====== -->
+    <div class="hint" id="hint">
+        <span class="hint-pulse"></span>
+        <span>输入文字 · 移动光标扰动色差 · 点击触发数据崩塌 · 切换模式探索故障美学</span>
+    </div>
+
+    <!-- ====== TOAST (for snapshot feedback) ====== -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

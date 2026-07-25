@@ -1,0 +1,6 @@
+scroll-narrative - 滚动驱动的故事化长页面生成器
+magnetic-cursor - 磁吸吸附与跟随光标微交互工具
+type-specimen - 可交互字体样张与排版实验室
+glitch-shader - 实时故障艺术图像扭曲生成器
+terrain-voyage - 程序化地形漫游与轨迹可视化
+motion-resume - 滚动叙事式个人作品履历页
