@@ -1,0 +1,6 @@
+magnetic-cursor-simulator - 磁吸光标交互力场可视化工具
+scroll-terrain-builder - 滚动驱动三维地形漫游生成器
+narrative-slice-studio - 沉浸式滚动叙事分镜编辑器
+typography-motion-lab - 字体长滚动动态排版实验室
+shader-distortion-cam - 实时着色器扭曲滤镜相机
+continuous-transform-weaver - 连续形变网格编织器

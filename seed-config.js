@@ -1300,6 +1300,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Narrative Slice Studio 叙事切片工作室',
+      description: '沉浸式叙事切片工作室。将微小说切片为可悬停、可激活、可重组的时间轴卡片，4 个故事调色板（灯塔/花园/远航/回声）、播放序列、洗牌重组、逐字揭示与微晶玻璃态容器，流体渐变背景 + 非线性动效',
+      path: '/seed/seeds/narrative-slice-studio/index.html',
+      tags: ['Interactive', 'Narrative', 'Micro-interaction', 'Animation'],
+      icon: '◧',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

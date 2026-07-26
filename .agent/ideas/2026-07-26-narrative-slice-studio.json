@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-26",
+  "name": "narrative-slice-studio",
+  "description": "沉浸式滚动叙事分镜编辑器",
+  "tagline": "Direct Your Scroll, Frame the Story",
+  "interaction": "用户通过滚动鼠标或触控板，在垂直时间轴上逐帧推进叙事分镜。每个分镜卡片在进入视口时触发电影级的过渡动画、视差图层和文字编排，用户可实时调整每个分镜的节奏、镜头类型和转场效果。最终的滚动序列可导出为可分享的沉浸式网页叙事。",
+  "directory": "seeds/narrative-slice-studio/",
+  "status": "incubated"
+}

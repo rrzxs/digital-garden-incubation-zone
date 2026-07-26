@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narrative Slice Studio | 叙事切片工作室</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- === Ambient Background === -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <canvas class="particle-field" id="particle-field"></canvas>
+        <div class="noise-layer"></div>
+    </div>
+
+    <!-- === Back Link === -->
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回孵化区</span>
+    </a>
+
+    <!-- === Main Stage === -->
+    <main class="stage" id="stage">
+
+        <!-- === Cover / Title === -->
+        <header class="cover glass-panel" id="cover">
+            <div class="cover-meta">
+                <span class="meta-dot"></span>
+                <span class="meta-label">NARRATIVE SLICE STUDIO</span>
+                <span class="meta-divider">//</span>
+                <span class="meta-version">v 1.0</span>
+            </div>
+            <h1 class="cover-title">
+                <span class="title-line reveal-chars" data-text="Slice">Slice</span>
+                <span class="title-line reveal-chars" data-text="the">the</span>
+                <span class="title-line reveal-chars" data-text="Story.">Story.</span>
+            </h1>
+            <p class="cover-subtitle" id="cover-subtitle">A story is not a line. It is a constellation of moments — sliced, shuffled, and reassembled by the reader. Drag the timeline. Hover a slice. Let the narrative breathe.</p>
+
+            <div class="cover-actions">
+                <button class="action-btn primary" id="btn-play" type="button">
+                    <span class="btn-glyph" aria-hidden="true">▶</span>
+                    <span class="btn-label">PLAY SEQUENCE</span>
+                </button>
+                <button class="action-btn ghost" id="btn-shuffle" type="button">
+                    <span class="btn-glyph" aria-hidden="true">⇄</span>
+                    <span class="btn-label">SHUFFLE</span>
+                </button>
+                <button class="action-btn ghost" id="btn-reset" type="button">
+                    <span class="btn-glyph" aria-hidden="true">↺</span>
+                    <span class="btn-label">RESET</span>
+                </button>
+            </div>
+
+            <div class="cover-ticker">
+                <span class="ticker-label">NOW SHOWING</span>
+                <span class="ticker-title" id="ticker-title">"The Lighthouse Keeper" — 7 slices</span>
+            </div>
+        </header>
+
+        <!-- === Mood Palette === -->
+        <section class="mood-rail glass-panel" id="mood-rail" aria-label="Story palette selector">
+            <span class="rail-label">PALETTE</span>
+            <div class="rail-options" id="mood-options">
+                <button class="mood-chip is-active" data-story="lighthouse" type="button">
+                    <span class="chip-swatch" style="--c1:#3a7bd5;--c2:#00d2ff"></span>
+                    <span class="chip-name">Lighthouse</span>
+                </button>
+                <button class="mood-chip" data-story="garden" type="button">
+                    <span class="chip-swatch" style="--c1:#11998e;--c2:#38ef7d"></span>
+                    <span class="chip-name">Garden</span>
+                </button>
+                <button class="mood-chip" data-story="voyage" type="button">
+                    <span class="chip-swatch" style="--c1:#f7971e;--c2:#ffd200"></span>
+                    <span class="chip-name">Voyage</span>
+                </button>
+                <button class="mood-chip" data-story="echo" type="button">
+                    <span class="chip-swatch" style="--c1:#c471f5;--c2:#fa71cd"></span>
+                    <span class="chip-name">Echo</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- === Slice Timeline === -->
+        <section class="timeline-wrap glass-panel" id="timeline-wrap">
+            <div class="timeline-head">
+                <div class="head-left">
+                    <span class="head-label">TIMELINE</span>
+                    <span class="head-count" id="head-count">07 / 07</span>
+                </div>
+                <div class="head-right">
+                    <span class="head-time" id="head-time">00:00 / 02:14</span>
+                </div>
+            </div>
+
+            <div class="timeline-track" id="timeline-track">
+                <div class="timeline-spine"></div>
+                <!-- slices injected by main.js -->
+            </div>
+
+            <div class="timeline-foot">
+                <div class="play-progress">
+                    <div class="play-progress-fill" id="play-progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Reading Pane === -->
+        <section class="reading-pane glass-panel" id="reading-pane" aria-live="polite">
+            <div class="reading-empty" id="reading-empty">
+                <div class="empty-orb"></div>
+                <p class="empty-text">Hover or click a slice to begin reading.</p>
+            </div>
+            <article class="reading-body" id="reading-body" hidden>
+                <div class="reading-meta">
+                    <span class="reading-index" id="reading-index">SLICE 01</span>
+                    <span class="reading-mood" id="reading-mood">dawn</span>
+                    <span class="reading-duration" id="reading-duration">00:18</span>
+                </div>
+                <h2 class="reading-title" id="reading-title">Title</h2>
+                <p class="reading-text" id="reading-text">Body text appears here.</p>
+                <div class="reading-foot">
+                    <button class="reading-nav" id="reading-prev" type="button">← PREV</button>
+                    <span class="reading-position" id="reading-position">1 of 7</span>
+                    <button class="reading-nav" id="reading-next" type="button">NEXT →</button>
+                </div>
+            </article>
+        </section>
+
+        <!-- === HUD === -->
+        <aside class="hud glass-panel" id="hud" aria-label="Status panel">
+            <div class="hud-row">
+                <span class="hud-key">MODE</span>
+                <span class="hud-val" id="hud-mode">IDLE</span>
+            </div>
+            <div class="hud-row">
+                <span class="hud-key">ACTIVE</span>
+                <span class="hud-val" id="hud-active">—</span>
+            </div>
+            <div class="hud-row">
+                <span class="hud-key">CURSOR</span>
+                <span class="hud-val" id="hud-cursor">0.00, 0.00</span>
+            </div>
+            <div class="hud-row">
+                <span class="hud-key">PULSE</span>
+                <div class="hud-pulse"><div class="hud-pulse-bar" id="hud-pulse-bar"></div></div>
+            </div>
+        </aside>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
