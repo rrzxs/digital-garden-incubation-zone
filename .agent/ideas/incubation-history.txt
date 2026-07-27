@@ -116,3 +116,4 @@ dragonfly-hover-trail
 glitch-lab
 glitch-shader
 narrative-slice-studio
+contrast-checker

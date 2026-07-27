@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-27",
+  "name": "contrast-checker",
+  "description": "WCAG对比度检查器，输入前景背景色即显示合规等级，带色盲模拟预览",
+  "tagline": "See Colors Everyone Can Read",
+  "interaction": "Input foreground and background colors to instantly see WCAG compliance levels (AA/AAA) with real-time contrast ratio feedback. Toggle color blindness simulation modes to preview how your palette appears to users with different visual conditions. Export accessible color combinations ready for production use.",
+  "directory": "seeds/contrast-checker/",
+  "status": "incubated"
+}

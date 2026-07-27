@@ -1,0 +1,5 @@
+timezone-visualizer - 时区对比可视化工具，输入多个城市实时显示当前时间与世界地图上的日夜分界线
+qr-styler - 二维码美化生成器，支持渐变色、圆点模块化、Logo嵌入，实时预览扫描可读性
+contrast-checker - WCAG对比度检查器，输入前景背景色即显示合规等级，带色盲模拟预览
+font-pairing-studio - 字体配对实验室，拖拽搭配标题与正文字体，实时渲染排版预览并提供使用建议
+markdown-table-builder - Markdown表格可视化构建器，所见即所得编辑单元格并导出格式化表格代码

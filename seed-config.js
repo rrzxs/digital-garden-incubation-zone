@@ -1310,6 +1310,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Contrast Checker 对比度透视',
+      description: '沉浸式 WCAG 色彩对比度检查器。RGB+Alpha 四通道调谐、四级 WCAG 徽章实时判定、12 套灵感调色板、历史记录与随机配色，粒子流场背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/contrast-checker/index.html',
+      tags: ['Interactive', 'Accessibility', 'WCAG', 'Color', 'Micro-interaction'],
+      icon: '◐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
