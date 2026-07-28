@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-28",
+  "name": "scroll-choreography",
+  "description": "滚动驱动的叙事编排工具",
+  "tagline": "**Scroll Is the Storyteller**",
+  "interaction": "As users scroll, page elements choreograph into a cinematic sequence—text reveals, images transform, and sections transition in perfect sync with scroll position. The tool maps scroll velocity and progress to choreographed animation timelines, turning passive reading into an embodied, frame-by-frame narrative journey where the user is both director and audience.",
+  "directory": "seeds/scroll-choreography/",
+  "status": "incubated"
+}

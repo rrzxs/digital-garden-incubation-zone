@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Choreography · 滚动编舞</title>
+    <meta name="description" content="沉浸式滚动编舞体验。七幕动效编排由滚动节奏指挥——视差深度层、字符级联揭示、3D 倾斜卡片、时间轴刻度、粒子流场与微晶玻璃态容器，流体渐变背景 + 非线性动效">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="particle-field"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <nav class="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="section-dots" id="section-dots"></div>
+    </nav>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void">◈</button>
+    </div>
+
+    <div class="tempo-hud" id="tempo-hud">
+        <div class="hud-row">
+            <span class="hud-label mono">TEMPO</span>
+            <span class="hud-value mono" id="tempo-value">0.00</span>
+        </div>
+        <div class="hud-bar"><div class="hud-fill" id="tempo-bar"></div></div>
+        <div class="hud-row">
+            <span class="hud-label mono">ACT</span>
+            <span class="hud-value mono" id="act-value">I / VII</span>
+        </div>
+    </div>
+
+    <div class="conductor-stick" id="conductor-stick">
+        <div class="stick-tip"></div>
+        <div class="stick-trail"></div>
+    </div>
+
+    <main id="main-content">
+
+        <section class="scene scene-hero" data-section="0" data-act="Overture">
+            <div class="scene-inner">
+                <div class="parallax-layer layer-far" data-depth="0.15">
+                    <div class="floating-glyph mono">♪</div>
+                    <div class="floating-glyph mono">♫</div>
+                    <div class="floating-glyph mono">♩</div>
+                </div>
+                <div class="parallax-layer layer-mid" data-depth="0.35">
+                    <div class="floating-ring ring-1"></div>
+                    <div class="floating-ring ring-2"></div>
+                </div>
+                <div class="glass-card hero-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">001</div>
+                        <div class="section-label">Overture · 序曲</div>
+                        <h1 class="section-title reveal-text" data-reveal-text>
+                            滚动，是指挥棒
+                        </h1>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">每一次滑轮的推动，都是一次节拍的落下。</span>
+                            <span class="line">元素随你的节奏起舞——视差、揭示、倾斜、脉动。</span>
+                            <span class="line">这是滚动编舞，让位移成为一场演出。</span>
+                        </p>
+                        <div class="scroll-hint" data-reveal>
+                            <span class="scroll-arrow">↓</span>
+                            <span class="mono hint-text">向下滚动以开始演出</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="1" data-act="Parallax">
+            <div class="scene-inner">
+                <div class="parallax-stack" id="parallax-stack">
+                    <div class="parallax-card card-back" data-depth="0.6" data-tilt>
+                        <div class="card-glow"></div>
+                        <div class="parallax-label mono">DEPTH · 60%</div>
+                    </div>
+                    <div class="parallax-card card-mid" data-depth="0.35" data-tilt>
+                        <div class="card-glow"></div>
+                        <div class="parallax-label mono">DEPTH · 35%</div>
+                    </div>
+                    <div class="parallax-card card-front" data-depth="0.1" data-tilt>
+                        <div class="card-glow"></div>
+                        <div class="parallax-label mono">DEPTH · 10%</div>
+                    </div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">002</div>
+                        <div class="section-label">Parallax · 视差</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            深度，是空间的呼吸
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">三层卡片以不同速率滑过——远者缓慢，近者急促。</span>
+                            <span class="line">鼠标轻移，它们各自倾斜，构筑立体的纵深剧场。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="2" data-act="Reveal">
+            <div class="scene-inner">
+                <div class="reveal-stage">
+                    <h2 class="mega-title" id="mega-title" data-mega-reveal>
+                        <span class="mega-char">编</span><span class="mega-char">排</span><span class="mega-char">即</span><span class="mega-char">叙</span><span class="mega-char">事</span>
+                    </h2>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">003</div>
+                        <div class="section-label">Reveal · 揭示</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            文字，逐字苏醒
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">当滚动将段落送入视野，字符们从模糊中浮现——</span>
+                            <span class="line">每一个字都有它登场的时刻，错峰、延迟、呼吸。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="3" data-act="Tilt">
+            <div class="scene-inner">
+                <div class="tilt-gallery" id="tilt-gallery">
+                    <div class="tilt-card" data-tilt data-intensity="1.0">
+                        <div class="card-glow"></div>
+                        <div class="tilt-inner">
+                            <div class="tilt-num mono">α</div>
+                            <div class="tilt-label mono">PERSPECTIVE</div>
+                        </div>
+                    </div>
+                    <div class="tilt-card" data-tilt data-intensity="1.3">
+                        <div class="card-glow"></div>
+                        <div class="tilt-inner">
+                            <div class="tilt-num mono">β</div>
+                            <div class="tilt-label mono">ROTATION</div>
+                        </div>
+                    </div>
+                    <div class="tilt-card" data-tilt data-intensity="0.8">
+                        <div class="card-glow"></div>
+                        <div class="tilt-inner">
+                            <div class="tilt-num mono">γ</div>
+                            <div class="tilt-label mono">DEPTH</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">004</div>
+                        <div class="section-label">Tilt · 倾斜</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            倾斜，赋予重量感
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">光标靠近，卡片向你的视线微微低头——</span>
+                            <span class="line">这是触觉的代偿，让平面拥有实体的引力。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="4" data-act="Pulse">
+            <div class="scene-inner">
+                <div class="pulse-grid" id="pulse-grid">
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                    <div class="pulse-cell" data-pulse></div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">005</div>
+                        <div class="section-label">Pulse · 脉动</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            网格，随节拍呼吸
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">滚动速度注入脉冲，16 个单元以波纹顺序起伏——</span>
+                            <span class="line">越快的滚动，越剧烈的律动；静止时，它们归于沉眠。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="5" data-act="Timeline">
+            <div class="scene-inner">
+                <div class="timeline-stage">
+                    <div class="timeline-rail">
+                        <div class="timeline-progress" id="timeline-progress"></div>
+                    </div>
+                    <div class="timeline-marks" id="timeline-marks">
+                        <div class="timeline-mark" data-mark="0"><span class="mark-label mono">00:00</span></div>
+                        <div class="timeline-mark" data-mark="1"><span class="mark-label mono">00:12</span></div>
+                        <div class="timeline-mark" data-mark="2"><span class="mark-label mono">00:24</span></div>
+                        <div class="timeline-mark" data-mark="3"><span class="mark-label mono">00:36</span></div>
+                        <div class="timeline-mark" data-mark="4"><span class="mark-label mono">00:48</span></div>
+                        <div class="timeline-mark" data-mark="5"><span class="mark-label mono">01:00</span></div>
+                        <div class="timeline-mark" data-mark="6"><span class="mark-label mono">01:12</span></div>
+                    </div>
+                    <div class="timeline-cursor" id="timeline-cursor">
+                        <div class="cursor-head"></div>
+                    </div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">006</div>
+                        <div class="section-label">Timeline · 时间轴</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            滚动，即时间的指挥
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">整场演出被映射到一条线性时间轴——</span>
+                            <span class="line">你的滚动位置，就是播放头的此刻。七幕，七十二秒。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene scene-finale" data-section="6" data-act="Finale">
+            <div class="scene-inner">
+                <div class="glass-card finale-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">007</div>
+                        <div class="section-label">Finale · 终章</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            曲终，意未尽
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">你刚刚指挥了一场七幕的滚动编舞：</span>
+                            <span class="line">视差、揭示、倾斜、脉动、时间轴——</span>
+                            <span class="line">每一次位移，都是一次微交互的交响。</span>
+                        </p>
+                        <div class="finale-cta" data-reveal>
+                            <a href="../../index.html" class="cta-glass">
+                                <span>返回数字花园</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

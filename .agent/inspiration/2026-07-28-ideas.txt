@@ -1,0 +1,6 @@
+typography-playground - 字体交互式效果实验室
+scroll-choreography - 滚动驱动的叙事编排工具
+motion-keyframe-visualizer - 动画关键帧可视化编排器
+cube-portfolio-spin - 三维立方体作品轮播展示
+family-chore-board - 家庭事务协作看板小工具
+terrain-render-lab - 实时三维地形渲染沙盒

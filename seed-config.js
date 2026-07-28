@@ -1320,6 +1320,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Scroll Choreography 滚动编舞',
+      description: '沉浸式滚动编舞体验场。滚动化身指挥棒驱动七幕微交互演出——视差深度层、字符级联揭示、3D 倾斜卡片、脉冲网格、线性时间轴与粒子流场，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/scroll-choreography/index.html',
+      tags: ['Interactive', 'Scroll', 'Animation', 'Micro-interaction'],
+      icon: '♪',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
