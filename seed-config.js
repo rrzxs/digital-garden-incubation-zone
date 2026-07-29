@@ -1330,6 +1330,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Merge City 融城',
+      description: '沉浸式建筑融合城市建设体验场。在 6×6 微晶玻璃网格上放置建筑，相同等级相邻建筑自动级联融合升级——从帐篷一路筑成大都市。12 种建筑、粒子迸射、冲击波环与弹簧物理动效，4 种氛围配色',
+      path: '/seed/seeds/merge-city/index.html',
+      tags: ['Interactive', 'Merge', 'City Builder', 'Micro-interaction'],
+      icon: '⌂',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
     }
   ]);
 

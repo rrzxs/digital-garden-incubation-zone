@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge City — 融城</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-aurora">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="fx-canvas"></canvas>
+
+    <header class="app-header">
+        <div class="brand-group">
+            <h1 class="brand-title">Merge<span class="brand-dot">·</span><span class="brand-accent">City</span></h1>
+            <p class="brand-subtitle">融城 — 在玻璃网格上放置与融合，从帐篷筑起一座大都市</p>
+        </div>
+    </header>
+
+    <aside class="stats-panel glass-panel" id="stats-panel">
+        <div class="stats-header">
+            <span class="stats-title">CITY METRICS</span>
+            <span class="stats-pulse"></span>
+        </div>
+        <div class="stats-section">
+            <div class="stats-row">
+                <span class="stats-label">人口</span>
+                <span class="stats-value mono" id="stat-population">0</span>
+            </div>
+            <div class="stats-row">
+                <span class="stats-label">分数</span>
+                <span class="stats-value mono" id="stat-score">0</span>
+            </div>
+            <div class="stats-divider"></div>
+            <div class="stats-row">
+                <span class="stats-label">最高</span>
+                <span class="stats-value mono" id="stat-tier">—</span>
+            </div>
+            <div class="stats-row">
+                <span class="stats-label">回合</span>
+                <span class="stats-value mono" id="stat-turns">0</span>
+            </div>
+            <div class="stats-row">
+                <span class="stats-label">建筑</span>
+                <span class="stats-value mono" id="stat-buildings">0</span>
+            </div>
+        </div>
+    </aside>
+
+    <aside class="codex-panel glass-panel" id="codex-panel">
+        <div class="codex-header">
+            <span class="codex-title">建筑图鉴</span>
+            <span class="codex-count mono" id="codex-count">0/12</span>
+        </div>
+        <div class="codex-list" id="codex-list"></div>
+    </aside>
+
+    <div class="hint-toast glass-panel" id="hint-toast">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span>点击空格放置 · 相同建筑相邻自动融合升级</span>
+    </div>
+
+    <main class="stage">
+        <div class="next-card glass-panel" id="next-card">
+            <span class="next-label">下一个</span>
+            <div class="next-tile" id="next-tile">
+                <div class="building-icon" id="next-icon"></div>
+                <span class="building-name" id="next-name">帐篷</span>
+            </div>
+        </div>
+
+        <div class="grid-wrap glass-panel" id="grid-wrap">
+            <div class="grid" id="grid"></div>
+            <div class="grid-overlay" id="grid-overlay"></div>
+        </div>
+    </main>
+
+    <footer class="controls-bar glass-panel" id="controls-bar">
+        <button class="action-btn" id="btn-reset">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>新城</span>
+        </button>
+        <button class="action-btn" id="btn-undo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H10"/></svg>
+            <span>撤销</span>
+        </button>
+        <button class="action-btn" id="btn-bulldoze">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01"/></svg>
+            <span>推平模式</span>
+        </button>
+
+        <div class="palette-group">
+            <button class="palette-btn active" data-palette="aurora" aria-label="极光">
+                <span class="swatch" style="background:linear-gradient(135deg,#22d3ee,#818cf8,#e879f9)"></span>
+            </button>
+            <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                <span class="swatch" style="background:linear-gradient(135deg,#fb923c,#f43f5e,#fbbf24)"></span>
+            </button>
+            <button class="palette-btn" data-palette="moss" aria-label="苔藓">
+                <span class="swatch" style="background:linear-gradient(135deg,#34d399,#a3e635,#22d3ee)"></span>
+            </button>
+            <button class="palette-btn" data-palette="dusk" aria-label="暮色">
+                <span class="swatch" style="background:linear-gradient(135deg,#f472b6,#c084fc,#60a5fa)"></span>
+            </button>
+        </div>
+
+        <button class="action-btn primary" id="btn-fullscreen">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            <span>全屏</span>
+        </button>
+    </footer>
+
+    <div class="result-modal" id="result-modal">
+        <div class="result-card glass-panel">
+            <h2 class="result-title" id="result-title">城市已满</h2>
+            <p class="result-sub" id="result-sub">你的城市没有空地了</p>
+            <div class="result-stats" id="result-stats"></div>
+            <button class="action-btn primary result-btn" id="result-restart">建造新城</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

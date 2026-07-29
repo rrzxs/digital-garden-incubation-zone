@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-29",
+  "name": "merge-city",
+  "description": "滚动驱动的消除融合城市迷你游戏",
+  "tagline": "Scroll to merge, build your city.",
+  "interaction": "当用户滚动页面时，相邻的同级建筑会自动滑动融合成更高级的建筑（如小屋→房屋→高楼）。每次成功融合触发粒子动画与城市等级跃升，滚动方向决定融合顺序，向下滚动推进城市建设，向上滚动则回溯拆解，创造出一种"用滚动雕刻城市"的节奏感体验。",
+  "directory": "seeds/merge-city/",
+  "status": "incubated"
+}

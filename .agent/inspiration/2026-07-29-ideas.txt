@@ -1,0 +1,6 @@
+scroll-cinema - 滚动驱动的沉浸式叙事页面构建器
+typeplayground - 可变字体交互演示与排版实验工具
+magnetic-cursor - 磁吸交互与光标特效组件实验室
+terrain-voyager - 程序化3D地形实时漫游器
+motion-catalog - 滚动动画模式可视化图鉴
+merge-city - 滚动驱动的消除融合城市迷你游戏
