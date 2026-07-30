@@ -119,3 +119,4 @@ narrative-slice-studio
 contrast-checker
 scroll-choreography
 merge-city
+typeface-playground

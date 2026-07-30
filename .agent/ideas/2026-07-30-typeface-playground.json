@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-30",
+  "name": "typeface-playground",
+  "description": "字体形态实时调参实验台",
+  "tagline": "Morph Type, Live.",
+  "interaction": "Users drag parametric sliders to morph letterforms in real time—adjusting weight, width, slant, optical size, and contrast. Every tweak renders instantly on a live canvas, letting typographers sculpt bespoke typefaces through playful, tactile experimentation.",
+  "directory": "seeds/typeface-playground/",
+  "status": "incubated"
+}

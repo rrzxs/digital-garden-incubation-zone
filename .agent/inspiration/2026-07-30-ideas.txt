@@ -1,0 +1,8 @@
+cursor-magnetic-field - 鼠标磁场吸附式交互演示工具
+scroll-cinema-editor - 滚动驱动叙事分镜编排器
+typeface-playground - 字体形态实时调参实验台
+terrain-viewport - 实时3D地形漫游渲染器
+shape-morph-studio - 几何形态连续变换动画器
+pacing-grid-sequencer - 滚动节奏可视化编排器
+magnetic-cursor-forge - 自定义磁性光标生成器
+palette-motion-lab - 配色与动效联动调色台

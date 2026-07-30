@@ -1340,6 +1340,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'game'
+    },
+    {
+      title: 'Typeface Playground 排版铸造实验室',
+      description: '沉浸式字体排版游乐场。实时操控字重、字宽、斜度、光学尺寸、字距与行高，拖拽字距张力球精修字符对间距，磁力悬停与力场扰动、基线律动网格、渐变描色与描边光泽纹理，参数实时编译为可复制 CSS，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4 种氛围配色',
+      path: '/seed/seeds/typeface-playground/index.html',
+      tags: ['Interactive', 'Typography', 'Micro-interaction', 'CSS Export'],
+      icon: 'Aa',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
