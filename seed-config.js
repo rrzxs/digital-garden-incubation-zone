@@ -1350,6 +1350,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Motion Type Lab 动效字体实验室',
+      description: '沉浸式动效字体微交互体验。邻近力场 + 弹簧-阻尼物理驱动字符实时呼吸：字距脉冲、字重波纹、景深模糊、轨道倾斜与乱码揭示五种模式，冲击波脉冲、粒子流场与字符遥测面板，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/motion-type-lab/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: 'Ṁ',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

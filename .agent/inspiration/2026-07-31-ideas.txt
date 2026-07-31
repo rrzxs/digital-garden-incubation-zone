@@ -1,0 +1,6 @@
+scroll-flip-gallery - 滚动驱动无限视差画廊
+motion-type-lab - 动态字体可变交互展示
+cinematic-terrain - 实时3D地形沉浸式漫游
+transform-tiles - 连续形变拼图微交互
+parallax-reveal-story - 编辑式视差滚动叙事页
+kinetic-token-playground - 动效设计令牌实时调参台

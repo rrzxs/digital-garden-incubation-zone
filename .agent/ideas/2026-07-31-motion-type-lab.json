@@ -1,0 +1,9 @@
+{
+  "date": "2026-07-31",
+  "name": "motion-type-lab",
+  "description": "动态字体可变交互展示",
+  "tagline": "Typography That Breathes",
+  "interaction": "Drag, scroll, and hover to morph variable fonts in real time—watch weights shift, axes bend, and letterforms respond to your every gesture. A tactile playground where typography becomes a living, reactive surface you sculpt with motion.",
+  "directory": "seeds/motion-type-lab/",
+  "status": "incubated"
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Type Lab — 动效字体实验室</title>
+    <meta name="description" content="沉浸式动效字体实验室。输入文字，观察字符在邻近力场、弹簧物理与非线性缓动中实时呼吸：字距脉冲、字重波纹、景深模糊、轨道倾斜与乱码揭示五种高阶微交互。流体渐变背景 + 微晶玻璃态容器。">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070712'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='30' font-family='monospace' font-weight='700' fill='%23fbbf24'%3EM%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain-overlay"></div>
+    </div>
+
+    <canvas class="particle-layer" id="particle-layer" aria-hidden="true"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="app-shell">
+        <header class="panel-header glass-panel">
+            <div class="brand-group">
+                <h1 class="brand-title">Motion<span class="brand-dot">·</span>Type<span class="brand-dot">·</span>Lab</h1>
+                <p class="brand-subtitle">动效字体实验室 — 字符的邻近力学与非线性呼吸</p>
+            </div>
+            <div class="header-actions">
+                <div class="hud-readout" id="hud-readout">
+                    <span class="hud-cell"><span class="hud-key">FPS</span><span class="hud-val" id="hud-fps">60</span></span>
+                    <span class="hud-cell"><span class="hud-key">CHARS</span><span class="hud-val" id="hud-chars">0</span></span>
+                </div>
+                <button class="icon-btn" id="btn-burst" aria-label="冲击波脉冲" title="冲击波脉冲 (Space)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-shuffle" aria-label="随机调参" title="随机调参 (S)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-reset" aria-label="重置参数" title="重置参数 (R)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <section class="stage" id="stage" aria-label="动效字体舞台">
+            <div class="stage-frame glass-panel" id="stage-frame">
+                <div class="typo-stage" id="typo-stage"></div>
+                <div class="canvas-rings" id="canvas-rings"></div>
+                <div class="stage-overlay-hint" id="stage-hint">
+                    <span class="hint-dot"></span>
+                    <span class="hint-text">移动光标 · 字符会向你呼吸</span>
+                </div>
+            </div>
+            <div class="char-meta" id="char-meta" aria-hidden="true"></div>
+        </section>
+
+        <footer class="controls-bar glass-panel">
+            <div class="controls-scroll">
+                <div class="ctrl-group">
+                    <label class="ctrl-label" for="input-text">输入文字</label>
+                    <div class="text-input-wrap">
+                        <input type="text" id="input-text" class="text-input" value="MOTION" maxlength="24" placeholder="输入任意文字…" autocomplete="off">
+                        <span class="text-counter" id="text-counter">6 / 24</span>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">字号 <span class="ctrl-value" id="val-size">120</span></label>
+                    <input type="range" id="ctrl-size" class="range-input" min="48" max="200" value="120">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">字重 <span class="ctrl-value" id="val-weight">300</span></label>
+                    <input type="range" id="ctrl-weight" class="range-input" min="100" max="900" value="300" step="100">
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">动效模式</label>
+                    <div class="mode-toggle" id="mode-toggle">
+                        <button class="mode-btn active" data-mode="breath" aria-label="呼吸模式">Breath</button>
+                        <button class="mode-btn" data-mode="wave" aria-label="波纹模式">Wave</button>
+                        <button class="mode-btn" data-mode="depth" aria-label="景深模式">Depth</button>
+                        <button class="mode-btn" data-mode="orbit" aria-label="轨道模式">Orbit</button>
+                        <button class="mode-btn" data-mode="scramble" aria-label="乱码模式">Scramble</button>
+                    </div>
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">力场半径 <span class="ctrl-value" id="val-radius">220</span></label>
+                    <input type="range" id="ctrl-radius" class="range-input" min="60" max="400" value="220">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">弹力 <span class="ctrl-value" id="val-stiffness">0.12</span></label>
+                    <input type="range" id="ctrl-stiffness" class="range-input" min="2" max="40" value="12">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">强度 <span class="ctrl-value" id="val-amplitude">60</span></label>
+                    <input type="range" id="ctrl-amplitude" class="range-input" min="0" max="100" value="60">
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">力场方向</label>
+                    <div class="field-toggle" id="field-toggle">
+                        <button class="mode-btn active" data-field="repel" aria-label="排斥">Repel</button>
+                        <button class="mode-btn" data-field="attract" aria-label="吸引">Attract</button>
+                        <button class="mode-btn" data-field="orbit" aria-label="环绕">Orbit</button>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">氛围配色</label>
+                    <div class="palette-toggle" id="palette-toggle">
+                        <button class="palette-btn active" data-palette="ember" aria-label="余烬">
+                            <span class="swatch" style="background:linear-gradient(135deg,#fbbf24,#f97316,#ef4444)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="nebula" aria-label="星云">
+                            <span class="swatch" style="background:linear-gradient(135deg,#f0abfc,#818cf8,#22d3ee)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="abyss" aria-label="深渊">
+                            <span class="swatch" style="background:linear-gradient(135deg,#22d3ee,#3b82f6,#6366f1)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="frost" aria-label="霜降">
+                            <span class="swatch" style="background:linear-gradient(135deg,#a5f3fc,#67e8f9,#e0e7ff)"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
