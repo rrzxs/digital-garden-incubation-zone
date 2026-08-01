@@ -1,0 +1,6 @@
+scroll-flip-gallery - 视差无限滚动画廊与翻页过渡
+energy-flow-viz - 能量流动实时数据可视化
+typography-playground - 字体动态排版实验空间
+terrain-render-lab - 实时3D地形渲染演示
+continuous-morph-art - 形态连续变换交互艺术
+mission-timeline - 滚动驱动叙事时间轴

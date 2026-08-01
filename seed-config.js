@@ -1360,6 +1360,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Mission Timeline 任务时间线',
+      description: '沉浸式任务时间线体验。3套任务集 × 6个递进里程碑、可拖拽时间轴、SVG渐变进度环呼吸、微晶玻璃态里程碑卡片网格、动态节点追加与非线性动效，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/mission-timeline/index.html',
+      tags: ['Interactive', 'Timeline', 'Animation', 'Micro-interaction'],
+      icon: '◍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

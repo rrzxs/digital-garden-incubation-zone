@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-01",
+  "name": "mission-timeline",
+  "description": "滚动驱动叙事时间轴",
+  "tagline": "**Scroll Through Living History**",
+  "interaction": "As users scroll down the page, a vertical timeline unfolds chronologically, triggering animated milestones, parallax visuals, and contextual text reveals that respond to scroll velocity. Each era or event dynamically lights up as it enters the viewport, creating an immersive "you are there" sensation where the pace of scrolling directly controls the pace of storytelling.",
+  "directory": "seeds/mission-timeline/",
+  "status": "incubated"
+}
