@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Parallax Flip 视差翻转 - 沉浸式滚动微交互</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-obsidian">
+
+    <!-- === Fluid Mesh Gradient Background === -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- === Parallax Depth Layers (fixed, respond to scroll + mouse) === -->
+    <div class="parallax-field" id="parallax-field" aria-hidden="true">
+        <div class="depth-layer depth-stars" data-depth="0.04">
+            <div class="star" style="--x:8%;--y:12%;--d:0s"></div>
+            <div class="star" style="--x:22%;--y:48%;--d:1.2s"></div>
+            <div class="star" style="--x:38%;--y:18%;--d:0.6s"></div>
+            <div class="star" style="--x:55%;--y:72%;--d:2.1s"></div>
+            <div class="star" style="--x:68%;--y:32%;--d:1.8s"></div>
+            <div class="star" style="--x:82%;--y:58%;--d:0.3s"></div>
+            <div class="star" style="--x:92%;--y:22%;--d:2.6s"></div>
+            <div class="star" style="--x:14%;--y:82%;--d:1.5s"></div>
+            <div class="star" style="--x:46%;--y:88%;--d:0.9s"></div>
+            <div class="star" style="--x:74%;--y:14%;--d:2.3s"></div>
+        </div>
+        <div class="depth-layer depth-grid" data-depth="0.10"></div>
+        <div class="depth-layer depth-rings" data-depth="0.18">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+        </div>
+        <div class="depth-layer depth-floaters" data-depth="0.32">
+            <div class="floater floater-1"></div>
+            <div class="floater floater-2"></div>
+            <div class="floater floater-3"></div>
+            <div class="floater floater-4"></div>
+        </div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- === Fixed HUD === -->
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="hud-corner hud-top-right">
+        <div class="hud-line"><span class="hud-key">SCROLL</span><span class="hud-val" id="hud-scroll">0%</span></div>
+        <div class="hud-line"><span class="hud-key">PARALLAX</span><span class="hud-val" id="hud-parallax">0.00</span></div>
+        <div class="hud-line"><span class="hud-key">FLIPS</span><span class="hud-val" id="hud-flips">0</span></div>
+    </div>
+
+    <div class="palette-dock" role="group" aria-label="氛围配色">
+        <button class="palette-btn active" data-palette="obsidian" aria-label="黑曜石">
+            <span class="swatch" style="background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899)"></span>
+        </button>
+        <button class="palette-btn" data-palette="aurora" aria-label="极光">
+            <span class="swatch" style="background:linear-gradient(135deg,#00d4ff,#a855f7,#00ff88)"></span>
+        </button>
+        <button class="palette-btn" data-palette="ember" aria-label="余烬">
+            <span class="swatch" style="background:linear-gradient(135deg,#f97316,#ef4444,#fbbf24)"></span>
+        </button>
+        <button class="palette-btn" data-palette="frost" aria-label="霜降">
+            <span class="swatch" style="background:linear-gradient(135deg,#67e8f9,#a5b4fc,#e0e7ff)"></span>
+        </button>
+    </div>
+
+    <!-- === Scroll Progress Rail === -->
+    <div class="progress-rail" aria-hidden="true">
+        <div class="progress-fill" id="progress-fill"></div>
+        <div class="progress-chapters" id="progress-chapters"></div>
+    </div>
+
+    <!-- === Main Scroll Content === -->
+    <main class="scroll-stage" id="scroll-stage">
+
+        <!-- Chapter 0: Hero -->
+        <section class="chapter chapter-hero" data-chapter="0">
+            <div class="hero-inner">
+                <span class="chapter-index" data-depth="0.45">00 / 05</span>
+                <h1 class="hero-title" data-reveal="chars">
+                    <span class="line">视差翻转</span>
+                    <span class="line accent">Parallax Flip</span>
+                </h1>
+                <p class="hero-lead" data-reveal="words">
+                    滚动驱动深度 · 卡片非线性翻转 · 流体粒子流场。
+                    每一次滚轮都是一次空间折叠，每一次悬停都是一次物理回响。
+                </p>
+                <div class="hero-meta" data-depth="0.22">
+                    <span class="meta-tag">SCROLL-DRIVEN</span>
+                    <span class="meta-dot"></span>
+                    <span class="meta-tag">SPRING-DAMPER</span>
+                    <span class="meta-dot"></span>
+                    <span class="meta-tag">GLASSMORPHISM</span>
+                </div>
+                <div class="scroll-cue" id="scroll-cue">
+                    <span class="cue-text">向下滚动</span>
+                    <span class="cue-line"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 1: Parallax Depth Showcase -->
+        <section class="chapter chapter-depth" data-chapter="1">
+            <div class="chapter-head" data-reveal="lines">
+                <span class="chapter-index">01 / 05</span>
+                <h2 class="chapter-title">深度视差 <span class="title-accent">Depth</span></h2>
+                <p class="chapter-lead">多层深度结构响应滚动与光标位移。近层剧烈，远层微弱，构筑无限纵深。</p>
+            </div>
+
+            <div class="depth-showcase">
+                <div class="depth-card glass-surface" data-depth="0.55">
+                    <div class="dc-num">01</div>
+                    <div class="dc-body">
+                        <h3>远景层 · Stars</h3>
+                        <p>深度系数 0.04，几乎静止，构成宇宙底色。</p>
+                    </div>
+                </div>
+                <div class="depth-card glass-surface" data-depth="0.75">
+                    <div class="dc-num">02</div>
+                    <div class="dc-body">
+                        <h3>中景层 · Grid</h3>
+                        <p>深度系数 0.10，缓慢漂移的透视网格。</p>
+                    </div>
+                </div>
+                <div class="depth-card glass-surface" data-depth="0.95">
+                    <div class="dc-num">03</div>
+                    <div class="dc-body">
+                        <h3>近景层 · Floaters</h3>
+                        <p>深度系数 0.32，强烈响应光标的光斑。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 2: Flip Card Gallery -->
+        <section class="chapter chapter-flip" data-chapter="2">
+            <div class="chapter-head" data-reveal="lines">
+                <span class="chapter-index">02 / 05</span>
+                <h2 class="chapter-title">翻转画廊 <span class="title-accent">Flip</span></h2>
+                <p class="chapter-lead">弹簧-阻尼物理驱动的非线性 3D 翻转。悬停倾斜，点击翻面，滚动入场。</p>
+            </div>
+
+            <div class="flip-grid" id="flip-grid">
+
+                <div class="flip-card" data-spring="0.14" data-damping="0.72">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-violet">
+                            <div class="face-glyph">⟐</div>
+                            <span class="face-label">弹性翻转</span>
+                            <span class="face-tag">spring · 0.14</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-violet">
+                            <span class="back-title">SPRING DAMPER</span>
+                            <p class="back-desc">弹簧-阻尼物理驱动卡片非线性翻转，回弹带有自然的过冲与衰减。</p>
+                            <span class="back-mono">F = −kx − cv</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.10" data-damping="0.80">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-cyan">
+                            <div class="face-glyph">◎</div>
+                            <span class="face-label">惯性轨道</span>
+                            <span class="face-tag">spring · 0.10</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-cyan">
+                            <span class="back-title">ORBITAL DRIFT</span>
+                            <p class="back-desc">翻转时卡片沿弧线轨道漂移，惯性叠加在角度之上形成深度。</p>
+                            <span class="back-mono">θ′ = θ + ω·Δt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.18" data-damping="0.62">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-rose">
+                            <div class="face-glyph">◈</div>
+                            <span class="face-label">共振脉冲</span>
+                            <span class="face-tag">spring · 0.18</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-rose">
+                            <span class="back-title">PULSE RESONANCE</span>
+                            <p class="back-desc">高刚度低阻尼产生共振过冲，翻转瞬间迸发粒子脉冲冲击波。</p>
+                            <span class="back-mono">ζ = c / 2√(km)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.08" data-damping="0.88">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-emerald">
+                            <div class="face-glyph">✧</div>
+                            <span class="face-label">柔顺悬浮</span>
+                            <span class="face-tag">spring · 0.08</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-emerald">
+                            <span class="back-title">SOFT LEVITATION</span>
+                            <p class="back-desc">低刚度高阻尼带来丝绸般的柔顺翻转，几乎察觉不到过冲。</p>
+                            <span class="back-mono">ω₀ = √(k/m)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.16" data-damping="0.70">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-amber">
+                            <div class="face-glyph">⬡</div>
+                            <span class="face-label">晶体折叠</span>
+                            <span class="face-tag">spring · 0.16</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-amber">
+                            <span class="back-title">CRYSTAL FOLD</span>
+                            <p class="back-desc">对角轴翻转模拟晶面折叠，透视景深强化空间层级感。</p>
+                            <span class="back-mono">perspective: 1400px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" data-spring="0.12" data-damping="0.78">
+                    <div class="flip-inner">
+                        <div class="flip-face flip-front glass-surface accent-indigo">
+                            <div class="face-glyph">◇</div>
+                            <span class="face-label">涟漪揭示</span>
+                            <span class="face-tag">spring · 0.12</span>
+                        </div>
+                        <div class="flip-face flip-back glass-surface accent-indigo">
+                            <span class="back-title">RIPPLE REVEAL</span>
+                            <p class="back-desc">翻转同步触发涟漪扩散，背面内容从光晕中心逐层揭示。</p>
+                            <span class="back-mono">r(t) = c·t</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flip-actions">
+                <button class="action-btn" id="btn-flip-all">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>全部翻转</span>
+                </button>
+                <button class="action-btn primary" id="btn-reset">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+                    <span>归位</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Chapter 3: Narrative Reveal -->
+        <section class="chapter chapter-narrative" data-chapter="3">
+            <div class="chapter-head" data-reveal="lines">
+                <span class="chapter-index">03 / 05</span>
+                <h2 class="chapter-title">叙事揭示 <span class="title-accent">Reveal</span></h2>
+            </div>
+
+            <div class="narrative-block glass-surface" data-depth="0.20">
+                <p class="narrative-line" data-reveal="words">滚动是时间的隐喻。</p>
+                <p class="narrative-line" data-reveal="words">每一次滚轮的推动，</p>
+                <p class="narrative-line" data-reveal="words">都是空间的一次折叠。</p>
+                <p class="narrative-line accent" data-reveal="words">深度在视差中诞生，</p>
+                <p class="narrative-line accent" data-reveal="words">意义在翻转中浮现。</p>
+            </div>
+        </section>
+
+        <!-- Chapter 4: Parallax Stacks -->
+        <section class="chapter chapter-stacks" data-chapter="4">
+            <div class="chapter-head" data-reveal="lines">
+                <span class="chapter-index">04 / 05</span>
+                <h2 class="chapter-title">堆叠卡片 <span class="title-accent">Stack</span></h2>
+                <p class="chapter-lead">滚动驱动卡片堆叠覆盖，相邻层以非线性缓动相互衔接。</p>
+            </div>
+
+            <div class="stack-track" id="stack-track">
+                <div class="stack-card glass-surface accent-violet" data-stack-index="0">
+                    <span class="stack-num">I</span>
+                    <h3>第一层 · 唤醒</h3>
+                    <p>滚动开始，卡片从底部升起，微晶玻璃态质感浮现。</p>
+                </div>
+                <div class="stack-card glass-surface accent-cyan" data-stack-index="1">
+                    <span class="stack-num">II</span>
+                    <h3>第二层 · 漂移</h3>
+                    <p>持续滚动，上一层覆盖固定，新层从下方滑入。</p>
+                </div>
+                <div class="stack-card glass-surface accent-rose" data-stack-index="2">
+                    <span class="stack-num">III</span>
+                    <h3>第三层 · 折叠</h3>
+                    <p>视差深度叠加，构筑层与层之间的纵深呼吸。</p>
+                </div>
+                <div class="stack-card glass-surface accent-emerald" data-stack-index="3">
+                    <span class="stack-num">IV</span>
+                    <h3>第四层 · 归一</h3>
+                    <p>所有层在终点汇聚，滚动完成的瞬间释放粒子脉冲。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter 5: Finale -->
+        <section class="chapter chapter-finale" data-chapter="5">
+            <div class="finale-inner" data-depth="0.15">
+                <span class="chapter-index">05 / 05</span>
+                <h2 class="finale-title" data-reveal="chars">
+                    <span class="line">滚动至此</span>
+                    <span class="line accent">空间归一</span>
+                </h2>
+                <p class="finale-lead" data-reveal="words">
+                    你已穿越五重深度。视差、翻转、揭示与堆叠——
+                    一切微交互的本质，都是物理与节奏的共鸣。
+                </p>
+                <div class="finale-stats">
+                    <div class="stat"><span class="stat-val" id="stat-scroll">0</span><span class="stat-key">SCROLL %</span></div>
+                    <div class="stat"><span class="stat-val" id="stat-flips">0</span><span class="stat-key">FLIPS</span></div>
+                    <div class="stat"><span class="stat-val" id="stat-depth">5</span><span class="stat-key">LAYERS</span></div>
+                </div>
+                <button class="finale-restart" id="btn-restart">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>回到起点</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1370,6 +1370,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Parallax Flip 视差翻转',
+      description: '沉浸式滚动视差翻转微交互体验。滚动驱动五幕章节（深度视差/翻转画廊/叙事揭示/堆叠覆盖/终幕统计），弹簧-阻尼物理驱动的非线性 3D 卡片翻转、多层视差深度、逐字逐词揭示与粒子流场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/scroll-parallax-flip/index.html',
+      tags: ['Interactive', 'Scroll', 'Parallax', 'Micro-interaction'],
+      icon: '⇅',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

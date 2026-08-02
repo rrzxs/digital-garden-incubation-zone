@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-02",
+  "name": "scroll-parallax-flip",
+  "description": "无限滚动视差画廊",
+  "tagline": "**Scroll Depth, Infinite Stories**",
+  "interaction": "用户向下滚动时，画廊以多层视差深度分离开合，前景元素飞速掠过、中景缓缓位移、背景近乎静止，营造出穿梭空间的纵深感。当滚动持续加速，卡片沿 Z 轴翻转重组，旧画面翻面消逝、新画面翻面浮现，形成永无止境的视觉接替。整个体验无需点击，节奏完全由滚动手势掌控，越快越具冲击力。",
+  "directory": "seeds/scroll-parallax-flip/",
+  "status": "incubated"
+}
