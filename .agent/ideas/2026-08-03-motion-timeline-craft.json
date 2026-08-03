@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-03",
+  "name": "motion-timeline-craft",
+  "description": "滚动驱动时间线动画编排器",
+  "tagline": "滚动驱动时间线动画编排器",
+  "interaction": "围绕 motion-timeline-craft 构建完整的高阶微交互体验。",
+  "directory": "seeds/motion-timeline-craft/",
+  "status": "incubated"
+}

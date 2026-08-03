@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Timeline Craft 动效时间线 - 沉浸式关键帧编排</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="deep-ocean">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- 粒子流场背景画布 -->
+    <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+    <!-- 光标跟随光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <main class="app-shell">
+        <!-- 顶部导航 -->
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">⌁</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Motion Timeline Craft</h1>
+                    <span class="nav-subtitle">沉浸式关键帧编排 · 非线性动效铸造</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle" role="group" aria-label="氛围配色">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主工作区 -->
+        <div class="workspace">
+            <!-- 左侧：属性面板 -->
+            <aside class="panel panel-left">
+                <div class="panel-section">
+                    <h3 class="panel-heading">轨道</h3>
+                    <div class="property-grid">
+                        <label class="property">
+                            <span class="property-label">动画属性</span>
+                            <select class="property-select" id="prop-select">
+                                <option value="translateX">位移 X</option>
+                                <option value="translateY">位移 Y</option>
+                                <option value="scale">缩放</option>
+                                <option value="rotate">旋转</option>
+                                <option value="opacity">不透明度</option>
+                                <option value="blur">模糊</option>
+                                <option value="hueRotate">色相</option>
+                            </select>
+                        </label>
+                        <label class="property">
+                            <span class="property-label">总时长 (ms)</span>
+                            <input type="number" class="property-input" id="duration-input" value="2400" min="600" max="12000" step="100">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3 class="panel-heading">关键帧</h3>
+                    <div class="keyframe-editor" id="keyframe-editor">
+                        <div class="kf-row">
+                            <span class="kf-time-label" id="kf-time-label">0%</span>
+                            <input type="range" class="kf-time-slider" id="kf-time-slider" min="0" max="100" value="0" step="1">
+                        </div>
+                        <div class="kf-row">
+                            <span class="kf-value-label" id="kf-value-label">0</span>
+                            <input type="range" class="kf-value-slider" id="kf-value-slider" min="-100" max="100" value="0" step="1">
+                        </div>
+                        <button class="kf-add-btn" id="kf-add-btn">
+                            <span class="kf-add-icon">+</span>
+                            <span>添加关键帧</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h3 class="panel-heading">缓动曲线</h3>
+                    <div class="easing-grid" id="easing-grid">
+                        <button class="easing-chip active" data-easing="linear">线性</button>
+                        <button class="easing-chip" data-easing="easeOutExpo">指数缓出</button>
+                        <button class="easing-chip" data-easing="easeInExpo">指数缓入</button>
+                        <button class="easing-chip" data-easing="easeOutBack">回弹缓出</button>
+                        <button class="easing-chip" data-easing="easeInBack">回弹缓入</button>
+                        <button class="easing-chip" data-easing="easeOutElastic">弹性缓出</button>
+                        <button class="easing-chip" data-easing="easeOutBounce">弹跳缓出</button>
+                        <button class="easing-chip" data-easing="easeInOutSine">正弦缓动</button>
+                    </div>
+                    <div class="easing-preview-wrap">
+                        <canvas id="easing-canvas" width="280" height="140"></canvas>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 中央：预览舞台 + 时间线 -->
+            <section class="stage-section">
+                <!-- 预览舞台 -->
+                <div class="preview-stage" id="preview-stage">
+                    <div class="stage-grid" aria-hidden="true"></div>
+                    <div class="stage-origin" aria-hidden="true"></div>
+                    <div class="motion-orb" id="motion-orb">
+                        <div class="orb-core"></div>
+                        <div class="orb-ring orb-ring-1"></div>
+                        <div class="orb-ring orb-ring-2"></div>
+                        <div class="orb-glow"></div>
+                    </div>
+                    <div class="stage-readout">
+                        <span class="readout-chip" id="readout-prop">translateX</span>
+                        <span class="readout-chip" id="readout-value">0</span>
+                        <span class="readout-chip" id="readout-time">0ms</span>
+                    </div>
+                </div>
+
+                <!-- 时间线 -->
+                <div class="timeline-area">
+                    <div class="timeline-header">
+                        <div class="timeline-label">
+                            <span class="timeline-title">时间线</span>
+                            <span class="timeline-keycount" id="timeline-keycount">0 关键帧</span>
+                        </div>
+                        <div class="timeline-toolbar">
+                            <button class="tool-btn" id="play-btn" aria-label="播放">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                <span>播放</span>
+                            </button>
+                            <button class="tool-btn tool-btn-ghost" id="clear-btn" aria-label="清空">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/></svg>
+                                <span>清空</span>
+                            </button>
+                            <button class="tool-btn tool-btn-ghost" id="preset-btn" aria-label="预设">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21l2.3-7.4-6-4.6h7.6z"/></svg>
+                                <span>预设</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="timeline-track-wrap" id="timeline-track-wrap">
+                        <canvas id="timeline-canvas"></canvas>
+                        <div class="timeline-keyframes" id="timeline-keyframes"></div>
+                        <div class="timeline-playhead" id="timeline-playhead">
+                            <div class="playhead-handle"></div>
+                        </div>
+                        <div class="timeline-ruler" id="timeline-ruler" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="timeline-footer">
+                        <div class="time-display" id="time-display">0000 / 2400 ms</div>
+                        <div class="speed-control">
+                            <span class="speed-label">速度</span>
+                            <button class="speed-btn active" data-speed="1">1×</button>
+                            <button class="speed-btn" data-speed="0.5">0.5×</button>
+                            <button class="speed-btn" data-speed="0.25">0.25×</button>
+                            <button class="speed-btn" data-speed="2">2×</button>
+                        </div>
+                        <div class="loop-control">
+                            <label class="loop-toggle">
+                                <input type="checkbox" id="loop-checkbox" checked>
+                                <span class="loop-slider"></span>
+                                <span class="loop-text">循环</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 右侧：CSS 输出 -->
+            <aside class="panel panel-right">
+                <div class="panel-section panel-section-tall">
+                    <div class="panel-heading-row">
+                        <h3 class="panel-heading">CSS 产出</h3>
+                        <button class="copy-btn" id="copy-btn" aria-label="复制 CSS">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                            <span>复制</span>
+                        </button>
+                    </div>
+                    <pre class="css-output" id="css-output"><code></code></pre>
+                </div>
+
+                <div class="panel-section">
+                    <h3 class="panel-heading">遥测</h3>
+                    <div class="telemetry-grid">
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">FPS</span>
+                            <span class="telemetry-value" id="telemetry-fps">60</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">关键帧</span>
+                            <span class="telemetry-value" id="telemetry-keyframes">0</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">进度</span>
+                            <span class="telemetry-value" id="telemetry-progress">0%</span>
+                        </div>
+                        <div class="telemetry-item">
+                            <span class="telemetry-label">状态</span>
+                            <span class="telemetry-value telemetry-status" id="telemetry-status">就绪</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- 预设选择浮层 -->
+    <div class="preset-overlay" id="preset-overlay" aria-hidden="true">
+        <div class="preset-modal">
+            <div class="preset-modal-header">
+                <h2 class="preset-modal-title">载入预设编排</h2>
+                <button class="preset-close" id="preset-close" aria-label="关闭">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="preset-list" id="preset-list"></div>
+        </div>
+    </div>
+
+    <!-- 复制成功提示 -->
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

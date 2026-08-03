@@ -1380,6 +1380,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Motion Timeline Craft 动效时间线',
+      description: '沉浸式关键帧编排工具。在微晶玻璃态时间线上拖拽关键帧、切换8种非线性缓动曲线、实时预览7种动画属性复合动效并一键导出 CSS，8 套预设编排、可擦洗播放头、4档速度与遥测面板，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/motion-timeline-craft/index.html',
+      tags: ['Interactive', 'Timeline', 'Keyframe', 'Micro-interaction', 'CSS Export'],
+      icon: '⌁',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
