@@ -1390,6 +1390,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Editorial Scroll Story 编年卷轴故事',
+      description: '沉浸式编辑式滚动故事体验。一篇关于「留白」的杂志体卷轴 — 6 幕叙事章节、逐字字符揭示、视差深度舞台、呼吸节奏、涟漪回声与4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/editorial-scroll-story/index.html',
+      tags: ['Interactive', 'Scroll', 'Narrative', 'Micro-interaction'],
+      icon: '◍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

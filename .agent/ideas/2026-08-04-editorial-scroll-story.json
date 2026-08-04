@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-04",
+  "name": "editorial-scroll-story",
+  "description": "印刷感编辑滚动叙事",
+  "tagline": "Ink Meets Scroll, Stories Unfold.",
+  "interaction": "随着用户滚动页面，印刷质感的版式如同翻阅一本精装杂志般逐层展开——标题以油墨晕染效果显现，正文随滚动节奏分段淡入，配以细微的纸张纹理位移。关键章节触发锁定式全屏叙事面板，文字与图像以编辑排版网格有序编排，营造出沉浸式的阅读体验。滚动速度影响视觉元素的呈现韵律，让每一次下滑都像在亲手翻页。",
+  "directory": "seeds/editorial-scroll-story/",
+  "status": "incubated"
+}

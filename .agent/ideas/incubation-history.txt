@@ -124,3 +124,4 @@ motion-type-lab
 mission-timeline
 scroll-parallax-flip
 motion-timeline-craft
+editorial-scroll-story

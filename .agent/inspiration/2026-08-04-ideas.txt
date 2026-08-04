@@ -1,0 +1,6 @@
+scroll-flip-gallery - 无限滚动视差画廊
+energy-flow-visualizer - 能量流动可视化交互
+typography-playground - 字体沉浸展示游乐场
+infinite-canvas-portfolio - 3D立方体画布漫游
+editorial-scroll-story - 印刷感编辑滚动叙事
+chore-wheel-roulette - 家庭家务轮盘分配器
