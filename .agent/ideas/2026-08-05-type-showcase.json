@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-05",
+  "name": "type-showcase",
+  "description": "字体沉浸式长滚动展陈工具",
+  "tagline": "Where Typography Breathes",
+  "interaction": "A full-screen vertical scroll experience where each typeface is revealed through cinematic transitions—scale, weight, and spacing animate as the user scrolls, turning type specimens into immersive editorial moments. Scroll velocity influences motion intensity, creating a tactile sense of weight and presence for each letterform.",
+  "directory": "seeds/type-showcase/",
+  "status": "incubated"
+}

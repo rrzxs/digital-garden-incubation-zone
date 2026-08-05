@@ -1400,6 +1400,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Type Showcase 字体剧场',
+      description: '沉浸式字体剧场。邻近力场驱动的排版表演空间 — 5 种字样展品（展示/正文/等宽/巨型字符/字重光谱）× 4 种表演模式（波浪/邻近/轨道/故障），Simplex 噪声粒子流场、乱码揭示动画、点击涟漪冲击波与遥测面板，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/type-showcase/index.html',
+      tags: ['Interactive', 'Typography', 'Micro-interaction', 'Animation'],
+      icon: 'Aa',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

@@ -1,0 +1,6 @@
+glass-xylophone - 滚动触发的玻璃琴音阶互动体验
+parallax-gallery - 无限滚动视差画廊与翻转过渡
+helix-bells - 螺旋管钟滚动发声可视化
+type-showcase - 字体沉浸式长滚动展陈工具
+motion-canvas - 连续形变交互式画布编辑器
+energy-orbit - 能量轨道粒子沉浸式叙事页
