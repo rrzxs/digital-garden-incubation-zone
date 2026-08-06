@@ -1410,6 +1410,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Print Web Bridge 印物桥',
+      description: '沉浸式屏幕与纸面桥接工作台。@page 参数工作台、双视口实时同步预览（屏幕态 ↔ 纸面态）、墨色映射、桥接粒子流、打印 CSS 一键导出与系统打印唤起，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/print-web-bridge/index.html',
+      tags: ['Interactive', 'Print', 'CSS Export', 'Micro-interaction'],
+      icon: '⎙',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

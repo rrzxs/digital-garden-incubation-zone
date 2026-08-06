@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Web Bridge — 印物桥</title>
+    <meta name="description" content="沉浸式屏幕与印物之间的桥接编辑器。@page 工作台、纸张物理预览、墨色映射、双视口实时同步与 CSS 导出。">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a12'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='30' font-family='Georgia, serif' fill='%23e8d5b7'%3EP%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono:wght@400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ============== 流体渐变背景 ============== -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain-overlay"></div>
+    </div>
+
+    <canvas class="particle-canvas" id="particle-canvas" aria-hidden="true"></canvas>
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="app-shell">
+        <!-- ============== 顶部品牌区 ============== -->
+        <header class="panel-header">
+            <div class="brand-group">
+                <div class="brand-mark" id="brand-mark">
+                    <svg viewBox="0 0 48 48" width="100%" height="100%">
+                        <rect x="10" y="6" width="28" height="36" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                        <line x1="16" y1="14" x2="32" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="16" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <line x1="16" y1="26" x2="26" y2="26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        <circle cx="34" cy="32" r="4" fill="currentColor" opacity="0.4"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1 class="brand-title">Print<span class="brand-dot">·</span>Web<span class="brand-dot">·</span>Bridge</h1>
+                    <p class="brand-subtitle">印物桥 — 屏幕与纸面之间的流体桥接工作台</p>
+                </div>
+            </div>
+
+            <div class="header-controls">
+                <div class="palette-switch" id="palette-switch" role="radiogroup" aria-label="氛围配色">
+                    <button class="palette-btn active" data-palette="inkstone" role="radio" aria-checked="true" title="墨石">墨</button>
+                    <button class="palette-btn" data-palette="paper" role="radio" aria-checked="false" title="素笺">笺</button>
+                    <button class="palette-btn" data-palette="sunset" role="radio" aria-checked="false" title="暮霞">霞</button>
+                    <button class="palette-btn" data-palette="abyss" role="radio" aria-checked="false" title="深渊">渊</button>
+                </div>
+                <button class="header-btn" id="btn-export-css" title="导出打印 CSS">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    <span>CSS</span>
+                </button>
+                <button class="header-btn primary" id="btn-print" title="调用浏览器打印">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    <span>打印</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ============== 主工作区 ============== -->
+        <main class="work-bench">
+            <!-- ============== 左：参数控制台 ============== -->
+            <aside class="control-dock glass-panel" id="control-dock">
+                <div class="dock-header">
+                    <span class="dock-label">@page 工作台</span>
+                    <span class="dock-pulse" id="dock-pulse"></span>
+                </div>
+
+                <!-- 纸张规格 -->
+                <section class="control-group">
+                    <h3 class="group-title">纸张规格 · Format</h3>
+                    <div class="format-grid">
+                        <button class="format-chip active" data-size="A4">A4</button>
+                        <button class="format-chip" data-size="A5">A5</button>
+                        <button class="format-chip" data-size="Letter">Letter</button>
+                        <button class="format-chip" data-size="Legal">Legal</button>
+                    </div>
+                    <div class="control-row">
+                        <label class="control-label">朝向</label>
+                        <div class="toggle-pair" id="orientation-toggle">
+                            <button class="toggle-btn active" data-orient="portrait">纵向</button>
+                            <button class="toggle-btn" data-orient="landscape">横向</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 页边距 -->
+                <section class="control-group">
+                    <h3 class="group-title">页边距 · Margin</h3>
+                    <div class="slider-row">
+                        <span class="slider-key">m</span>
+                        <input type="range" class="slider" id="margin-slider" min="0" max="40" value="18" step="1">
+                        <span class="slider-val" id="margin-val">18mm</span>
+                    </div>
+                </section>
+
+                <!-- 字体族 -->
+                <section class="control-group">
+                    <h3 class="group-title">字体族 · Typeface</h3>
+                    <div class="type-grid">
+                        <button class="type-chip active" data-font="sans" style="font-family: 'Inter', sans-serif;">Sans</button>
+                        <button class="type-chip" data-font="serif" style="font-family: 'Playfair Display', serif;">Serif</button>
+                        <button class="type-chip" data-font="mono" style="font-family: 'Share Tech Mono', monospace;">Mono</button>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-key">字号</span>
+                        <input type="range" class="slider" id="fontsize-slider" min="9" max="16" value="11" step="0.5">
+                        <span class="slider-val" id="fontsize-val">11pt</span>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-key">行高</span>
+                        <input type="range" class="slider" id="lineheight-slider" min="1.2" max="2.2" value="1.6" step="0.05">
+                        <span class="slider-val" id="lineheight-val">1.6</span>
+                    </div>
+                </section>
+
+                <!-- 墨色映射 -->
+                <section class="control-group">
+                    <h3 class="group-title">墨色映射 · Ink</h3>
+                    <div class="control-row">
+                        <label class="control-label">墨浓度</label>
+                        <div class="toggle-pair ink-toggle" id="ink-toggle">
+                            <button class="toggle-btn active" data-ink="rich">浓墨</button>
+                            <button class="toggle-btn" data-ink="eco">省墨</button>
+                        </div>
+                    </div>
+                    <div class="slider-row">
+                        <span class="slider-key">对比</span>
+                        <input type="range" class="slider" id="contrast-slider" min="60" max="100" value="92" step="1">
+                        <span class="slider-val" id="contrast-val">92%</span>
+                    </div>
+                </section>
+
+                <!-- 额外选项 -->
+                <section class="control-group">
+                    <h3 class="group-title">输出选项 · Output</h3>
+                    <div class="switch-list">
+                        <label class="switch-row">
+                            <span class="switch-text">出血标记</span>
+                            <span class="switch" data-switch="bleed"><span class="switch-thumb"></span></span>
+                        </label>
+                        <label class="switch-row">
+                            <span class="switch-text">页眉页脚</span>
+                            <span class="switch active" data-switch="header"><span class="switch-thumb"></span></span>
+                        </label>
+                        <label class="switch-row">
+                            <span class="switch-text">分栏</span>
+                            <span class="switch" data-switch="columns"><span class="switch-thumb"></span></span>
+                        </label>
+                        <label class="switch-row">
+                            <span class="switch-text">水印</span>
+                            <span class="switch" data-switch="watermark"><span class="switch-thumb"></span></span>
+                        </label>
+                    </div>
+                </section>
+
+                <button class="reset-btn" id="btn-reset">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>恢复默认</span>
+                </button>
+            </aside>
+
+            <!-- ============== 中：双视口桥接预览 ============== -->
+            <section class="bridge-stage">
+                <!-- 视口模式切换 -->
+                <div class="stage-toolbar glass-pill">
+                    <div class="view-tabs" id="view-tabs">
+                        <button class="view-tab active" data-view="split">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="18" rx="1"/><rect x="13" y="3" width="8" height="18" rx="1"/></svg>
+                            <span>桥接</span>
+                        </button>
+                        <button class="view-tab" data-view="screen">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            <span>屏幕</span>
+                        </button>
+                        <button class="view-tab" data-view="print">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span>纸面</span>
+                        </button>
+                    </div>
+                    <div class="stage-meta">
+                        <span class="meta-tag" id="meta-density">密度 64%</span>
+                        <span class="meta-tag" id="meta-pages">1 页</span>
+                    </div>
+                </div>
+
+                <!-- 双视口容器 -->
+                <div class="viewport-frame" id="viewport-frame">
+                    <!-- 左：屏幕视口 -->
+                    <div class="viewport viewport-screen" id="viewport-screen">
+                        <div class="viewport-label">
+                            <span class="label-dot screen-dot"></span>
+                            <span class="label-text">DIGITAL · 屏幕</span>
+                        </div>
+                        <div class="screen-doc" id="screen-doc">
+                            <article class="doc-article" id="doc-content" data-variant="screen">
+                                <header class="doc-head">
+                                    <div class="doc-kicker">桥接笔记 · No.07</div>
+                                    <h2 class="doc-title">屏幕之外，仍有纸面</h2>
+                                    <div class="doc-meta">
+                                        <span>EDEN · 数字花园</span>
+                                        <span class="meta-sep">/</span>
+                                        <span id="doc-date">2026.08.06</span>
+                                    </div>
+                                </header>
+                                <div class="doc-body" id="doc-body">
+                                    <p class="doc-p">屏幕与纸张，本是两种截然不同的物质。前者由像素与背光构成，色彩鲜艳却转瞬即逝；后者由纤维与墨迹凝结，安静沉稳却能流传百年。<strong class="doc-strong">这座桥</strong>，便是为了让数字的内容，得以拥有纸面的重量。</p>
+                                    <p class="doc-p">当你调节左侧的参数，纸张会同步呼吸——边距撑开呼吸的留白，字号决定字符的密度，墨色映射控制每一滴油墨的去留。屏幕上的鲜艳渐变，在纸面上被翻译成克制的灰阶；流动的动画，凝结为静止的版面。</p>
+                                    <blockquote class="doc-quote">"印刷并非屏幕的退步，而是信息的另一种沉淀方式。"</blockquote>
+                                    <p class="doc-p">桥接的核心，是一份精心调校的 <code class="doc-code">@media print</code> 样式表。它过滤掉一切不适合纸面的元素：动画、阴影、半透明、交互态。只留下结构、层次与可读性——这正是纸面最擅长的领域。</p>
+                                    <p class="doc-p">试着拖动参数，观察右侧纸面的回应。每一次调整，都是一次跨越介质的翻译。最终导出的 CSS，便是这座桥的工程图纸。</p>
+                                </div>
+                            </article>
+                            <div class="screen-watermark" aria-hidden="true">DIGITAL</div>
+                        </div>
+                    </div>
+
+                    <!-- 桥接连接器 -->
+                    <div class="bridge-connector" id="bridge-connector">
+                        <svg class="connector-svg" viewBox="0 0 60 200" preserveAspectRatio="none">
+                            <path class="connector-path" d="M0,100 Q30,40 60,100" fill="none" stroke="url(#bridgeGrad)" stroke-width="1.5" stroke-dasharray="4 4"/>
+                            <defs>
+                                <linearGradient id="bridgeGrad" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="var(--screen-c)" stop-opacity="0.8"/>
+                                    <stop offset="100%" stop-color="var(--paper-c)" stop-opacity="0.8"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="connector-arrow">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </div>
+                        <div class="connector-particles" id="connector-particles"></div>
+                    </div>
+
+                    <!-- 右：纸面视口 -->
+                    <div class="viewport viewport-print" id="viewport-print">
+                        <div class="viewport-label">
+                            <span class="label-dot paper-dot"></span>
+                            <span class="label-text">PAPER · 纸面</span>
+                        </div>
+                        <div class="paper-stack" id="paper-stack">
+                            <!-- 纸张由 JS 动态生成 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 底部密度条 -->
+                <div class="density-bar glass-pill">
+                    <span class="density-label">纸面负载</span>
+                    <div class="density-track">
+                        <div class="density-fill" id="density-fill"></div>
+                        <div class="density-ticks">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <span class="density-value" id="density-value">64%</span>
+                </div>
+            </section>
+        </main>
+
+        <!-- ============== 底部遥测 ============== -->
+        <footer class="panel-footer">
+            <div class="telemetry glass-pill">
+                <div class="tele-cell"><span class="tele-k">视口</span><span class="tele-v" id="tele-view">桥接</span></div>
+                <div class="tele-cell"><span class="tele-k">规格</span><span class="tele-v" id="tele-size">A4 纵</span></div>
+                <div class="tele-cell"><span class="tele-k">边距</span><span class="tele-v" id="tele-margin">18mm</span></div>
+                <div class="tele-cell"><span class="tele-k">字号</span><span class="tele-v" id="tele-fontsize">11pt</span></div>
+                <div class="tele-cell"><span class="tele-k">墨色</span><span class="tele-v" id="tele-ink">浓墨</span></div>
+                <div class="tele-cell"><span class="tele-k">FPS</span><span class="tele-v" id="tele-fps">60</span></div>
+            </div>
+        </footer>
+
+        <!-- ============== CSS 导出抽屉 ============== -->
+        <div class="drawer-overlay" id="drawer-overlay"></div>
+        <aside class="export-drawer" id="export-drawer">
+            <div class="drawer-header">
+                <h3 class="drawer-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    导出 CSS · 打印样式表
+                </h3>
+                <button class="drawer-close" id="drawer-close" aria-label="关闭">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="drawer-actions">
+                <button class="drawer-action" id="btn-copy-css">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span>复制</span>
+                </button>
+                <button class="drawer-action" id="btn-download-css">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                    <span>下载</span>
+                </button>
+            </div>
+            <pre class="code-block" id="code-block"></pre>
+        </aside>
+
+        <!-- ============== Toast 提示 ============== -->
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

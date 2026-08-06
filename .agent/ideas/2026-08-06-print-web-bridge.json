@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-06",
+  "name": "print-web-bridge",
+  "description": "印刷感排版与Web交互融合编辑器",
+  "tagline": "Where Print Meets Pixel.",
+  "interaction": "一个融合经典印刷美学与现代Web交互的排版编辑器。用户可以像设计师一样调整字体、网格、留白与层级,实时预览印刷感版式在浏览器中的呈现效果。通过滑块、色板与拖拽组件,将传统的平面设计语言转化为可交互的Web体验。",
+  "directory": "seeds/print-web-bridge/",
+  "status": "incubated"
+}
