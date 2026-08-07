@@ -1420,6 +1420,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Nocturne 候补名单',
+      description: '沉浸式候补名单发布页。流体渐变背景 + 微晶玻璃态容器 + 非线性动效，粒子流场、磁性按钮、逐字揭示、倒计时、3D 倾斜卡片、证言轮播、多步注册表单与成功彩纸庆祝，11 个高阶微交互模块',
+      path: '/seed/seeds/waitlist-launch-page/index.html',
+      tags: ['Interactive', 'Waitlist', 'Launch Page', 'Micro-interaction'],
+      icon: '☾',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

@@ -1,0 +1,6 @@
+glass-xylophone - 滚动触发的玻璃琴音阶交互装置
+infinite-parallax-gallery - 无限滚动视差图片画廊
+garden-anomaly-sphere - WebGPU球体形变物理玩具
+typeface-playground - 字体沉浸式滚动展示工具
+waitlist-launch-page - 产品预热倒计时落地页生成器
+dot-grid-poster-maker - 点阵抖动海报生成器
