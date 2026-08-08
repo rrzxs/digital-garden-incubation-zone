@@ -1430,6 +1430,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Type Forge 字形锻造',
+      description: '沉浸式字形锻造实验室。弹簧-阻尼物理驱动的字符对光标产生磁力、排斥、波浪、故障、重力五种锻造模式响应，脉冲冲击波涟漪、Simplex 噪声粒子流场、可变排版参数与逐字揭示动画，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/type/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: 'T',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

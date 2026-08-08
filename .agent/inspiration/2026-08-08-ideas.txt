@@ -1,0 +1,12 @@
+scroll-helix - chime` — 滚动螺旋玻璃琴（Codrops 玻璃木琴 → 抽象为滚动触发的螺旋音条交互乐器）
+neuro-bond - sandbox` — 神经递质分子键可视化沙盒（Awwwards Alethia/Serotoninn → 抽象为分子键交互可视化）
+milestone - chronicle` — 组织编年里程碑沉浸式回顾器（Awwwards 20 Years/Hearst Exhibit → 抽象为任意时间线的沉浸式回顾工具）
+procedural-orb - lab` — 程序化形变球体实验室（Codrops Garden Anomaly → 抽象为可玩物理形变球体沙盒）
+type - fingerprint` — 排版独特性指纹生成器（Codrops Individuality/Readymag → 抽象为基于输入文字生成唯一视觉指纹的工具）
+infinite-flip - gallery` — 无限视差翻转画廊构建器（Codrops GSAP Gallery → 抽象为可配置的视差翻转画廊生成器）
+scroll-helix-chime - 滚动驱动螺旋琴键发声乐器
+neuro-bond-sandbox - 神经递质分子键可视化沙盒
+milestone-chronicle - 组织编年里程碑沉浸回顾器
+procedural-orb-lab - 程序化物理形变球体实验室
+type-fingerprint - 输入文字生成排版独特性指纹
+infinite-flip-gallery - 无限视差翻转画廊构建器

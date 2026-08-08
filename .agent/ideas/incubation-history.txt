@@ -128,3 +128,4 @@ editorial-scroll-story
 type-showcase
 print-web-bridge
 waitlist-launch-page
+type

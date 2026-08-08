@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-08",
+  "name": "type",
+  "description": "fingerprint` — 排版独特性指纹生成器（Codrops Individuality/Readymag → 抽象为基于输入文字生成唯一视觉指纹的工具）",
+  "tagline": "Every word leaves a mark.",
+  "interaction": "Users type any text, and the tool analyzes character patterns, frequency, and rhythm to generate a one-of-a-kind abstract visual fingerprint. The more distinctive the input, the more intricate and unique the generated pattern becomes — no two strings produce the same result. Fingerprints can be exported as SVG, turning any word into a personal typographic signature.",
+  "directory": "seeds/type/",
+  "status": "incubated"
+}
