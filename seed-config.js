@@ -1440,6 +1440,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Procedural Audio Orb 程序化音频球体',
+      description: '沉浸式程序化音频合成球体。双振荡器+失谐+子八度+低通滤波+卷积混响的合成器引擎驱动 Fibonacci 球面 Simplex 噪声顶点位移，音频能量实时扭曲光球，可演奏钢琴键盘 + 计算机键盘映射 + 琶音/持续低音生成器，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/procedural-audio-orb/index.html',
+      tags: ['Interactive', 'Audio', 'Synth', 'Micro-interaction'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

@@ -1,0 +1,6 @@
+glass-xylophone - 滚动触发的螺旋玻璃琴音互动体验
+scroll-helix-chime - 滚动驱动三维螺旋发声装置
+garden-sphere-lab - 可揉捏形变的WebGPU球体实验室
+clip-device-waitlist - 随身硬件发布的滚动等候页生成器
+dither-dot-grid-builder - 点阵抖动视觉风格海报生成器
+procedural-audio-orb - 带物理形变与程序化音频的减压球

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedural Audio Orb — 数字花园</title>
+    <meta name="description" content="程序化音频球体。用简单的合成器引擎孕育一颗会呼吸、会歌唱、会被声音扭曲的流体光球。">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23b388ff'/%3E%3Cstop offset='100%25' stop-color='%231e1b4b'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23080810'/%3E%3Ccircle cx='32' cy='32' r='18' fill='url(%23g)'/%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%238184cf' stroke-width='0.8' opacity='0.5'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- === Ambient Fluid Background === -->
+    <div class="ambient" aria-hidden="true">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+        <div class="blob b4"></div>
+        <div class="blob b5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>返回集木区</span>
+    </a>
+
+    <!-- === App === -->
+    <div class="app">
+        <!-- === Header === -->
+        <header class="header glass">
+            <div class="brand">
+                <span class="brand-glyph">◉</span>
+                <div class="brand-text">
+                    <h1 class="brand-title">Procedural Audio Orb</h1>
+                    <p class="brand-sub">Sculpt sound, watch it breathe into light.</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <span class="pill" id="status-pill">
+                    <span class="dot"></span>
+                    <span class="pill-text" id="status-text">IDLE</span>
+                </span>
+                <span class="pill ghost">
+                    <span class="pill-text">ROOT <strong id="note-readout">A2</strong></span>
+                </span>
+            </div>
+        </header>
+
+        <!-- === Stage === -->
+        <main class="stage">
+            <!-- === Orb Canvas === -->
+            <section class="canvas-wrap glass" id="canvas-wrap">
+                <canvas id="orb-canvas" aria-label="音频反应球体画布"></canvas>
+
+                <!-- HUD overlays -->
+                <div class="hud hud-tl">
+                    <span class="hud-key">WAVEFORM</span>
+                    <span class="hud-val" id="hud-wave">SINE</span>
+                </div>
+                <div class="hud hud-tr">
+                    <span class="hud-key">FPS</span>
+                    <span class="hud-val" id="hud-fps">60</span>
+                </div>
+                <div class="hud hud-bl">
+                    <span class="hud-key">VOICES</span>
+                    <span class="hud-val" id="hud-voices">0</span>
+                </div>
+                <div class="hud hud-br">
+                    <span class="hud-key">ENERGY</span>
+                    <span class="hud-val" id="hud-energy">0.00</span>
+                </div>
+
+                <!-- Spectrum bar overlay -->
+                <div class="spectrum-strip" id="spectrum-strip" aria-hidden="true"></div>
+
+                <!-- Idle hint -->
+                <div class="orb-hint" id="orb-hint">
+                    <div class="hint-ring"></div>
+                    <p class="hint-label">点击琴键 · 唤醒球体</p>
+                    <p class="hint-sub">或按下键盘 A S D F G H J K 演奏</p>
+                </div>
+            </section>
+
+            <!-- === Controls === -->
+            <section class="controls glass">
+                <!-- Synth params -->
+                <div class="ctrl-block">
+                    <h3 class="block-title">SYNTH ENGINE</h3>
+
+                    <div class="field">
+                        <label class="field-label" for="slider-attack">ATTACK<span class="field-unit">s</span></label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-attack" min="2" max="800" value="40">
+                            <span class="slider-val" id="val-attack">0.04</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="slider-release">RELEASE<span class="field-unit">s</span></label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-release" min="80" max="3000" value="900">
+                            <span class="slider-val" id="val-release">0.90</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="slider-cutoff">FILTER<span class="field-unit">Hz</span></label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-cutoff" min="200" max="8000" value="3200">
+                            <span class="slider-val" id="val-cutoff">3200</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="slider-detune">DETUNE<span class="field-unit">ct</span></label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-detune" min="0" max="50" value="12">
+                            <span class="slider-val" id="val-detune">12</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="slider-reverb">REVERB<span class="field-unit">%</span></label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-reverb" min="0" max="100" value="45">
+                            <span class="slider-val" id="val-reverb">45</span>
+                        </div>
+                    </div>
+
+                    <div class="wave-group" id="wave-group">
+                        <button class="wave-btn active" data-wave="sine" title="正弦">
+                            <svg width="22" height="14" viewBox="0 0 22 14"><path d="M1 7 Q4 1 7 7 T13 7 T19 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                        </button>
+                        <button class="wave-btn" data-wave="triangle" title="三角">
+                            <svg width="22" height="14" viewBox="0 0 22 14"><path d="M1 7 L5 2 L9 12 L13 2 L17 12 L21 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button class="wave-btn" data-wave="sawtooth" title="锯齿">
+                            <svg width="22" height="14" viewBox="0 0 22 14"><path d="M1 12 L6 2 L6 12 L11 2 L11 12 L16 2 L16 12 L21 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button class="wave-btn" data-wave="square" title="方波">
+                            <svg width="22" height="14" viewBox="0 0 22 14"><path d="M1 12 L1 2 L6 2 L6 12 L11 12 L11 2 L16 2 L16 12 L21 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Orb params -->
+                <div class="ctrl-block">
+                    <h3 class="block-title">ORB FIELD</h3>
+
+                    <div class="field">
+                        <label class="field-label" for="slider-distort">DISTORT<span class="field-unit">×</span></label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-distort" min="0" max="100" value="55">
+                            <span class="slider-val" id="val-distort">0.55</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="slider-speed">FLOW SPEED</label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-speed" min="0" max="100" value="35">
+                            <span class="slider-val" id="val-speed">0.35</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="slider-particles">PARTICLES</label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-particles" min="0" max="100" value="60">
+                            <span class="slider-val" id="val-particles">240</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="slider-trail">TRAIL<span class="field-unit">%</span></label>
+                        <div class="slider-row">
+                            <input type="range" class="cyber-slider" id="slider-trail" min="0" max="100" value="72">
+                            <span class="slider-val" id="val-trail">72</span>
+                        </div>
+                    </div>
+
+                    <div class="palette-row" id="palette-row">
+                        <button class="palette-btn active" data-palette="nebula" aria-label="星云">
+                            <span class="swatch s1"></span><span class="swatch s2"></span><span class="swatch s3"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="ember" aria-label="余烬">
+                            <span class="swatch s1"></span><span class="swatch s2"></span><span class="swatch s3"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="lagoon" aria-label="潟湖">
+                            <span class="swatch s1"></span><span class="swatch s2"></span><span class="swatch s3"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="bloom" aria-label="花期">
+                            <span class="swatch s1"></span><span class="swatch s2"></span><span class="swatch s3"></span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- === Keyboard === -->
+            <section class="keyboard glass">
+                <div class="kb-scroll" id="kb-scroll">
+                    <div class="kb-track" id="kb-track"></div>
+                </div>
+                <div class="kb-actions">
+                    <button class="ghost-btn" id="btn-oct-down" title="降八度">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                    </button>
+                    <span class="oct-readout" id="oct-readout">OCT +0</span>
+                    <button class="ghost-btn" id="btn-oct-up" title="升八度">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 19l7-7-7-7"/></svg>
+                    </button>
+                    <span class="kb-divider"></span>
+                    <button class="ghost-btn" id="btn-arpeggio" title="琶音生成器">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18l4-12 4 12M5 13h4M13 18l4-12 4 12M15 13h4"/></svg>
+                        <span>ARPEGGIO</span>
+                    </button>
+                    <button class="ghost-btn" id="btn-drone" title="持续低音">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <span>DRONE</span>
+                    </button>
+                    <span class="kb-divider"></span>
+                    <button class="ghost-btn" id="btn-clear" title="清音">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <span class="footer-text">PROCEDURAL AUDIO ORB · v1.0 · Maintainer: EDEN</span>
+            <span class="footer-text muted">Play · Watch · Breathe</span>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
