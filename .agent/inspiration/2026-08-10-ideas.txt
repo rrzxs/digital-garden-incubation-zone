@@ -1,0 +1,6 @@
+glass-xylophone - 滚动触发音效的玻璃琴螺旋可视化
+garden-anomaly - 可揉捏的程序化物理球体实验场
+scroll-sequencer - 长滚动驱动的分层音画编排器
+dither-poster - 抖动网点风海报即时生成器
+interaction-storyteller - 奢侈品级滚动叙事微框架
+sensory-orb - 鼠标力场扰动的可触发光球

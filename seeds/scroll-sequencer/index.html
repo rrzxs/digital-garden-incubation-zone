@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Sequencer · 滚动音序器</title>
+    <meta name="description" content="沉浸式滚动音序器体验。滚动化身播放头穿越 16 步序列，五轨微晶玻璃态垫合成节拍，流体渐变背景 + 非线性动效">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="particle-field"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <nav class="progress-rail">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="section-dots" id="section-dots"></div>
+    </nav>
+
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void">◈</button>
+    </div>
+
+    <div class="sequencer-hud" id="sequencer-hud">
+        <div class="hud-row">
+            <span class="hud-label mono">STEP</span>
+            <span class="hud-value mono" id="step-value">01 / 16</span>
+        </div>
+        <div class="hud-bar"><div class="hud-fill" id="step-bar"></div></div>
+        <div class="hud-row">
+            <span class="hud-label mono">TEMPO</span>
+            <span class="hud-value mono" id="tempo-value">0.00</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label mono">BPM</span>
+            <span class="hud-value mono" id="bpm-value">120</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label mono">HITS</span>
+            <span class="hud-value mono" id="hits-value">0</span>
+        </div>
+    </div>
+
+    <div class="audio-toggle" id="audio-toggle">
+        <button class="audio-btn" id="audio-btn" title="启用音频">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <line x1="23" y1="9" x2="17" y2="15"/>
+                <line x1="17" y1="9" x2="23" y2="15"/>
+            </svg>
+        </button>
+        <button class="audio-btn hidden" id="audio-on-btn" title="音频已启用">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            </svg>
+        </button>
+    </div>
+
+    <main id="main-content">
+
+        <section class="scene scene-hero" data-section="0" data-act="Overture">
+            <div class="scene-inner">
+                <div class="parallax-layer layer-far" data-depth="0.15">
+                    <div class="floating-glyph mono">♪</div>
+                    <div class="floating-glyph mono">♬</div>
+                    <div class="floating-glyph mono">♩</div>
+                    <div class="floating-glyph mono">♭</div>
+                </div>
+                <div class="parallax-layer layer-mid" data-depth="0.35">
+                    <div class="floating-ring ring-1"></div>
+                    <div class="floating-ring ring-2"></div>
+                </div>
+                <div class="glass-card hero-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">001</div>
+                        <div class="section-label">Overture · 序曲</div>
+                        <h1 class="section-title reveal-text" data-reveal-text>
+                            滚动，是节拍
+                        </h1>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">每一次滑轮的推动，都推动播放头穿越 16 个序列步。</span>
+                            <span class="line">五轨节拍由你掌控——底鼓、军鼓、踩镲、贝斯、主音。</span>
+                            <span class="line">滚动即作曲，位移即节奏。</span>
+                        </p>
+                        <div class="scroll-hint" data-reveal>
+                            <span class="scroll-arrow">↓</span>
+                            <span class="mono hint-text">向下滚动以启动序列</span>
+                        </div>
+                        <div class="audio-prompt" data-reveal>
+                            <span class="mono prompt-text">点击右上角扬声器启用音频合成</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene scene-sequencer" data-section="1" data-act="Sequencer">
+            <div class="scene-inner-vertical">
+                <div class="scene-header" data-reveal>
+                    <div class="section-number mono">002</div>
+                    <div class="section-label">Sequencer · 序列器</div>
+                    <h2 class="section-title reveal-text" data-reveal-text>
+                        十六步，五条轨道
+                    </h2>
+                    <p class="scene-sub reveal-lines" data-reveal-lines>
+                        <span class="line">滚动驱动播放头在步进间移动，越过的步进触发音符。</span>
+                        <span class="line">点击任意单元格即可激活或静音——你是这张谱的编曲者。</span>
+                    </p>
+                </div>
+
+                <div class="sequencer-stage glass-panel" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="sequencer-frame">
+                        <div class="step-ruler" id="step-ruler">
+                            <div class="track-label-spacer mono">STEP</div>
+                            <div class="step-numbers" id="step-numbers"></div>
+                        </div>
+                        <div class="track-grid" id="track-grid"></div>
+                        <div class="playhead-line" id="playhead-line">
+                            <div class="playhead-glow"></div>
+                            <div class="playhead-tip"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sequencer-stats" id="sequencer-stats">
+                    <div class="stat-chip glass-panel-sm" data-reveal>
+                        <div class="stat-label mono">ACTIVE</div>
+                        <div class="stat-value mono" id="stat-active">0</div>
+                    </div>
+                    <div class="stat-chip glass-panel-sm" data-reveal>
+                        <div class="stat-label mono">DENSITY</div>
+                        <div class="stat-value mono" id="stat-density">0%</div>
+                    </div>
+                    <div class="stat-chip glass-panel-sm" data-reveal>
+                        <div class="stat-label mono">LOOP</div>
+                        <div class="stat-value mono" id="stat-loop">∞</div>
+                    </div>
+                    <div class="stat-chip glass-panel-sm" data-reveal>
+                        <div class="stat-label mono">SYNC</div>
+                        <div class="stat-value mono" id="stat-sync">SCROLL</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene scene-waveform" data-section="2" data-act="Waveform">
+            <div class="scene-inner-vertical">
+                <div class="scene-header" data-reveal>
+                    <div class="section-number mono">003</div>
+                    <div class="section-label">Waveform · 波形</div>
+                    <h2 class="section-title reveal-text" data-reveal-text>
+                        每一次触发，都是一道涟漪
+                    </h2>
+                    <p class="scene-sub reveal-lines" data-reveal-lines>
+                        <span class="line">播放头越过激活的步进时，波形从该轨道涌出。</span>
+                        <span class="line">滚动越快，波形越剧烈；静止时，它们归于涟漪。</span>
+                    </p>
+                </div>
+
+                <div class="waveform-stage glass-panel" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <canvas id="waveform-canvas"></canvas>
+                    <div class="waveform-labels" id="waveform-labels"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="3" data-act="Tempo">
+            <div class="scene-inner">
+                <div class="tempo-visualizer" id="tempo-visualizer">
+                    <div class="tempo-ring ring-outer" data-tilt>
+                        <div class="card-glow"></div>
+                    </div>
+                    <div class="tempo-ring ring-middle"></div>
+                    <div class="tempo-ring ring-inner"></div>
+                    <div class="tempo-core">
+                        <div class="tempo-pulse" id="tempo-pulse"></div>
+                        <div class="tempo-readout">
+                            <span class="mono tempo-num" id="tempo-num">120</span>
+                            <span class="mono tempo-unit">BPM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">004</div>
+                        <div class="section-label">Tempo · 速度</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            滚动速度，即心跳
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">快速滚动推高 BPM，脉冲核心剧烈跳动。</span>
+                            <span class="line">慢速滚动降下节拍，呼吸般的低频律动。</span>
+                            <span class="line">你的节奏感，就是这首曲子的灵魂。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene" data-section="4" data-act="Tracks">
+            <div class="scene-inner">
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">005</div>
+                        <div class="section-label">Tracks · 轨道</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            五种音色，五种性格
+                        </h2>
+                        <div class="track-legend reveal-lines" data-reveal-lines>
+                            <div class="legend-item">
+                                <span class="legend-dot track-kick-color"></span>
+                                <span class="legend-name">Kick · 底鼓</span>
+                                <span class="legend-desc mono">低频脉冲，序列的地基</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot track-snare-color"></span>
+                                <span class="legend-name">Snare · 军鼓</span>
+                                <span class="legend-desc mono">噪点爆破，节拍的骨架</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot track-hat-color"></span>
+                                <span class="legend-name">Hat · 踩镲</span>
+                                <span class="legend-desc mono">高频闪烁，律动的呼吸</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot track-bass-color"></span>
+                                <span class="legend-name">Bass · 贝斯</span>
+                                <span class="legend-desc mono">次低频，序列的暗流</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot track-lead-color"></span>
+                                <span class="legend-name">Lead · 主音</span>
+                                <span class="legend-desc mono">旋律线，曲调的灵魂</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="track-showcase" id="track-showcase">
+                    <div class="showcase-card track-kick-bg" data-tilt data-intensity="1.2">
+                        <div class="card-glow"></div>
+                        <div class="showcase-inner">
+                            <div class="showcase-glyph mono">◉</div>
+                            <div class="showcase-label mono">KICK</div>
+                        </div>
+                    </div>
+                    <div class="showcase-card track-snare-bg" data-tilt data-intensity="1.0">
+                        <div class="card-glow"></div>
+                        <div class="showcase-inner">
+                            <div class="showcase-glyph mono">◍</div>
+                            <div class="showcase-label mono">SNARE</div>
+                        </div>
+                    </div>
+                    <div class="showcase-card track-hat-bg" data-tilt data-intensity="0.8">
+                        <div class="card-glow"></div>
+                        <div class="showcase-inner">
+                            <div class="showcase-glyph mono">✦</div>
+                            <div class="showcase-label mono">HAT</div>
+                        </div>
+                    </div>
+                    <div class="showcase-card track-bass-bg" data-tilt data-intensity="1.1">
+                        <div class="card-glow"></div>
+                        <div class="showcase-inner">
+                            <div class="showcase-glyph mono">◭</div>
+                            <div class="showcase-label mono">BASS</div>
+                        </div>
+                    </div>
+                    <div class="showcase-card track-lead-bg" data-tilt data-intensity="0.9">
+                        <div class="card-glow"></div>
+                        <div class="showcase-inner">
+                            <div class="showcase-glyph mono">∿</div>
+                            <div class="showcase-label mono">LEAD</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="scene scene-finale" data-section="5" data-act="Finale">
+            <div class="scene-inner">
+                <div class="glass-card finale-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">006</div>
+                        <div class="section-label">Finale · 终章</div>
+                        <h2 class="section-title reveal-text" data-reveal-text>
+                            曲终，回响不息
+                        </h2>
+                        <p class="section-body reveal-lines" data-reveal-lines>
+                            <span class="line">你刚刚用滚动谱写了一首序列曲：</span>
+                            <span class="line">十六步、五轨道、无限循环——</span>
+                            <span class="line">每一次位移，都是一次音符的绽放。</span>
+                        </p>
+                        <div class="finale-cta" data-reveal>
+                            <a href="../../index.html" class="cta-glass">
+                                <span>返回数字花园</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

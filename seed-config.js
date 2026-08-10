@@ -1450,6 +1450,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Scroll Sequencer 滚动音序器',
+      description: '沉浸式滚动驱动音序器体验。滚动化身播放头穿越 16 步序列，五轨微晶玻璃态垫（底鼓/军鼓/踩镲/贝斯/主音）实时 Web Audio 合成节拍，波形涟漪可视化、BPM 随滚动速度映射 (60~180)、可点击编曲与4种氛围配色，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/scroll-sequencer/index.html',
+      tags: ['Interactive', 'Audio', 'Sequencer', 'Micro-interaction'],
+      icon: '♪',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

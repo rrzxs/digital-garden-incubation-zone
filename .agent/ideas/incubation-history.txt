@@ -130,3 +130,4 @@ print-web-bridge
 waitlist-launch-page
 type
 procedural-audio-orb
+scroll-sequencer

@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-10",
+  "name": "scroll-sequencer",
+  "description": "长滚动驱动的分层音画编排器",
+  "tagline": "Scroll. Layer. Compose.",
+  "interaction": "As you scroll vertically, layered audio stems and visual elements progressively activate and interweave, creating an evolving audiovisual composition. Each scroll position corresponds to a specific arrangement of synchronized sound layers and their visual representations, letting users "play" the piece simply by scrolling through the page.",
+  "directory": "seeds/scroll-sequencer/",
+  "status": "incubated"
+}
