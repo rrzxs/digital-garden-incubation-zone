@@ -1460,6 +1460,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Glass Xylophone 微晶玻璃木琴',
+      description: '沉浸式微晶玻璃木琴。Web Audio 合成（Glass/Crystal/Bell/Marimba 四音色）+ 弹簧-阻尼物理琴键非线性形变 + 涟漪粒子迸射 + Simplex 噪声流场，键盘演奏、八度切换、自动演奏与4种氛围配色，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/glass-xylophone/index.html',
+      tags: ['Interactive', 'Audio', 'Physics', 'Micro-interaction'],
+      icon: '♪',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glass Xylophone — 微晶玻璃木琴</title>
+  <meta name="description" content="沉浸式微晶玻璃木琴。Web Audio 合成 + 弹簧-阻尼物理琴键形变 + 涟漪粒子迸射 + 4 种氛围配色">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 流体网格渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+    <div class="grain-overlay"></div>
+  </div>
+
+  <!-- 光标光晕 -->
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <!-- 顶部标题栏 -->
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">♪</span>
+        <div class="brand-text">
+          <h1 class="brand-title">Glass Xylophone</h1>
+          <span class="brand-sub">微晶玻璃木琴 · Resonant Glass</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="octave-toggle" id="octaveToggle" role="group" aria-label="八度切换">
+          <button class="oct-btn" data-oct="-1" aria-label="降低八度">−</button>
+          <span class="oct-display" id="octDisplay">C4</span>
+          <button class="oct-btn" data-oct="1" aria-label="升高八度">+</button>
+        </div>
+
+        <button class="sustain-btn" id="sustainBtn" aria-pressed="false" aria-label="持续模式">
+          <span class="sustain-dot"></span>
+          <span class="sustain-label">持续</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 琴键舞台 -->
+    <section class="stage" id="stage">
+      <canvas id="effectCanvas" aria-hidden="true"></canvas>
+
+      <!-- 谐振环（击键时浮现的扩散圆环容器，由 JS 注入） -->
+      <div class="bar-rack" id="barRack" role="group" aria-label="琴键组"></div>
+
+      <!-- 背景音名幽灵（无衬线大字音名，作为氛围装饰） -->
+      <div class="ghost-names" aria-hidden="true">
+        <span class="ghost-name ghost-a">A</span>
+        <span class="ghost-name ghost-b">B</span>
+        <span class="ghost-name ghost-c">C</span>
+      </div>
+
+      <!-- 初始提示 -->
+      <div class="stage-hint" id="stageHint">
+        <div class="hint-ring"></div>
+        <span class="hint-text">轻触琴键 · 或按键盘 A&nbsp;S&nbsp;D&nbsp;F&nbsp;G&nbsp;H&nbsp;J&nbsp;K</span>
+      </div>
+    </section>
+
+    <!-- 控制台 -->
+    <footer class="console">
+      <div class="console-group">
+        <span class="console-label">音色</span>
+        <div class="timbre-row" id="timbreRow" role="group" aria-label="音色选择">
+          <button class="timbre-btn active" data-timbre="glass">Glass</button>
+          <button class="timbre-btn" data-timbre="crystal">Crystal</button>
+          <button class="timbre-btn" data-timbre="bell">Bell</button>
+          <button class="timbre-btn" data-timbre="marimba">Marimba</button>
+        </div>
+      </div>
+
+      <div class="console-group console-sliders">
+        <div class="slider-control">
+          <label class="slider-label" for="sliderDecay">延音</label>
+          <input type="range" class="slider" id="sliderDecay" min="40" max="400" value="180" step="5">
+        </div>
+        <div class="slider-control">
+          <label class="slider-label" for="sliderShimmer">微光</label>
+          <input type="range" class="slider" id="sliderShimmer" min="0" max="100" value="55" step="1">
+        </div>
+        <div class="slider-control">
+          <label class="slider-label" for="sliderForce">力度</label>
+          <input type="range" class="slider" id="sliderForce" min="20" max="100" value="70" step="1">
+        </div>
+      </div>
+
+      <div class="console-group">
+        <div class="palette-row" id="paletteRow" role="group" aria-label="氛围配色">
+          <button class="palette-btn active" data-palette="prism" aria-label="棱镜配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #04111d, #155e75, #22d3ee)"></span>
+            <span class="palette-name">棱镜</span>
+          </button>
+          <button class="palette-btn" data-palette="dusk" aria-label="暮霭配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #1a0a1f, #6d28d9, #f472b6)"></span>
+            <span class="palette-name">暮霭</span>
+          </button>
+          <button class="palette-btn" data-palette="ember" aria-label="余烬配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #1a0a06, #7c2d12, #fb923c)"></span>
+            <span class="palette-name">余烬</span>
+          </button>
+          <button class="palette-btn" data-palette="moss" aria-label="苔藓配色">
+            <span class="palette-swatch" style="background: linear-gradient(135deg, #04140c, #166534, #6ee7b7)"></span>
+            <span class="palette-name">苔藓</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="console-group">
+        <button class="action-btn" id="btnAuto" aria-label="自动演奏">
+          <span class="action-icon">♫</span>
+          <span class="action-label">自动</span>
+        </button>
+        <button class="action-btn" id="btnClear" aria-label="清除涟漪">
+          <span class="action-icon">↺</span>
+          <span class="action-label">清空</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- 状态栏 -->
+    <div class="stats-bar">
+      <span class="stat"><span class="stat-label">NOTE</span><span class="stat-value" id="statNote">—</span></span>
+      <span class="stat"><span class="stat-label">FREQ</span><span class="stat-value" id="statFreq">0<span class="stat-unit">Hz</span></span></span>
+      <span class="stat"><span class="stat-label">VOICES</span><span class="stat-value" id="statVoices">0</span></span>
+      <span class="stat"><span class="stat-label">RIPPLES</span><span class="stat-value" id="statRipples">0</span></span>
+      <span class="stat"><span class="stat-label">FPS</span><span class="stat-value" id="statFps">60</span></span>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
