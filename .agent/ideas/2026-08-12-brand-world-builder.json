@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-12",
+  "name": "brand-world-builder",
+  "description": "品牌系统到视觉世界的构建器",
+  "tagline": "Where brand systems become living worlds.",
+  "interaction": "Users select or upload brand tokens (colors, typography, logo) which the tool synthesizes into a fully navigable 3D visual universe. Each brand element transforms into architectural features, atmospheric lighting, and dynamic textures that users can explore, customize, and export as immersive brand worlds.",
+  "directory": "seeds/brand-world-builder/",
+  "status": "incubated"
+}

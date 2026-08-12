@@ -1470,6 +1470,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Brand World Builder 品牌世界铸造器',
+      description: '沉浸式品牌世界铸造器。五维 DNA（色彩 / 字体 / 几何 / 氛围 / 音律）实时铸炼整个世界的呼吸——拖入坩埚即刻重组背景流体、粒子流场、坩埚核心、字体排版与形态几何，唯一 Soul 码身份印记，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/brand-world-builder/index.html',
+      tags: ['Interactive', 'Brand', 'Builder', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

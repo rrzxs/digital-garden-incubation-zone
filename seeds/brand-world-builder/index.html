@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand World Builder — 品牌世界铸造器</title>
+    <meta name="description" content="沉浸式品牌世界铸造器。拖拽 DNA 元素至中央坩埚，色彩 / 字体 / 几何 / 氛围 / 音律五维实时铸炼整个世界的呼吸。流体渐变背景 + 微晶玻璃态容器 + 非线性动效。">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070712'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%23fbbf24' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%23fbbf24'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Fluid Mesh Gradient Background -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1" id="blob-1"></div>
+        <div class="blob blob-2" id="blob-2"></div>
+        <div class="blob blob-3" id="blob-3"></div>
+        <div class="blob blob-4" id="blob-4"></div>
+        <div class="grain-overlay"></div>
+    </div>
+
+    <!-- Particle Layer -->
+    <canvas class="particle-layer" id="particle-layer" aria-hidden="true"></canvas>
+
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="app-shell">
+        <!-- Header -->
+        <header class="panel-header glass-panel">
+            <div class="brand-group">
+                <h1 class="brand-title">Brand<span class="brand-dot">·</span>World<span class="brand-dot">·</span>Builder</h1>
+                <p class="brand-subtitle">品牌世界铸造器 — 五维 DNA 实时铸炼一整个宇宙</p>
+            </div>
+            <div class="header-actions">
+                <div class="hud-readout" id="hud-readout">
+                    <span class="hud-cell"><span class="hud-key">FPS</span><span class="hud-val" id="hud-fps">60</span></span>
+                    <span class="hud-cell"><span class="hud-key">DENSITY</span><span class="hud-val" id="hud-density">5</span></span>
+                    <span class="hud-cell"><span class="hud-key">SOUL</span><span class="hud-val" id="hud-soul">—</span></span>
+                </div>
+                <button class="icon-btn" id="btn-shuffle" aria-label="随机铸炼" title="随机铸炼 (S)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-reset" aria-label="清空坩埚" title="清空坩埚 (R)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Stage -->
+        <section class="stage" id="stage" aria-label="品牌世界铸炼舞台">
+            <!-- Crucible Center -->
+            <div class="crucible-wrap" id="crucible-wrap">
+                <div class="crucible-rings" id="crucible-rings">
+                    <div class="c-ring c-ring-1"></div>
+                    <div class="c-ring c-ring-2"></div>
+                    <div class="c-ring c-ring-3"></div>
+                </div>
+                <div class="crucible glass-panel" id="crucible">
+                    <div class="crucible-core" id="crucible-core">
+                        <span class="crucible-mark" id="crucible-mark">◈</span>
+                    </div>
+                    <div class="crucible-aura" id="crucible-aura"></div>
+                </div>
+                <div class="crucible-label" id="crucible-label">
+                    <span class="label-line">DROP DNA · 铸炼</span>
+                </div>
+            </div>
+
+            <!-- Live Brand Specimen -->
+            <div class="specimen glass-panel" id="specimen" aria-hidden="true">
+                <div class="specimen-top">
+                    <span class="spec-logo" id="spec-logo">EDEN</span>
+                    <span class="spec-tag" id="spec-tag">— forge the unseen —</span>
+                </div>
+                <div class="specimen-bottom">
+                    <span class="spec-meta" id="spec-meta">Soul · 000</span>
+                    <span class="spec-shape" id="spec-shape"></span>
+                </div>
+            </div>
+
+            <!-- Drop zones hint -->
+            <div class="drop-hint" id="drop-hint">
+                <span class="drop-hint-dot"></span>
+                <span class="drop-hint-text">从下方 DNA 库拖入坩埚 · 或点击元素直接铸炼</span>
+            </div>
+        </section>
+
+        <!-- DNA Library -->
+        <footer class="dna-bar glass-panel">
+            <div class="dna-tabs" id="dna-tabs">
+                <button class="dna-tab active" data-dimension="color" aria-label="色彩维度">
+                    <span class="tab-glyph" style="--tg:#fbbf24">◐</span>
+                    <span class="tab-name">COLOR</span>
+                </button>
+                <button class="dna-tab" data-dimension="type" aria-label="字体维度">
+                    <span class="tab-glyph" style="--tg:#f0abfc">Aa</span>
+                    <span class="tab-name">TYPE</span>
+                </button>
+                <button class="dna-tab" data-dimension="shape" aria-label="几何维度">
+                    <span class="tab-glyph" style="--tg:#22d3ee">⬡</span>
+                    <span class="tab-name">SHAPE</span>
+                </button>
+                <button class="dna-tab" data-dimension="mood" aria-label="氛围维度">
+                    <span class="tab-glyph" style="--tg:#34d399">≈</span>
+                    <span class="tab-name">MOOD</span>
+                </button>
+                <button class="dna-tab" data-dimension="rhythm" aria-label="音律维度">
+                    <span class="tab-glyph" style="--tg:#f87171">♪</span>
+                    <span class="tab-name">RHYTHM</span>
+                </button>
+            </div>
+
+            <div class="dna-divider"></div>
+
+            <div class="dna-shelf" id="dna-shelf">
+                <!-- DNA orbs injected by JS -->
+            </div>
+
+            <div class="dna-divider"></div>
+
+            <div class="dna-palette-wrap">
+                <label class="dna-palette-label">WORLD TONE</label>
+                <div class="palette-toggle" id="palette-toggle">
+                    <button class="palette-btn active" data-palette="ember" aria-label="余烬">
+                        <span class="swatch" style="background:linear-gradient(135deg,#fbbf24,#f97316,#ef4444)"></span>
+                    </button>
+                    <button class="palette-btn" data-palette="nebula" aria-label="星云">
+                        <span class="swatch" style="background:linear-gradient(135deg,#f0abfc,#818cf8,#22d3ee)"></span>
+                    </button>
+                    <button class="palette-btn" data-palette="abyss" aria-label="深渊">
+                        <span class="swatch" style="background:linear-gradient(135deg,#22d3ee,#3b82f6,#6366f1)"></span>
+                    </button>
+                    <button class="palette-btn" data-palette="frost" aria-label="霜降">
+                        <span class="swatch" style="background:linear-gradient(135deg,#a5f3fc,#67e8f9,#e0e7ff)"></span>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+geometry-painter - 浏览器内程序化几何体绘制器
+procedural-sphere-playground - WebGPU球体形变与程序化音频实验
+audio-visualizer-studio - 浏览器内音频可视化视频生成器
+studio-archive - 创作作品的灵活数字档案展示
+brand-world-builder - 品牌系统到视觉世界的构建器
+call-notes-organizer - 按客户归档的通话记录整理器
