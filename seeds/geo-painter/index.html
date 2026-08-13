@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Painter · 几何画师</title>
+    <meta name="description" content="沉浸式参数化几何绘画工作室。6 种形状画笔、弹簧物理形变、对称镜像、粒子流场背景与微晶玻璃态工具面板，流体渐变背景 + 非线性动效，4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <!-- 粒子流场背景画布 -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">⬡</span>
+            <div class="brand-text">
+                <span class="brand-title">Geo Painter</span>
+                <span class="brand-sub">几何画师 · 参数化构图</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="hud" id="hud">
+                <span class="hud-dot" id="hud-dot"></span>
+                <span class="hud-text" id="hud-text">在画布上拖拽绘制</span>
+            </div>
+            <div class="palette-picker" role="group" aria-label="氛围配色">
+                <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora" aria-label="极光配色"></button>
+                <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember" aria-label="余烬配色"></button>
+                <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss" aria-label="深渊配色"></button>
+                <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid" aria-label="兰若配色"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主舞台 -->
+    <main class="stage">
+        <!-- 序言 -->
+        <section class="preamble reveal">
+            <span class="pre-tag">PARAMETRIC / 2026</span>
+            <h1 class="pre-title">
+                <span class="pre-line">Draw geometry</span>
+                <span class="pre-line pre-italic">that breathes.</span>
+            </h1>
+            <p class="pre-desc">拖拽即创造。六种参数化画笔在画布上呼吸——每一次落笔都拥有弹簧般的弹性回弹，对称镜像让构图自发涌现。松手后，形状以非线性曲线沉淀。</p>
+        </section>
+
+        <!-- 画布舞台 -->
+        <section class="canvas-stage reveal">
+            <canvas id="paint-canvas" aria-label="几何绘画画布"></canvas>
+            <div class="canvas-frame" aria-hidden="true"></div>
+            <div class="canvas-corners" aria-hidden="true">
+                <span class="corner corner-tl"></span>
+                <span class="corner corner-tr"></span>
+                <span class="corner corner-bl"></span>
+                <span class="corner corner-br"></span>
+            </div>
+            <!-- 画布遥测 -->
+            <div class="canvas-telemetry glass-bar" id="canvas-telemetry">
+                <div class="tel-row">
+                    <span class="tel-label">SHAPES</span>
+                    <span class="tel-val" id="tel-shapes">0</span>
+                </div>
+                <div class="tel-row">
+                    <span class="tel-label">SYM</span>
+                    <span class="tel-val" id="tel-sym">1×</span>
+                </div>
+                <div class="tel-row">
+                    <span class="tel-label">MODE</span>
+                    <span class="tel-val" id="tel-mode">CIRCLE</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 工具面板 -->
+        <section class="tool-deck reveal">
+            <!-- 画笔选择 -->
+            <div class="tool-group glass-bar">
+                <span class="tool-group-label">BRUSH</span>
+                <div class="brush-grid" id="brush-grid">
+                    <button class="brush-btn active" data-brush="circle" aria-label="圆形画笔">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/></svg>
+                        <span>Circle</span>
+                    </button>
+                    <button class="brush-btn" data-brush="polygon" aria-label="多边形画笔">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><polygon points="12,3 21,9 18,20 6,20 3,9"/></svg>
+                        <span>Polygon</span>
+                    </button>
+                    <button class="brush-btn" data-brush="line" aria-label="直线画笔">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="5" y1="19" x2="19" y2="5"/></svg>
+                        <span>Line</span>
+                    </button>
+                    <button class="brush-btn" data-brush="curve" aria-label="曲线画笔">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 18 Q 9 4, 14 12 T 21 6"/></svg>
+                        <span>Curve</span>
+                    </button>
+                    <button class="brush-btn" data-brush="star" aria-label="星形画笔">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><polygon points="12,2 14.5,9 22,9 16,13.5 18,21 12,16.5 6,21 8,13.5 2,9 9.5,9"/></svg>
+                        <span>Star</span>
+                    </button>
+                    <button class="brush-btn" data-brush="burst" aria-label="放射画笔">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="21"/><line x1="3" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="21" y2="12"/><line x1="5.6" y1="5.6" x2="9" y2="9"/><line x1="15" y1="15" x2="18.4" y2="18.4"/><line x1="18.4" y1="5.6" x2="15" y2="9"/><line x1="9" y1="15" x2="5.6" y2="18.4"/></svg>
+                        <span>Burst</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 参数控制 -->
+            <div class="tool-group glass-bar">
+                <span class="tool-group-label">PARAMS</span>
+                <div class="param-list">
+                    <div class="param-row">
+                        <span class="param-name">Sides</span>
+                        <input type="range" class="param-slider" id="slider-sides" min="3" max="12" value="6" step="1">
+                        <span class="param-val" id="val-sides">6</span>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-name">Weight</span>
+                        <input type="range" class="param-slider" id="slider-weight" min="1" max="12" value="3" step="0.5">
+                        <span class="param-val" id="val-weight">3</span>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-name">Symmetry</span>
+                        <input type="range" class="param-slider" id="slider-sym" min="1" max="8" value="1" step="1">
+                        <span class="param-val" id="val-sym">1×</span>
+                    </div>
+                    <div class="param-row">
+                        <span class="param-name">Fill</span>
+                        <label class="param-toggle">
+                            <input type="checkbox" id="toggle-fill">
+                            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 动作按钮 -->
+            <div class="tool-group glass-bar">
+                <span class="tool-group-label">ACTIONS</span>
+                <div class="action-grid">
+                    <button class="action-btn" id="btn-undo" aria-label="撤销">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M3 13a9 9 0 1 0 3-7.7L3 8"/></svg>
+                        <span>Undo</span>
+                    </button>
+                    <button class="action-btn" id="btn-redo" aria-label="重做">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M21 13a9 9 0 1 1-3-7.7L21 8"/></svg>
+                        <span>Redo</span>
+                    </button>
+                    <button class="action-btn" id="btn-random" aria-label="随机生成">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1" fill="currentColor"/><circle cx="16" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="8" cy="16" r="1" fill="currentColor"/><circle cx="16" cy="16" r="1" fill="currentColor"/></svg>
+                        <span>Random</span>
+                    </button>
+                    <button class="action-btn action-danger" id="btn-clear" aria-label="清空画布">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M6 6l1 14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-14"/></svg>
+                        <span>Clear</span>
+                    </button>
+                    <button class="action-btn action-primary" id="btn-export" aria-label="导出 PNG">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+                        <span>Export</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 脚注 -->
+        <footer class="stage-foot reveal">
+            <span class="foot-glyph">⬡</span>
+            <span class="foot-text">Drag · Release · Settle — 笔触的三段呼吸。</span>
+            <span class="foot-counter">BRUSH <span id="brush-counter">CIRCLE</span></span>
+        </footer>
+    </main>
+
+    <!-- 光标跟随光晕 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <!-- 涟漪层 -->
+    <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

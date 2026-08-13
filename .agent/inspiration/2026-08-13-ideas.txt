@@ -1,0 +1,7 @@
+geo-painter - 程序化几何体绘制与变形工坊
+cluster-sphere - 可交互三维粒子球簇物理玩具
+audio-visual-forge - 音乐可视化视频生成与导出工具
+brand-iteration-canvas - 品牌方案迭代打磨画布
+sound-deform-orb - 音频驱动球体形变沉浸体验
+scroll-cinema - 长滚动电影叙事网页生成器
+procedural-noise-lab - 噪声场实时渲染与参数调试实验室

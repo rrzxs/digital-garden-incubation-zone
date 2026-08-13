@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-13",
+  "name": "geo-painter",
+  "description": "程序化几何体绘制与变形工坊",
+  "tagline": "**Shape Geometry, Sculpt Worlds.**",
+  "interaction": "Users draw and manipulate parametric geometric primitives on an infinite canvas, with real-time procedural deformation driven by mouse velocity, pressure, and path curvature. The workshop supports layering, boolean operations, and exportable SVG/mesh outputs, turning simple strokes into complex generative structures.",
+  "directory": "seeds/geo-painter/",
+  "status": "incubated"
+}

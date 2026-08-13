@@ -1480,6 +1480,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Geo Painter 几何画师',
+      description: '沉浸式参数化几何绘画工作室。6 种画笔（圆形/多边形/直线/曲线/星形/放射）、弹簧物理形变入场、1×~8× 径向对称镜像、撤销重做、随机生成与 PNG 导出，粒子流场背景 + 微晶玻璃态工具面板，4种氛围配色',
+      path: '/seed/seeds/geo-painter/index.html',
+      tags: ['Interactive', 'Drawing', 'Geometry', 'Micro-interaction'],
+      icon: '⬡',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
