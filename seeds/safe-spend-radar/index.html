@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Spend Radar · 安全消费雷达</title>
+    <meta name="description" content="沉浸式个人消费安全雷达。六维预算健康实时扫描，雷达拓扑可视化，预算溢出预警与智能建议。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="aurora">
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">◉</span>
+            <div class="brand-text">
+                <span class="brand-title">Safe Spend Radar</span>
+                <span class="brand-sub">安全消费雷达 · 六维预算健康扫描</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="period-picker" role="group" aria-label="预算周期">
+                <button class="period-btn" data-period="week">周</button>
+                <button class="period-btn active" data-period="month">月</button>
+                <button class="period-btn" data-period="year">年</button>
+            </div>
+            <div class="palette-picker" role="group" aria-label="氛围配色">
+                <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora"></button>
+                <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember"></button>
+                <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss"></button>
+                <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid"></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="app">
+        <!-- 左侧：消费记录输入与列表 -->
+        <section class="panel panel-input glass-card" aria-label="消费记录">
+            <div class="panel-head">
+                <span class="panel-tag">TRANSACTIONS</span>
+                <h2 class="panel-title">消费记录 · 追踪每一笔支出</h2>
+            </div>
+            <div class="entry-form">
+                <input type="text" id="entry-name" class="input" placeholder="消费项目 (如: 午餐)" maxlength="20" />
+                <input type="number" id="entry-amount" class="input input-amount" placeholder="金额" min="0" step="0.01" />
+                <select id="entry-category" class="input input-category">
+                    <option value="food">🍽 餐饮</option>
+                    <option value="transport">🚌 交通</option>
+                    <option value="shopping">🛍 购物</option>
+                    <option value="entertainment">🎮 娱乐</option>
+                    <option value="housing">🏠 居家</option>
+                    <option value="health">💊 健康</option>
+                </select>
+                <button class="btn-add" id="btn-add-entry" aria-label="添加消费">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="12" y1="5" x2="12" y2="19"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="entries-list" id="entries-list"></div>
+            <div class="panel-footer">
+                <span class="footer-label">本期合计</span>
+                <span class="footer-total" id="footer-total">¥0.00</span>
+            </div>
+        </section>
+
+        <!-- 中央：雷达可视化 -->
+        <section class="panel panel-radar glass-card" aria-label="消费雷达">
+            <div class="radar-head">
+                <span class="panel-tag">RADAR SCAN</span>
+                <div class="health-badge" id="health-badge">
+                    <span class="health-dot"></span>
+                    <span class="health-text">扫描中...</span>
+                </div>
+            </div>
+            <div class="radar-stage">
+                <svg id="radar-svg" viewBox="-200 -200 400 400" preserveAspectRatio="xMidYMid meet">
+                    <defs id="radar-defs"></defs>
+                    <g id="radar-grid"></g>
+                    <g id="radar-budget"></g>
+                    <polygon id="radar-spend" class="radar-spend" points="" />
+                    <g id="radar-axes"></g>
+                    <g id="radar-labels"></g>
+                    <g id="radar-sweep">
+                        <line x1="0" y1="0" x2="0" y2="-180" stroke="url(#sweep-grad)" stroke-width="1.5" opacity="0.6" />
+                    </g>
+                </svg>
+            </div>
+            <div class="radar-stats" id="radar-stats"></div>
+        </section>
+
+        <!-- 右侧：预算设置与智能建议 -->
+        <section class="panel panel-advice glass-card" aria-label="预算与建议">
+            <div class="panel-head">
+                <span class="panel-tag">BUDGET LIMITS</span>
+                <h2 class="panel-title">预算上限 · 拖动设定安全线</h2>
+            </div>
+            <div class="budget-list" id="budget-list"></div>
+            <div class="advice-block">
+                <span class="panel-tag">AI ADVISOR</span>
+                <div class="advice-content" id="advice-content">
+                    <p class="advice-item">添加消费记录后，AI 顾问将根据雷达扫描结果提供个性化预算建议。</p>
+                </div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-cell">
+                    <span class="summary-label">已用</span>
+                    <span class="summary-value" id="summary-spent">¥0</span>
+                </div>
+                <div class="summary-cell">
+                    <span class="summary-label">预算</span>
+                    <span class="summary-value" id="summary-budget">¥0</span>
+                </div>
+                <div class="summary-cell">
+                    <span class="summary-label">剩余</span>
+                    <span class="summary-value" id="summary-remaining">¥0</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 快捷预设 -->
+    <div class="quick-presets glass-bar" aria-label="快捷场景">
+        <span class="preset-hint">快捷场景</span>
+        <button class="quick-btn" data-preset="student">🎓 学生</button>
+        <button class="quick-btn" data-preset="freelancer">💻 自由职业</button>
+        <button class="quick-btn" data-preset="family">👨‍👩‍👧 家庭</button>
+        <button class="quick-btn" data-preset="minimal">🍃 极简</button>
+        <button class="quick-btn danger" id="btn-clear">清空</button>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

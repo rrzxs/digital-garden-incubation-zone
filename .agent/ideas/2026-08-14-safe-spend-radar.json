@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-14",
+  "name": "safe-spend-radar",
+  "description": "今日安全消费额可视化计算器",
+  "tagline": "Spend Smart, Stay Safe Today.",
+  "interaction": "用户输入每日预算和已消费金额，雷达图实时渲染剩余安全消费额度，动态收缩的环形区域直观警示消费进度。当接近预算上限时，雷达从绿色渐变为红色并触发脉冲动画，帮助用户在花钱前瞬间感知财务边界。",
+  "directory": "seeds/safe-spend-radar/",
+  "status": "incubated"
+}

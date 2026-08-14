@@ -134,3 +134,4 @@ scroll-sequencer
 glass-xylophone
 brand-world-builder
 geo-painter
+safe-spend-radar

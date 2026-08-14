@@ -1490,6 +1490,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Safe Spend Radar 安全消费雷达',
+      description: '沉浸式个人消费安全雷达。六维预算健康实时扫描（餐饮/交通/购物/娱乐/居家/健康），SVG 雷达拓扑可视化、旋转扫描动画、预算溢出预警与智能建议引擎，4种快捷场景预设与周/月/年周期切换',
+      path: '/seed/seeds/safe-spend-radar/index.html',
+      tags: ['Interactive', 'Finance', 'Data Visualization', 'Micro-interaction'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

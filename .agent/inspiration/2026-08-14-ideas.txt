@@ -1,0 +1,6 @@
+safe-spend-radar - 今日安全消费额可视化计算器
+ascii-cinema - 实时画面转ASCII艺术播放器
+geo-surface-painter - 程序化几何体表面绘制工坊
+cluster-forge - 交互式3D粒子簇生成器
+brand-iter-lab - 品牌标识迭代演变实验室
+scroll-chapter-weaver - 多章节滚动叙事编织器
