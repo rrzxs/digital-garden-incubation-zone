@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASCII Signal Cam · 字符信号摄像机</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="phosphor">
+  <!-- ====== 流体渐变背景层 ====== -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="blob blob--1"></div>
+    <div class="blob blob--2"></div>
+    <div class="blob blob--3"></div>
+    <div class="blob blob--4"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ====== 顶部导航 ====== -->
+  <header class="top-bar glass">
+    <div class="top-bar__brand">
+      <span class="brand-dot"></span>
+      <span class="brand-name">ASCII<br />SIGNAL CAM</span>
+    </div>
+    <nav class="top-bar__nav">
+      <button class="nav-chip is-active" data-feed="plasma">Plasma</button>
+      <button class="nav-chip" data-feed="tunnel">Tunnel</button>
+      <button class="nav-chip" data-feed="wave">Wave</button>
+      <button class="nav-chip" data-feed="static">Static</button>
+      <button class="nav-chip" data-feed="camera">Cam</button>
+    </nav>
+    <div class="top-bar__themes">
+      <button class="theme-dot" data-theme="phosphor" title="磷光"></button>
+      <button class="theme-dot" data-theme="vapor" title="蒸汽"></button>
+      <button class="theme-dot" data-theme="ember" title="余烬"></button>
+      <button class="theme-dot" data-theme="arctic" title="极地"></button>
+    </div>
+  </header>
+
+  <!-- ====== 主区域 ====== -->
+  <main class="stage">
+    <!-- 左侧：字符信号视口 -->
+    <section class="viewport glass">
+      <div class="viewport__head">
+        <div class="viewport__title">
+          <span class="viewport__live" id="liveDot"></span>
+          <h2 id="scopeTitle">PLASMA FIELD</h2>
+          <span class="viewport__sub" id="scopeSub">PLASMA FIELD · SYNTHETIC FEED</span>
+        </div>
+        <div class="viewport__readout">
+          <span class="readout-item"><b id="rdFps">60</b><i>FPS</i></span>
+          <span class="readout-item"><b id="rdCells">96×54</b><i>CELLS</i></span>
+          <span class="readout-item"><b id="rdSignal">82</b><i>SIGNAL%</i></span>
+        </div>
+      </div>
+
+      <div class="viewport__frame">
+        <canvas id="fieldCanvas" class="field-canvas"></canvas>
+        <div class="crt" aria-hidden="true"></div>
+        <div class="flash" id="flash" aria-hidden="true"></div>
+      </div>
+
+      <div class="viewport__hud">
+        <span class="hud-tag" id="hudFeed">FEED · PLASMA FIELD</span>
+        <span class="hud-tag">KEYS · [1-5] FEED / [F] FREEZE / [S] SHOT / [G] GLITCH / [I] INVERT</span>
+      </div>
+    </section>
+
+    <!-- 右侧：字符集 + 参数 + 动作 + 信号 -->
+    <aside class="panel glass">
+      <div class="panel__section">
+        <h3 class="panel__h">CHARSET</h3>
+        <div class="charset-grid" id="charsetGrid">
+          <button class="charset-btn is-active" data-charset="ascii">ASCII</button>
+          <button class="charset-btn" data-charset="blocks">BLOCK</button>
+          <button class="charset-btn" data-charset="binary">BIN</button>
+          <button class="charset-btn" data-charset="katakana">KANA</button>
+          <button class="charset-btn" data-charset="braille">BRAIL</button>
+        </div>
+      </div>
+
+      <div class="panel__section">
+        <h3 class="panel__h">PARAMETERS</h3>
+        <label class="slider-row">
+          <span>Resolution</span>
+          <input type="range" id="resSlider" min="48" max="144" step="4" value="96" />
+          <span class="slider-val" id="resVal">96</span>
+        </label>
+        <label class="slider-row">
+          <span>Contrast</span>
+          <input type="range" id="contrastSlider" min="0.5" max="2" step="0.05" value="1.15" />
+          <span class="slider-val" id="contrastVal">1.15</span>
+        </label>
+        <label class="slider-row">
+          <span>Brightness</span>
+          <input type="range" id="brightSlider" min="-0.4" max="0.4" step="0.02" value="0.02" />
+          <span class="slider-val" id="brightVal">0.02</span>
+        </label>
+        <label class="slider-row">
+          <span>Glitch</span>
+          <input type="range" id="glitchSlider" min="0" max="1" step="0.02" value="0.25" />
+          <span class="slider-val" id="glitchVal">0.25</span>
+        </label>
+      </div>
+
+      <div class="panel__section">
+        <h3 class="panel__h">ACTIONS</h3>
+        <div class="action-grid">
+          <button class="action-btn" id="btnFreeze">FREEZE</button>
+          <button class="action-btn" id="btnInvert">INVERT</button>
+          <button class="action-btn" id="btnShot">SNAPSHOT</button>
+        </div>
+      </div>
+
+      <div class="panel__section">
+        <h3 class="panel__h">SIGNAL</h3>
+        <div class="metrics">
+          <div class="metric"><span>SIG</span><div class="metric-bar"><i id="mSig" style="width:82%"></i></div><b id="mSigV">82%</b></div>
+          <div class="metric"><span>LUMA</span><div class="metric-bar"><i id="mLuma" style="width:50%"></i></div><b id="mLumaV">0.50</b></div>
+          <div class="metric"><span>NOISE</span><div class="metric-bar"><i id="mNoise" style="width:18%"></i></div><b id="mNoiseV">LOW</b></div>
+          <div class="metric"><span>FPS</span><div class="metric-bar"><i id="mFps" style="width:100%"></i></div><b id="mFpsV">60</b></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ====== 底部 Ticker ====== -->
+  <footer class="ticker glass">
+    <div class="ticker__track" id="tickerTrack"></div>
+  </footer>
+
+  <!-- ====== 点击涟漪层 ====== -->
+  <div class="ripple-layer" id="rippleLayer" aria-hidden="true"></div>
+
+  <!-- ====== 隐藏摄像头视频源 ====== -->
+  <video id="camVideo" autoplay playsinline muted></video>
+
+  <script src="main.js"></script>
+</body>
+</html>

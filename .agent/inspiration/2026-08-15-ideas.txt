@@ -1,0 +1,7 @@
+ascii-signal-cam - 摄像头实时转ASCII字符画生成器
+noise-cluster-orb - 噪声驱动可交互的3D多面体星团
+one-pager-blocks - 模块化单页落地页可视化搭建器
+copy-iterate-bench - 品牌文案多轮迭代对比打磨台
+film-strip-archive - 胶片式灵活个人影像归档框架
+city-bar-atlas - 城市小众去处标签筛选索引地图
+always-on-machine - 常开复古机械控制台沉浸互动舱

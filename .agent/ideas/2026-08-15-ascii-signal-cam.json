@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-15",
+  "name": "ascii-signal-cam",
+  "description": "摄像头实时转ASCII字符画生成器",
+  "tagline": "ASCII Your Face",
+  "interaction": "打开摄像头，你的影像即刻被解码为流动的字符矩阵。实时调节字符密度、对比度与字符集，让画面在清晰与 glitch 之间自由切换。一键截取当前帧，将最爱的“字符自己”导出保存。",
+  "directory": "seeds/ascii-signal-cam/",
+  "status": "incubated"
+}

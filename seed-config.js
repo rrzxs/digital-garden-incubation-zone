@@ -1500,6 +1500,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'ASCII Signal Cam 字符信号摄像机',
+      description: '沉浸式 ASCII 字符信号摄像机。合成信号场（等离子/隧道/干涉/噪点）或实时摄像头画面转译为字符矩阵，信号透镜、脉冲冲击波、故障撕裂与 .txt 快照导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/ascii-signal-cam/index.html',
+      tags: ['Interactive', 'ASCII', 'Signal', 'Micro-interaction'],
+      icon: '⌗',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
