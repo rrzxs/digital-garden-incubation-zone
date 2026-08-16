@@ -1510,6 +1510,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Archive Drawer 记忆档案抽屉',
+      description: '沉浸式记忆档案抽屉柜。磁吸拉手、非线性开合冲击波、微晶玻璃态档案卡级联入场、3D 倾斜跟随与指针光泽追踪、全文检索过滤、随机调档与详情透视层，流体渐变背景 + 微晶玻璃容器，3种氛围配色',
+      path: '/seed/seeds/archive-drawer/index.html',
+      tags: ['Interactive', 'Archive', 'Micro-interaction', 'Glassmorphism'],
+      icon: '▤',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

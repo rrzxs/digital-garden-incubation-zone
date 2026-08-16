@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-16",
+  "name": "archive-drawer",
+  "description": "分组重排的创作者作品数字档案柜",
+  "tagline": "Works, grouped.",
+  "interaction": "创作者的全部作品以抽屉形式陈列于一座数字档案柜中，拖拽抽屉即可重排顺序，将相邻抽屉叠合归入自定义分组。点击分组标签可整组收起或展开，拉开抽屉时作品以卡片流滑出，构成一座随手势流动、不断重组的个人档案馆。",
+  "directory": "seeds/archive-drawer/",
+  "status": "incubated"
+}
