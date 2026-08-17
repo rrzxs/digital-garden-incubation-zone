@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-17",
+  "name": "surface-geo-painter",
+  "description": "表面拾取的程序化三维几何画笔",
+  "tagline": "Draw solid light",
+  "interaction": "将光标滑过任意三维表面，画笔会沿表面法线方向“生长”出程序化生成的几何结构——尖刺、鳞片、晶簇或藤蔓。笔刷的速度与停顿实时改变生成物的密度、尺度与扭曲形态，让每次涂抹都成为独一无二的即兴雕塑。松开手指，作品留在表面，成为场景本身的肌理。",
+  "directory": "seeds/surface-geo-painter/",
+  "status": "incubated"
+}

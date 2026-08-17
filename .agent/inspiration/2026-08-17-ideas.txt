@@ -1,0 +1,8 @@
+shape-physics-lab - 物理驱动的有机形态捏挤画板
+today-spend-lens - 输入收支即刻算出今日安全花费
+surface-geo-painter - 表面拾取的程序化三维几何画笔
+noise-cluster-orb - 噪声驱动可交互的粒子星团实验室
+ink-hover-forge - 墨迹晕染悬停动效生成器
+scroll-glass-stage - 滚动同步的玻璃质感着色器舞台
+revenue-stream-weave - 多渠道收入流可视化编织面板
+film-archive-loom - 胶片主导的弹性数字档案陈列

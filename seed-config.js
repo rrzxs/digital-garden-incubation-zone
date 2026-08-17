@@ -1520,6 +1520,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Surface Geo Painter 曲面几何画师',
+      description: '沉浸式 3D 曲面雕塑绘画工作室。在可旋转的微晶曲面上以 6 种雕塑画笔（隆起/雕刻/平滑/涟漪/晶峰/抚平）实时塑形，弹簧-阻尼物理、径向对称、轨道视角、程序化地形与 PNG 导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/surface-geo-painter/index.html',
+      tags: ['Interactive', '3D', 'Sculpting', 'Micro-interaction'],
+      icon: '◭',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
