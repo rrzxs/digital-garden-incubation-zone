@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-18",
+  "name": "morph-ink-cursor",
+  "description": "墨迹晕染指针悬停效果生成器",
+  "tagline": "Ink follows you",
+  "interaction": "指针化作一滴活墨，悬停于任意元素时墨迹自然晕开，边缘呈现宣纸吸墨般的有机浸润效果。移开指针后墨晕如水分蒸发般缓缓消散，留下短暂的水痕残影。开发者可调节墨浓度、扩散半径与晕染速度，生成独一无二的墨韵指针。",
+  "directory": "seeds/morph-ink-cursor/",
+  "status": "incubated"
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morph Ink Cursor · 墨变光标</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="ink">
+  <!-- 流体渐变背景 -->
+  <div class="bg-mesh" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+    <span class="blob blob-d"></span>
+  </div>
+
+  <!-- 墨迹画布 -->
+  <canvas id="ink-canvas" aria-label="墨迹交互画布"></canvas>
+
+  <!-- 品牌层 -->
+  <header class="brand">
+    <span class="brand-glyph">墨</span>
+    <div class="brand-text">
+      <h1>Morph Ink Cursor</h1>
+      <p>墨变光标 · 高阶微交互体验场</p>
+    </div>
+  </header>
+
+  <!-- 微晶玻璃态控制面板 -->
+  <aside class="panel glass" id="panel">
+    <div class="panel-head">
+      <span class="dot"></span>
+      <span class="panel-title">INK CONSOLE</span>
+      <button class="panel-toggle" id="panel-toggle" title="收起 / 展开">—</button>
+    </div>
+
+    <section class="ctrl-group">
+      <label class="ctrl-label">墨迹模式</label>
+      <div class="seg" id="mode-seg">
+        <button class="seg-btn active" data-mode="trail">拖尾</button>
+        <button class="seg-btn" data-mode="burst">迸溅</button>
+        <button class="seg-btn" data-mode="orbit">环绕</button>
+      </div>
+    </section>
+
+    <section class="ctrl-group">
+      <label class="ctrl-label">粘滞强度 <em id="val-viscosity">0.86</em></label>
+      <input type="range" id="viscosity" min="0.5" max="0.97" step="0.01" value="0.86">
+    </section>
+
+    <section class="ctrl-group">
+      <label class="ctrl-label">墨滴密度 <em id="val-density">14</em></label>
+      <input type="range" id="density" min="4" max="30" step="1" value="14">
+    </section>
+
+    <section class="ctrl-group">
+      <label class="ctrl-label">扩散半径 <em id="val-spread">46</em></label>
+      <input type="range" id="spread" min="20" max="90" step="1" value="46">
+    </section>
+
+    <section class="ctrl-group">
+      <label class="ctrl-label">氛围配色</label>
+      <div class="theme-row" id="theme-row">
+        <button class="theme-chip active" data-theme="ink" title="墨玄">墨玄</button>
+        <button class="theme-chip" data-theme="ember" title="烬火">烬火</button>
+        <button class="theme-chip" data-theme="jade" title="青瓷">青瓷</button>
+        <button class="theme-chip" data-theme="orchid" title="幽兰">幽兰</button>
+      </div>
+    </section>
+
+    <section class="ctrl-group readout">
+      <div class="readout-row"><span>CURSOR</span><b id="ro-pos">0, 0</b></div>
+      <div class="readout-row"><span>VELOCITY</span><b id="ro-vel">0.00</b></div>
+      <div class="readout-row"><span>DROPLETS</span><b id="ro-drops">0</b></div>
+    </section>
+
+    <footer class="panel-foot">
+      <button class="btn ghost" id="btn-clear">清空画布</button>
+      <button class="btn solid" id="btn-pulse">墨脉冲</button>
+    </footer>
+  </aside>
+
+  <p class="hint">移动光标 · 观察墨迹随速度延展形变 — 点击迸发墨滴</p>
+
+  <script src="main.js"></script>
+</body>
+</html>

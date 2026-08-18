@@ -1530,6 +1530,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Morph Ink Cursor 墨变光标',
+      description: '沉浸式墨变光标微交互体验场。弹簧-阻尼驱动的活体墨滴光标沿运动方向延展形变，3种墨迹模式（拖尾/迸溅/环绕）、墨脉冲冲击波、metaball 柔光渲染，流体渐变背景 + 微晶玻璃态控制面板，4种氛围配色',
+      path: '/seed/seeds/morph-ink-cursor/index.html',
+      tags: ['Interactive', 'Ink', 'Cursor', 'Micro-interaction'],
+      icon: '墨',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
