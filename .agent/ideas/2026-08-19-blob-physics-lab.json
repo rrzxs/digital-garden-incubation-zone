@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-19",
+  "name": "blob-physics-lab",
+  "description": "挤压碰撞有机形状的物理绘图工具",
+  "tagline": "Squish physics into art.",
+  "interaction": "用户用鼠标拖拽、绘制软绵绵的有机 blob 形状，每个 blob 都具有真实的软体物理属性，会挤压、弹跳、融合彼此。形状之间碰撞时会产生果冻般的形变与回弹，用户还能调节软硬度、重力等参数，像在玩一座数字黏土实验室。",
+  "directory": "seeds/blob-physics-lab/",
+  "status": "incubated"
+}

@@ -1540,6 +1540,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Blob Physics Lab 液滴物理实验室',
+      description: '沉浸式软体液滴物理实验室。压力软体模型（质点环 + 弹簧 + 内压 + Verlet 积分）驱动的液滴可点击孕育、按住揉捏拖拽、双击炸裂，3种物理模式 × 实时参数调节 × 4种氛围配色，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/blob-physics-lab/index.html',
+      tags: ['Interactive', 'Physics', 'Soft Body', 'Micro-interaction'],
+      icon: '◍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

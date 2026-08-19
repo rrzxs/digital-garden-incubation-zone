@@ -1,0 +1,6 @@
+blob-physics-lab - 挤压碰撞有机形状的物理绘图工具
+geometry-painter - 实时调节参数的程序化几何画布
+cluster-sculptor - 把多面体雕成可交互3D星团
+timeline-hero-kit - 用时间轴编排轮播证言动效
+grid-story-resume - 把三栏网格变成叙事式简历
+revenue-fusion-board - 多源收入数据聚合可视化看板
