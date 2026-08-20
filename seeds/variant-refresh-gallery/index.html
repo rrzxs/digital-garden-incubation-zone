@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variant Refresh Gallery 变体刷新画廊</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- 流体渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain"></div>
+    </div>
+
+    <!-- 光标辉光 -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <main class="app-shell">
+        <!-- === 顶部面板 === -->
+        <header class="panel-header glass-surface">
+            <div class="brand-group">
+                <h1 class="brand-title">Variant<span class="brand-dot">·</span>Refresh</h1>
+                <p class="brand-subtitle">变体刷新画廊 — 每一次刷新都是一场非线性重生</p>
+            </div>
+            <div class="header-actions">
+                <div class="theme-switcher" id="theme-switcher" role="group" aria-label="氛围配色">
+                    <button class="theme-btn active" data-theme="aurora" aria-label="极光"></button>
+                    <button class="theme-btn" data-theme="dusk" aria-label="暮色"></button>
+                    <button class="theme-btn" data-theme="abyss" aria-label="深渊"></button>
+                    <button class="theme-btn" data-theme="mint" aria-label="薄荷"></button>
+                </div>
+                <button class="action-btn shuffle-btn" id="shuffle-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/>
+                        <polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/>
+                        <line x1="4" y1="4" x2="9" y2="9"/>
+                    </svg>
+                    <span>重组</span>
+                </button>
+                <button class="action-btn refresh-btn" id="refresh-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="refresh-icon">
+                        <path d="M21 12a9 9 0 1 1-2.64-6.36L21 8"/>
+                        <polyline points="21 3 21 8 16 8"/>
+                    </svg>
+                    <span>刷新变体</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- === 遥测条 === -->
+        <div class="telemetry glass-surface" id="telemetry">
+            <span class="tele-item"><span class="tele-key">GEN</span><span class="tele-val" id="tele-gen">#001</span></span>
+            <span class="tele-sep"></span>
+            <span class="tele-item"><span class="tele-key">VARIANTS</span><span class="tele-val" id="tele-count">8</span></span>
+            <span class="tele-sep"></span>
+            <span class="tele-item"><span class="tele-key">PALETTE</span><span class="tele-val" id="tele-palette">AURORA</span></span>
+            <span class="tele-sep"></span>
+            <span class="tele-item"><span class="tele-key">EASE</span><span class="tele-val">cubic-bezier(0.16, 1, 0.3, 1)</span></span>
+        </div>
+
+        <!-- === 变体画廊 === -->
+        <section class="gallery-stage" id="gallery-stage">
+            <div class="gallery-grid" id="gallery-grid"></div>
+            <div class="refresh-ripple" id="refresh-ripple" aria-hidden="true"></div>
+        </section>
+
+        <!-- === 底部提示 === -->
+        <footer class="panel-footer">
+            <p class="footer-hint">点击「刷新变体」生成全新画廊 · 「重组」以 FLIP 物理重排 · 悬停卡片感受倾斜光泽</p>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

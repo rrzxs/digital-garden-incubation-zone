@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-20",
+  "name": "variant-refresh-gallery",
+  "description": "每次刷新随机换装的展示页引擎",
+  "tagline": "Fresh Look, Every Refresh",
+  "interaction": "每次页面刷新，引擎从主题、配色、排版与动效组合中随机抽取一套“装扮”，让展示页永不重样。用户可锁定心仪变体、分享带种子的链接，或一键重掷换取全新风格。",
+  "directory": "seeds/variant-refresh-gallery/",
+  "status": "incubated"
+}

@@ -1550,6 +1550,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Variant Refresh Gallery 变体刷新画廊',
+      description: '沉浸式变体刷新画廊。点击刷新生成全新渐变色板变体卡片，非线性级联入场/退场、乱码揭示标题、FLIP 物理重组、3D 倾斜光泽与惯性光标辉光，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/variant-refresh-gallery/index.html',
+      tags: ['Interactive', 'Gallery', 'Micro-interaction', 'Animation'],
+      icon: '⟳',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

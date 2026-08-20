@@ -1,0 +1,8 @@
+scroll-cinema - 长滚动驱动的分镜式叙事生成器
+shader-glass-portfolio - 毛玻璃着色器滚动同步作品页
+depth-relight-studio - 深度图照片打光重渲编辑器
+icosahedron-cluster-lab - 二十面体噪声生长3D粒子实验场
+testimonial-hero-forge - 时间轴动画证言头图搭建器
+variant-refresh-gallery - 每次刷新随机换装的展示页引擎
+grid-story-cv - 三栏网格叙事式简历生成器
+copy-collage-studio - 拼贴风文案金句海报合成器

@@ -140,3 +140,4 @@ archive-drawer
 surface-geo-painter
 morph-ink-cursor
 blob-physics-lab
+variant-refresh-gallery
