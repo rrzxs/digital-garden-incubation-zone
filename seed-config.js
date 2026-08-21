@@ -1560,6 +1560,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Copy Collage Crafter 文案拼贴工坊',
+      description: '沉浸式文案拼贴海报工坊。撕碎句子为碎片，弹簧-阻尼物理拖拽、惯性抛飞回弹、乱码揭示入场、幽灵描边模式与 Canvas 海报导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/copy-collage-crafter/index.html',
+      tags: ['Interactive', 'Collage', 'Physics', 'Micro-interaction'],
+      icon: '✂',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

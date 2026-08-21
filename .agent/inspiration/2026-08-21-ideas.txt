@@ -1,0 +1,6 @@
+motion-quote-hero - GSAP时间线证言轮播搭建器
+depth-relight-lab - 深度图图像重打光实验台
+audio-goo-playground - 音乐反应式3D粘液变形可视化
+scroll-stage-sync - 滚动驱动DOM与WebGL联动舞台
+single-axis-story - 单轴滚动版式叙事排版器
+copy-collage-crafter - 拼贴风文案一页式生成器

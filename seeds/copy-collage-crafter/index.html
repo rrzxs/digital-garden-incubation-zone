@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Collage Crafter · 文案拼贴工坊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=Outfit:wght@300;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- 流体渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+  </div>
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+
+  <main class="app-shell">
+
+    <!-- 顶栏 -->
+    <header class="glass topbar">
+      <div class="brand">
+        <span class="brand-glyph">✂</span>
+        <div class="brand-text">
+          <h1>Copy Collage Crafter</h1>
+          <p>文案拼贴工坊 — 撕碎句子，重组诗意</p>
+        </div>
+      </div>
+      <nav class="theme-switcher" aria-label="氛围配色">
+        <button class="theme-dot" data-set-theme="aurora" title="极光"></button>
+        <button class="theme-dot" data-set-theme="sunset" title="暮霞"></button>
+        <button class="theme-dot" data-set-theme="ocean" title="深海"></button>
+        <button class="theme-dot" data-set-theme="mono" title="墨色"></button>
+      </nav>
+    </header>
+
+    <section class="layout">
+
+      <!-- 左侧：控制面板 -->
+      <aside class="glass panel">
+        <h2 class="panel-title"><span>01</span> 投喂文案</h2>
+        <textarea id="copy-input" rows="5" placeholder="粘贴一句文案，或点击下方灵感样本……">把星星揉碎 撒进夜风里 让梦替我发光</textarea>
+
+        <div class="sample-row">
+          <button class="chip sample-btn" data-sample="把星星揉碎 撒进夜风里 让梦替我发光">✦ 星夜</button>
+          <button class="chip sample-btn" data-sample="代码即诗学 缺陷即勋章 深夜即 deadlines">⌘ 程序</button>
+          <button class="chip sample-btn" data-sample="慢一点 再慢一点 生活是一杯冷萃">❋ 生活</button>
+        </div>
+
+        <h2 class="panel-title"><span>02</span> 撕裂重组</h2>
+        <div class="action-row">
+          <button id="tear-btn" class="btn btn-primary">✂ 撕碎成拼贴</button>
+          <button id="shuffle-btn" class="btn">⟲ 打乱布局</button>
+        </div>
+
+        <h2 class="panel-title"><span>03</span> 调节张力</h2>
+        <label class="slider-label">字号基准 <output id="scale-out">52</output><small>px</small></label>
+        <input type="range" id="scale-range" min="28" max="96" value="52">
+        <label class="slider-label">旋转狂野度 <output id="tilt-out">14</output><small>°</small></label>
+        <input type="range" id="tilt-range" min="0" max="40" value="14">
+        <label class="toggle-row">
+          <input type="checkbox" id="outline-toggle">
+          <span class="toggle-track"></span>
+          描边幽灵字模式
+        </label>
+
+        <div class="action-row">
+          <button id="export-btn" class="btn btn-primary">⤓ 导出 PNG</button>
+          <button id="clear-btn" class="btn btn-ghost">✕ 清空画布</button>
+        </div>
+
+        <p class="hint-line">拖拽碎片可自由摆放 · 松手会有弹簧回弹 · 双击碎片随机换装</p>
+      </aside>
+
+      <!-- 右侧：拼贴舞台 -->
+      <section class="glass stage-wrap">
+        <div class="stage-meta">
+          <span id="fragment-count">0</span> 片碎片在册
+          <em>· COLLAGE POSTER ·</em>
+        </div>
+        <div id="stage" class="stage"></div>
+        <div class="stage-empty" id="stage-empty">
+          <p>舞台空空如也</p>
+          <p class="sub">点击「撕碎成拼贴」，让文字碎裂成诗</p>
+        </div>
+      </section>
+
+    </section>
+
+    <footer class="foot-line">
+      <span maintainer>crafted by EDEN</span> · 数字花园种子区 · zero-build vanilla trio
+    </footer>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="main.js"></script>
+</body>
+</html>

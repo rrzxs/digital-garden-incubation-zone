@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-21",
+  "name": "copy-collage-crafter",
+  "description": "拼贴风文案一页式生成器",
+  "tagline": "Cut, paste, publish — copy as collage art.",
+  "interaction": "用户从碎片库中拖拽标题、卖点、CTA 短语到画布上，像做剪贴 Zine 一样自由旋转、撕边、叠加排版。系统实时提供文案灵感推荐与随机重组按钮，一键生成风格统一的拼贴风一页式文案，支持直接导出分享。",
+  "directory": "seeds/copy-collage-crafter/",
+  "status": "incubated"
+}
