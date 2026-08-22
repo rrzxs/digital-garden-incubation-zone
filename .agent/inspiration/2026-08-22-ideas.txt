@@ -1,0 +1,8 @@
+voice-tone-scribe - 语音转文字并按场景切换语气风格
+depth-relight - 深度图驱动的照片重打光实验台
+audio-goo-lab - 音乐实时驱动的黏液形态可视化
+copy-teardown - 拆解爆款文案并生成句式模板
+pattern-identity - 几何色块拼贴生成个人视觉标识
+scroll-shader-stage - 滚动同步的玻璃质感着色器剧场
+proof-counter-hero - 生成带数字滚动的证言动效组件
+structure-blueprint - 终端风页面信息架构规划器

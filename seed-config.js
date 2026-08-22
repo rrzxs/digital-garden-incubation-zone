@@ -1570,6 +1570,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Proof Counter Hero 证明计数英雄',
+      description: '沉浸式英雄计数器体验。里程仪式翻牌计数、里程碑冲击波礼花、击键节奏遥测与狂热脉冲连击，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/proof-counter-hero/index.html',
+      tags: ['Interactive', 'Counter', 'Animation', 'Micro-interaction'],
+      icon: 'Σ',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

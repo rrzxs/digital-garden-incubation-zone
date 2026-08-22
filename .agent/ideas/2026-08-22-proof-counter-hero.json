@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-22",
+  "name": "proof-counter-hero",
+  "description": "生成带数字滚动的证言动效组件",
+  "tagline": ""Trust, Counted in Motion"",
+  "interaction": "页面滚动至视口时，证言卡片中的关键数字（用户数、好评率、交付量）从零开始以缓动曲线滚动递增，配合细微的数字翻牌模糊效果强化动态感。数字落定的瞬间，对应证言文字与头像淡入浮现，形成“数据见证—真实声音”的叙事节奏。悬停任意数字可回放计数动画并高亮其来源证言。",
+  "directory": "seeds/proof-counter-hero/",
+  "status": "incubated"
+}

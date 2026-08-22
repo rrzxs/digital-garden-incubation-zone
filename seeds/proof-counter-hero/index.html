@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof Counter Hero · 证明计数英雄</title>
+    <meta name="description" content="沉浸式计数英雄体验。里程仪式翻牌计数、里程碑冲击波、粒子迸射与非线性弹簧动效，让每一次计数都成为一场仪式。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="aurora">
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="blob blob-5"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+    <!-- 顶部控制条 -->
+    <header class="topbar glass-bar">
+        <div class="brand">
+            <span class="brand-glyph">Σ</span>
+            <div class="brand-text">
+                <span class="brand-title">Proof Counter Hero</span>
+                <span class="brand-sub">证明计数英雄 · 每一次计数都是仪式</span>
+            </div>
+        </div>
+        <div class="palette-picker" role="group" aria-label="氛围配色">
+            <button class="palette-dot active" data-palette="aurora" style="--dot:#7af0c8" title="极光 Aurora"></button>
+            <button class="palette-dot" data-palette="ember"  style="--dot:#f0a07a" title="余烬 Ember"></button>
+            <button class="palette-dot" data-palette="abyss"  style="--dot:#7aa8f0" title="深渊 Abyss"></button>
+            <button class="palette-dot" data-palette="orchid" style="--dot:#b488f0" title="兰若 Orchid"></button>
+        </div>
+    </header>
+
+    <main class="app">
+        <!-- 左侧:遥测面板 -->
+        <section class="panel panel-stats glass-card" aria-label="计数遥测">
+            <div class="panel-head">
+                <span class="panel-tag">TELEMETRY</span>
+                <h2 class="panel-title">计数遥测</h2>
+            </div>
+            <div class="stat-list">
+                <div class="stat-row">
+                    <span class="stat-glyph">⌁</span>
+                    <span class="stat-name">操作总数<br><i>Operations</i></span>
+                    <span class="stat-value" id="stat-ops">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-glyph">↯</span>
+                    <span class="stat-name">击键节奏<br><i>Tempo BPM</i></span>
+                    <span class="stat-value" id="stat-tempo">—</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-glyph">◎</span>
+                    <span class="stat-name">里程碑<br><i>Milestones</i></span>
+                    <span class="stat-value" id="stat-milestones">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-glyph">∿</span>
+                    <span class="stat-name">净证明量<br><i>Net Proof</i></span>
+                    <span class="stat-value" id="stat-net">0</span>
+                </div>
+            </div>
+            <div class="tempo-meter" aria-hidden="true">
+                <div class="tempo-fill" id="tempo-fill"></div>
+            </div>
+            <p class="stat-hint">节奏条随你的击键频率呼吸——连续计数将点亮满档节奏态。</p>
+        </section>
+
+        <!-- 中央:英雄计数器 -->
+        <section class="panel panel-hero glass-card" aria-label="英雄计数器">
+            <div class="hero-stage" id="hero-stage">
+                <div class="progress-ring" aria-hidden="true">
+                    <svg viewBox="0 0 200 200" class="ring-svg">
+                        <circle class="ring-track" cx="100" cy="100" r="92"></circle>
+                        <circle class="ring-bar" id="ring-bar" cx="100" cy="100" r="92"></circle>
+                    </svg>
+                    <span class="ring-label" id="ring-label">NEXT 10</span>
+                </div>
+                <div class="odometer" id="odometer" role="status" aria-live="polite" aria-label="当前计数值">
+                    <!-- JS 注入翻牌数字列 -->
+                </div>
+                <div class="hero-caption">
+                    <span class="caption-line" id="caption-line">始于一次微小的证明</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="ctrl-btn ctrl-minus" data-delta="-1" aria-label="减少 1">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span>−1</span>
+                </button>
+                <div class="step-cluster" role="group" aria-label="步进选择">
+                    <button class="step-btn" data-step="1">1</button>
+                    <button class="step-btn active" data-step="5">5</button>
+                    <button class="step-btn" data-step="10">10</button>
+                    <button class="step-btn" data-step="25">25</button>
+                </div>
+                <button class="ctrl-btn ctrl-plus" data-delta="1" aria-label="增加">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    <span>+<b id="plus-label">5</b></span>
+                </button>
+            </div>
+
+            <div class="aux-row">
+                <button class="aux-btn" id="burst-btn">✦ 狂热脉冲 ×10</button>
+                <button class="aux-btn" id="reset-btn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                    </svg>
+                    归零
+                </button>
+            </div>
+
+            <p class="kbd-hint">
+                <kbd>Space</kbd> 计数 · <kbd>←</kbd><kbd>→</kbd> 增减 · <kbd>↑</kbd> 狂热脉冲 · <kbd>R</kbd> 归零
+            </p>
+        </section>
+
+        <!-- 右侧:里程碑编年史 -->
+        <section class="panel panel-log glass-card" aria-label="里程碑编年史">
+            <div class="panel-head">
+                <span class="panel-tag">CHRONICLE</span>
+                <h2 class="panel-title">里程碑编年史</h2>
+            </div>
+            <div class="milestone-glyph-ring" aria-hidden="true">
+                <div class="glyph-core" id="glyph-core">Σ</div>
+            </div>
+            <ul class="log-list" id="log-list">
+                <li class="log-empty" id="log-empty">尚未点亮里程碑——抵达 10 即刻铭刻第一笔。</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- 里程碑祝词浮层 -->
+    <div class="toast-layer" id="toast-layer" aria-live="polite"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
