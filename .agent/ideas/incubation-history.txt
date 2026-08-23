@@ -143,3 +143,4 @@ blob-physics-lab
 variant-refresh-gallery
 copy-collage-crafter
 proof-counter-hero
+voice-scribe

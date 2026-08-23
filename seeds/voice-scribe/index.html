@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Scribe · 声之誊写员</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230c1226'/%3E%3Crect x='26' y='12' width='12' height='28' rx='6' fill='%2310b981'/%3E%3Cpath d='M18 30a14 14 0 0 0 28 0M32 44v8' stroke='%23eafff7' stroke-width='4' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-theme="aurora">
+    <!-- === 流体渐变背景 === -->
+    <div class="ambient" aria-hidden="true">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="orb orb-c"></div>
+        <div class="grain"></div>
+    </div>
+
+    <!-- === 顶部导航 === -->
+    <header class="topbar glass">
+        <div class="brand">
+            <span class="brand-glyph">🎙</span>
+            <span class="brand-name">Voice&nbsp;Scribe</span>
+            <span class="brand-sub">声之誊写员</span>
+        </div>
+        <div class="topbar-actions">
+            <div class="stats">
+                <span class="stat"><b id="stat-notes">0</b> 篇</span>
+                <span class="stat"><b id="stat-words">0</b> 字</span>
+                <span class="stat"><b id="stat-duration">00:00</b></span>
+            </div>
+            <div class="theme-picker" id="theme-picker" title="切换氛围配色">
+                <button class="theme-dot" data-theme="aurora" aria-label="Aurora 配色"></button>
+                <button class="theme-dot" data-theme="dusk" aria-label="Dusk 配色"></button>
+                <button class="theme-dot" data-theme="mint" aria-label="Mint 配色"></button>
+                <button class="theme-dot" data-theme="noir" aria-label="Noir 配色"></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="stage">
+        <!-- === 誊写主舞台 === -->
+        <section class="scribe-panel glass reveal">
+            <div class="mic-zone">
+                <button class="mic-btn" id="mic-btn" aria-label="开始聆听">
+                    <span class="mic-pulse"></span>
+                    <span class="mic-pulse delay"></span>
+                    <span class="mic-core">🎙</span>
+                </button>
+                <div class="mic-caption">
+                    <span class="mic-state" id="mic-state">轻触唤醒誊写员</span>
+                    <span class="mic-hint" id="mic-hint">语音将被实时誊写为文字</span>
+                </div>
+            </div>
+
+            <div class="wave-wrap">
+                <canvas id="wave-canvas"></canvas>
+                <div class="wave-idle" id="wave-idle">
+                    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+                    <span class="bar"></span><span class="bar"></span>
+                </div>
+            </div>
+
+            <div class="transcript-shell">
+                <div class="transcript-meta">
+                    <span class="mono" id="session-clock">00:00.0</span>
+                    <span class="mono dim" id="session-count">0 chars</span>
+                </div>
+                <div class="transcript" id="transcript" aria-live="polite">
+                    <p class="placeholder" id="transcript-placeholder">
+                        这里将浮现你的声音——<br>每一句话，都会被温柔地誊写下来。
+                    </p>
+                </div>
+                <div class="transcript-actions">
+                    <button class="ghost-btn" id="btn-demo">演示模式</button>
+                    <button class="ghost-btn" id="btn-copy">誊写复制</button>
+                    <button class="ghost-btn" id="btn-clear">清空重誊</button>
+                    <button class="primary-btn" id="btn-save">存入声档 <span class="arrow">→</span></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 声档抽屉 === -->
+        <section class="archive">
+            <div class="archive-head">
+                <h2 class="archive-title">声档 · <span id="archive-count">0</span></h2>
+                <div class="archive-tools">
+                    <button class="ghost-btn" id="btn-export-md">导出 Markdown</button>
+                    <button class="ghost-btn danger" id="btn-clear-archive">焚毁声档</button>
+                </div>
+            </div>
+            <div class="archive-grid" id="archive-grid">
+                <div class="archive-empty glass" id="archive-empty">
+                    <span class="empty-glyph">✧</span>
+                    <p>还没有声档。完成一次誊写并存档，<br>它便会在此以微晶之姿沉眠。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- === 通知气泡 === -->
+    <div class="toast-zone" id="toast-zone"></div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-23",
+  "name": "voice-scribe",
+  "description": "浏览器语音实时转写润色工具",
+  "tagline": "Speak raw. Ship polished.",
+  "interaction": "用户对着浏览器麦克风说话，语音实时转写为文字流。AI 边说边润色——自动修正语法、补充标点、优化句式，原始转写与润色版本并排呈现，可一键切换或回滚。说完即得一份结构清晰、可直接使用的成稿。",
+  "directory": "seeds/voice-scribe/",
+  "status": "incubated"
+}

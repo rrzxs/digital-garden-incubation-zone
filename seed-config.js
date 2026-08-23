@@ -1580,6 +1580,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Voice Scribe 声之誊写员',
+      description: '沉浸式语音誊写体验。轻触麦克风，言语即刻化为文字——Web Speech API 实时转写 + 活体波形可视化 + 微晶玻璃态声档管理，演示模式回退与 Markdown 导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/voice-scribe/index.html',
+      tags: ['Interactive', 'Voice', 'Speech to Text', 'Micro-interaction'],
+      icon: '🎙',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
