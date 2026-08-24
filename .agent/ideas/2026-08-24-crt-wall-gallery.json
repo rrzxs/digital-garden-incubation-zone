@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-24",
+  "name": "crt-wall-gallery",
+  "description": "复古CRT电视墙滚动展示画廊",
+  "tagline": "Static Never Looked So Good",
+  "interaction": "一整面由数十台复古CRT电视组成的画廊墙，观众的视线（或鼠标滚轮）驱动着画面在屏幕之间流动传输——图像像信号一样从一台电视"跳"到相邻的电视上，伴随扫描线和雪花噪点。滚动越快，信号越不稳定，画面会产生扭曲、撕裂与色差故障；停留时则恢复清晰，营造出翻越整面电视墙的沉浸式浏览体验。",
+  "directory": "seeds/crt-wall-gallery/",
+  "status": "incubated"
+}

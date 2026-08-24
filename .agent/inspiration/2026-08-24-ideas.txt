@@ -1,0 +1,7 @@
+image-relight-studio - 深度图驱动的2D图片重打光工具
+audio-goo-visualizer - 音乐实时分析的3D粘液可视化
+crt-wall-gallery - 复古CRT电视墙滚动展示画廊
+agent-card-stage - 重叠卡片式AI角色编排沙盒
+geo-pattern-forge - 几何条纹图案视觉标识生成器
+testimonial-hero-lab - 时间轴动画证言轮播生成器
+split-terminal-reader - 明暗分栏终端风长文阅读器

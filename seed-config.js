@@ -1590,6 +1590,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'CRT Wall Gallery 显像管画廊',
+      description: '沉浸式 CRT 显像管墙画廊。八台老式显示器播放八个生成艺术频道（等离子/星野/隧道/利萨如/干涉纹/螺旋/透视网格/雷达），扫描线可调、电子束坍缩开关机、聚焦剧场与雪花重调谐，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/crt-wall-gallery/index.html',
+      tags: ['Interactive', 'CRT', 'Generative Art', 'Micro-interaction'],
+      icon: '▣',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
