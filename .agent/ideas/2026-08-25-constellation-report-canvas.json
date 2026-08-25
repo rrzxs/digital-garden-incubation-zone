@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-25",
+  "name": "constellation-report-canvas",
+  "description": "星座连线式数据叙事报告图表画布",
+  "tagline": "Data, mapped in starlight",
+  "interaction": "报告中的每个数据点被呈现为夜空中的星辰，用户悬停或拖拽时，星辰之间浮现发光连线，自动勾勒出数据背后的叙事脉络。点击某颗"星"即展开对应指标的细节面板，而拖动时间滑块则让整个星座随数据演变重新连线、呼吸闪烁，让阅读报告像仰望星空一样逐步揭示故事全貌。",
+  "directory": "seeds/constellation-report-canvas/",
+  "status": "incubated"
+}

@@ -1600,6 +1600,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Constellation Report Canvas 星座报告画布',
+      description: '沉浸式星座报告生成器。输入姓名与生日（或点击星座符号）即刻生成专属星图报告：星座连线逐笔绘制、六维特质雷达扫描、能量指标脉动与种子确定性随机，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/constellation-report-canvas/index.html',
+      tags: ['Interactive', 'Zodiac', 'Data Visualization', 'Micro-interaction'],
+      icon: '✦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

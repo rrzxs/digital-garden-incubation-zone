@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="nebula">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constellation Report Canvas · 星座报告画布</title>
+    <meta name="description" content="沉浸式星座报告画布。输入姓名与生日，即刻生成专属星图报告：星座连线逐笔绘制、特质雷达扫描、幸运指标脉动与流粒子星场，流体渐变背景 + 微晶玻璃态容器，4 种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === Ambient Fluid Gradient Orbs (breathing atmosphere) === -->
+    <div class="ambient-orbs" aria-hidden="true">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+    </div>
+
+    <!-- === Starfield Particle Canvas === -->
+    <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+
+    <!-- === Custom Cursor === -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+    <!-- === Back Link === -->
+    <a class="back-link" href="../../index.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === Theme Switcher === -->
+    <div class="theme-switcher" id="theme-switcher" title="切换氛围配色">
+        <button class="theme-dot" data-theme="nebula" aria-label="星云配色"></button>
+        <button class="theme-dot" data-theme="aurora" aria-label="极光配色"></button>
+        <button class="theme-dot" data-theme="ember" aria-label="余烬配色"></button>
+        <button class="theme-dot" data-theme="void" aria-label="虚空的配色"></button>
+    </div>
+
+    <!-- === Main Stage === -->
+    <main class="stage">
+
+        <!-- === View: Summon (input) === -->
+        <section class="view view-summon is-active" id="view-summon">
+            <header class="summon-head reveal-item">
+                <p class="eyebrow">// STELLAR ARCHIVE INITIALIZED</p>
+                <h1 class="display-title">星座报告画布</h1>
+                <p class="display-sub">Constellation Report Canvas</p>
+                <p class="lede">在星海中校准你的坐标。<br>输入姓名与降生之日，观测台将为你绘制一张独一无二的星图报告。</p>
+            </header>
+
+            <div class="glass summon-panel reveal-item" style="--reveal-delay: 120ms">
+                <div class="panel-decoration" aria-hidden="true"></div>
+
+                <label class="field">
+                    <span class="field-label">OBSERVER NAME · 观测者姓名</span>
+                    <input type="text" id="input-name" class="field-input mono" placeholder="e.g. EDEN" maxlength="24" autocomplete="off">
+                </label>
+
+                <label class="field">
+                    <span class="field-label">BIRTH DATE · 降生之日</span>
+                    <input type="date" id="input-date" class="field-input mono" value="2000-06-15" min="1920-01-01" max="2025-12-31">
+                </label>
+
+                <div class="zodiac-strip" id="zodiac-strip" aria-label="十二星座速览">
+                    <!-- 12 glyph buttons injected by JS -->
+                </div>
+
+                <button class="btn-generate" id="btn-generate">
+                    <span class="btn-star" aria-hidden="true">✦</span>
+                    <span class="btn-text">开始观测 · GENERATE REPORT</span>
+                    <span class="btn-shine" aria-hidden="true"></span>
+                </button>
+
+                <p class="hint mono" id="summon-hint">TIP: 直接点击上方星座符号亦可快速观测</p>
+            </div>
+        </section>
+
+        <!-- === View: Report === -->
+        <section class="view view-report" id="view-report" aria-live="polite">
+            <div class="report-grid">
+
+                <!-- Constellation Canvas Card -->
+                <article class="glass card card-constellation reveal-item" style="--reveal-delay: 0ms">
+                    <div class="card-tag mono">STAR CHART · 星图 No.<span id="report-seed">0000</span></div>
+                    <canvas id="constellation-canvas"></canvas>
+                    <div class="constellation-meta">
+                        <h2 class="sign-glyph" id="report-glyph">♊</h2>
+                        <div class="sign-names">
+                            <h3 class="sign-name" id="report-name">Gemini</h3>
+                            <p class="sign-cname" id="report-cname">双子座</p>
+                        </div>
+                        <div class="sign-window mono" id="report-window">05.21 — 06.21</div>
+                    </div>
+                </article>
+
+                <!-- Identity Card -->
+                <article class="glass card card-identity reveal-item" style="--reveal-delay: 90ms">
+                    <div class="card-tag mono">IDENTITY · 观测档案</div>
+                    <p class="identity-line"><span class="k mono">SUBJECT</span><span id="report-observer" class="v">—</span></p>
+                    <p class="identity-line"><span class="k mono">ELEMENT</span><span id="report-element" class="v">—</span></p>
+                    <p class="identity-line"><span class="k mono">RULER</span><span id="report-ruler" class="v">—</span></p>
+                    <p class="identity-line"><span class="k mono">MODALITY</span><span id="report-modality" class="v">—</span></p>
+                    <p class="identity-line"><span class="k mono">LUCKY NO.</span><span id="report-lucky" class="v">—</span></p>
+                    <div class="lucky-color-row">
+                        <span class="k mono">AURA</span>
+                        <div class="aura-swatches" id="report-aura"></div>
+                    </div>
+                    <p class="oracle-text" id="report-oracle">“群星不预言命运，它们只是让你看见自己已的模样。”</p>
+                </article>
+
+                <!-- Trait Radar Card -->
+                <article class="glass card card-radar reveal-item" style="--reveal-delay: 180ms">
+                    <div class="card-tag mono">TRAIT SCAN · 特质雷达</div>
+                    <canvas id="radar-canvas"></canvas>
+                    <div class="radar-legend mono" id="radar-legend"></div>
+                </article>
+
+                <!-- Metrics Card -->
+                <article class="glass card card-metrics reveal-item" style="--reveal-delay: 270ms">
+                    <div class="card-tag mono">FLUX METRICS · 能量指标</div>
+                    <div class="metric-list" id="metric-list"></div>
+                </article>
+
+            </div>
+
+            <div class="report-actions reveal-item" style="--reveal-delay: 360ms">
+                <button class="btn-ghost" id="btn-back">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+                    重新输入
+                </button>
+                <button class="btn-generate btn-compact" id="btn-reroll">
+                    <span class="btn-star" aria-hidden="true">✧</span>
+                    <span class="btn-text">再观测一次 · REROLL</span>
+                    <span class="btn-shine" aria-hidden="true"></span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- === Grain Overlay === -->
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

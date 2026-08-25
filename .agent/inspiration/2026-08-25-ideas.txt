@@ -1,0 +1,6 @@
+photo-relight-studio - 拖拽光源为照片实时重新打光
+vinyl-orb-visualizer - 悬浮3D唱片音频可视化小播放器
+praise-wall-studio - 时间轴驱动的滚动动效证言墙生成器
+constellation-report-canvas - 星座连线式数据叙事报告图表画布
+crt-wall-theater - 复古CRT监控墙沉浸式影像装置
+agent-card-sandbox - 点阵画布上的智能体卡片拖拽编排台
