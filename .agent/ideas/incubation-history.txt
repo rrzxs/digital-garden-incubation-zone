@@ -146,3 +146,4 @@ proof-counter-hero
 voice-scribe
 crt-wall-gallery
 constellation-report-canvas
+constellation-report-weaver

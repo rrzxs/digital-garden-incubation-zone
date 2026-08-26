@@ -1610,6 +1610,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Constellation Report Weaver 星座报告织机',
+      description: '沉浸式星座报告织造器。以姓名与生日为经纬，确定性随机生成主星与最近邻星线，织机逐笔织出专属星座图，六维特质雷达、能量指标、乱码判词与织造档案，重织可生成无限变体，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/constellation-report-weaver/index.html',
+      tags: ['Interactive', 'Zodiac', 'Micro-interaction', 'Data Visualization'],
+      icon: '✧',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

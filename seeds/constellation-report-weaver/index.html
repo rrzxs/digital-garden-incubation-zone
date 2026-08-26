@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constellation Report Weaver · 星座报告织机</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="nebula">
+  <!-- 流体渐变背景 -->
+  <div class="fluid-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 星尘画布（全屏底层） -->
+  <canvas id="stardust"></canvas>
+
+  <main class="stage">
+    <!-- 顶部标题 -->
+    <header class="hero">
+      <p class="hero-kicker mono">// CONSTELLATION REPORT WEAVER</p>
+      <h1 class="hero-title">星座报告织机</h1>
+      <p class="hero-sub">以姓名与生日为经纬，将星线织成一份只属于你的星图报告。</p>
+    </header>
+
+    <!-- 织机主体 -->
+    <section class="loom">
+      <!-- 左侧：织机控制台 -->
+      <aside class="console glass">
+        <h2 class="panel-title">Loom Console · 织机参数</h2>
+
+        <label class="field">
+          <span class="field-label">姓名 / NAME</span>
+          <input id="input-name" type="text" maxlength="24" placeholder="你的名字…" autocomplete="off">
+        </label>
+
+        <label class="field">
+          <span class="field-label">生日 / BIRTH</span>
+          <input id="input-date" type="date">
+        </label>
+
+        <div class="field">
+          <span class="field-label">星座 / SIGN</span>
+          <div class="zodiac-grid" id="zodiac-grid"></div>
+        </div>
+
+        <button class="weave-btn" id="btn-weave">
+          <span class="btn-star">✦</span>
+          <span class="btn-text">开始织造</span>
+        </button>
+
+        <div class="console-meta mono" id="console-meta">AWAITING THREADS…</div>
+      </aside>
+
+      <!-- 右侧：织造星图 -->
+      <section class="weave-area glass">
+        <canvas id="weave-canvas"></canvas>
+        <div class="weave-hud mono" id="weave-hud">THREAD 00 / 00</div>
+        <div class="weave-empty" id="weave-empty">
+          <div class="empty-orb"></div>
+          <p>输入参数，按下「开始织造」<br>星线将在此逐笔织成你的星座。</p>
+        </div>
+      </section>
+    </section>
+
+    <!-- 报告区（织造完成后级联揭示） -->
+    <section class="report" id="report" hidden>
+      <!-- 报告头 -->
+      <div class="report-head glass reveal-item">
+        <div class="report-identity">
+          <div class="report-glyph" id="report-glyph">✦</div>
+          <div>
+            <h2 class="report-name" id="report-name">—</h2>
+            <p class="report-sign mono" id="report-sign">—</p>
+          </div>
+        </div>
+        <div class="report-date mono" id="report-date">—</div>
+      </div>
+
+      <div class="report-grid">
+        <!-- 六维特质雷达 -->
+        <div class="report-card glass reveal-item">
+          <h3 class="card-title">特质光谱 · Trait Radar</h3>
+          <svg id="radar" viewBox="0 0 300 260" class="radar"></svg>
+        </div>
+
+        <!-- 能量指标 -->
+        <div class="report-card glass reveal-item">
+          <h3 class="card-title">星能量 · Energy Metrics</h3>
+          <div class="metrics" id="metrics"></div>
+        </div>
+
+        <!-- 星语判词 -->
+        <div class="report-card glass reveal-item">
+          <h3 class="card-title">星语判词 · Verdict</h3>
+          <p class="verdict mono" id="verdict">—</p>
+          <p class="verdict-poem" id="verdict-poem">—</p>
+        </div>
+
+        <!-- 守护星与幸运参数 -->
+        <div class="report-card glass reveal-item">
+          <h3 class="card-title">织造档案 · Archive</h3>
+          <div class="archive" id="archive"></div>
+        </div>
+      </div>
+
+      <!-- 重新织造 -->
+      <div class="report-foot reveal-item">
+        <button class="reweave-btn" id="btn-reweave">
+          <span>⟳</span> 换一种织法（重织）
+        </button>
+      </div>
+    </section>
+
+    <!-- 主题切换 -->
+    <nav class="theme-dock glass" aria-label="氛围配色">
+      <button class="theme-dot" data-theme="nebula" title="星云"></button>
+      <button class="theme-dot" data-theme="aurora" title="极光"></button>
+      <button class="theme-dot" data-theme="ember" title="余烬"></button>
+      <button class="theme-dot" data-theme="abyss" title="深海"></button>
+    </nav>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

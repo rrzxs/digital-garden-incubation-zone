@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-26",
+  "name": "constellation-report-weaver",
+  "description": "星图连线式数据报告生成器",
+  "tagline": "Reports, written in stars",
+  "interaction": "数据点化作夜空中的星辰，用户像连接星座一样拖拽连线，将相关指标串联成“星座”。每完成一组连线，星图便自动生成对应的可视化图表与叙述文本。最终整份报告以一幅自定义星图的形式呈现，可导出、分享，让数据讲述属于自己的故事。",
+  "directory": "seeds/constellation-report-weaver/",
+  "status": "incubated"
+}

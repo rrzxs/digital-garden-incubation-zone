@@ -1,0 +1,6 @@
+shader-lens-playground - 鼠标跟随透镜畸变与RGB偏移实验台
+depth-relight-studio - 基于深度图的二维照片重打光工具
+audio-goo-visualizer - 音乐驱动的粘液几何变形可视化
+crt-wall-gallery - 复古CRT显示器墙影像巡游空间
+motion-timeline-composer - 滚动叙事动效时间轴编排器
+constellation-report-weaver - 星图连线式数据报告生成器
