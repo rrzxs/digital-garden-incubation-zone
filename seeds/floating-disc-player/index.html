@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Floating Disc Player · 浮碟播放器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="aurora">
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="mesh-blob blob-a"></div>
+    <div class="mesh-blob blob-b"></div>
+    <div class="mesh-blob blob-c"></div>
+    <div class="mesh-grain"></div>
+  </div>
+
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <main class="stage">
+    <!-- === 顶部标题 === -->
+    <header class="stage-header">
+      <p class="stage-eyebrow">SEED · FLOATING DISC PLAYER</p>
+      <h1 class="stage-title">浮碟播放器</h1>
+      <p class="stage-sub">拖拽碟片刮擦寻迹 · 松手弹簧归速 · 生成式环境音源</p>
+    </header>
+
+    <!-- === 浮碟区域 === -->
+    <section class="disc-zone" id="disc-zone">
+      <div class="float-halo" aria-hidden="true"></div>
+
+      <div class="disc-assembly" id="disc-assembly">
+        <div class="disc-tilt" id="disc-tilt">
+          <div class="disc" id="disc">
+            <div class="disc-face">
+              <div class="grooves" aria-hidden="true"></div>
+              <div class="sheen" aria-hidden="true"></div>
+              <div class="disc-label">
+                <span class="label-title" id="label-title">—</span>
+                <span class="label-artist" id="label-artist">—</span>
+                <div class="spindle"></div>
+              </div>
+            </div>
+          </div>
+          <div class="tonearm" id="tonearm" aria-hidden="true">
+            <div class="tonearm-base"></div>
+            <div class="tonearm-stick">
+              <div class="tonearm-head"></div>
+            </div>
+          </div>
+        </div>
+        <div class="disc-shadow" aria-hidden="true"></div>
+      </div>
+
+      <div class="readout" aria-hidden="true">
+        <span id="readout-rpm">0.0 RPM</span>
+        <span id="readout-state">IDLE</span>
+      </div>
+    </section>
+
+    <!-- === 微晶玻璃控制台 === -->
+    <section class="console">
+      <div class="now-playing">
+        <div class="np-meta">
+          <p class="np-title" id="np-title">—</p>
+          <p class="np-artist" id="np-artist">—</p>
+        </div>
+        <div class="np-time">
+          <span id="time-current">0:00</span>
+          <div class="np-bar" id="np-bar" role="progressbar" aria-label="播放进度">
+            <div class="np-bar-fill" id="np-bar-fill"></div>
+            <div class="np-bar-knob" id="np-bar-knob"></div>
+          </div>
+          <span id="time-total">0:00</span>
+        </div>
+      </div>
+
+      <div class="transport">
+        <button class="t-btn" id="btn-prev" title="上一曲" aria-label="上一曲">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 5v14L8 12l10-7z" /><path d="M6 5v14" />
+          </svg>
+        </button>
+        <button class="t-btn t-main" id="btn-play" title="播放 / 暂停" aria-label="播放或暂停">
+          <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5.5v13l11-6.5-11-6.5z" />
+          </svg>
+          <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="7" y="5" width="3.4" height="14" rx="1.2" />
+            <rect x="13.6" y="5" width="3.4" height="14" rx="1.2" />
+          </svg>
+        </button>
+        <button class="t-btn" id="btn-next" title="下一曲" aria-label="下一曲">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 5v14l10-7L6 5z" /><path d="M18 5v14" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="console-row">
+        <div class="volume">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 5L6 9H3v6h3l5 4V5z" /><path d="M15.5 8.5a5 5 0 0 1 0 7" />
+          </svg>
+          <input type="range" id="volume" min="0" max="100" value="60" aria-label="音量" />
+        </div>
+        <div class="themes" id="themes" role="radiogroup" aria-label="氛围配色">
+          <button class="th-btn" data-theme="aurora" title="极光"></button>
+          <button class="th-btn" data-theme="dusk" title="暮色"></button>
+          <button class="th-btn" data-theme="abyss" title="深渊"></button>
+          <button class="th-btn" data-theme="bloom" title="绽放"></button>
+        </div>
+      </div>
+
+      <ul class="playlist" id="playlist" aria-label="播放列表"></ul>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

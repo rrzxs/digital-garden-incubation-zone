@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-27",
+  "name": "floating-disc-player",
+  "description": "悬浮3D唱片盘，随音乐律动的播放界面",
+  "tagline": "Spin the Air, Feel the Beat",
+  "interaction": "一张3D黑胶唱片悬浮于空中缓慢自转，可拖拽旋转、切换视角。播放音乐时，唱盘随节拍起伏脉动，音波化作光环扩散，用户点击唱片即可播放/暂停，实现听觉与视觉的双重律动。",
+  "directory": "seeds/floating-disc-player/",
+  "status": "incubated"
+}

@@ -1620,6 +1620,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Floating Disc Player 浮碟播放器',
+      description: '沉浸式浮碟音乐播放器。悬浮唱片以 33⅓ RPM 旋转，拖拽刮擦寻迹、弹簧归速、Web Audio 生成式音源、唱针联动与 3D 倾斜跟随，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/floating-disc-player/index.html',
+      tags: ['Interactive', 'Audio', 'Physics', 'Micro-interaction'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
