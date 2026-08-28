@@ -1630,6 +1630,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Retro Boot Terminal 复古开机终端',
+      description: '沉浸式复古开机终端体验。BIOS 自检序列 + CRT 扫描线 + 电子束坍缩关机动画，13 条内置指令的交互 Shell、Web Audio 合成音效与 4 种磷光配色，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/retro-boot-terminal/index.html',
+      tags: ['Interactive', 'Terminal', 'Retro', 'Micro-interaction'],
+      icon: '⏻',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

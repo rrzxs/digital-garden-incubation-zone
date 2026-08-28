@@ -148,3 +148,4 @@ crt-wall-gallery
 constellation-report-canvas
 constellation-report-weaver
 floating-disc-player
+retro-boot-terminal

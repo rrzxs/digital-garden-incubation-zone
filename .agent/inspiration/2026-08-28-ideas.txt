@@ -1,0 +1,7 @@
+design-token-harvester - 从粘贴CSS提取配色字体生成设计令牌
+lens-canvas-explorer - 鼠标跟随方形透镜的图片局部放大查看器
+depth-parallax-scene - 单图深度贴图生成可打光视差场景
+audio-reactive-blob - 音乐驱动的实时粒子形变可视化
+retro-boot-terminal - 自定义复古开机引导动画的终端模拟器
+tiled-mood-canvas - 拖拽动画瓷贴拼贴情绪板生成器
+constellation-chart-weaver - 数据转星座连线图的编辑式图表工具

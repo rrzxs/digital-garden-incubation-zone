@@ -1,0 +1,724 @@
+/* ==========================================================================
+   Retro Boot Terminal · 复古开机终端
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   动效曲线: cubic-bezier(0.16, 1, 0.3, 1)
+   ========================================================================== */
+
+/* === 设计令牌 / 主题磷光配色 === */
+:root {
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+    --font-ui: 'Outfit', 'Inter', sans-serif;
+    --dur-fast: 0.25s;
+    --dur-mid: 0.45s;
+    --dur-slow: 0.9s;
+}
+
+body[data-theme="phosphor"] {
+    --phos: #34d399;
+    --phos-bright: #a7f3d0;
+    --phos-dim: #0f5c40;
+    --phos-glow: rgba(52, 211, 153, 0.55);
+    --screen-bg: rgba(4, 16, 11, 0.92);
+    --orb-a: #0d9488;
+    --orb-b: #065f46;
+    --orb-c: #10b981;
+}
+
+body[data-theme="amber"] {
+    --phos: #fbbf24;
+    --phos-bright: #fde68a;
+    --phos-dim: #7c4a03;
+    --phos-glow: rgba(251, 191, 36, 0.55);
+    --screen-bg: rgba(20, 12, 3, 0.92);
+    --orb-a: #d97706;
+    --orb-b: #92400e;
+    --orb-c: #f59e0b;
+}
+
+body[data-theme="ice"] {
+    --phos: #38bdf8;
+    --phos-bright: #bae6fd;
+    --phos-dim: #0c4a6e;
+    --phos-glow: rgba(56, 189, 248, 0.55);
+    --screen-bg: rgba(3, 12, 20, 0.92);
+    --orb-a: #0284c7;
+    --orb-b: #075985;
+    --orb-c: #22d3ee;
+}
+
+body[data-theme="magenta"] {
+    --phos: #e879f9;
+    --phos-bright: #f5d0fe;
+    --phos-dim: #701a75;
+    --phos-glow: rgba(232, 121, 249, 0.55);
+    --screen-bg: rgba(18, 5, 20, 0.92);
+    --orb-a: #a21caf;
+    --orb-b: #701a75;
+    --orb-c: #d946ef;
+}
+
+/* === 基础 === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+    font-family: var(--font-ui);
+    color: var(--phos-bright);
+    background: #050608;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: color var(--dur-mid) var(--ease-out-expo);
+}
+
+::selection { background: var(--phos); color: #04120c; }
+
+/* ==========================================================================
+   1. 流体渐变背景 (Mesh Gradient Orbs)
+   ========================================================================== */
+.ambient-stage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    filter: saturate(1.15);
+}
+
+.fluid-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    mix-blend-mode: screen;
+    will-change: transform;
+    transition: background var(--dur-slow) var(--ease-out-expo);
+}
+
+.orb-a {
+    width: 55vmax; height: 55vmax;
+    left: -18vmax; top: -22vmax;
+    background: radial-gradient(circle at 40% 40%, var(--orb-a), transparent 65%);
+    animation: drift-a 26s ease-in-out infinite alternate;
+}
+
+.orb-b {
+    width: 48vmax; height: 48vmax;
+    right: -16vmax; bottom: -20vmax;
+    background: radial-gradient(circle at 60% 60%, var(--orb-b), transparent 65%);
+    animation: drift-b 32s ease-in-out infinite alternate;
+}
+
+.orb-c {
+    width: 34vmax; height: 34vmax;
+    left: 38%; top: 45%;
+    background: radial-gradient(circle at 50% 50%, var(--orb-c), transparent 62%);
+    opacity: 0.3;
+    animation: drift-c 21s ease-in-out infinite alternate;
+}
+
+@keyframes drift-a {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to   { transform: translate3d(9vw, 7vh, 0) scale(1.18); }
+}
+
+@keyframes drift-b {
+    from { transform: translate3d(0, 0, 0) scale(1.1); }
+    to   { transform: translate3d(-8vw, -6vh, 0) scale(0.95); }
+}
+
+@keyframes drift-c {
+    from { transform: translate3d(-6vw, 4vh, 0) rotate(0deg); }
+    to   { transform: translate3d(6vw, -5vh, 0) rotate(28deg); }
+}
+
+.noise-veil {
+    position: absolute;
+    inset: -50%;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    animation: grain 0.6s steps(3) infinite;
+}
+
+@keyframes grain {
+    0%   { transform: translate(0, 0); }
+    33%  { transform: translate(-2%, 1.5%); }
+    66%  { transform: translate(1.5%, -2%); }
+    100% { transform: translate(0, 0); }
+}
+
+/* ==========================================================================
+   2. 顶部 HUD 工具条
+   ========================================================================== */
+.hud-bar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem clamp(1rem, 4vw, 2.5rem);
+    flex-wrap: wrap;
+}
+
+.hud-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.14em;
+}
+
+.hud-chip {
+    display: grid;
+    place-items: center;
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    color: var(--phos);
+    border: 1px solid color-mix(in srgb, var(--phos) 30%, transparent);
+    background: color-mix(in srgb, var(--phos) 8%, transparent);
+    box-shadow: 0 0 18px color-mix(in srgb, var(--phos) 20%, transparent);
+    animation: chip-breathe 3.4s ease-in-out infinite;
+}
+
+@keyframes chip-breathe {
+    0%, 100% { box-shadow: 0 0 12px color-mix(in srgb, var(--phos) 14%, transparent); }
+    50%      { box-shadow: 0 0 26px color-mix(in srgb, var(--phos) 34%, transparent); }
+}
+
+.hud-title { font-size: 0.82rem; color: var(--phos-bright); }
+
+.hud-sub {
+    font-size: 0.68rem;
+    color: var(--phos);
+    opacity: 0.75;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--phos) 25%, transparent);
+    border-radius: 99px;
+}
+
+.hud-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+/* --- 磷光主题切换点 --- */
+.theme-switch {
+    display: flex;
+    gap: 0.45rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.theme-dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: transform var(--dur-fast) var(--ease-spring),
+                box-shadow var(--dur-fast) var(--ease-out-expo);
+}
+
+.theme-dot[data-set-theme="phosphor"] { background: #34d399; }
+.theme-dot[data-set-theme="amber"]    { background: #fbbf24; }
+.theme-dot[data-set-theme="ice"]      { background: #38bdf8; }
+.theme-dot[data-set-theme="magenta"]  { background: #e879f9; }
+
+.theme-dot:hover { transform: scale(1.28); }
+
+body[data-theme="phosphor"] .theme-dot[data-set-theme="phosphor"],
+body[data-theme="amber"]    .theme-dot[data-set-theme="amber"],
+body[data-theme="ice"]      .theme-dot[data-set-theme="ice"],
+body[data-theme="magenta"]  .theme-dot[data-set-theme="magenta"] {
+    transform: scale(1.28);
+    box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.35);
+}
+
+/* --- HUD 按钮 --- */
+.hud-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--phos);
+    padding: 0.5rem 0.9rem;
+    border-radius: 99px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    transition: all var(--dur-mid) var(--ease-out-expo);
+}
+
+.hud-btn:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--phos) 55%, transparent);
+    box-shadow: 0 8px 24px -8px var(--phos-glow);
+    background: color-mix(in srgb, var(--phos) 10%, transparent);
+}
+
+.hud-btn:active { transform: translateY(0) scale(0.96); }
+
+.hud-btn-accent {
+    background: color-mix(in srgb, var(--phos) 16%, transparent);
+    border-color: color-mix(in srgb, var(--phos) 45%, transparent);
+}
+
+.hud-btn.is-off { opacity: 0.45; filter: saturate(0.4); }
+
+/* ==========================================================================
+   3. 微晶玻璃态终端容器
+   ========================================================================== */
+.terminal-stage {
+    position: relative;
+    z-index: 5;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    padding: 0.5rem clamp(0.8rem, 3vw, 2rem) 2.2rem;
+}
+
+.glass-crt {
+    width: min(880px, 100%);
+    border-radius: 20px;
+    background: rgba(12, 16, 22, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(22px) saturate(1.25);
+    -webkit-backdrop-filter: blur(22px) saturate(1.25);
+    box-shadow:
+        0 30px 80px -30px rgba(0, 0, 0, 0.75),
+        0 0 60px -22px var(--phos-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    transition: box-shadow var(--dur-slow) var(--ease-out-expo),
+                transform var(--dur-mid) var(--ease-out-expo);
+}
+
+.terminal-shell {
+    animation: shell-enter 1.2s var(--ease-out-expo) both;
+}
+
+@keyframes shell-enter {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.terminal-shell.is-glitching {
+    animation: glitch-shake 0.32s steps(2) 2;
+}
+
+@keyframes glitch-shake {
+    0%   { transform: translate(0); filter: none; }
+    25%  { transform: translate(-4px, 2px); filter: hue-rotate(40deg); }
+    50%  { transform: translate(3px, -2px); filter: invert(0.08); }
+    75%  { transform: translate(-2px, -1px); filter: hue-rotate(-30deg); }
+    100% { transform: translate(0); filter: none; }
+}
+
+/* --- 标题栏 --- */
+.term-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.7rem 1.1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.term-dots { display: flex; gap: 0.45rem; }
+
+.dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    transition: transform var(--dur-fast) var(--ease-spring),
+                box-shadow var(--dur-fast) var(--ease-out-expo);
+    cursor: default;
+}
+
+.dot-r { background: #ff5f57; }
+.dot-y { background: #febc2e; }
+.dot-g { background: #28c840; }
+
+.term-dots:hover .dot { transform: scale(1.25); }
+.dot-r:hover { box-shadow: 0 0 10px #ff5f57; }
+.dot-y:hover { box-shadow: 0 0 10px #febc2e; }
+.dot-g:hover { box-shadow: 0 0 10px #28c840; }
+
+.term-title {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.45);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.term-signal { display: flex; align-items: flex-end; gap: 3px; height: 14px; }
+
+.signal-bar {
+    width: 3px;
+    background: var(--phos);
+    border-radius: 2px;
+    animation: signal-eq 1.2s ease-in-out infinite;
+    box-shadow: 0 0 6px var(--phos-glow);
+}
+
+.signal-bar:nth-child(1) { height: 35%; animation-delay: 0s; }
+.signal-bar:nth-child(2) { height: 60%; animation-delay: 0.18s; }
+.signal-bar:nth-child(3) { height: 85%; animation-delay: 0.36s; }
+.signal-bar:nth-child(4) { height: 100%; animation-delay: 0.54s; }
+
+@keyframes signal-eq {
+    0%, 100% { transform: scaleY(1); }
+    50%      { transform: scaleY(0.45); }
+}
+
+/* ==========================================================================
+   4. CRT 屏幕
+   ========================================================================== */
+.crt-screen {
+    position: relative;
+    height: min(52vh, 470px);
+    min-height: 340px;
+    background: var(--screen-bg);
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    line-height: 1.65;
+    color: var(--phos);
+    text-shadow: 0 0 6px var(--phos-glow), 0 0 22px color-mix(in srgb, var(--phos) 25%, transparent);
+    overflow: hidden;
+    cursor: text;
+    transition: background var(--dur-slow) var(--ease-out-expo),
+                text-shadow var(--dur-slow) var(--ease-out-expo);
+}
+
+/* --- 扫描线（可通过 .no-crt 关闭） --- */
+.crt-scanlines {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 2px,
+        rgba(0, 0, 0, 0.22) 3px, rgba(0, 0, 0, 0.22) 4px
+    );
+    mix-blend-mode: multiply;
+}
+
+.crt-flicker {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--phos) 6%, transparent) 50%, transparent);
+    height: 42%;
+    animation: roll-bar 7.5s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes roll-bar {
+    from { transform: translateY(-120%); }
+    to   { transform: translateY(340%); }
+}
+
+.crt-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 58%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+body.no-crt .crt-scanlines,
+body.no-crt .crt-flicker { opacity: 0; }
+
+.crt-screen.is-off {
+    animation: crt-off 0.55s var(--ease-out-expo) forwards;
+}
+
+@keyframes crt-off {
+    0%   { filter: brightness(1); transform: scaleY(1); }
+    55%  { filter: brightness(4); transform: scaleY(0.06); }
+    75%  { filter: brightness(6); transform: scaleY(0.012) scaleX(1); opacity: 1; }
+    100% { opacity: 0; transform: scaleY(0.001) scaleX(0.4); }
+}
+
+/* ==========================================================================
+   5. 开机序列层
+   ========================================================================== */
+.boot-layer {
+    position: absolute;
+    inset: 0;
+    padding: 1.2rem 1.4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.boot-lines {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    mask-image: linear-gradient(to bottom, transparent, #000 18%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%);
+}
+
+.boot-line {
+    white-space: pre-wrap;
+    word-break: break-all;
+    animation: boot-line-in 0.4s var(--ease-out-expo) both;
+}
+
+@keyframes boot-line-in {
+    from { opacity: 0; transform: translateX(-8px); filter: blur(2px); }
+    to   { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+.boot-line .bl-ok    { color: var(--phos-bright); }
+.boot-line .bl-dim   { color: var(--phos-dim); }
+.boot-line .bl-hi    { color: #ffffff; text-shadow: 0 0 10px var(--phos-glow); }
+.boot-line .bl-warn  { color: #fbbf24; text-shadow: 0 0 8px rgba(251, 191, 36, 0.5); }
+
+.boot-line.is-ascii {
+    color: var(--phos-bright);
+    font-size: 0.62rem;
+    line-height: 1.15;
+    white-space: pre;
+}
+
+/* --- 开机进度条 --- */
+.boot-progress {
+    margin-top: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity var(--dur-mid) var(--ease-out-expo),
+                transform var(--dur-mid) var(--ease-out-expo);
+}
+
+.boot-progress.is-visible { opacity: 1; transform: translateY(0); }
+
+.boot-progress-track {
+    height: 10px;
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid color-mix(in srgb, var(--phos) 25%, transparent);
+    overflow: hidden;
+}
+
+.boot-progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--phos-dim), var(--phos), var(--phos-bright));
+    box-shadow: 0 0 14px var(--phos-glow);
+    transition: width 0.34s var(--ease-out-expo);
+    position: relative;
+}
+
+.boot-progress-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    animation: progress-shine 1.4s linear infinite;
+}
+
+@keyframes progress-shine {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(100%); }
+}
+
+.boot-progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--phos);
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   6. 交互 Shell 层
+   ========================================================================== */
+.shell-layer {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 1.4rem;
+}
+
+.shell-layer.is-hidden { display: none; }
+
+.shell-layer.shell-enter { animation: shell-rise 0.8s var(--ease-out-expo) both; }
+
+@keyframes shell-rise {
+    from { opacity: 0; transform: translateY(14px); filter: blur(3px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.shell-output {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.4rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--phos-dim) transparent;
+}
+
+.shell-output::-webkit-scrollbar { width: 5px; }
+.shell-output::-webkit-scrollbar-thumb { background: var(--phos-dim); border-radius: 99px; }
+
+.out-line {
+    white-space: pre-wrap;
+    word-break: break-word;
+    animation: boot-line-in 0.35s var(--ease-out-expo) both;
+}
+
+.out-line.out-cmd { color: var(--phos-bright); }
+.out-line.out-dim { color: var(--phos-dim); }
+.out-line.out-err { color: #f87171; text-shadow: 0 0 8px rgba(248, 113, 113, 0.4); }
+.out-line.out-hi  { color: #ffffff; }
+.out-line.out-ascii { color: var(--phos-bright); font-size: 0.6rem; line-height: 1.15; white-space: pre; }
+
+/* --- 输入行 --- */
+.shell-input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-top: 0.65rem;
+    border-top: 1px dashed color-mix(in srgb, var(--phos) 22%, transparent);
+    flex-wrap: nowrap;
+}
+
+.prompt-user { color: var(--phos-bright); }
+.prompt-sep  { color: var(--phos-dim); }
+.prompt-path { color: #7dd3fc; text-shadow: 0 0 6px rgba(125, 211, 252, 0.4); }
+.prompt-sigil {
+    color: var(--phos);
+    margin-right: 0.15rem;
+    animation: sigil-blink 2.2s ease-in-out infinite;
+}
+
+@keyframes sigil-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.45; }
+}
+
+.shell-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    color: #ffffff;
+    caret-color: var(--phos);
+    text-shadow: 0 0 6px var(--phos-glow);
+}
+
+.shell-input::placeholder { color: var(--phos-dim); letter-spacing: 0.05em; }
+
+.caret-block {
+    width: 0.55em;
+    height: 1.05em;
+    background: var(--phos);
+    box-shadow: 0 0 10px var(--phos-glow);
+    animation: caret-blink 1.05s steps(1) infinite;
+}
+
+.shell-input-row.is-typing .caret-block { opacity: 0; }
+.shell-input-row:not(.is-typing) .caret-block { display: block; }
+
+@keyframes caret-blink {
+    0%, 49%  { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* ==========================================================================
+   7. 底部状态条
+   ========================================================================== */
+.term-statusbar {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 0.55rem 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.status-cell { color: var(--phos); }
+.status-dim  { opacity: 0.55; }
+
+.status-pulse { display: inline-flex; align-items: center; gap: 0.45rem; margin-left: auto; }
+
+.pulse-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--phos);
+    box-shadow: 0 0 8px var(--phos-glow);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(0.6); opacity: 0.55; }
+}
+
+/* ==========================================================================
+   8. 页脚提示
+   ========================================================================== */
+.stage-hint {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.35);
+    text-align: center;
+}
+
+.stage-hint kbd {
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--phos);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+}
+
+/* === 响应式 === */
+@media (max-width: 640px) {
+    .hud-title { display: none; }
+    .hud-btn-label { display: none; }
+    .hud-btn { padding: 0.5rem 0.7rem; }
+    .crt-screen { height: 58vh; min-height: 300px; font-size: 0.76rem; }
+    .boot-line.is-ascii { font-size: 0.42rem; }
+    .term-title { display: none; }
+}

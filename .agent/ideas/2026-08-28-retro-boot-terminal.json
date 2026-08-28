@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-28",
+  "name": "retro-boot-terminal",
+  "description": "自定义复古开机引导动画的终端模拟器",
+  "tagline": "Boot Up Nostalgia.",
+  "interaction": "用户启动页面后瞬间穿越回90年代——BIOS自检、内存滚动检测、软盘寻道声依次上演。通过内置脚本编辑器，可自定义每一步引导文案、进度条速度与CRT扫描线滤镜，打造专属的复古开机仪式感。",
+  "directory": "seeds/retro-boot-terminal/",
+  "status": "incubated"
+}
