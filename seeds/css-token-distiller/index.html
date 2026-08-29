@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Token Distiller · 设计令牌蒸馏器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- ═══ 流体渐变背景 ═══ -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain" aria-hidden="true"></div>
+  </div>
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+
+  <!-- ═══ 顶栏 ═══ -->
+  <header class="topbar glass">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M12 3c-3.5 4.2-6 7.3-6 10.4a6 6 0 0 0 12 0C18 10.3 15.5 7.2 12 3z"/>
+          <path d="M9.5 13.8a2.6 2.6 0 0 0 2.5 2.7" class="drop-shine"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">Token Distiller</span>
+        <span class="brand-sub">设计令牌蒸馏器</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="stat-chip" id="chip-decls">0 declarations</div>
+      <div class="stat-chip" id="chip-tokens">0 tokens</div>
+      <div class="theme-switch" role="radiogroup" aria-label="氛围配色">
+        <button class="theme-dot" data-theme="aurora" title="Aurora 极光"></button>
+        <button class="theme-dot" data-theme="ember" title="Ember 熔金"></button>
+        <button class="theme-dot" data-theme="mint" title="Mint 薄荷"></button>
+        <button class="theme-dot" data-theme="violet" title="Violet 星紫"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <!-- ═══ 左侧：原料投入 ═══ -->
+    <section class="panel input-panel glass" data-reveal>
+      <div class="panel-head">
+        <h2 class="panel-title"><span class="panel-index">01</span>投入原料</h2>
+        <p class="panel-desc">粘贴任意 CSS，蒸馏出可复用的设计令牌系统。</p>
+      </div>
+      <div class="input-wrap">
+        <textarea id="css-input" spellcheck="false" placeholder="在此粘贴你的 CSS…"></textarea>
+        <div class="input-glow" aria-hidden="true"></div>
+      </div>
+      <div class="input-actions">
+        <button class="btn btn-ghost" id="btn-sample">载入样本</button>
+        <button class="btn btn-ghost" id="btn-clear">清空</button>
+        <button class="btn btn-primary" id="btn-distill">
+          <span class="btn-label">开始蒸馏</span>
+          <span class="btn-ripple" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="distill-progress" id="distill-progress" aria-hidden="true">
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+        <div class="progress-text mono" id="progress-text">distilling…</div>
+      </div>
+    </section>
+
+    <!-- ═══ 右侧：蒸馏产物 ═══ -->
+    <section class="output-side">
+      <div class="token-grid" id="token-grid">
+        <!-- 令牌分组卡片由 JS 注入 -->
+      </div>
+
+      <!-- ═══ 导出面板 ═══ -->
+      <div class="panel export-panel glass" id="export-panel" data-reveal hidden>
+        <div class="panel-head export-head">
+          <h2 class="panel-title"><span class="panel-index">03</span>封装出料</h2>
+          <div class="export-tabs" role="tablist">
+            <button class="export-tab is-active" data-format="css" role="tab">CSS</button>
+            <button class="export-tab" data-format="json" role="tab">JSON</button>
+            <button class="export-tab" data-format="tailwind" role="tab">Tailwind</button>
+            <span class="tab-slider" aria-hidden="true"></span>
+          </div>
+          <button class="btn btn-ghost btn-copy-output" id="btn-copy-output">复制</button>
+        </div>
+        <pre class="export-code mono"><code id="export-code"></code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footnote">
+    <span class="mono">css-token-distiller</span> · 蒸馏即设计 · Digital Garden 🌱
+  </footer>
+
+  <!-- ═══ 蒸馏粒子流画布（蒸馏时可见） ═══ -->
+  <canvas id="distill-canvas" aria-hidden="true"></canvas>
+
+  <!-- ═══ Toast ═══ -->
+  <div class="toast glass" id="toast" role="status"><span class="toast-dot"></span><span id="toast-text">copied</span></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

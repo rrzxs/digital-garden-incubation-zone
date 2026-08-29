@@ -1,0 +1,7 @@
+lens-distortion-lab - 方形透镜扭曲与RGB偏移动效实验台
+depth-relight-studio - 深度图驱动的二维图像重打光工具
+audio-goo-lab - 音乐驱动的高黏流体形变可视化
+boot-sequence-forge - 复古终端开机动画序列生成器
+css-token-distiller - 粘贴CSS即提炼设计令牌色板面板
+crt-wall-gallery - 可翻页的CRT显示器网格影像墙
+visual-pinboard - 支持年份归组的灵感图钉看板

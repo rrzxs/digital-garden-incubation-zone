@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-29",
+  "name": "css-token-distiller",
+  "description": "粘贴CSS即提炼设计令牌色板面板",
+  "tagline": "Paste CSS, harvest your design tokens.",
+  "interaction": "用户将任意 CSS 代码粘贴到编辑区，工具实时解析所有颜色、字体、间距等声明，自动提炼并归类为设计令牌。右侧面板即时生成可视化令牌色板，支持一键复制变量名或导出为 JSON/CSS custom properties。",
+  "directory": "seeds/css-token-distiller/",
+  "status": "incubated"
+}
