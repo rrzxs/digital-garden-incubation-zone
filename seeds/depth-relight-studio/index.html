@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depth Relight Studio · 深度重光照工作室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="nebula">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="fluid-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+
+  <main class="stage">
+
+    <!-- === 顶部标题 === -->
+    <header class="masthead reveal">
+      <p class="eyebrow"><span class="mono">[ DEPTH ∙ RELIGHT ]</span></p>
+      <h1 class="title">Depth Relight Studio</h1>
+      <p class="subtitle">从图像亮度中蒸馏深度，再用一束可拖拽的光重新雕刻它。<br>Drag the light. Reshape the world.</p>
+    </header>
+
+    <!-- === 主体区 === -->
+    <section class="layout">
+
+      <!-- 画布舞台 -->
+      <div class="glass viewport-card reveal" style="--d:0.08s">
+        <div class="viewport-head">
+          <span class="dot-group"><i></i><i></i><i></i></span>
+          <span class="mono label">RELIGHT_VIEWPORT</span>
+          <span class="mono hud" id="hud-fps">-- fps</span>
+        </div>
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="relight-canvas"></canvas>
+          <div class="light-orb" id="light-orb"></div>
+          <div class="drop-hint" id="drop-hint">
+            <span class="drop-icon">◈</span>
+            <span>拖入图片 · 或点击上传</span>
+          </div>
+          <div class="empty-state" id="empty-state">
+            <button class="primary-btn" id="btn-demo">
+              <span class="btn-glow"></span>
+              <span class="btn-label">唤醒示例场景</span>
+            </button>
+            <button class="ghost-btn" id="btn-upload-secondary">上传图片</button>
+          </div>
+        </div>
+        <div class="viewport-foot mono">
+          <span id="hud-dim">DIM —</span>
+          <span id="hud-light">LIGHT 0.00, 0.00</span>
+          <span id="hud-mode">MODE LAMBERT</span>
+        </div>
+      </div>
+
+      <!-- 控制面板 -->
+      <aside class="glass panel reveal" style="--d:0.16s">
+
+        <div class="panel-section">
+          <h2 class="section-title">光源</h2>
+
+          <div class="swatch-row" id="light-color-row">
+            <button class="swatch active" data-lc="#ffffff" style="--c:#ffffff" title="月光白"></button>
+            <button class="swatch" data-lc="#ffd9a0" style="--c:#ffd9a0" title="琥珀"></button>
+            <button class="swatch" data-lc="#9ecbff" style="--c:#9ecbff" title="冷蓝"></button>
+            <button class="swatch" data-lc="#ff9ecb" style="--c:#ff9ecb" title="玫瑰"></button>
+            <button class="swatch" data-lc="#b6ffcf" style="--c:#b6ffcf" title="磷光"></button>
+          </div>
+
+          <label class="slider-block">
+            <span class="slider-label">光照强度 <b class="mono" id="v-intensity">1.20</b></span>
+            <input type="range" id="s-intensity" min="0" max="3" step="0.01" value="1.2">
+          </label>
+
+          <label class="slider-block">
+            <span class="slider-label">环境光 <b class="mono" id="v-ambient">0.30</b></span>
+            <input type="range" id="s-ambient" min="0" max="1" step="0.01" value="0.3">
+          </label>
+
+          <label class="slider-block">
+            <span class="slider-label">光源深度 <b class="mono" id="v-height">0.55</b></span>
+            <input type="range" id="s-height" min="0.1" max="2" step="0.01" value="0.55">
+          </label>
+        </div>
+
+        <div class="panel-section">
+          <h2 class="section-title">深度场</h2>
+
+          <label class="slider-block">
+            <span class="slider-label">浮雕强度 <b class="mono" id="v-relief">1.00</b></span>
+            <input type="range" id="s-relief" min="0" max="4" step="0.01" value="1">
+          </label>
+
+          <label class="slider-block">
+            <span class="slider-label">高光锐度 <b class="mono" id="v-specular">0.40</b></span>
+            <input type="range" id="s-specular" min="0" max="1.5" step="0.01" value="0.4">
+          </label>
+
+          <div class="toggle-row" id="depth-view-toggle" role="button" tabindex="0">
+            <span class="toggle-track"><span class="toggle-knob"></span></span>
+            <span class="toggle-label mono">DEPTH_MAP_VIEW</span>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 class="section-title">运动</h2>
+
+          <div class="toggle-row" id="orbit-toggle" role="button" tabindex="0">
+            <span class="toggle-track"><span class="toggle-knob"></span></span>
+            <span class="toggle-label mono">AUTO_ORBIT</span>
+          </div>
+
+          <div class="btn-row">
+            <button class="ghost-btn" id="btn-upload">上传图片</button>
+            <button class="ghost-btn danger" id="btn-clear">清空画布</button>
+          </div>
+          <input type="file" id="file-input" accept="image/*" hidden>
+        </div>
+
+        <div class="panel-section">
+          <h2 class="section-title">氛围</h2>
+          <div class="theme-row">
+            <button class="theme-dot" data-theme="nebula" title="星云"></button>
+            <button class="theme-dot" data-theme="abyss" title="深海"></button>
+            <button class="theme-dot" data-theme="ember" title="余烬"></button>
+            <button class="theme-dot" data-theme="prism" title="棱镜"></button>
+          </div>
+        </div>
+
+      </aside>
+    </section>
+
+    <footer class="foot mono reveal" style="--d:0.24s">
+      DEPTH_RELIGHT_STUDIO · seeded by EDEN · luminance → depth → normal → light
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

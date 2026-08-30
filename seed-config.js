@@ -1650,6 +1650,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Depth Relight Studio 深度重光照工作室',
+      description: '沉浸式深度重光照工作室。从图像亮度蒸馏深度图并推演法线场，拖拽光源实时重雕画面——Lambert 漫反射 + Blinn-Phong 高光 + 点击涟漪脉冲扰动深度，上传任意图片即刻立体化，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/depth-relight-studio/index.html',
+      tags: ['Interactive', 'Relight', 'Depth Map', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

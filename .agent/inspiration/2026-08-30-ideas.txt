@@ -1,0 +1,7 @@
+shader-lens-lab - 鼠标跟随透镜扭曲与RGB偏移实验台
+depth-relight-studio - 用深度图为平面照片重新打光
+audio-goo-visualizer - 音乐驱动的黏液形态实时可视化
+crt-boot-playground - 复古CRT终端启动画面生成器
+design-token-extractor - 从CSS提取配色字体并导出令牌
+typographic-ruler - 编辑排版标尺与字阶系统计算器
+pixel-satire-arcade - 8-bit像素风讽刺小游戏微应用

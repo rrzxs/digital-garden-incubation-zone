@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-30",
+  "name": "depth-relight-studio",
+  "description": "用深度图为平面照片重新打光",
+  "tagline": "Light in depth",
+  "interaction": "上传任意平面照片，系统自动生成深度图，让画面中的景物拥有远近层次。拖动虚拟光源的位置、角度与颜色，照片会实时产生符合空间关系的明暗、阴影和氛围光效。一键切换日出、霓虹、烛光等预设光环境，把普通照片改造成电影感大片。",
+  "directory": "seeds/depth-relight-studio/",
+  "status": "incubated"
+}
