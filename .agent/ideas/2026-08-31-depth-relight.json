@@ -1,0 +1,9 @@
+{
+  "date": "2026-08-31",
+  "name": "depth-relight",
+  "description": "深度图照片打光实验台",
+  "tagline": "Sculpt the light",
+  "interaction": "拖动虚拟光源在照片上任意移动，基于深度图估算的三维信息实时重算明暗与阴影。用户可调节光源角度、高度、色温与强度，观察同一张照片在不同光照下呈现的戏剧化效果，并支持导出打光后的图像。",
+  "directory": "seeds/depth-relight/",
+  "status": "incubated"
+}

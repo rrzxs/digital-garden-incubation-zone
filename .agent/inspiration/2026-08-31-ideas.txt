@@ -1,0 +1,7 @@
+reading-room - 沉浸式个人书架与共读笔记空间
+report-scroller - 数据报告滚动叙事生成器
+yestalgia-archive - 怀旧物件时间轴互动档案馆
+boardwalk-wall - 视觉灵感卡片收集墙
+depth-relight - 深度图照片打光实验台
+goo-visualizer - 音乐驱动粘液形态可视化
+boot-sequence - 复古终端开机动画生成器

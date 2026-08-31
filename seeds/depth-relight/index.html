@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Depth Relight · 深度重光</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 流体渐变背景 -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="bg-blob bg-blob-a"></div>
+    <div class="bg-blob bg-blob-b"></div>
+    <div class="bg-blob bg-blob-c"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <!-- 顶部导航 -->
+  <header class="topbar glass">
+    <div class="topbar-left">
+      <span class="logo-glyph">◈</span>
+      <div class="logo-text">
+        <h1>Depth Relight</h1>
+        <span class="logo-sub">深度重光 · Relighting the Depth Field</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="hud-chip mono" id="hud-fps">FPS --</span>
+      <span class="hud-chip mono" id="hud-light">L --/--</span>
+      <a class="back-link" href="/seed/index.html">← 花园</a>
+    </div>
+  </header>
+
+  <main class="stage-wrap">
+    <!-- 画布区 -->
+    <section class="canvas-shell glass reveal">
+      <canvas id="scene"></canvas>
+      <div class="canvas-vignette"></div>
+      <div class="mode-dock glass" id="mode-dock">
+        <button class="dock-btn active" data-mode="diffuse" title="Lambert 漫反射">漫反射</button>
+        <button class="dock-btn" data-mode="specular" title="Blinn-Phong 高光">高光</button>
+        <button class="dock-btn" data-mode="rim" title="边缘轮廓光">轮廓光</button>
+        <button class="dock-btn" data-mode="xray" title="深度透视">透视</button>
+      </div>
+      <div class="hint mono">拖拽光源 · 点击释放涟漪脉冲 · 空格随机换地形</div>
+    </section>
+
+    <!-- 控制面板 -->
+    <aside class="panel glass reveal delay-100">
+      <h2 class="panel-title">光照参数 <span class="mono panel-tag">LIGHT RIG</span></h2>
+
+      <div class="ctrl-group">
+        <label class="ctrl-label"><span>光源高度</span><span class="mono" id="val-height">0.55</span></label>
+        <input type="range" id="ctl-height" class="slider" min="0.1" max="1" step="0.01" value="0.55">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label"><span>光照强度</span><span class="mono" id="val-intensity">1.20</span></label>
+        <input type="range" id="ctl-intensity" class="slider" min="0.2" max="2.5" step="0.01" value="1.2">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label"><span>环境光</span><span class="mono" id="val-ambient">0.18</span></label>
+        <input type="range" id="ctl-ambient" class="slider" min="0" max="0.6" step="0.01" value="0.18">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label"><span>地形起伏</span><span class="mono" id="val-relief">1.00</span></label>
+        <input type="range" id="ctl-relief" class="slider" min="0.2" max="2.5" step="0.01" value="1">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label"><span>流变速度</span><span class="mono" id="val-flow">0.40</span></label>
+        <input type="range" id="ctl-flow" class="slider" min="0" max="1.5" step="0.01" value="0.4">
+      </div>
+
+      <h2 class="panel-title">氛围配色 <span class="mono panel-tag">PALETTE</span></h2>
+      <div class="palette-row" id="palette-row">
+        <button class="palette-btn active" data-palette="aurora" title="极光"><span class="swatch" style="--sw:#7cf7c4"></span>极光</button>
+        <button class="palette-btn" data-palette="ember" title="熔金"><span class="swatch" style="--sw:#ffb45e"></span>熔金</button>
+        <button class="palette-btn" data-palette="abyss" title="深海"><span class="swatch" style="--sw:#5e9bff"></span>深海</button>
+        <button class="palette-btn" data-palette="orchid" title="幻夜"><span class="swatch" style="--sw:#c792ff"></span>幻夜</button>
+      </div>
+
+      <div class="telemetry">
+        <h2 class="panel-title">场域遥测 <span class="mono panel-tag">TELEMETRY</span></h2>
+        <div class="tele-grid mono">
+          <span>DEPTH.SEED</span><span id="tele-seed">----</span>
+          <span>PULSES</span><span id="tele-pulse">0</span>
+          <span>LIGHT.VEL</span><span id="tele-vel">0.00</span>
+          <span>FIELD.CELLS</span><span id="tele-cells">----</span>
+        </div>
+      </div>
+
+      <p class="footnote">噪声高度场 → 法线推演 → 实时重光。每一次拖拽，都是对深度的重新雕刻。</p>
+    </aside>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

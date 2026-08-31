@@ -1660,6 +1660,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Depth Relight 深度重光',
+      description: '沉浸式程序化深度场重光体验场。Simplex 噪声高度场实时推演法线，拖拽弹簧光源重雕光影——漫反射/高光/轮廓光/透视四种着色模式，点击涟漪脉冲扰动深度，光锥尘埃微粒盘旋，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/depth-relight/index.html',
+      tags: ['Interactive', 'Relight', 'Depth Field', 'Micro-interaction'],
+      icon: '◐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
