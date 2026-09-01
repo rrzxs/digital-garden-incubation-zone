@@ -1,0 +1,6 @@
+lens-magnifier - 鼠标跟随方形透镜，图片局部扭曲与RGB偏移查看器
+audio-goo-lab - 麦克风或音频驱动的黏液形变实时可视化实验室
+brand-sheet-builder - 在线生成可编辑的动态品牌规范页，含色彩字体与动效
+reading-orbit - 书单轨道式阅读进度管理器，沉浸式滚动展示收藏
+idea-boardwalk - 灵感卡片墙，拖拽聚合图片链接与碎片笔记
+poster-brutalist - 新粗野主义风海报排版生成器，超大字与荧光撞色

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Idea Boardwalk 创意栈道</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dusk">
+
+  <!-- 流体渐变背景层 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <!-- 光标跟随光晕 -->
+  <div class="cursor-halo" id="cursor-halo" aria-hidden="true"></div>
+
+  <!-- 顶栏 -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <div class="brand-text">
+        <h1 class="brand-title" id="brand-title" data-text="IDEA BOARDWALK">IDEA BOARDWALK</h1>
+        <p class="brand-sub">创意栈道 · 漫步拾光</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="palette-switch" id="palette-switch" role="group" aria-label="氛围配色">
+        <button class="palette-btn active" data-theme="dusk" title="暮色">☄</button>
+        <button class="palette-btn" data-theme="aurora" title="极光">✦</button>
+        <button class="palette-btn" data-theme="dawn" title="晨曦">☀</button>
+        <button class="palette-btn" data-theme="midnight" title="子夜">☾</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 步道舞台 -->
+  <main class="stage" id="stage">
+    <!-- 视差层：远海 -->
+    <div class="layer layer-sea" id="layer-sea" aria-hidden="true">
+      <div class="sea-glimmer"></div>
+      <div class="moon"></div>
+    </div>
+
+    <!-- 视差层：步道木板 -->
+    <div class="layer layer-planks" id="layer-planks" aria-hidden="true">
+      <div class="plank-strip"></div>
+      <div class="rail" style="--rail-x: 8;"></div>
+      <div class="rail" style="--rail-x: 92;"></div>
+    </div>
+
+    <!-- 灯卡轨道 -->
+    <div class="track" id="track"></div>
+
+    <!-- 视差层：前景芦苇 -->
+    <div class="layer layer-reeds" id="layer-reeds" aria-hidden="true">
+      <span class="reed" style="--rx: 4;"></span>
+      <span class="reed" style="--rx: 12;"></span>
+      <span class="reed" style="--rx: 30;"></span>
+      <span class="reed" style="--rx: 52;"></span>
+      <span class="reed" style="--rx: 70;"></span>
+      <span class="reed" style="--rx: 88;"></span>
+      <span class="reed" style="--rx: 96;"></span>
+    </div>
+
+    <!-- 空态提示 -->
+    <div class="empty-hint glass" id="empty-hint" hidden>
+      <span class="hint-icon">🏮</span>
+      <p>栈道还很安静，点亮第一盏想法吧</p>
+    </div>
+
+    <!-- 涟漪容器 -->
+    <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+  </main>
+
+  <!-- 底部 HUD 与输入坞 -->
+  <footer class="dock">
+    <div class="hud glass mono" id="hud">
+      <span id="hud-count">0 IDEAS</span>
+      <span class="hud-sep">/</span>
+      <span id="hud-dist">0 m</span>
+      <span class="hud-sep">/</span>
+      <span id="hud-hint">拖拽漫步 · 滚轮滑行 · 点击空处起涟漪</span>
+    </div>
+    <form class="composer glass" id="composer" autocomplete="off">
+      <input type="text" id="idea-input" maxlength="80" placeholder="写下一个一闪而过的念头…" aria-label="新想法">
+      <button type="submit" class="compose-btn" id="compose-btn">
+        <span class="btn-label">点亮</span>
+        <span class="btn-orb"></span>
+      </button>
+    </form>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

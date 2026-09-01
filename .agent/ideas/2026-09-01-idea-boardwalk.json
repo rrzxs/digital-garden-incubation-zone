@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-01",
+  "name": "idea-boardwalk",
+  "description": "灵感卡片墙，拖拽聚合图片链接与碎片笔记",
+  "tagline": "Stroll Your Ideas Into Place",
+  "interaction": "Users drag image links and sticky notes onto an infinite boardwalk-style wall, where cards organically cluster by theme. Scattered fragments snap together with magnetic pull when related, gradually forming constellation-like idea maps.",
+  "directory": "seeds/idea-boardwalk/",
+  "status": "incubated"
+}

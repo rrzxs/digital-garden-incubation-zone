@@ -1670,6 +1670,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Idea Boardwalk 创意栈道',
+      description: '沉浸式创意栈道漫步体验。黄昏海滨栈道上每个念头都是一盏悬浮灯卡——弹簧-阻尼漫步物理、四层视差纵深、涟漪冲击波推挤、乱码揭示点亮仪式与光标柔光晕，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/idea-boardwalk/index.html',
+      tags: ['Interactive', 'Physics', 'Micro-interaction', 'Glassmorphism'],
+      icon: '🏮',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
