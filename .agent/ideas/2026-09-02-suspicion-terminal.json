@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-02",
+  "name": "suspicion-terminal",
+  "description": "上传照片即生成机密档案风讽刺分析报告的终端",
+  "tagline": "Trust No One.",
+  "interaction": "用户将照片拖入复古CRT终端，屏幕上滚动打印出盖着"TOP SECRET"红章的机密档案，以冷战审讯口吻对照片中的人物、物体进行一本正经的荒谬分析。进度条、打字机音效与频闪的"DECRYPTING..."提示营造出秘密档案解密的紧张氛围，最终输出一份可下载归档的完整讽刺报告。",
+  "directory": "seeds/suspicion-terminal/",
+  "status": "incubated"
+}

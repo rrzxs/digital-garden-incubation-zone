@@ -1680,6 +1680,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Suspicion Terminal 猜疑终端',
+      description: '沉浸式黑色侦探诘问终端。审讯三名嫌疑人、出示证物戳破谎言、嫌疑光谱供述破裂与公信力指控系统，CRT 扫描线 + 开机 BIOS 序列 + 粒子流场，流体渐变背景 + 微晶玻璃态容器，4种磷光配色',
+      path: '/seed/seeds/suspicion-terminal/index.html',
+      tags: ['Interactive', 'Terminal', 'Detective', 'Micro-interaction'],
+      icon: '⌗',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
     }
   ]);
 

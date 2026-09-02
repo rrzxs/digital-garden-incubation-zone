@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="amber">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suspicion Terminal · 猜疑终端</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 流体渐变背景层 -->
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+  <div class="bg-blob bg-blob-3"></div>
+  <canvas id="particles"></canvas>
+  <div class="bg-grain"></div>
+
+  <main class="app">
+    <!-- === 顶栏 === -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-glyph">⌗</span>
+        <div class="brand-text">
+          <h1>SUSPICION<span class="brand-dot">·</span>TERMINAL</h1>
+          <p>猜疑终端 — EDEN-7 原型机失窃案 · 诘问模拟器</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="trust-chip" id="trust-chip" title="公信力：错误指控会消耗它">
+          <span class="trust-label">TRUST</span>
+          <div class="trust-bar"><div class="trust-fill" id="trust-fill"></div></div>
+          <span class="trust-value" id="trust-value">100</span>
+        </div>
+        <div class="theme-switch" id="theme-switch" title="切换磷光配色">
+          <button class="theme-btn active" data-theme="amber">琥珀</button>
+          <button class="theme-btn" data-theme="phosphor">磷绿</button>
+          <button class="theme-btn" data-theme="cyan">冷青</button>
+          <button class="theme-btn" data-theme="magenta">品红</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- === 主体布局 === -->
+    <section class="layout">
+      <!-- 终端 -->
+      <section class="terminal glass" id="terminal">
+        <div class="terminal-titlebar">
+          <span class="tb-dots"><i></i><i></i><i></i></span>
+          <span class="tb-title">interrogation@x-13 — zsh</span>
+          <span class="tb-status" id="tb-status">ONLINE</span>
+        </div>
+        <div class="terminal-scanlines"></div>
+        <div class="terminal-output" id="output" aria-live="polite"></div>
+        <form class="terminal-input-line" id="input-form" autocomplete="off">
+          <label class="prompt" for="cli"><span class="prompt-user">detective</span>@suspicion<span class="prompt-caret">:~$</span></label>
+          <input id="cli" type="text" spellcheck="false" placeholder="输入 help 查看指令…" />
+          <button type="submit" class="send-btn" aria-label="发送">↵</button>
+        </form>
+      </section>
+
+      <!-- 侧栏 -->
+      <aside class="side">
+        <div class="panel glass panel-suspects">
+          <h2 class="panel-title"><span class="panel-glyph">◉</span> 嫌疑光谱</h2>
+          <div class="suspect-list" id="suspect-list"></div>
+        </div>
+        <div class="panel glass panel-evidence">
+          <h2 class="panel-title"><span class="panel-glyph">▤</span> 证物档案</h2>
+          <div class="evidence-list" id="evidence-list"></div>
+          <p class="panel-hint">在终端输入 <code>press 嫌疑人 证物ID</code> 出示证物</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- === 开机序列 === -->
+  <div class="boot-overlay" id="boot-overlay">
+    <div class="boot-inner">
+      <pre class="boot-log" id="boot-log"></pre>
+    </div>
+  </div>
+
+  <!-- === 判决层 === -->
+  <div class="verdict-overlay" id="verdict-overlay" hidden>
+    <div class="verdict-card glass" id="verdict-card">
+      <div class="verdict-glyph" id="verdict-glyph">◉</div>
+      <h2 class="verdict-title" id="verdict-title"></h2>
+      <p class="verdict-body" id="verdict-body"></p>
+      <button class="verdict-btn" id="verdict-btn">重新立案 · REBOOT</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

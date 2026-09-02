@@ -153,3 +153,4 @@ css-token-distiller
 depth-relight-studio
 depth-relight
 idea-boardwalk
+suspicion-terminal
