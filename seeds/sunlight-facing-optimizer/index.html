@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunlight Facing Optimizer · 采光朝向优化器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dawn">
+
+  <!-- 流体渐变背景 -->
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <main class="stage">
+
+    <!-- 顶部导航 -->
+    <header class="topbar reveal" style="--d:0">
+      <div class="brand">
+        <span class="brand-glyph">☀</span>
+        <div class="brand-text">
+          <h1>Sunlight Facing Optimizer</h1>
+          <p>采光朝向优化器 · 把太阳装进你的窗</p>
+        </div>
+      </div>
+      <nav class="theme-picker" aria-label="氛围配色">
+        <button class="theme-dot" data-theme="dawn"  title="黎明 Dawn"></button>
+        <button class="theme-dot" data-theme="noon"  title="正午 Noon"></button>
+        <button class="theme-dot" data-theme="dusk"  title="黄昏 Dusk"></button>
+        <button class="theme-dot" data-theme="night" title="子夜 Night"></button>
+      </nav>
+    </header>
+
+    <!-- 主体：左画布 + 右控制 -->
+    <section class="layout">
+
+      <!-- 太阳轨迹画布 -->
+      <article class="glass sun-card reveal" style="--d:1">
+        <div class="card-head">
+          <h2>太阳轨迹 · Sun Path</h2>
+          <span class="mono" id="hud-date">—</span>
+        </div>
+        <div class="canvas-wrap">
+          <canvas id="sunCanvas"></canvas>
+          <div class="sun-readout mono">
+            <span>ALT <b id="hud-alt">--°</b></span>
+            <span>AZ <b id="hud-az">--°</b></span>
+          </div>
+        </div>
+        <div class="scrub-row">
+          <span class="scrub-label mono">TIME</span>
+          <input type="range" id="timeScrub" min="0" max="1439" value="600" step="1">
+          <span class="mono scrub-value" id="hud-time">10:00</span>
+          <button class="btn-play" id="playBtn" title="播放一天">▶</button>
+        </div>
+        <div class="scrub-row">
+          <span class="scrub-label mono">DATE</span>
+          <input type="range" id="dateScrub" min="0" max="364" value="172" step="1">
+          <span class="mono scrub-value" id="hud-day">Jun 21</span>
+        </div>
+      </article>
+
+      <!-- 控制面板 -->
+      <article class="glass panel reveal" style="--d:2">
+        <div class="card-head">
+          <h2>朝向配置 · Orientation</h2>
+          <span class="mono" id="hud-orient">180° S</span>
+        </div>
+
+        <div class="dial-zone">
+          <div class="dial" id="dial" tabindex="0" aria-label="拖拽旋转以设定窗户朝向">
+            <div class="dial-face">
+              <span class="dial-tick n">N</span>
+              <span class="dial-tick e">E</span>
+              <span class="dial-tick s">S</span>
+              <span class="dial-tick w">W</span>
+              <div class="dial-needle" id="dialNeedle">
+                <span class="needle-window"></span>
+              </div>
+              <div class="dial-core mono" id="dialDeg">180</div>
+            </div>
+            <p class="dial-hint">拖拽指针 · 设定窗户朝向</p>
+          </div>
+
+          <div class="panel-controls">
+            <label class="field">
+              <span class="field-name">城市纬度 City</span>
+              <select id="citySelect" class="mono">
+                <option value="39.9">北京 39.9°N</option>
+                <option value="31.2">上海 31.2°N</option>
+                <option value="22.5">深圳 22.5°N</option>
+                <option value="35.7">东京 35.7°N</option>
+                <option value="51.5">伦敦 51.5°N</option>
+                <option value="40.7">纽约 40.7°N</option>
+                <option value="-33.9">悉尼 33.9°S</option>
+                <option value="59.3">斯德哥尔摩 59.3°N</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-name">窗宽比 Window</span>
+              <input type="range" id="winScrub" min="10" max="100" value="60">
+              <span class="mono scrub-value" id="hud-win">60%</span>
+            </label>
+            <button class="btn-optimize" id="optimizeBtn">
+              <span class="btn-shine"></span>
+              ✦ 计算最优朝向
+            </button>
+          </div>
+        </div>
+
+        <!-- 评分环 -->
+        <div class="score-zone">
+          <div class="score-ring" id="scoreRing">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-track" cx="60" cy="60" r="52"/>
+              <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="52"/>
+            </svg>
+            <div class="score-num">
+              <b id="scoreVal">0</b><i>/100</i>
+            </div>
+          </div>
+          <div class="score-meta">
+            <h3 id="scoreLabel">—</h3>
+            <p id="scoreDesc">转动指针或播放一天，观察采光变化。</p>
+            <div class="score-stats mono">
+              <span>直照 <b id="statHours">--</b> h/日</span>
+              <span>峰值 <b id="statPeak">--</b> W/㎡</span>
+              <span>最优 <b id="statBest">--</b></span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- 24 小时曝光条 -->
+    <section class="glass bars-card reveal" style="--d:3">
+      <div class="card-head">
+        <h2>逐时日照 · Hourly Exposure</h2>
+        <span class="mono legend"><i class="lg lg-hit"></i>直射 <i class="lg lg-soft"></i>漫射 <i class="lg"></i>夜</span>
+      </div>
+      <div class="bars" id="bars"></div>
+    </section>
+
+    <footer class="foot mono reveal" style="--d:4">
+      maintained by EDEN · zero-build vanilla seed · solar geometry: Cooper declination model
+    </footer>
+  </main>
+
+  <div class="toast mono" id="toast"></div>
+  <script src="main.js"></script>
+</body>
+</html>

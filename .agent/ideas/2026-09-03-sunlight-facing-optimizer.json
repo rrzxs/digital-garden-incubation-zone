@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-03",
+  "name": "sunlight-facing-optimizer",
+  "description": "户型朝向日照模拟选房器",
+  "tagline": "Chase the Light",
+  "interaction": "用户上传或选择户型图后，拖动罗盘旋转房屋朝向，太阳轨迹会实时投射动态光影。时间轴滑块可模拟一天及四季的日照变化，直观展示每个房间获得的光照时长与阴影覆盖，辅助用户对比选出采光最优的房源。",
+  "directory": "seeds/sunlight-facing-optimizer/",
+  "status": "incubated"
+}

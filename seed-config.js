@@ -1690,6 +1690,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'game'
+    },
+    {
+      title: 'Sunlight Facing Optimizer 采光朝向优化器',
+      description: '沉浸式采光朝向优化工具。选择城市纬度、拖拽罗盘设定窗户朝向，实时观察太阳轨迹弧、逐时日照强度与 0-100 采光评分，一键计算当日最优朝向，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/sunlight-facing-optimizer/index.html',
+      tags: ['Interactive', 'Solar', 'Tool', 'Micro-interaction'],
+      icon: '☀',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
