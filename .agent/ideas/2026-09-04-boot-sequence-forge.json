@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-04",
+  "name": "boot-sequence-forge",
+  "description": "定制复古终端开机动画生成器",
+  "tagline": "Forge Your Legendary Boot Sequence",
+  "interaction": "用户输入自定义启动文本、ASCII Logo 和假硬件检测信息，选择 CRT 磷光配色（琥珀绿/经典绿/冷白）与扫描线效果。点击 "Ignite" 后，终端逐行打字渲染出复古 BIOS 开机动画，伴随内存计数滚动与蜂鸣音效，最终可导出为视频或 shell 脚本一键回放。",
+  "directory": "seeds/boot-sequence-forge/",
+  "status": "incubated"
+}

@@ -1,0 +1,8 @@
+brandpulse-live - 可编辑的品牌规范实时预览生成器
+deckcraft-motion - 动效优先的交互式演示文稿编辑器
+collage-room-3d - 客厅场景内的拖拽拼贴创作工坊
+datamosh-lab - 上传图片即玩的实时故障艺术实验台
+verdict-terminal - 仿监控终端的戏谑分析报告生成器
+refraction-play - 玻璃折射与焦散光的着色器玩具
+boot-sequence-forge - 定制复古终端开机动画生成器
+shelf-quest - 沉浸式3D书架阅读进度可视化

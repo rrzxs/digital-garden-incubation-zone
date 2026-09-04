@@ -1700,6 +1700,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Boot Sequence Forge 开机序列锻造炉',
+      description: '沉浸式开机序列锻造场。自定义开机步骤、状态徽章与打字节奏，实时锻造 BIOS POST / dmesg / 机魂 / 星舰启动序列，CRT 电子束开机动画、拖拽重排、Web Audio 蜂鸣、故障闪烁与配置导出，流体渐变背景 + 微晶玻璃态容器，4种磷光配色',
+      path: '/seed/seeds/boot-sequence-forge/index.html',
+      tags: ['Interactive', 'Terminal', 'Boot Sequence', 'Micro-interaction'],
+      icon: '⏻',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

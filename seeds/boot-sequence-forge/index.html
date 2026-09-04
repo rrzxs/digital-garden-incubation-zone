@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boot Sequence Forge · 开机序列锻造炉</title>
+    <meta name="description" content="沉浸式开机序列锻造场。自定义开机步骤、状态徽章与打字节奏，实时锻造 BIOS POST / dmesg / 机魂启动序列，CRT 电子束开机动画、Web Audio 蜂鸣、故障闪烁与配置导出，4 种磷光配色。">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23050b07'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' fill='%2334d399' text-anchor='middle'%3E%E2%8F%BB%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="phosphor">
+
+    <!-- === 流体渐变背景 === -->
+    <div class="ambient-stage" aria-hidden="true">
+        <div class="fluid-orb orb-a"></div>
+        <div class="fluid-orb orb-b"></div>
+        <div class="fluid-orb orb-c"></div>
+        <div class="noise-veil"></div>
+    </div>
+
+    <!-- === 顶部工具条 === -->
+    <header class="hud-bar">
+        <div class="hud-brand">
+            <span class="hud-chip">⏻</span>
+            <span class="hud-title">BOOT·SEQUENCE·FORGE</span>
+            <span class="hud-sub">EDEN FORGE v1.0</span>
+        </div>
+        <div class="hud-actions">
+            <div class="theme-switch" role="group" aria-label="磷光配色">
+                <button class="theme-dot" data-set-theme="phosphor" title="Phosphor 磷光绿"></button>
+                <button class="theme-dot" data-set-theme="amber" title="Amber 琥珀"></button>
+                <button class="theme-dot" data-set-theme="ice" title="Ice 冰蓝"></button>
+                <button class="theme-dot" data-set-theme="magenta" title="Magenta 品红"></button>
+            </div>
+            <label class="speed-control" title="打字速度">
+                <span class="speed-glyph">⏩</span>
+                <input type="range" id="speed-range" min="0.4" max="3" step="0.1" value="1">
+                <span class="speed-value" id="speed-value">1.0×</span>
+            </label>
+            <button class="hud-btn" id="btn-sfx" title="切换音效">
+                <span class="hud-btn-glyph">♪</span><span class="hud-btn-label" id="sfx-label">SFX ON</span>
+            </button>
+            <button class="hud-btn hud-btn-accent" id="btn-forge" title="锻造开机序列 (Ctrl+Enter)">
+                <span class="hud-btn-glyph">⟳</span><span class="hud-btn-label">FORGE</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- === 主体：锻造布局 === -->
+    <main class="forge-layout">
+
+        <!-- === 左侧：序列编辑器（微晶玻璃态） === -->
+        <aside class="panel editor-panel glass">
+            <div class="panel-head">
+                <h2 class="panel-title">序列图纸</h2>
+                <span class="panel-badge" id="step-count-badge">0 STEPS</span>
+            </div>
+
+            <div class="preset-row" role="group" aria-label="预设序列">
+                <button class="preset-chip" data-preset="bios">BIOS POST</button>
+                <button class="preset-chip" data-preset="dmesg">DMESG</button>
+                <button class="preset-chip" data-preset="cyber">CYBERDECK</button>
+                <button class="preset-chip" data-preset="navi">SPACECRAFT</button>
+            </div>
+
+            <ul class="step-list" id="step-list"></ul>
+
+            <button class="add-step-btn" id="btn-add-step">
+                <span class="add-glyph">＋</span> 添加启动步骤
+            </button>
+
+            <div class="editor-footer">
+                <div class="time-estimate">
+                    <span class="estimate-label">预计时长</span>
+                    <span class="estimate-value" id="time-estimate">0.0s</span>
+                </div>
+                <button class="export-btn" id="btn-export" title="复制序列配置 JSON">
+                    <span class="export-glyph">⎘</span> 导出配置
+                </button>
+            </div>
+        </aside>
+
+        <!-- === 右侧：CRT 锻造舞台（微晶玻璃态） === -->
+        <section class="stage-panel">
+            <div class="crt-shell glass">
+                <div class="term-titlebar">
+                    <div class="term-dots">
+                        <span class="dot dot-r"></span>
+                        <span class="dot dot-y"></span>
+                        <span class="dot dot-g"></span>
+                    </div>
+                    <div class="term-title" id="term-title">forge@garden: ~/boot — tty1 9600 baud</div>
+                    <div class="term-led" id="term-led" title="运行状态"></div>
+                </div>
+
+                <div class="crt-screen" id="crt-screen">
+                    <div class="crt-flicker" aria-hidden="true"></div>
+                    <div class="crt-scanlines" aria-hidden="true"></div>
+                    <div class="crt-vignette" aria-hidden="true"></div>
+                    <div class="crt-flash" id="crt-flash" aria-hidden="true"></div>
+
+                    <div class="boot-layer" id="boot-layer">
+                        <div class="boot-banner" id="boot-banner"></div>
+                        <div class="boot-lines" id="boot-lines"></div>
+                        <div class="boot-progress" id="boot-progress">
+                            <div class="boot-progress-track">
+                                <div class="boot-progress-fill" id="boot-progress-fill"></div>
+                            </div>
+                            <div class="boot-progress-meta">
+                                <span id="progress-label">STANDBY</span>
+                                <span id="progress-percent">0%</span>
+                            </div>
+                        </div>
+                        <div class="boot-hint" id="boot-hint">按 FORGE 或 Ctrl+Enter 点火锻造</div>
+                    </div>
+                </div>
+
+                <div class="term-statusbar">
+                    <span class="status-cell" id="status-state">STATE: IDLE</span>
+                    <span class="status-cell" id="status-uptime">UPTIME: 00.00s</span>
+                    <span class="status-cell status-right" id="status-meta">THEME: PHOSPHOR</span>
+                </div>
+            </div>
+
+            <p class="stage-caption">拖动左侧步骤可重新排序 · 点亮 READY 后按 ENTER 完成点火</p>
+        </section>
+    </main>
+
+    <!-- === 轻提示 === -->
+    <div class="toast" id="toast" role="status"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>
