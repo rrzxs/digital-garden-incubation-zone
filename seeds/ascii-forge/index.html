@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASCII Forge · 字符锻造炉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body data-theme="ember">
+  <!-- 流体渐变背景 -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <!-- 光标辉光 -->
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <div class="page">
+    <!-- === 顶栏 === -->
+    <header class="topbar glass">
+      <div class="brand">
+        <span class="brand-mark">⌗</span>
+        <div class="brand-text">
+          <h1>ASCII <em>Forge</em></h1>
+          <p>字符锻造炉 · 把光影炼成字符矩阵</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="palette-dots" id="paletteDots" title="氛围配色"></div>
+        <button class="btn btn-ghost" id="btnRandom" title="随机锻造一次">⟳ 随机锻造</button>
+      </div>
+    </header>
+
+    <!-- === 主体 === -->
+    <main class="layout">
+      <!-- 锻造台（预览） -->
+      <section class="forge-stage glass">
+        <div class="stage-meta">
+          <span class="meta-chip"><i class="dot"></i><span id="metaSource">ORB-01</span></span>
+          <span class="meta-chip mono" id="metaGrid">— × —</span>
+          <span class="meta-chip mono" id="metaChars">— chars</span>
+        </div>
+        <div class="canvas-wrap" id="canvasWrap">
+          <canvas id="asciiCanvas"></canvas>
+          <div class="stage-hint" id="stageHint">
+            <span>拖入图片 · 粘贴 · 或从右侧选择坯料</span>
+          </div>
+          <div class="scanline" aria-hidden="true"></div>
+        </div>
+        <div class="stage-actions">
+          <button class="btn btn-solid" id="btnCopy">⧉ 复制字符</button>
+          <button class="btn btn-ghost" id="btnTxt">↓ 导出 .txt</button>
+          <button class="btn btn-ghost" id="btnPng">↓ 导出 .png</button>
+        </div>
+      </section>
+
+      <!-- 控制面板 -->
+      <aside class="controls glass">
+        <h2 class="panel-title">坯料 · <span>Stock</span></h2>
+        <div class="stock-grid" id="stockGrid"></div>
+        <label class="upload-zone" for="fileInput">
+          <input type="file" id="fileInput" accept="image/*" hidden />
+          <span class="upload-icon">⇪</span>
+          <span class="upload-text">拖入 / 点击上传图片</span>
+          <span class="upload-sub mono">PNG · JPG · WEBP · SVG</span>
+        </label>
+
+        <h2 class="panel-title">字符集 · <span>Charset</span></h2>
+        <div class="charset-list" id="charsetList"></div>
+        <label class="field">
+          <span class="field-label">自定义字符梯度</span>
+          <input type="text" id="customCharset" class="input mono" placeholder=" .:-=+*#%" spellcheck="false" />
+        </label>
+
+        <h2 class="panel-title">锻打 · <span>Hammering</span></h2>
+        <label class="field">
+          <span class="field-label">分辨率 <b class="mono" id="valRes">110</b></span>
+          <input type="range" id="rangeRes" min="40" max="220" value="110" />
+        </label>
+        <label class="field">
+          <span class="field-label">对比度 <b class="mono" id="valContrast">1.0</b></span>
+          <input type="range" id="rangeContrast" min="0.4" max="2.4" step="0.05" value="1" />
+        </label>
+        <label class="field">
+          <span class="field-label">亮度 <b class="mono" id="valBright">0.0</b></span>
+          <input type="range" id="rangeBright" min="-0.5" max="0.5" step="0.02" value="0" />
+        </label>
+        <label class="field">
+          <span class="field-label">辉光热度 <b class="mono" id="valGlow">0.8</b></span>
+          <input type="range" id="rangeGlow" min="0" max="2" step="0.05" value="0.8" />
+        </label>
+
+        <div class="toggle-row">
+          <button class="toggle" id="toggleInvert" aria-pressed="false"><i></i>反相</button>
+          <button class="toggle" id="toggleColor" aria-pressed="false"><i></i>原色</button>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span class="mono">// move cursor to heat · click to quench</span>
+      <span>EDEN · Digital Garden · ascii-forge</span>
+    </footer>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast mono" id="toast"></div>
+
+  <script src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-05",
+  "name": "ascii-forge",
+  "description": "图片转形状感知ASCII字符画生成器",
+  "tagline": "ASCII with soul",
+  "interaction": "拖入任意图片，Forge 会分析边缘与明暗，智能挑选最贴合轮廓的字符逐行"锻造"出ASCII画作。用户可实时调节分辨率、字符集密度与对比度，观看图像在字符流中逐渐成型，并一键复制或导出成品。",
+  "directory": "seeds/ascii-forge/",
+  "status": "incubated"
+}

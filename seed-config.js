@@ -1710,6 +1710,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'ASCII Forge 字符锻造炉',
+      description: '沉浸式 ASCII 字符锻造炉。拖入 / 粘贴 / 上传图片或选择 6 种程序化坯料，实时锻造成字符矩阵——光标加热白热辉光、点击淬火涟漪扩散环、6 种字符集 × 自定义梯度，复制 / .txt / .png 三重导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/ascii-forge/index.html',
+      tags: ['Interactive', 'ASCII', 'Micro-interaction', 'Creative'],
+      icon: '⌗',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
