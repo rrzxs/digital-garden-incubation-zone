@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Link Rolodex · 链接旋转夹</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="aurora">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 顶部导航 === -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-glyph">◎</span>
+      <div class="brand-text">
+        <h1>Link Rolodex</h1>
+        <p>链接旋转夹 · digital card file</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="searchInput" type="text" placeholder="search the rolodex…" autocomplete="off" />
+        <kbd id="searchHint">/</kbd>
+      </div>
+      <div class="theme-swatches" id="themeSwatches" title="氛围配色">
+        <button class="swatch" data-theme="aurora" aria-label="aurora"></button>
+        <button class="swatch" data-theme="dusk" aria-label="dusk"></button>
+        <button class="swatch" data-theme="mint" aria-label="mint"></button>
+        <button class="swatch" data-theme="mono" aria-label="mono"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <!-- === 左侧：Rolodex 轮 === -->
+    <section class="rolodex-zone">
+      <div class="rolodex" id="rolodex">
+        <div class="spine" aria-hidden="true"></div>
+        <div class="card-orbit" id="cardOrbit"><!-- 卡片由 JS 渲染 --></div>
+        <div class="spine-cap" aria-hidden="true"></div>
+      </div>
+
+      <div class="dial-row">
+        <button class="dial-btn" id="prevBtn" title="上一张 (←)">
+          <span>‹</span><em>prev</em>
+        </button>
+        <div class="counter glass-soft">
+          <span class="mono" id="counterText">01 / 06</span>
+        </div>
+        <button class="dial-btn" id="nextBtn" title="下一张 (→)">
+          <span>›</span><em>next</em>
+        </button>
+        <button class="dial-btn" id="shuffleBtn" title="洗牌 (S)">
+          <span>⤨</span><em>shuffle</em>
+        </button>
+      </div>
+    </section>
+
+    <!-- === 右侧：管理面板 === -->
+    <aside class="panel">
+      <section class="glass panel-card">
+        <h2 class="panel-title"><span>✦</span> 新建联系人</h2>
+        <form id="linkForm" autocomplete="off">
+          <label class="field">
+            <span>名称</span>
+            <input id="fldTitle" type="text" placeholder="e.g. Are.na" maxlength="42" required />
+          </label>
+          <label class="field">
+            <span>URL</span>
+            <input id="fldUrl" type="url" placeholder="https://…" required />
+          </label>
+          <label class="field">
+            <span>标签</span>
+            <input id="fldTag" type="text" placeholder="e.g. inspiration" maxlength="18" list="tagList" />
+            <datalist id="tagList"></datalist>
+          </label>
+          <label class="field">
+            <span>备注</span>
+            <input id="fldNote" type="text" placeholder="一句话备注…" maxlength="64" />
+          </label>
+          <button type="submit" class="btn-primary" id="addBtn">
+            <span class="btn-glow" aria-hidden="true"></span>
+            收入夹中
+          </button>
+        </form>
+      </section>
+
+      <section class="glass panel-card">
+        <h2 class="panel-title"><span>◈</span> 标签过滤</h2>
+        <div class="tag-cloud" id="tagCloud"></div>
+        <div class="stats-row mono" id="statsRow"></div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- === 底部提示 === -->
+  <footer class="hint mono">
+    drag card to spin · ← → navigate · F flip · S shuffle · / search · double-click card to visit
+  </footer>
+
+  <!-- === Toast === -->
+  <div class="toast glass" id="toast" role="status"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

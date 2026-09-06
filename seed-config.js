@@ -1720,6 +1720,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Link Rolodex 链接旋转夹',
+      description: '沉浸式链接联系人旋转夹。卡片沿发光中轴弧线堆叠，拖拽甩动翻页、3D 翻转、键盘导航、标签过滤与实时搜索，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/link-rolodex/index.html',
+      tags: ['Interactive', 'Bookmark', 'Micro-interaction', 'Animation'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

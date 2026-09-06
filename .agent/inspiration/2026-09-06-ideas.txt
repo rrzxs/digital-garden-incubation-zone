@@ -1,0 +1,8 @@
+variable-font-playground - 可变字体实时调试与字形检视器
+ascii-image-forge - 将图片转为形状感知ASCII字符画
+datamosh-studio - 实时故障风格图像转场特效器
+digital-postcraft - 可拖拽复古明信片与邮票拼贴创作
+thread-loom-visual - 图像拆解成丝线流动的织机可视化
+link-rolodex - 极简个人链接收藏夹与胶囊筛选
+collage-room - 客厅场景内的3D拼贴画创作角
+slide-motion-deck - 融入音效与动效的演示卡片编排器

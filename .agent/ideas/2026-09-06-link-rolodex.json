@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-06",
+  "name": "link-rolodex",
+  "description": "极简个人链接收藏夹与胶囊筛选",
+  "tagline": "Flip. Filter. Find your web.",
+  "interaction": "收藏的链接以极简卡片形式呈现在虚拟 rolodex 转盘中，用户可上下拨动快速翻阅。点击顶部的胶囊标签（capsule chips）即时筛选分类，卡片流畅重排，让检索收藏像翻名片一样优雅直觉。",
+  "directory": "seeds/link-rolodex/",
+  "status": "incubated"
+}
