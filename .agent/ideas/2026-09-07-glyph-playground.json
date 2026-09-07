@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-07",
+  "name": "glyph-playground",
+  "description": "可变字体滑杆调试与字形检视器",
+  "tagline": "Every axis. Every glyph. Live.",
+  "interaction": "拖动滑杆实时调节可变字体的各个轴（字重、字宽、倾斜等），字形随之即时变化。点击任意字形进入检视模式，放大查看轮廓细节与坐标参数，并支持一键复制当前轴配置为 CSS 代码。",
+  "directory": "seeds/glyph-playground/",
+  "status": "incubated"
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glyph Playground · 字形游乐场</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="nebula">
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 字形画布 === -->
+  <canvas id="glyph-canvas"></canvas>
+
+  <!-- === 顶部标题 === -->
+  <header class="stage-header">
+    <div class="brand">
+      <span class="brand-glyph" id="brand-glyph">༚</span>
+      <div class="brand-text">
+        <h1 class="brand-title" data-scramble>Glyph Playground</h1>
+        <p class="brand-sub">字形游乐场 · 弹簧物理驱动的字符力场</p>
+      </div>
+    </div>
+    <div class="telemetry" id="telemetry">
+      <span class="tele-item">GLYPHS <b id="tele-count">0</b></span>
+      <span class="tele-item">MODE <b id="tele-mode">RIPPLE</b></span>
+      <span class="tele-item">FPS <b id="tele-fps">60</b></span>
+    </div>
+  </header>
+
+  <!-- === 控制面板 === -->
+  <aside class="panel" id="panel">
+    <div class="panel-header">
+      <span class="panel-title">CONTROL DECK</span>
+      <button class="panel-toggle" id="panel-toggle" title="收起 / 展开">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 3 L13 10 L3 10 Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+
+    <div class="panel-body">
+      <section class="ctrl-group">
+        <label class="ctrl-label">力场模式</label>
+        <div class="mode-grid" id="mode-grid">
+          <button class="mode-btn is-active" data-mode="ripple">涟漪</button>
+          <button class="mode-btn" data-mode="repel">磁斥</button>
+          <button class="mode-btn" data-mode="vortex">漩涡</button>
+          <button class="mode-btn" data-mode="shuffle">重排</button>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">字符集</label>
+        <div class="set-grid" id="set-grid">
+          <button class="set-btn is-active" data-set="latin">Aa</button>
+          <button class="set-btn" data-set="cjk">漢</button>
+          <button class="set-btn" data-set="symbol">⌘∴</button>
+          <button class="set-btn" data-set="digit">01</button>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">力场半径 <output id="out-radius">180</output></label>
+        <input type="range" id="rng-radius" min="80" max="360" value="180" step="4">
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">力场强度 <output id="out-force">100</output></label>
+        <input type="range" id="rng-force" min="20" max="240" value="100" step="4">
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">字形密度 <output id="out-density">64</output></label>
+        <input type="range" id="rng-density" min="28" max="110" value="64" step="2">
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">氛围配色</label>
+        <div class="theme-grid" id="theme-grid">
+          <button class="theme-btn is-active" data-theme="nebula" title="星云"><span></span></button>
+          <button class="theme-btn" data-theme="aurora" title="极光"><span></span></button>
+          <button class="theme-btn" data-theme="ember" title="余烬"><span></span></button>
+          <button class="theme-btn" data-theme="abyss" title="深渊"><span></span></button>
+        </div>
+      </section>
+
+      <button class="pulse-btn" id="btn-pulse">
+        <span class="pulse-btn-label">触发冲击波</span>
+        <span class="pulse-btn-hint">或点击画布任意位置</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- === 底部提示 === -->
+  <footer class="stage-footer">
+    <span class="hint-mono">MOVE CURSOR · DISTURB THE FIELD</span>
+    <span class="hint-dim">移动光标扰动字形力场 · 点击释放冲击波</span>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

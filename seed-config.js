@@ -1730,6 +1730,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Glyph Playground 字形游乐场',
+      description: '沉浸式字形力场游乐场。弹簧-阻尼物理驱动的满屏字符对光标产生涟漪、磁斥、漩涡、重排四种力场响应，点击冲击波、环境粒子流场与乱码揭示标题，4种字符集 × 4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/glyph-playground/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: '༚',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
