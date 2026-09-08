@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASCII Glyph Renderer · 字符渲染台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="nebula">
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 渲染画布 === -->
+  <canvas id="glyph-canvas"></canvas>
+
+  <!-- === 顶部标题 === -->
+  <header class="stage-header">
+    <div class="brand">
+      <span class="brand-glyph" id="brand-glyph">⌗</span>
+      <div class="brand-text">
+        <h1 class="brand-title" data-scramble>ASCII Glyph Renderer</h1>
+        <p class="brand-sub">字符渲染台 · 字形被拆解为字符之海</p>
+      </div>
+    </div>
+    <div class="telemetry" id="telemetry">
+      <span class="tele-item">GRID <b id="tele-grid">—</b></span>
+      <span class="tele-item">GLYPH <b id="tele-glyph">A</b></span>
+      <span class="tele-item">FPS <b id="tele-fps">60</b></span>
+    </div>
+  </header>
+
+  <!-- === 控制面板 === -->
+  <aside class="panel" id="panel">
+    <div class="panel-header">
+      <span class="panel-title">CONTROL DECK</span>
+      <button class="panel-toggle" id="panel-toggle" title="收起 / 展开">
+        <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 3 L13 10 L3 10 Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+
+    <div class="panel-body">
+      <section class="ctrl-group">
+        <label class="ctrl-label">渲染字形</label>
+        <div class="glyph-input-row">
+          <input type="text" id="glyph-input" class="glyph-input" maxlength="8" value="A" autocomplete="off" spellcheck="false">
+          <div class="preset-chips" id="preset-chips">
+            <button class="chip" data-glyph="A">A</button>
+            <button class="chip" data-glyph="漢">漢</button>
+            <button class="chip" data-glyph="∞">∞</button>
+            <button class="chip" data-glyph="GLM">GLM</button>
+            <button class="chip" data-glyph="☾">☾</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">字符梯度</label>
+        <div class="set-grid" id="set-grid">
+          <button class="set-btn is-active" data-set="standard"> .# </button>
+          <button class="set-btn" data-set="blocks">░▓</button>
+          <button class="set-btn" data-set="binary">01</button>
+          <button class="set-btn" data-set="runes">✦</button>
+        </div>
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">采样精度 <output id="out-res">96</output></label>
+        <input type="range" id="rng-res" min="48" max="160" value="96" step="4">
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">对比度 <output id="out-contrast">120</output>%</label>
+        <input type="range" id="rng-contrast" min="60" max="220" value="120" step="5">
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">交互模式</label>
+        <div class="mode-grid" id="mode-grid">
+          <button class="mode-btn is-active" data-mode="heat">白热</button>
+          <button class="mode-btn" data-mode="scramble">乱码</button>
+          <button class="mode-btn" data-mode="displace">位移</button>
+        </div>
+      </section>
+
+      <section class="ctrl-group row-toggles">
+        <label class="toggle-row">
+          <input type="checkbox" id="chk-invert" class="toggle">
+          <span>反转明度</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="chk-autopulse" class="toggle" checked>
+          <span>自动脉冲</span>
+        </label>
+      </section>
+
+      <section class="ctrl-group">
+        <label class="ctrl-label">氛围配色</label>
+        <div class="theme-grid" id="theme-grid">
+          <button class="theme-btn is-active" data-theme="nebula"><span class="dot" style="--c:#7c6cff"></span>星云</button>
+          <button class="theme-btn" data-theme="ember"><span class="dot" style="--c:#ff7a4d"></span>余烬</button>
+          <button class="theme-btn" data-theme="verdant"><span class="dot" style="--c:#4ce6a5"></span>翠林</button>
+          <button class="theme-btn" data-theme="orchid"><span class="dot" style="--c:#ff6fb5"></span>兰曦</button>
+        </div>
+      </section>
+
+      <section class="ctrl-group actions">
+        <button class="action-btn" id="btn-pulse">触发脉冲</button>
+        <button class="action-btn ghost" id="btn-copy">复制矩阵</button>
+      </section>
+    </div>
+  </aside>
+
+  <!-- === 底部提示 === -->
+  <footer class="stage-hint">
+    <span class="hint-key">输入</span> 更换字形 ·
+    <span class="hint-key">移动</span> 局部扰动 ·
+    <span class="hint-key">点击</span> 冲击波脉冲
+  </footer>
+
+  <!-- === Toast === -->
+  <div class="toast" id="toast"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

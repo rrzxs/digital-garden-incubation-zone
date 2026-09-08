@@ -159,3 +159,4 @@ boot-sequence-forge
 ascii-forge
 link-rolodex
 glyph-playground
+ascii-glyph-renderer

@@ -1,0 +1,7 @@
+variable-font-playground - 可变字体滑杆调试与字形检视器
+postcard-collage-desk - 可拖拽复古明信片邮票拼贴桌
+floating-ui-dial-panel - 实时调节动效布局配色的悬浮控制台
+ascii-glyph-renderer - 图像转 ASCII 字符画渲染工具
+thread-loom-unraveler - 图片拆解成流动丝线的编织画布
+light-tube-sketchpad - WebGPU 光管轨迹涂鸦画板
+link-rolodex-curated - 胶囊筛选的个人链接卡片收纳盒

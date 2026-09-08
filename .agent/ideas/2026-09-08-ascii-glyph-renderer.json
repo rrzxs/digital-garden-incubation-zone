@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-08",
+  "name": "ascii-glyph-renderer",
+  "description": "图像转 ASCII 字符画渲染工具",
+  "tagline": "Pixels dissolve into poetry.",
+  "interaction": "Drop any image onto the canvas and watch it dissolve in real time into a living field of ASCII glyphs, where character density and brightness map to tone. Scrub a slider to shift resolution, invert the charset, or toggle between blocks, shades, and binary — then copy the raw text art straight to your clipboard.",
+  "directory": "seeds/ascii-glyph-renderer/",
+  "status": "incubated"
+}

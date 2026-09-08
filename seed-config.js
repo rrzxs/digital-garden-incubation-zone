@@ -1740,6 +1740,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'ASCII Glyph Renderer 字符渲染台',
+      description: '沉浸式 ASCII 字形渲染器。输入任意字符或短词，字形被逐像素采样拆解为 ASCII 字符矩阵——3种交互模式（白热/乱码/位移）、冲击波脉冲、弹簧物理回弹、扫开式揭示动画与矩阵复制导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/ascii-glyph-renderer/index.html',
+      tags: ['Interactive', 'ASCII', 'Typography', 'Micro-interaction'],
+      icon: '⌗',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 
