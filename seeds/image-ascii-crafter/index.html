@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image ASCII Crafter - 影像字符雕塑台</title>
+    <meta name="description" content="将图片锻造成 ASCII 字符艺术。实时预览、多字符集、色彩模式与三重导出">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0f'/%3E%3Ctext x='32' y='44' font-family='monospace' font-size='36' fill='%237cf7d4' text-anchor='middle'%3E%40%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+    <!-- 流体渐变背景 -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="noise-overlay"></div>
+        <canvas id="bg-field"></canvas>
+    </div>
+
+    <div class="app-container">
+        <!-- 顶栏 -->
+        <header class="header glass-panel">
+            <div class="header-left">
+                <span class="logo-icon">⌗</span>
+                <div class="logo-stack">
+                    <h1 class="logo-text">IMAGE ASCII CRAFTER</h1>
+                    <span class="logo-sub">影像字符雕塑台</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="theme-switcher" id="theme-switcher" role="group" aria-label="氛围配色">
+                    <button class="theme-btn active" data-theme="aurora" title="极光">◈</button>
+                    <button class="theme-btn" data-theme="ember" title="熔金">◉</button>
+                    <button class="theme-btn" data-theme="ocean" title="深海">≈</button>
+                    <button class="theme-btn" data-theme="mono" title="墨色">◐</button>
+                </div>
+                <span class="status-indicator" id="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text" id="status-text">STANDBY</span>
+                </span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- 舞台：字符画布 -->
+            <section class="stage glass-panel" id="stage">
+                <div class="stage-header">
+                    <span class="stage-label">CHARACTER FIELD</span>
+                    <span class="stage-meta" id="stage-meta">— × —</span>
+                </div>
+                <div class="canvas-wrap" id="canvas-wrap">
+                    <div class="upload-zone" id="upload-zone">
+                        <div class="upload-icon">⬚</div>
+                        <p class="upload-title">拖入图片 · 点击上传 · 粘贴剪贴板</p>
+                        <p class="upload-hint">或从下方坯料库选取一颗程序化原料</p>
+                        <input type="file" id="file-input" accept="image/*" hidden>
+                    </div>
+                    <canvas id="ascii-canvas" hidden></canvas>
+                    <div class="scan-beam" id="scan-beam"></div>
+                </div>
+                <div class="stage-footer">
+                    <div class="quick-actions">
+                        <button class="chip-btn magnetic" id="btn-sample" data-tip="随机程序化坯料">⟳ 坯料</button>
+                        <button class="chip-btn magnetic" id="btn-invert" data-tip="反转明暗">◐ 反转</button>
+                        <button class="chip-btn magnetic" id="btn-shuffle" data-tip="随机打乱字符梯度">⤨ 洗牌</button>
+                    </div>
+                    <div class="export-actions">
+                        <button class="btn-primary magnetic" id="btn-copy">⧉ 复制文本</button>
+                        <button class="btn-primary magnetic" id="btn-txt">↓ .TXT</button>
+                        <button class="btn-primary magnetic" id="btn-png">↓ .PNG</button>
+                    </div>
+                </div>
+                <div class="toast" id="toast"></div>
+            </section>
+
+            <!-- 控制面板 -->
+            <aside class="panel glass-panel">
+                <div class="panel-section">
+                    <h2 class="panel-title">CHARACTER SET</h2>
+                    <div class="charset-grid" id="charset-grid">
+                        <button class="charset-btn active" data-charset="standard">@%#*+=-:. </button>
+                        <button class="charset-btn" data-charset="blocks">█▓▒░ </button>
+                        <button class="charset-btn" data-charset="minimal"> .:-=+*#%@</button>
+                        <button class="charset-btn" data-charset="binary">10 </button>
+                        <button class="charset-btn" data-charset="dots">·∙•○◎●◉</button>
+                        <button class="charset-btn" data-charset="custom">自定义…</button>
+                    </div>
+                    <input type="text" class="gradient-input" id="custom-charset" placeholder="自定义梯度（暗 → 亮）" maxlength="64" hidden>
+                </div>
+
+                <div class="panel-section">
+                    <h2 class="panel-title">RENDER</h2>
+                    <label class="control-row">
+                        <span class="control-name">分辨率</span>
+                        <input type="range" id="ctl-columns" min="40" max="220" value="110" step="2">
+                        <span class="control-value mono" id="val-columns">110</span>
+                    </label>
+                    <label class="control-row">
+                        <span class="control-name">对比度</span>
+                        <input type="range" id="ctl-contrast" min="50" max="250" value="100" step="5">
+                        <span class="control-value mono" id="val-contrast">1.00</span>
+                    </label>
+                    <label class="control-row">
+                        <span class="control-name">亮度</span>
+                        <input type="range" id="ctl-brightness" min="50" max="180" value="100" step="5">
+                        <span class="control-value mono" id="val-brightness">1.00</span>
+                    </label>
+                    <label class="control-row">
+                        <span class="control-name">字号</span>
+                        <input type="range" id="ctl-fontsize" min="4" max="16" value="8" step="1">
+                        <span class="control-value mono" id="val-fontsize">8px</span>
+                    </label>
+                </div>
+
+                <div class="panel-section">
+                    <h2 class="panel-title">COLOR MODE</h2>
+                    <div class="mode-grid">
+                        <button class="mode-btn active" data-mode="mono">单色</button>
+                        <button class="mode-btn" data-mode="source">原彩</button>
+                        <button class="mode-btn" data-mode="accent">氛围</button>
+                    </div>
+                    <label class="toggle-row" for="chk-glow">
+                        <span class="control-name">字符辉光</span>
+                        <span class="toggle"><input type="checkbox" id="chk-glow" checked><span class="toggle-track"></span></span>
+                    </label>
+                </div>
+
+                <div class="panel-section">
+                    <h2 class="panel-title">TELEMETRY</h2>
+                    <div class="telemetry mono" id="telemetry">
+                        <div class="tele-row"><span>GRID</span><span id="tele-grid">—</span></div>
+                        <div class="tele-row"><span>CHARS</span><span id="tele-chars">0</span></div>
+                        <div class="tele-row"><span>RENDER</span><span id="tele-render">— ms</span></div>
+                        <div class="tele-bar"><div class="tele-bar-fill" id="tele-bar"></div></div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="footer">
+            <span class="footer-text mono">IMAGE ASCII CRAFTER · maintainer: EDEN · zero-build vanilla</span>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

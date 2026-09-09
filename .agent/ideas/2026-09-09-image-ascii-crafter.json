@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-09",
+  "name": "image-ascii-crafter",
+  "description": "图片转字符画并生成形状感知ASCII艺术",
+  "tagline": "Pixels, Reborn.",
+  "interaction": "用户上传任意图片，系统实时分析边缘与明暗分布，生成保留原始形状轮廓的字符画。可通过滑块调节字符密度、对比度和字符集风格，实时预览变化。一键复制纯文本或导出为艺术作品。",
+  "directory": "seeds/image-ascii-crafter/",
+  "status": "incubated"
+}

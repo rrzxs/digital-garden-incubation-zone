@@ -1,0 +1,7 @@
+variable-font-lab - 可变字体实时调试与字形检视工作台
+dial-panel-kit - 悬浮式界面参数实时调节控制面板
+pixel-icon-forge - 8×8网格像素图标绘制与导出工具
+vintage-postcard-studio - 可拖拽老式明信片在线创作台
+image-ascii-crafter - 图片转字符画并生成形状感知ASCII艺术
+thread-loom-visual - 图像拆解成流动丝线的沉浸式编织演示
+liquid-glass-grid - 无限液态玻璃网格折射交互实验

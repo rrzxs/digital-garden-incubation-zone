@@ -1750,6 +1750,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Image ASCII Crafter 影像字符雕塑台',
+      description: '沉浸式图片 ASCII 字符雕塑台。拖入 / 粘贴 / 上传图片或锻造程序化坯料，实时转译为字符矩阵——5种字符集梯度 × 单色/原彩/氛围色彩模式 × 扫描光束仪式 × 遥测面板，复制 / .txt / .png 三重导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/image-ascii-crafter/index.html',
+      tags: ['Interactive', 'ASCII', 'Image Processing', 'Micro-interaction'],
+      icon: '⌗',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

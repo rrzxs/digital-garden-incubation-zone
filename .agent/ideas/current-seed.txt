@@ -1,1 +1,1 @@
-ascii-glyph-renderer
+image-ascii-crafter
