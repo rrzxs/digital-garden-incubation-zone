@@ -1760,6 +1760,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Glyph Forge 字符锻造炉',
+      description: '沉浸式字符锻造微交互体验。键入字符投入熔炉，弹簧-阻尼物理落锤锻造、光标热场再加热、淬火涟漪与余烬粒子，3种锤型模式 × 4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/glyph-forge/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: '⚒',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

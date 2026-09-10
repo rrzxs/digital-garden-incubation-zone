@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-10",
+  "name": "glyph-forge",
+  "description": "图片转形状感知ASCII字符画，可拖拽实时调节",
+  "tagline": "Forge Images Into Living Glyphs",
+  "interaction": "Drop in any image and watch it re-render as a shape-aware ASCII artwork, where character density follows edges and contours rather than a fixed grid. Drag sliders in real time to adjust resolution, contrast, and glyph palette — the ASCII canvas re-forges itself instantly under your cursor.",
+  "directory": "seeds/glyph-forge/",
+  "status": "incubated"
+}

@@ -1,0 +1,6 @@
+glyph-forge - 图片转形状感知ASCII字符画，可拖拽实时调节
+thread-loom - 将图片解构为流动丝带线程的织机画布
+ink-garden - 水墨风格程序化生成的冥想交互花园
+motion-dial - 实时调节动效曲线与配色的浮动控制台
+doodle-vault - 三维空间漫游手绘SVG素材库，点击即复制
+glass-grid - 液态玻璃折射与无限网格的光影实验场

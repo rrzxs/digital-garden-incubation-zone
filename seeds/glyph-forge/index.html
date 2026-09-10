@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glyph Forge 字符锻造炉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="ember">
+
+  <!-- 流体渐变背景 -->
+  <div class="forge-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="forge-vignette"></div>
+  </div>
+
+  <!-- 环境余烬粒子画布 -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <main class="stage">
+
+    <!-- 顶部标题 -->
+    <header class="stage-header">
+      <p class="stage-eyebrow mono">// FORGE · GLYPH · TEMPER</p>
+      <h1 class="stage-title" id="title-scramble" data-text="GLYPH FORGE">GLYPH FORGE</h1>
+      <p class="stage-sub">键入字符，投入熔炉。每一次落锤，都将滚烫的字形锻进铁砧。</p>
+    </header>
+
+    <!-- 主锻造区：微晶玻璃态容器 -->
+    <section class="anvil-panel glass" id="anvil-panel">
+      <canvas id="forge-canvas"></canvas>
+
+      <div class="anvil-hud mono">
+        <span class="hud-chip">TEMP <b id="hud-temp">1200</b>°C</span>
+        <span class="hud-chip">STRIKES <b id="hud-strikes">0</b></span>
+        <span class="hud-chip">GLYPHS <b id="hud-glyphs">0</b></span>
+      </div>
+
+      <div class="anvil-hint mono" id="anvil-hint">TYPE TO FORGE · CLICK TO QUENCH</div>
+    </section>
+
+    <!-- 控制台 -->
+    <section class="console glass">
+
+      <div class="console-row">
+        <label class="field-label mono">INGOT</label>
+        <div class="ingot-input-wrap">
+          <input id="ingot-input" class="ingot-input" type="text" maxlength="24"
+                 placeholder="在此键入待锻字符…" autocomplete="off" spellcheck="false">
+          <button class="btn btn-forge" id="btn-forge" title="开始锻造">
+            <span class="btn-label">锤锻</span>
+            <span class="btn-hammer">🔨</span>
+          </button>
+          <button class="btn btn-quench" id="btn-quench-all" title="全部淬火">淬火</button>
+          <button class="btn btn-reset" id="btn-reset" title="清空铁砧">清炉</button>
+        </div>
+      </div>
+
+      <div class="console-row">
+        <label class="field-label mono">HAMMER</label>
+        <div class="seg-group" id="hammer-group">
+          <button class="seg-btn active" data-hammer="stamp">压印</button>
+          <button class="seg-btn" data-hammer="shatter">迸裂</button>
+          <button class="seg-btn" data-hammer="orbit">环绕</button>
+        </div>
+
+        <label class="field-label mono">HEAT</label>
+        <input type="range" id="heat-range" class="range" min="0" max="100" value="62">
+
+        <label class="field-label mono">PALETTE</label>
+        <div class="seg-group" id="palette-group">
+          <button class="seg-btn seg-swatch active" data-palette="ember" title="余烬"><i></i></button>
+          <button class="seg-btn seg-swatch" data-palette="azure" title="寒钢"><i></i></button>
+          <button class="seg-btn seg-swatch" data-palette="verdant" title="翠焰"><i></i></button>
+          <button class="seg-btn seg-swatch" data-palette="amethyst" title="紫熔"><i></i></button>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="stage-footer mono">
+      <span>maintainer: EDEN</span>
+      <span class="footer-dot"></span>
+      <span>zero-build · vanilla js · cubic-bezier(0.16,1,0.3,1)</span>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

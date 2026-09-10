@@ -161,3 +161,4 @@ link-rolodex
 glyph-playground
 ascii-glyph-renderer
 image-ascii-crafter
+glyph-forge
