@@ -922,6 +922,16 @@
        category: 'visual'
     },
     {
+      title: 'Font Specimen Lens 字体样张透镜',
+      description: '沉浸式字体样张检视工具。弹簧物理驱动的放大透镜跟随光标检视字形，3种透镜模式（放大/度量/蓝图）、可变字重字距调节、字形度量参考线与字符乱码重构，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/font-specimen-lens/index.html',
+      tags: ['Interactive', 'Typography', 'Micro-interaction', 'Lens'],
+      icon: '⌖',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
+    },
+    {
       title: 'Font Glyph Playground 字形游乐场',
       description: '沉浸式字体字形形变实验场。实时操控字重、字宽、字距、斜度、字号五大字体坐标轴，配合 5 种动画预设（呼吸/抖动/波浪/弹跳/静止）与涂抹扰动模式，弹簧-阻尼物理驱动的字符动力学，流体渐变背景 + 微晶玻璃态容器',
       path: '/seed/seeds/font-glyph-playground/index.html',

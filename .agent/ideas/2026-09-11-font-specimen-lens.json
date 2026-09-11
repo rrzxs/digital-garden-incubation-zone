@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-11",
+  "name": "font-specimen-lens",
+  "description": "本地字体并排预览对比器",
+  "tagline": "Fonts, in focus",
+  "interaction": "Browse all locally installed fonts and preview them side by side on a single canvas with your own custom text. Sliders for size, weight, and letter-spacing update every specimen live, while a "diff lens" mode overlays two fonts to reveal subtle differences in letterforms and spacing.",
+  "directory": "seeds/font-specimen-lens/",
+  "status": "incubated"
+}

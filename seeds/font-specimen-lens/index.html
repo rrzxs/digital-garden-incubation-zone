@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Specimen Lens — 字体样张透镜</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas class="dust-canvas" id="dust-canvas" aria-hidden="true"></canvas>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Font<span class="brand-dot">·</span>Specimen<span class="brand-fade"> Lens</span></h1>
+                <p class="brand-subtitle">字体样张透镜 — 移动光标，洞穿字体的骨骼与血肉</p>
+            </div>
+            <div class="header-actions">
+                <div class="lens-mode-toggle" id="lens-mode-toggle" role="tablist" aria-label="透镜模式">
+                    <button class="mode-btn active" data-mode="magnify" role="tab" aria-selected="true">
+                        <span class="mode-glyph">◎</span>
+                        <span class="mode-name">放大</span>
+                    </button>
+                    <button class="mode-btn" data-mode="metrics" role="tab" aria-selected="false">
+                        <span class="mode-glyph">⊞</span>
+                        <span class="mode-name">度量</span>
+                    </button>
+                    <button class="mode-btn" data-mode="blueprint" role="tab" aria-selected="false">
+                        <span class="mode-glyph">⌖</span>
+                        <span class="mode-name">蓝图</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage" id="stage">
+            <div class="specimen-wrap" id="specimen-wrap">
+                <div class="specimen-text" id="specimen-text" spellcheck="false">Aa Gg Rr 字形</div>
+
+                <div class="lens" id="lens" aria-hidden="true">
+                    <div class="lens-inner" id="lens-inner">
+                        <div class="lens-text" id="lens-text">Aa Gg Rr 字形</div>
+                        <div class="metric-guides" id="metric-guides"></div>
+                    </div>
+                    <div class="lens-ring"></div>
+                    <div class="lens-crosshair"></div>
+                    <div class="lens-hud">
+                        <span class="hud-family" id="hud-family">Inter</span>
+                        <span class="hud-sep">·</span>
+                        <span class="hud-weight" id="hud-weight">480</span>
+                        <span class="hud-sep">·</span>
+                        <span class="hud-size" id="hud-size">96px</span>
+                        <span class="hud-char" id="hud-char">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-dot"></span>
+                <span class="hint-text">移动透镜检视字形 · 点击字符网格扰动 · 切换模式洞穿字体</span>
+            </div>
+
+            <div class="zoom-readout" id="zoom-readout">
+                <span class="zoom-label">ZOOM</span>
+                <span class="zoom-value" id="zoom-value">2.4×</span>
+            </div>
+        </section>
+
+        <section class="controls">
+            <div class="control-block font-block">
+                <span class="control-label">字体族 Typeface</span>
+                <div class="font-chips" id="font-chips">
+                    <button class="font-chip active" data-font="Inter" data-variable="true" style="--chip-font:'Inter'">Inter</button>
+                    <button class="font-chip" data-font="Outfit" data-variable="true" style="--chip-font:'Outfit'">Outfit</button>
+                    <button class="font-chip" data-font="'Share Tech Mono'" data-variable="false" style="--chip-font:'Share Tech Mono'">Share Tech Mono</button>
+                </div>
+            </div>
+
+            <div class="control-block slider-block" id="weight-block">
+                <div class="slider-head">
+                    <span class="control-label">字重 Weight</span>
+                    <span class="slider-value" id="weight-value">480</span>
+                </div>
+                <input type="range" id="weight-slider" class="range-input" min="100" max="900" step="10" value="480">
+            </div>
+
+            <div class="control-block slider-block">
+                <div class="slider-head">
+                    <span class="control-label">字号 Size</span>
+                    <span class="slider-value" id="size-value">96px</span>
+                </div>
+                <input type="range" id="size-slider" class="range-input" min="40" max="180" step="2" value="96">
+            </div>
+
+            <div class="control-block slider-block">
+                <div class="slider-head">
+                    <span class="control-label">字距 Tracking</span>
+                    <span class="slider-value" id="tracking-value">0em</span>
+                </div>
+                <input type="range" id="tracking-slider" class="range-input" min="-60" max="120" step="2" value="0">
+            </div>
+
+            <div class="control-block slider-block">
+                <div class="slider-head">
+                    <span class="control-label">透镜倍率 Magnification</span>
+                    <span class="slider-value" id="zoom-out-value">2.4×</span>
+                </div>
+                <input type="range" id="zoom-slider" class="range-input" min="12" max="48" step="2" value="24">
+            </div>
+
+            <div class="control-block input-block">
+                <span class="control-label">样张文本 Specimen</span>
+                <input type="text" id="text-input" class="text-input" maxlength="36" value="Aa Gg Rr 字形" placeholder="输入样张文字 / type specimen…" autocomplete="off" spellcheck="false">
+            </div>
+
+            <div class="control-block theme-block">
+                <span class="control-label">氛围 Ambience</span>
+                <div class="theme-dots" id="theme-dots">
+                    <button class="theme-dot active" data-theme="aurora" aria-label="极光"></button>
+                    <button class="theme-dot" data-theme="ember" aria-label="余烬"></button>
+                    <button class="theme-dot" data-theme="midnight" aria-label="午夜"></button>
+                    <button class="theme-dot" data-theme="bloom" aria-label="花晖"></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="waterfall" id="waterfall">
+            <!-- 字号级联行在 main.js 中动态渲染 -->
+        </section>
+
+        <section class="char-grid-section">
+            <div class="section-head">
+                <span class="section-title">字形骨骼 Glyph Skeleton</span>
+                <span class="section-note">悬停扰动 · 点击乱码重构</span>
+            </div>
+            <div class="char-grid" id="char-grid">
+                <!-- 字符单元在 main.js 中动态渲染 -->
+            </div>
+        </section>
+
+        <footer class="footnote">
+            <span>FONT SPECIMEN LENS · 数字花园种子区</span>
+            <span class="footnote-sep">—</span>
+            <span>maintained by EDEN</span>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
