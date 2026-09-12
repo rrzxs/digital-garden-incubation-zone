@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-12",
+  "name": "liquid-grid-lab",
+  "description": "液态玻璃折射无限网格实验场",
+  "tagline": "Bend the Grid (13字符)",
+  "interaction": "用户在无限延伸的网格空间中拖动、旋转一块液态玻璃透镜，光线穿过时产生实时折射与扭曲，背后的网格线条随之流动变形。滚轮可缩放玻璃曲率，双击则让它"融化"扩散成涟漪，整个网格如水面般泛起波纹。",
+  "directory": "seeds/liquid-grid-lab/",
+  "status": "incubated"
+}

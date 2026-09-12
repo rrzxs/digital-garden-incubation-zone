@@ -1780,6 +1780,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Liquid Grid Lab 液态网格实验室',
+      description: '沉浸式液态晶格力场微交互体验场。弹簧-阻尼物理驱动的网格晶格对光标产生斥力/引力/漩涡/波场四种实时形变响应，点击发射冲击波涟漪共振，实时遥测面板与可调参数，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/liquid-grid-lab/index.html',
+      tags: ['Interactive', 'Physics', 'Grid', 'Micro-interaction'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

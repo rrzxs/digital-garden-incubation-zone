@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liquid Grid Lab — 液态网格实验室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 流体渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="mesh-blob blob-a"></div>
+    <div class="mesh-blob blob-b"></div>
+    <div class="mesh-blob blob-c"></div>
+    <div class="mesh-blob blob-d"></div>
+    <div class="grain-overlay"></div>
+  </div>
+
+  <!-- 主画布 -->
+  <canvas id="stage-canvas"></canvas>
+
+  <div class="app">
+    <!-- 微晶玻璃态头部 -->
+    <header class="app-header glass-panel">
+      <div class="header-left">
+        <span class="logo-icon">▦</span>
+        <h1 class="logo-text">Liquid Grid Lab</h1>
+      </div>
+      <div class="header-center">
+        <span class="header-subtitle" id="mode-label">斥力场 · 移动光标扰动晶格</span>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="btn-theme" aria-label="切换氛围配色" title="切换氛围配色">
+          <span class="theme-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 遥测面板 -->
+    <aside class="telemetry glass-panel" aria-label="遥测面板">
+      <div class="tele-row">
+        <span class="tele-key">MODE</span>
+        <span class="tele-val" id="tele-mode">REPEL</span>
+      </div>
+      <div class="tele-row">
+        <span class="tele-key">NODES</span>
+        <span class="tele-val" id="tele-nodes">0</span>
+      </div>
+      <div class="tele-row">
+        <span class="tele-key">ENERGY</span>
+        <span class="tele-val" id="tele-energy">0.00</span>
+      </div>
+      <div class="tele-row">
+        <span class="tele-key">WAVES</span>
+        <span class="tele-val" id="tele-waves">0</span>
+      </div>
+      <div class="tele-row">
+        <span class="tele-key">FPS</span>
+        <span class="tele-val" id="tele-fps">60</span>
+      </div>
+      <div class="tele-bar">
+        <div class="tele-bar-fill" id="tele-energy-bar"></div>
+      </div>
+    </aside>
+
+    <!-- 底部控制条 -->
+    <nav class="controls-bar glass-panel">
+      <div class="mode-tabs" id="mode-tabs">
+        <button class="mode-tab active" data-mode="repel">
+          <span class="tab-icon">◇</span>
+          <span class="tab-label">斥力</span>
+        </button>
+        <button class="mode-tab" data-mode="attract">
+          <span class="tab-icon">◆</span>
+          <span class="tab-label">引力</span>
+        </button>
+        <button class="mode-tab" data-mode="vortex">
+          <span class="tab-icon">⊛</span>
+          <span class="tab-label">漩涡</span>
+        </button>
+        <button class="mode-tab" data-mode="wave">
+          <span class="tab-icon">≋</span>
+          <span class="tab-label">波场</span>
+        </button>
+      </div>
+
+      <div class="ctrl-divider"></div>
+
+      <div class="ctrl-group">
+        <label class="ctrl-slider">
+          <span class="slider-label">力场半径</span>
+          <input type="range" id="slider-radius" min="60" max="320" value="160" step="2">
+          <span class="slider-val" id="val-radius">160</span>
+        </label>
+        <label class="ctrl-slider">
+          <span class="slider-label">晶格密度</span>
+          <input type="range" id="slider-density" min="28" max="72" value="46" step="1">
+          <span class="slider-val" id="val-density">46</span>
+        </label>
+      </div>
+
+      <div class="ctrl-divider"></div>
+
+      <div class="ctrl-group">
+        <button class="ctrl-btn" id="btn-pulse" aria-label="发射冲击波">
+          <span class="ctrl-icon">◎</span>
+          <span class="ctrl-label">Pulse</span>
+        </button>
+        <button class="ctrl-btn" id="btn-reset" aria-label="重置晶格">
+          <span class="ctrl-icon">↺</span>
+          <span class="ctrl-label">Reset</span>
+        </button>
+      </div>
+    </nav>
+
+    <footer class="status-bar glass-panel">
+      <span class="status-text" id="status-text">READY — 移动光标 / 点击画布发射冲击波</span>
+      <span class="status-theme" id="status-theme">AURORA</span>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

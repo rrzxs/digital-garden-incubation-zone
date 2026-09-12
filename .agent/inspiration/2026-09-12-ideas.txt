@@ -1,0 +1,7 @@
+name-architect - 输入文字实时生成3D数字建筑结构
+ink-garden - 水墨风程序生成禅意庭园
+doodle-vault - 手绘SVG涂鸦库，点击即复制
+font-lens - 本地字体预览与并排对比器
+pixel-icon-forge - 8×8网格像素图标绘制工坊
+liquid-grid-lab - 液态玻璃折射无限网格实验场
+light-tubes - 光轨管状3D线条涂鸦画板

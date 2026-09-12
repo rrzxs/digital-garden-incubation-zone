@@ -163,3 +163,4 @@ ascii-glyph-renderer
 image-ascii-crafter
 glyph-forge
 font-specimen-lens
+liquid-grid-lab
