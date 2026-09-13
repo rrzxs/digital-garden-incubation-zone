@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ink Garden - 墨韵花园</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="garden-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">墨</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Ink Garden</h1>
+                    <span class="nav-subtitle">墨韵花园 · 让每一次落笔都开花</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="garden-night" aria-label="墨夜">墨夜</button>
+                    <button class="theme-btn" data-theme="garden-moon" aria-label="月白">月白</button>
+                    <button class="theme-btn" data-theme="garden-crimson" aria-label="朱砂">朱砂</button>
+                    <button class="theme-btn" data-theme="garden-void" aria-label="虚空">虚空</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <section class="garden-stage" id="garden-stage">
+            <div class="stage-hint" id="stage-hint">
+                <span class="hint-ring"></span>
+                <span class="hint-text">点击或拖拽 · 播下墨的种子</span>
+            </div>
+
+            <aside class="control-panel" id="control-panel">
+                <div class="panel-header">
+                    <span class="panel-title">园艺台</span>
+                    <span class="panel-badge">INK</span>
+                </div>
+                <div class="panel-row">
+                    <span class="row-label">花型</span>
+                    <div class="seg-group" id="bloom-mode">
+                        <button class="seg-btn active" data-mode="branch">枝</button>
+                        <button class="seg-btn" data-mode="lotus">莲</button>
+                        <button class="seg-btn" data-mode="grass">草</button>
+                        <button class="seg-btn" data-mode="blot">斑</button>
+                    </div>
+                </div>
+                <div class="panel-row">
+                    <span class="row-label">风</span>
+                    <input type="range" id="wind-slider" class="range-slider" min="0" max="100" value="32">
+                </div>
+                <div class="panel-row">
+                    <span class="row-label">扩散</span>
+                    <input type="range" id="spread-slider" class="range-slider" min="10" max="100" value="55">
+                </div>
+                <div class="panel-row">
+                    <span class="row-label">飘散粒子</span>
+                    <div class="seg-group" id="particle-toggle">
+                        <button class="seg-btn active" data-particles="on">开</button>
+                        <button class="seg-btn" data-particles="off">关</button>
+                    </div>
+                </div>
+                <button class="panel-action" id="btn-harvest">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+                    收获并清空花园
+                </button>
+            </aside>
+        </section>
+
+        <footer class="app-footer">
+            <div class="footer-hint">
+                <span class="hint-key">Click</span>
+                <span class="hint-sep">·</span>
+                <span class="hint-key">Drag</span>
+                <span class="hint-sep">·</span>
+                <span class="hint-key">Shift + Click</span>
+                <span class="hint-label">墨韵栽种</span>
+            </div>
+            <div class="footer-meta">
+                <span class="meta-chip" id="bloom-count">0 朵</span>
+                <span class="meta-chip" id="fps-counter">60 FPS</span>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

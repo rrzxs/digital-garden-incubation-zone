@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-13",
+  "name": "ink-garden",
+  "description": "水墨晕染程序化生长的冥想庭园",
+  "tagline": "Where ink blooms into stillness.",
+  "interaction": "每次点击或拖动都会滴落一滴墨，在宣纸般的画布上晕染开来，程序化生成出枝叶、苔藓与花朵的缓慢生长。庭园会随时间自然蔓延、褪色与重生，无需目标与操作压力——观察本身即是冥想。",
+  "directory": "seeds/ink-garden/",
+  "status": "incubated"
+}

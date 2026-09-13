@@ -1790,6 +1790,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Ink Garden 墨韵花园',
+      description: '沉浸式墨韵花园微交互体验。点击或拖拽播下墨的种子，递归分枝以非线性缓动生长为摇曳墨花，4种花型 × 4种氛围配色，风场摆动 + 光标力场弯折 + 飘散粒子，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/ink-garden/index.html',
+      tags: ['Interactive', 'Ink', 'Physics', 'Micro-interaction'],
+      icon: '❀',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
