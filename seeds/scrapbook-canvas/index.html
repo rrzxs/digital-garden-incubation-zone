@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrapbook Canvas 拼贴画布 - 沉浸式剪贴簿体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="kraft">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- 流体渐变背景 -->
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="particle-canvas"></canvas>
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="topbar glass">
+            <div class="brand">
+                <span class="brand-icon">✎</span>
+                <div class="brand-text">
+                    <h1 class="brand-title" id="scramble-title">Scrapbook Canvas</h1>
+                    <span class="brand-sub">拼贴画布 · 拖拽 · 甩动 · 胶带 · 记忆</span>
+                </div>
+            </div>
+            <div class="topbar-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="kraft" aria-label="牛皮纸">牛皮纸</button>
+                    <button class="theme-btn" data-theme="polaroid" aria-label="宝丽来">宝丽来</button>
+                    <button class="theme-btn" data-theme="midnight" aria-label="午夜">午夜</button>
+                    <button class="theme-btn" data-theme="botanical" aria-label="植物志">植物志</button>
+                </div>
+                <button class="action-btn" id="btn-shuffle" title="洗牌布局">
+                    <span>⟳</span><em>洗牌</em>
+                </button>
+                <button class="action-btn" id="btn-export" title="导出 PNG">
+                    <span>⤓</span><em>导出</em>
+                </button>
+            </div>
+        </nav>
+
+        <section class="workspace">
+            <!-- 贴纸货架 -->
+            <aside class="shelf glass" id="shelf">
+                <h2 class="shelf-title">贴纸架</h2>
+                <p class="shelf-hint">点击或拖入画布</p>
+                <div class="shelf-grid" id="shelf-grid"></div>
+                <div class="shelf-divider"></div>
+                <h2 class="shelf-title">装饰</h2>
+                <div class="shelf-grid tape-grid" id="tape-grid"></div>
+            </aside>
+
+            <!-- 拼贴画布 -->
+            <div class="board-wrap">
+                <div class="board glass" id="board">
+                    <div class="board-grain"></div>
+                    <div class="board-inner" id="board-inner"></div>
+                    <div class="board-empty" id="board-empty">
+                        <span class="empty-icon">✦</span>
+                        <p>画布空空如也</p>
+                        <small>从左侧贴纸架拖入第一枚记忆</small>
+                    </div>
+                </div>
+                <div class="board-meta glass" id="board-meta">
+                    <span class="meta-item mono" id="meta-count">ITEMS 00</span>
+                    <span class="meta-item mono" id="meta-coord">X 000 · Y 000</span>
+                    <span class="meta-item mono" id="meta-vel">V 0.00</span>
+                    <span class="meta-item mono" id="meta-theme">THEME KRAFT</span>
+                </div>
+            </div>
+        </section>
+
+        <footer class="foot-hint">
+            <span class="mono">DRAG</span> 拖拽甩动 ·
+            <span class="mono">DBLCLICK</span> 置顶弹跳 ·
+            <span class="mono">[DEL]</span> 移除选中 ·
+            <span class="mono">R</span> 随机旋转 ·
+            <span class="mono">T</span> 贴胶带
+        </footer>
+    </main>
+
+    <div class="toast glass" id="toast"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

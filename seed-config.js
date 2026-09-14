@@ -1800,6 +1800,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scrapbook Canvas 拼贴画布',
+      description: '沉浸式数字剪贴簿画布。拖入贴纸与便签，弹簧-阻尼物理甩动、边界弹性碰撞、胶带装饰、粒子迸射与 PNG 拼贴导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/scrapbook-canvas/index.html',
+      tags: ['Interactive', 'Scrapbook', 'Physics', 'Micro-interaction'],
+      icon: '✎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

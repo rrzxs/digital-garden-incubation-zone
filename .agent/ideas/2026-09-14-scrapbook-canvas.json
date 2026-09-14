@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-14",
+  "name": "scrapbook-canvas",
+  "description": "拼贴手账编辑器，叠加照片与纸纹",
+  "tagline": "Paste, layer, remember.",
+  "interaction": "用户将照片拖入画布，自由旋转、裁切并叠加纸张纹理、胶带与手写批注。图层可随时调整顺序与透明度，像真实拼贴手账一样堆叠出个人记忆页面。",
+  "directory": "seeds/scrapbook-canvas/",
+  "status": "incubated"
+}
