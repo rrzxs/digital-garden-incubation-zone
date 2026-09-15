@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Name to Architecture · 名字建筑学</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 顶部栏 === -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-mark">◧</span>
+      <span class="brand-name">NAME<span class="brand-thin">→</span>ARCHITECTURE</span>
+    </div>
+    <div class="topbar-meta mono" id="blueprint-id">BLUEPRINT #0000-0000</div>
+  </header>
+
+  <main class="stage">
+    <!-- === 左侧：控制面板 === -->
+    <section class="panel glass" aria-label="命名与蓝图控制">
+      <h1 class="panel-title">名字建筑学</h1>
+      <p class="panel-sub">每一个名字，都是一座待建成的建筑。<br>输入任意名字，算法将为其铸造专属的空间蓝图。</p>
+
+      <label class="field-label mono" for="name-input">NAME / 名字</label>
+      <div class="name-row">
+        <input id="name-input" type="text" maxlength="24" placeholder="输入一个名字…" autocomplete="off" spellcheck="false">
+        <button id="forge-btn" class="forge-btn" title="铸造蓝图">
+          <span class="forge-btn-label">铸造</span>
+          <span class="forge-btn-glyph">⌂</span>
+        </button>
+      </div>
+
+      <div class="quick-names" id="quick-names">
+        <span class="mono quick-label">示例</span>
+        <button class="chip" data-name="EDEN">EDEN</button>
+        <button class="chip" data-name="Alice">Alice</button>
+        <button class="chip" data-name="智">智</button>
+        <button class="chip" data-name="Zephyr">Zephyr</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <label class="field-label mono">AMBIENCE / 氛围</label>
+      <div class="theme-row" id="theme-row">
+        <button class="theme-btn active" data-theme="0"><i></i>晨雾</button>
+        <button class="theme-btn" data-theme="1"><i></i>暮色</button>
+        <button class="theme-btn" data-theme="2"><i></i>深海</button>
+        <button class="theme-btn" data-theme="3"><i></i>霓虹</button>
+      </div>
+
+      <label class="field-label mono">BLUEPRINT DATA / 蓝本数据</label>
+      <dl class="specs mono" id="specs">
+        <div class="spec"><dt>SEED</dt><dd id="spec-seed">—</dd></div>
+        <div class="spec"><dt>STYLE</dt><dd id="spec-style">—</dd></div>
+        <div class="spec"><dt>FLOORS</dt><dd id="spec-floors">—</dd></div>
+        <div class="spec"><dt>HEIGHT</dt><dd id="spec-height">—</dd></div>
+      </dl>
+
+      <button id="replay-btn" class="ghost-btn mono">↻ 重播建造动画</button>
+    </section>
+
+    <!-- === 右侧：建筑画布 === -->
+    <section class="viewport glass" aria-label="建筑视口">
+      <canvas id="city-canvas"></canvas>
+      <div class="viewport-hud mono">
+        <span id="hud-name">AWAITING NAME</span>
+        <span class="hud-dot"></span>
+        <span id="hud-progress">0%</span>
+      </div>
+      <div class="viewport-foot mono">拖拽旋转 · 滚轮缩放 · 双击重置视角</div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

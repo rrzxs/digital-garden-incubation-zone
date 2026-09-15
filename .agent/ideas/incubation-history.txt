@@ -166,3 +166,4 @@ font-specimen-lens
 liquid-grid-lab
 ink-garden
 scrapbook-canvas
+name-to-architecture

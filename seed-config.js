@@ -1810,6 +1810,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Name to Architecture 名字建筑学',
+      description: '沉浸式名字建筑生成器。任意名字经确定性哈希铸造为独一无二的等距建筑蓝图，错峰建造动画、亮灯窗格、尖顶信标与弹簧相机，可拖拽旋转缩放，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/name-to-architecture/index.html',
+      tags: ['Interactive', 'Generative', 'Isometric', 'Micro-interaction'],
+      icon: '◧',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

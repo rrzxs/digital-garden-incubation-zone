@@ -1,0 +1,6 @@
+name-to-architecture - 输入姓名实时生成3D建筑结构
+ink-garden - 水墨风生成式禅意交互花园
+scrapbook-collage - 拼贴手账风图文排版编辑器
+scroll-journey - 卷轴驱动沉浸式旅程叙事生成器
+tilt-card-lab - 倾斜卡片收集式微交互实验场
+depth-canvas - 为2D图形添加伪3D深度的渲染器
