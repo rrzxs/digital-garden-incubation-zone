@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey Canvas 旅途画布 - 手绘旅途航线</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="field-canvas"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <nav class="topbar glass-card">
+            <div class="brand">
+                <span class="brand-icon">✒</span>
+                <div class="brand-text">
+                    <h1 class="brand-title">Journey Canvas</h1>
+                    <span class="brand-subtitle">手绘一条线，让它成为旅途</span>
+                </div>
+            </div>
+            <div class="topbar-controls">
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="deep-ocean" aria-label="深海">深海</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="余烬">余烬</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+                <div class="speed-control">
+                    <span class="speed-label">速度</span>
+                    <input type="range" class="speed-slider" id="speed-slider" min="0.2" max="3" step="0.1" value="1">
+                </div>
+            </div>
+        </nav>
+
+        <section class="stage glass-card" id="stage">
+            <canvas id="journey-canvas"></canvas>
+
+            <div class="stage-hint" id="stage-hint">
+                <div class="hint-ring"></div>
+                <p class="hint-text">在画布上按住并拖动，<br>画出你的旅途航线</p>
+            </div>
+
+            <div class="station-card glass-card" id="station-card">
+                <div class="station-glyph" id="station-glyph">◈</div>
+                <div class="station-body">
+                    <span class="station-index" id="station-index">STATION 00</span>
+                    <h2 class="station-name" id="station-name">启程之前</h2>
+                    <p class="station-poem" id="station-poem">每一道笔触，都是尚未启程的远方。</p>
+                </div>
+            </div>
+
+            <div class="telemetry" id="telemetry">
+                <span class="tele-item">DIST <b id="tm-dist">0.00</b>u</span>
+                <span class="tele-item">STATIONS <b id="tm-stations">0</b></span>
+                <span class="tele-item">MODE <b id="tm-mode">DRAW</b></span>
+            </div>
+        </section>
+
+        <footer class="deck glass-card">
+            <div class="timeline" id="timeline">
+                <div class="timeline-track">
+                    <div class="timeline-fill" id="timeline-fill"></div>
+                    <div class="timeline-head" id="timeline-head"></div>
+                    <div class="timeline-marks" id="timeline-marks"></div>
+                </div>
+                <span class="timeline-label" id="timeline-label">0%</span>
+            </div>
+
+            <div class="deck-controls">
+                <button class="ctrl-btn" id="btn-clear" aria-label="清除航线">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+                    <span>清除</span>
+                </button>
+                <button class="ctrl-btn ctrl-btn--primary" id="btn-play" aria-label="出发" disabled>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" id="icon-play"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" id="icon-pause" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+                    <span id="play-label">出发</span>
+                </button>
+                <button class="ctrl-btn" id="btn-redraw" aria-label="重新作画">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                    <span>重新作画</span>
+                </button>
+            </div>
+
+            <p class="deck-tip">空格 播放/暂停 · R 重画 · C 清除 · 拖动时间线回溯旅途</p>
+        </footer>
+    </main>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

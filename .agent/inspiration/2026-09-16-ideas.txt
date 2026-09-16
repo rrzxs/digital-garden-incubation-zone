@@ -1,0 +1,7 @@
+quiet-ink - 极简无干扰写作台，本地存储加导出
+doodle-desk - 浏览器涂鸦画布与趣味互动实验场
+memory-scrapbook - 拖拽式电子手帐拼贴编辑器
+tilt-card-showcase - 倾斜视差收集卡片展示生成器
+drift-search - 沉浸式滚动探索的信息检索界面
+journey-canvas - 滚动驱动的沉浸式旅程叙事搭建器
+mood-orb - 纯SVG驱动的情绪小球表情引擎

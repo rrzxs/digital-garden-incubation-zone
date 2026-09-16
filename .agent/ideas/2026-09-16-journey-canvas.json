@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-16",
+  "name": "journey-canvas",
+  "description": "滚动驱动的沉浸式旅程叙事搭建器",
+  "tagline": "Every scroll tells a story.",
+  "interaction": "用户将旅程节点（章节、图像、里程碑）拖入一条垂直叙事画布，页面滚动即成为推进叙事的时间轴。滚动速度、方向与深度实时驱动视差、转场与内容展开，让访客在"下拉"中亲历一段沉浸式旅程。",
+  "directory": "seeds/journey-canvas/",
+  "status": "incubated"
+}

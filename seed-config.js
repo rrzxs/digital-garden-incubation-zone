@@ -1820,6 +1820,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Journey Canvas 旅途画布',
+      description: '沉浸式手绘旅途航线体验。随手画一条线即刻平滑为发光航线：自动诗意里程碑站点、旅行者光球弹簧物理行驶、乱码揭示站点卡、可拖拽时间线回溯，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/journey-canvas/index.html',
+      tags: ['Interactive', 'Journey', 'Canvas', 'Micro-interaction'],
+      icon: '✒',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
