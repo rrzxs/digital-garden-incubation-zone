@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Voyage · 滚动远航</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="abyss">
+
+  <!-- 流体渐变背景 -->
+  <div class="fluid-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 粒子流场画布（海洋雪 / 气泡） -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- 左侧固定：深度仪表 HUD -->
+  <aside class="depth-hud" aria-hidden="true">
+    <div class="hud-meter">
+      <svg viewBox="0 0 40 260" class="hud-tube">
+        <defs>
+          <linearGradient id="tubeFill" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="var(--hud-1)"/>
+            <stop offset="100%" stop-color="var(--hud-2)"/>
+          </linearGradient>
+        </defs>
+        <rect x="12" y="8" width="16" height="244" rx="8" class="tube-track"/>
+        <rect x="12" y="8" width="16" height="244" rx="8" class="tube-liquid" id="tube-liquid"/>
+        <circle cx="20" cy="8" r="5" class="tube-glow" id="tube-glow"/>
+      </svg>
+      <div class="hud-readout">
+        <span class="hud-depth" id="hud-depth">0</span>
+        <span class="hud-unit">M · DEPTH</span>
+      </div>
+    </div>
+    <div class="hud-biome">
+      <span class="hud-biome-label">ZONE</span>
+      <span class="hud-biome-name" id="hud-biome">海面 · SUNLIGHT</span>
+    </div>
+    <div class="hud-pressure">
+      <span class="hud-pressure-label">PRESSURE</span>
+      <span class="hud-pressure-val" id="hud-pressure">1.0 ATM</span>
+    </div>
+    <div class="hud-velocity">
+      <span class="hud-velocity-label">DESCENT</span>
+      <span class="hud-velocity-bar"><i id="hud-velocity-fill"></i></span>
+    </div>
+  </aside>
+
+  <!-- 右侧固定：航线站点导航 -->
+  <nav class="voyage-rail" aria-label="航段导航">
+    <div class="rail-line"><i id="rail-progress"></i></div>
+    <button class="rail-stop" data-target="zone-surface" aria-label="海面出发">
+      <span class="rail-dot"></span><span class="rail-name">出发 Surface</span>
+    </button>
+    <button class="rail-stop" data-target="zone-mist" aria-label="雾光带">
+      <span class="rail-dot"></span><span class="rail-name">雾光 Mist</span>
+    </button>
+    <button class="rail-stop" data-target="zone-twilight" aria-label="暮光带">
+      <span class="rail-dot"></span><span class="rail-name">暮光 Twilight</span>
+    </button>
+    <button class="rail-stop" data-target="zone-midnight" aria-label="午夜深渊">
+      <span class="rail-dot"></span><span class="rail-name">午夜 Midnight</span>
+    </button>
+    <button class="rail-stop" data-target="zone-vents" aria-label="热泉喷口">
+      <span class="rail-dot"></span><span class="rail-name">热泉 Vents</span>
+    </button>
+    <button class="rail-stop" data-target="zone-ascent" aria-label="归途上浮">
+      <span class="rail-dot"></span><span class="rail-name">归途 Ascent</span>
+    </button>
+  </nav>
+
+  <!-- 顶部工具条 -->
+  <header class="topbar">
+    <div class="topbar-brand">
+      <span class="brand-glyph">≋</span>
+      <span class="brand-text">SCROLL VOYAGE</span>
+    </div>
+    <div class="topbar-themes" role="group" aria-label="氛围配色">
+      <button class="theme-dot" data-theme="abyss"  title="深渊蓝"></button>
+      <button class="theme-dot" data-theme="aurora" title="极光绿"></button>
+      <button class="theme-dot" data-theme="ember"  title="熔岩橙"></button>
+      <button class="theme-dot" data-theme="orchid" title="暗夜紫"></button>
+    </div>
+  </header>
+
+  <main class="voyage">
+
+    <!-- ═══════════ 序章 · 海面出发 ═══════════ -->
+    <section class="zone zone-hero" id="zone-surface" data-zone='{"depth":[0,180],"biome":"海面 · SUNLIGHT","hue":[200,190]}'>
+      <div class="hero-inner">
+        <p class="hero-eyebrow mono">DIVE LOG · 0000-00-00 · N 23°26′ E 135°00′</p>
+        <h1 class="hero-title">
+          <span class="char-reveal" data-text="滚动远航"></span>
+        </h1>
+        <p class="hero-sub char-reveal" data-text="Scroll, and the ocean folds around you."></p>
+        <div class="hero-scroll-hint">
+          <span class="hint-mouse"><i></i></span>
+          <span class="hint-text mono">向下滚动 · 开始下潜</span>
+        </div>
+      </div>
+      <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+          <path class="wave wave-1" d="M0,80 C240,140 480,20 720,80 C960,140 1200,20 1440,80 L1440,200 L0,200 Z"/>
+          <path class="wave wave-2" d="M0,120 C240,60 480,180 720,120 C960,60 1200,180 1440,120 L1440,200 L0,200 Z"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 航线 SVG：随滚动绘制的下潜曲线 + 潜艇光球 -->
+    <div class="voyage-path-wrap" aria-hidden="true">
+      <svg class="voyage-path" id="voyage-svg" preserveAspectRatio="none">
+        <path id="path-track" d=""/>
+        <path id="path-draw" d=""/>
+        <g id="traveler">
+          <circle class="traveler-halo" r="26"/>
+          <circle class="traveler-core" r="7"/>
+          <circle class="traveler-ring" r="14"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ═══════════ 01 · 雾光带 ═══════════ -->
+    <section class="zone" id="zone-mist" data-zone='{"depth":[180,1000],"biome":"雾光带 · TWILIGHT EDGE","hue":[190,210]}'>
+      <div class="zone-meta mono">
+        <span class="zone-index">01</span>
+        <span class="zone-depth">180 — 1000 M</span>
+      </div>
+      <div class="glass-card parallax" data-depth="0.35">
+        <p class="card-eyebrow mono">MARINE SNOW · 海雪</p>
+        <h2 class="card-title char-reveal" data-text="光线开始变得礼貌"></h2>
+        <p class="card-body">阳光在这里折断成碎屑。浮游生物的残骸像永不落地的雪，缓慢飘过舷窗。你的每一次滚动，都是潜艇外壳的一声轻响。</p>
+        <div class="card-chips">
+          <span class="chip mono">光通量 −87%</span>
+          <span class="chip mono">水温 8°C</span>
+          <span class="chip mono">能见度 12M</span>
+        </div>
+      </div>
+      <div class="float-frag frag-a mono" data-depth="0.7">▚▚ 光衰减曲线 EXP(-0.04d)</div>
+    </section>
+
+    <!-- ═══════════ 02 · 暮光带 ═══════════ -->
+    <section class="zone" id="zone-twilight" data-zone='{"depth":[1000,4000],"biome":"暮光带 · TWILIGHT","hue":[210,230]}'>
+      <div class="zone-meta mono">
+        <span class="zone-index">02</span>
+        <span class="zone-depth">1000 — 4000 M</span>
+      </div>
+      <div class="twilight-grid">
+        <div class="glass-card parallax tilt" data-depth="0.2">
+          <p class="card-eyebrow mono">BIOLUMINESCENCE · 生物荧光</p>
+          <h3 class="card-title-sm char-reveal" data-text="黑暗中的签名"></h3>
+          <p class="card-body">灯笼鱼用光写字，水母用光呼吸。在这里，发光不是装饰，而是唯一通行的语言。</p>
+        </div>
+        <div class="glass-card parallax tilt" data-depth="0.5">
+          <p class="card-eyebrow mono">SONAR ECHO · 声呐回波</p>
+          <h3 class="card-title-sm char-reveal" data-text="听不见的雷"></h3>
+          <p class="card-body">抹香鲸的点击声穿过两公里水体抵达舱壁——那是地球上最响的生物声，而此刻它只是你耳膜上的一次温柔敲门。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ 03 · 午夜深渊 ═══════════ -->
+    <section class="zone zone-fullscreen" id="zone-midnight" data-zone='{"depth":[4000,6000],"biome":"午夜深渊 · MIDNIGHT","hue":[230,250]}'>
+      <div class="zone-meta mono">
+        <span class="zone-index">03</span>
+        <span class="zone-depth">4000 — 6000 M</span>
+      </div>
+      <div class="abyss-stage">
+        <h2 class="abyss-title char-reveal" data-text="这里没有白天"></h2>
+        <p class="abyss-sub mono">// PRESSURE 601 ATM · SUNLIGHT 0.00 LUX · ALONE 100%</p>
+        <div class="abyss-eye" aria-hidden="true">
+          <div class="pupil"></div>
+          <div class="glow"></div>
+        </div>
+        <p class="abyss-note">滚动慢一些。有些东西正在看你——它已经一百年没有见过访客了。</p>
+      </div>
+    </section>
+
+    <!-- ═══════════ 04 · 热泉喷口 ═══════════ -->
+    <section class="zone" id="zone-vents" data-zone='{"depth":[6000,11000],"biome":"热泉喷口 · HADAL VENTS","hue":[250,20]}'>
+      <div class="zone-meta mono">
+        <span class="zone-index">04</span>
+        <span class="zone-depth">6000 — 11000 M</span>
+      </div>
+      <div class="vents-row">
+        <div class="vent-card glass-card parallax" data-depth="0.15">
+          <div class="vent-plume" aria-hidden="true"><i></i><i></i><i></i></div>
+          <p class="card-eyebrow mono">CHIMNEY · 黑烟囱</p>
+          <h3 class="card-title-sm char-reveal" data-text="生命的另一个起点"></h3>
+          <p class="card-body">380°C 的矿物烟柱在海底铸塔。不需要阳光的化能生态系统，在这里安静运转了四十亿年——这可能是地球生命最初的炉膛。</p>
+        </div>
+        <div class="vent-stats glass-card parallax" data-depth="0.45">
+          <p class="card-eyebrow mono">TELEMETRY · 实时遥测</p>
+          <ul class="stat-list mono">
+            <li><span>烟温</span><b id="stat-temp">382°C</b></li>
+            <li><span>舱压</span><b id="stat-press">1104 ATM</b></li>
+            <li><span>深度</span><b id="stat-depth">10909 M</b></li>
+            <li><span> hull 完整度</span><b id="stat-hull">99.2%</b></li>
+          </ul>
+          <div class="hull-bar"><i id="hull-fill"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ 05 · 归途上浮 ═══════════ -->
+    <section class="zone zone-finale" id="zone-ascent" data-zone='{"depth":[11000,0],"biome":"归途 · ASCENT","hue":[20,200]}'>
+      <div class="zone-meta mono">
+        <span class="zone-index">05</span>
+        <span class="zone-depth">← 上浮 · ASCENT</span>
+      </div>
+      <div class="finale-inner">
+        <h2 class="finale-title char-reveal" data-text="带着深处的光回到海面"></h2>
+        <p class="finale-sub">你滚动了整个垂直的海洋。此刻向上看，海面是一枚摇晃的、发光的月亮。</p>
+        <button class="resurface-btn" id="resurface-btn">
+          <span class="btn-text">上浮 ↗ 回到海面</span>
+          <span class="btn-ring" aria-hidden="true"></span>
+        </button>
+        <p class="finale-sign mono">VOYAGE COMPLETE · 22,014 M TOTAL · THANK YOU FOR DIVING</p>
+      </div>
+    </section>
+
+    <footer class="voyage-footer mono">
+      <span>SCROLL VOYAGE · Digital Garden Seed</span>
+      <span>maintainer: EDEN</span>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

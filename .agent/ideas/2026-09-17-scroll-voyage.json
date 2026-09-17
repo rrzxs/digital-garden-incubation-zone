@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-17",
+  "name": "scroll-voyage",
+  "description": "长滚动沉浸式微叙事搭建器",
+  "tagline": "Every scroll sails the story.",
+  "interaction": "用户通过连续滚动驱动一艘小船在纵向长卷世界中航行，每个滚动段落解锁一个叙事场景（视差层、文字渐显与场景变换）。拖拽时间轴可编辑自己的叙事节点，实时预览并一键生成可分享的长滚动微叙事页面。",
+  "directory": "seeds/scroll-voyage/",
+  "status": "incubated"
+}

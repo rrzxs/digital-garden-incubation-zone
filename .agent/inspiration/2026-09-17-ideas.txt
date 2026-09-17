@@ -1,0 +1,7 @@
+focus-writer - 仿真桌面里的极简沉浸写作台
+week-rhythm - 创意团队周计划可视化编排器
+emotion-orb - 纯SVG驱动的AI助手表情球
+shot-previs - 浏览器内方块场景镜头预演台
+wobble-glyph - 手绘抖动字体动效生成器
+canvas-veil - WebGL创意背景组件实验场
+scroll-voyage - 长滚动沉浸式微叙事搭建器

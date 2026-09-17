@@ -1830,6 +1830,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Voyage 滚动远航',
+      description: '沉浸式滚动远航体验。滚动即下潜——海面/雾光带/暮光带/午夜深渊/热泉喷口/归途六幕深潜叙事，深度仪表 HUD、SVG 航线绘制、潜艇光球、海洋雪粒子场与逐字揭示，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/scroll-voyage/index.html',
+      tags: ['Interactive', 'Scroll', 'Ocean', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
