@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-18",
+  "name": "doodle-play",
+  "description": "space — 浏览器涂鸦画布加彩蛋按钮实验间",
+  "tagline": ""Doodle freely, discover secretly."",
+  "interaction": "A blank browser canvas invites free-form doodling with playful brushes and colors. Scattered among the toolbar are disguised easter egg buttons—press them to trigger surprise effects like gravity mode, rainbow trails, or canvas-shaking animations. Each discovery unlocks a new way to transform your sketch into living art.",
+  "directory": "seeds/doodle-play/",
+  "status": "incubated"
+}

@@ -1,0 +1,7 @@
+mood-orb - lab — 纯SVG情绪表情球，实时驱动32种状态
+type-parallax - specimen — 视差滚动的字体样张互动试验场
+week-rhythm - board — 编辑感排版的团队周节律规划板
+immersive-search - scape — 沉浸式动效搜索结果探索界面
+scroll-journey - canvas — 长滚动叙事式旅程互动画册
+doodle-play - space — 浏览器涂鸦画布加彩蛋按钮实验间
+motion-feel - mixer — 描述情绪即生成过渡动效的调音台

@@ -1840,6 +1840,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Doodle Play 涂鸦游乐场',
+      description: '沉浸式即兴涂鸦体验场。5种画笔（墨韵/霓虹/流彩/星屑/缎带）、弹簧-阻尼活体光标、笔迹节奏回放、粒子迸射层、撤销与PNG导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/doodle-play/index.html',
+      tags: ['Interactive', 'Drawing', 'Physics', 'Micro-interaction'],
+      icon: '✎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
