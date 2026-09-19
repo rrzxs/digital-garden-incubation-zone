@@ -1,0 +1,8 @@
+motion-type-specimen - 视差滚动 brutalist 字体样张试验场
+scroll-voyage - 长滚动沉浸式章节叙事微站
+emotion-orb-console - 纯SVG情绪小球调试与演示台
+shot-block-studio - 浏览器分镜相机走位排布工具
+week-rhythm-grid - 单页团队周节奏可视化规划板
+coin-split-board - 多人多币种共享开销拆分器
+deep-search-atlas - 命令面板式沉浸搜索结果探索器
+doodle-joke-lab - 交互涂鸦画布与随机惊喜按钮

@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-19",
+  "name": "week-rhythm-grid",
+  "description": "单页团队周节奏可视化规划板",
+  "tagline": "Plan the week, feel the rhythm.",
+  "interaction": "一个 7×N 网格代表团队每位成员的一周，拖拽彩色区块即可安排专注时间、会议和休息，网格实时渲染成团队的“节奏热力图”。悬停任意区块会高亮全组同时段安排，冲突与空档一目了然。",
+  "directory": "seeds/week-rhythm-grid/",
+  "status": "incubated"
+}

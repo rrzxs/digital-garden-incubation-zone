@@ -1850,6 +1850,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Week Rhythm Grid 周律网格',
+      description: '沉浸式一周能量节律网格。7 天 × 6 级能量标度上点击或拖拽涂抹，节律曲线即刻显形——粒子迸射、弹跳点亮、节律读数与 4 种节律预设，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/week-rhythm-grid/index.html',
+      tags: ['Interactive', 'Rhythm', 'Data Visualization', 'Micro-interaction'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

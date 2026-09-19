@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week Rhythm Grid · 周律网格</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- 流体渐变背景 -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="bg-blob bg-blob-a"></div>
+    <div class="bg-blob bg-blob-b"></div>
+    <div class="bg-blob bg-blob-c"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <main class="stage">
+
+    <!-- 顶部标题 -->
+    <header class="hero">
+      <div class="hero-eyebrow"><span class="hero-dot"></span>WEEK · 07 · RHYTHM</div>
+      <h1 class="hero-title">周律网格</h1>
+      <p class="hero-sub">在一周的土地上描绘你的能量节律 —— 点击或拖拽单元格，让七天的脉搏显形。</p>
+    </header>
+
+    <div class="layout">
+
+      <!-- 网格主体 -->
+      <section class="glass grid-panel">
+        <div class="panel-head">
+          <div class="panel-title">
+            <span class="panel-icon">▦</span>
+            <span>本周节律</span>
+          </div>
+          <div class="panel-meta">
+            <span class="meta-chip" id="chip-filled">0 / 7 天</span>
+            <span class="meta-chip mono" id="chip-avg">AVG 0.0</span>
+          </div>
+        </div>
+
+        <div class="grid-wrap">
+          <div class="grid-canvas">
+            <!-- 日列由 JS 生成 -->
+            <div class="days" id="days"></div>
+            <svg class="rhythm-curve" id="rhythm-curve" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="curve-stroke" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" class="curve-stop-a"/>
+                  <stop offset="100%" class="curve-stop-b"/>
+                </linearGradient>
+                <linearGradient id="curve-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" class="fill-stop-a"/>
+                  <stop offset="100%" class="fill-stop-b"/>
+                </linearGradient>
+              </defs>
+              <path class="curve-area" id="curve-area"/>
+              <path class="curve-line" id="curve-line"/>
+              <g class="curve-nodes" id="curve-nodes"></g>
+            </svg>
+            <div class="particles-layer" id="particles"></div>
+          </div>
+
+          <div class="grid-legend">
+            <span class="legend-label">能量标度</span>
+            <div class="legend-scale" id="legend-scale"></div>
+            <span class="legend-hint">拖拽一列即可连续涂抹</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 侧栏 -->
+      <aside class="side">
+
+        <!-- 节律读数 -->
+        <section class="glass stat-panel">
+          <div class="panel-title"><span class="panel-icon">◎</span><span>节律读数</span></div>
+          <div class="stat-rows">
+            <div class="stat-row">
+              <span class="stat-key">平均能量</span>
+              <span class="stat-val mono" id="stat-avg">0.0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-key">峰值之日</span>
+              <span class="stat-val" id="stat-peak">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-key">低谷之日</span>
+              <span class="stat-val" id="stat-trough">—</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-key">节律均衡度</span>
+              <span class="stat-val mono" id="stat-balance">--</span>
+            </div>
+          </div>
+          <div class="balance-track"><div class="balance-bar" id="balance-bar"></div></div>
+          <p class="stat-note" id="stat-note">等待你落下第一笔能量。</p>
+        </section>
+
+        <!-- 节律预设 -->
+        <section class="glass preset-panel">
+          <div class="panel-title"><span class="panel-icon">✦</span><span>节律预设</span></div>
+          <div class="preset-list">
+            <button class="preset-btn" data-preset="early-bird">
+              <span class="preset-name">早鸟型</span><span class="preset-desc">晨光充沛 · 周末回落</span>
+            </button>
+            <button class="preset-btn" data-preset="night-owl">
+              <span class="preset-name">夜猫型</span><span class="preset-desc">白日蛰伏 · 周末沸腾</span>
+            </button>
+            <button class="preset-btn" data-preset="balanced">
+              <span class="preset-name">均衡型</span><span class="preset-desc">平稳律动 · 张弛有度</span>
+            </button>
+            <button class="preset-btn" data-preset="sprint">
+              <span class="preset-name">冲刺型</span><span class="preset-desc">周中爆发 · 两端松弛</span>
+            </button>
+          </div>
+          <div class="action-row">
+            <button class="action-btn" id="btn-random">随机节律</button>
+            <button class="action-btn action-warn" id="btn-clear">清空网格</button>
+          </div>
+        </section>
+
+        <!-- 氛围配色 -->
+        <section class="glass theme-panel">
+          <div class="panel-title"><span class="panel-icon">◐</span><span>氛围配色</span></div>
+          <div class="theme-list">
+            <button class="theme-dot" data-theme="aurora" title="极光"></button>
+            <button class="theme-dot" data-theme="ember" title="余烬"></button>
+            <button class="theme-dot" data-theme="tide" title="深海"></button>
+            <button class="theme-dot" data-theme="grove" title="林间"></button>
+          </div>
+        </section>
+
+      </aside>
+    </div>
+
+    <footer class="foot mono">WEEK-RHYTHM-GRID · EDEN · SEED ZONE</footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
