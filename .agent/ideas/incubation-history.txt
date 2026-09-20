@@ -171,3 +171,4 @@ journey-canvas
 scroll-voyage
 doodle-play
 week-rhythm-grid
+verse-receipt-printer

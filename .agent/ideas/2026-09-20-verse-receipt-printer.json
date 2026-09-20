@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-20",
+  "name": "verse-receipt-printer",
+  "description": "打字机诗意小票创作器",
+  "tagline": "Type your heart, print a poem.",
+  "interaction": "用户在复古打字机界面上逐字敲下心情或诗句，每次回车就像小票打印机吐出一行带着油墨温度的文字。创作完成后，热敏纸风格的诗意小票缓缓打印出来，可撕下保存或分享。",
+  "directory": "seeds/verse-receipt-printer/",
+  "status": "incubated"
+}

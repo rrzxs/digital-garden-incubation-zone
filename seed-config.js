@@ -1852,6 +1852,16 @@
       category: 'tool'
     },
     {
+      title: 'Verse Receipt Printer 诗句收据打印机',
+      description: '沉浸式诗句收据打印体验。选择心境（星夜/海雾/晨光/夜雨），热敏打印机逐字打出一张逐行标价的诗句收据，沿虚线撕下归档，纸屑迸射与 Web Audio 音效，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/verse-receipt-printer/index.html',
+      tags: ['Interactive', 'Poetry', 'Micro-interaction', 'Sound'],
+      icon: '✦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'Week Rhythm Grid 周律网格',
       description: '沉浸式一周能量节律网格。7 天 × 6 级能量标度上点击或拖拽涂抹，节律曲线即刻显形——粒子迸射、弹跳点亮、节律读数与 4 种节律预设，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
       path: '/seed/seeds/week-rhythm-grid/index.html',

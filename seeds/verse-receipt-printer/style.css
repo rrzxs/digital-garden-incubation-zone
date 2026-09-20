@@ -1,0 +1,436 @@
+/* ============================================================
+   Verse Receipt Printer · 诗句收据打印机
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ============================================================ */
+
+:root {
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-sans: 'Inter', 'Outfit', sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+/* === 心境配色变量 === */
+[data-mood="starry"] {
+  --c1: #6d5bff; --c2: #2ec4b6; --c3: #14213d;
+  --accent: #8d7bff; --accent-soft: rgba(141, 123, 255, 0.16);
+  --receipt-ink: #2b2d42;
+}
+[data-mood="mist"] {
+  --c1: #4a7c9e; --c2: #8fd3c7; --c3: #0e2233;
+  --accent: #7ec8d3; --accent-soft: rgba(126, 200, 211, 0.16);
+  --receipt-ink: #23404f;
+}
+[data-mood="dawn"] {
+  --c1: #ff8360; --c2: #ffd166; --c3: #4a2545;
+  --accent: #ffab6f; --accent-soft: rgba(255, 171, 111, 0.18);
+  --receipt-ink: #5b3524;
+}
+[data-mood="rain"] {
+  --c1: #5f6f94; --c2: #7f9bbf; --c3: #171c28;
+  --accent: #93a8cf; --accent-soft: rgba(147, 168, 207, 0.16);
+  --receipt-ink: #303a4d;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  color: rgba(255, 255, 255, 0.92);
+  background: var(--c3);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 1.2s var(--ease);
+}
+
+/* ==================== 流体渐变背景 ==================== */
+.ambient-bg {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden;
+}
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); mix-blend-mode: screen;
+  opacity: 0.55; will-change: transform;
+  transition: background 1.2s var(--ease);
+}
+.blob-a {
+  width: 55vmax; height: 55vmax; left: -12vmax; top: -18vmax;
+  background: var(--c1);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+.blob-b {
+  width: 48vmax; height: 48vmax; right: -14vmax; top: 22vh;
+  background: var(--c2);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+.blob-c {
+  width: 42vmax; height: 42vmax; left: 28vw; bottom: -20vmax;
+  background: var(--c1);
+  opacity: 0.35;
+  animation: drift-c 38s ease-in-out infinite alternate;
+}
+@keyframes drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(9vw, 7vh, 0) scale(1.15); }
+}
+@keyframes drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.1); }
+  to   { transform: translate3d(-8vw, -9vh, 0) scale(0.95); }
+}
+@keyframes drift-c {
+  from { transform: translate3d(0, 0, 0) rotate(0deg); }
+  to   { transform: translate3d(-6vw, -10vh, 0) rotate(30deg); }
+}
+.grain {
+  position: absolute; inset: 0; opacity: 0.05; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ==================== 微晶玻璃态 ==================== */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* ==================== 舞台布局 ==================== */
+.stage {
+  max-width: 1080px; margin: 0 auto;
+  padding: clamp(24px, 5vw, 64px) clamp(18px, 4vw, 40px) 80px;
+}
+.masthead { text-align: center; margin-bottom: clamp(28px, 5vh, 48px); }
+.masthead-eyebrow {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.35em; color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase; margin-bottom: 10px;
+}
+.masthead-title {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: clamp(28px, 5vw, 44px); letter-spacing: 0.04em;
+  background: linear-gradient(100deg, #fff 20%, var(--accent) 80%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.masthead-sub {
+  margin-top: 8px; font-size: 14px; font-weight: 300;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.layout {
+  display: grid; grid-template-columns: 320px 1fr;
+  gap: 28px; align-items: start;
+}
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+/* ==================== 控制面板 ==================== */
+.panel { padding: 28px 26px; }
+.panel-heading {
+  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 14px;
+}
+.panel-heading + .mood-grid,
+.panel-heading + .length-row { margin-bottom: 26px; }
+
+.mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mood-chip {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.75); cursor: pointer;
+  font-family: var(--font-sans); font-size: 14px;
+  transition: all 0.45s var(--ease);
+}
+.mood-chip:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.25); }
+.mood-chip.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 24px var(--accent-soft), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.mood-glyph {
+  font-size: 16px; width: 24px; text-align: center;
+  color: var(--accent); transition: transform 0.45s var(--ease);
+}
+.mood-chip.is-active .mood-glyph { transform: scale(1.25) rotate(12deg); }
+
+.length-row { display: flex; gap: 8px; }
+.len-chip {
+  flex: 1; padding: 9px 0; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7); cursor: pointer;
+  font-family: var(--font-sans); font-size: 13px;
+  transition: all 0.4s var(--ease);
+}
+.len-chip:hover { border-color: rgba(255, 255, 255, 0.25); }
+.len-chip.is-active {
+  background: var(--accent-soft); border-color: var(--accent); color: #fff;
+}
+
+/* === 声音开关 === */
+.sound-toggle {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 26px; cursor: pointer; user-select: none;
+}
+.sound-toggle input { display: none; }
+.toggle-track {
+  width: 42px; height: 24px; border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative; transition: all 0.4s var(--ease);
+}
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.45s var(--ease);
+}
+.sound-toggle input:checked + .toggle-track {
+  background: var(--accent-soft); border-color: var(--accent);
+}
+.sound-toggle input:checked + .toggle-track .toggle-thumb {
+  left: 20px; background: var(--accent);
+}
+.toggle-label { font-size: 13px; color: rgba(255, 255, 255, 0.65); }
+
+/* === 打印按钮 === */
+.print-btn {
+  position: relative; overflow: hidden;
+  width: 100%; padding: 15px 0; border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+  color: #fff; font-family: var(--font-display);
+  font-size: 15px; font-weight: 600; letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.5s var(--ease);
+}
+.print-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 32px var(--accent-soft);
+}
+.print-btn:active { transform: translateY(-1px) scale(0.98); }
+.print-btn.is-busy { opacity: 0.55; pointer-events: none; }
+.print-btn-glow {
+  position: absolute; top: 0; left: -80%;
+  width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: skewX(-20deg);
+  animation: sheen 3.2s var(--ease) infinite;
+}
+@keyframes sheen {
+  0%, 55% { left: -80%; }
+  100% { left: 140%; }
+}
+
+.panel-footnote {
+  margin-top: 16px; text-align: center;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.4);
+  transition: color 0.4s var(--ease);
+}
+
+/* ==================== 打印机 ==================== */
+.machine-zone {
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 460px;
+}
+.printer { width: min(460px, 100%); padding: 20px 24px 26px; }
+.printer-top {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.18em; color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 18px;
+}
+.printer-temp { margin-left: auto; }
+.printer-led {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  animation: led-breathe 2.4s ease-in-out infinite;
+}
+.printer-led.is-printing { animation: led-blink 0.28s steps(2) infinite; }
+@keyframes led-breathe { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes led-blink { 0% { opacity: 1; } 100% { opacity: 0.2; } }
+
+.printer-slot {
+  height: 18px; border-radius: 9px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.6);
+  transition: box-shadow 0.5s var(--ease);
+}
+.printer.is-printing .printer-slot {
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.6), 0 0 26px var(--accent-soft);
+}
+
+/* ==================== 收据纸 ==================== */
+.paper-tray {
+  width: min(340px, 88%); min-height: 40px;
+  display: flex; justify-content: center;
+  perspective: 900px;
+}
+.receipt {
+  width: 100%; margin-top: -4px;
+  background: linear-gradient(180deg, #fdfcf8, #f6f3ea);
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.3), 0 20px 44px rgba(0, 0, 0, 0.28);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transform-origin: top center;
+  animation: paper-sway 5.6s ease-in-out infinite;
+  transition: transform 0.8s var(--ease), opacity 0.6s var(--ease);
+}
+@keyframes paper-sway {
+  0%, 100% { transform: rotate(-0.35deg); }
+  50% { transform: rotate(0.35deg); }
+}
+.receipt-body {
+  padding: 26px 24px 20px;
+  font-family: var(--font-mono); font-size: 12.5px;
+  color: var(--receipt-ink); line-height: 1.75;
+}
+.receipt.is-torn {
+  transform: translateY(46px) rotate(3deg) scale(0.96);
+  opacity: 0;
+}
+
+/* 收据内部排版 */
+.rc-header { text-align: center; }
+.rc-shop {
+  font-size: 15px; letter-spacing: 0.3em; font-weight: 400;
+  margin-bottom: 2px;
+}
+.rc-shop-sub { font-size: 10px; opacity: 0.6; letter-spacing: 0.14em; }
+.rc-meta {
+  display: flex; justify-content: space-between;
+  font-size: 10.5px; opacity: 0.65; margin: 10px 0 4px;
+}
+.rc-divider {
+  border-top: 1.5px dashed rgba(0, 0, 0, 0.3);
+  margin: 10px 0;
+}
+.rc-verse { display: flex; flex-direction: column; gap: 6px; }
+.rc-line {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-size: 13px;
+  opacity: 0; transform: translateY(6px);
+  animation: line-in 0.55s var(--ease) forwards;
+}
+@keyframes line-in { to { opacity: 1; transform: translateY(0); } }
+.rc-line-text { flex: 1; }
+.rc-line-price { opacity: 0.55; font-size: 11.5px; white-space: nowrap; }
+.rc-total {
+  display: flex; justify-content: space-between;
+  font-size: 14px; letter-spacing: 0.08em;
+}
+.rc-total .rc-line-price { opacity: 1; font-size: 14px; }
+.rc-footer {
+  text-align: center; font-size: 10.5px;
+  opacity: 0.6; letter-spacing: 0.1em; margin-top: 6px;
+}
+.rc-barcode {
+  display: flex; gap: 1.5px; justify-content: center; align-items: flex-end;
+  height: 34px; margin-top: 12px; opacity: 0.85;
+}
+.rc-barcode span { background: var(--receipt-ink); display: block; width: 2px; height: 100%; }
+.rc-cursor {
+  display: inline-block; width: 8px; height: 14px;
+  background: var(--receipt-ink); vertical-align: middle;
+  animation: cursor-blink 0.6s steps(2) infinite;
+}
+@keyframes cursor-blink { 50% { opacity: 0; } }
+
+/* === 撕裂线（锯齿） === */
+.receipt-tear {
+  position: relative; height: 44px; cursor: pointer;
+  background:
+    radial-gradient(circle at 7px -4px, transparent 8px, #f6f3ea 8.5px) 0 0 / 14px 100%;
+  display: flex; align-items: center; justify-content: center;
+  transition: filter 0.4s var(--ease);
+}
+.receipt-tear:hover { filter: brightness(1.04); }
+.tear-hint {
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.24em; color: rgba(0, 0, 0, 0.45);
+  background: #f6f3ea; padding: 3px 10px; border-radius: 99px;
+  opacity: 0.7; transition: all 0.45s var(--ease);
+}
+.receipt-tear:hover .tear-hint {
+  opacity: 1; color: rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.32em;
+}
+
+/* ==================== 收据档案 ==================== */
+.archive { margin-top: 40px; padding: 24px 28px; }
+.archive-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.archive-clear {
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.4s var(--ease);
+}
+.archive-clear:hover { color: rgba(255, 255, 255, 0.85); }
+.archive-rail {
+  display: flex; gap: 18px; flex-wrap: wrap; min-height: 90px;
+  align-items: flex-start;
+}
+.archive-empty {
+  font-size: 13px; font-weight: 300;
+  color: rgba(255, 255, 255, 0.4); padding: 8px 2px;
+}
+.mini-receipt {
+  width: 132px; padding: 12px 12px 0;
+  background: linear-gradient(180deg, #fdfcf8, #f1ede2);
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
+  font-family: var(--font-mono); color: var(--receipt-ink);
+  cursor: default;
+  opacity: 0; transform: translateY(24px) rotate(var(--tilt, 0deg)) scale(0.9);
+  transition: all 0.7s var(--ease);
+  position: relative;
+}
+.mini-receipt.is-landed { opacity: 1; transform: translateY(0) rotate(var(--tilt)) scale(1); }
+.mini-receipt:hover {
+  transform: translateY(-6px) rotate(0deg) scale(1.05);
+  z-index: 2;
+}
+.mini-receipt-tear {
+  height: 12px; margin: 8px -12px 0;
+  background: radial-gradient(circle at 6px -3px, transparent 7px, #f1ede2 7.5px) 0 0 / 12px 100%;
+}
+.mini-verse { font-size: 10px; line-height: 1.65; opacity: 0.85; }
+.mini-meta {
+  font-size: 9px; opacity: 0.5; margin-top: 6px;
+  display: flex; justify-content: space-between;
+}
+
+/* 撕下瞬间的飞纸粒子 */
+.paper-bit {
+  position: fixed; width: 7px; height: 10px;
+  background: #f6f3ea; pointer-events: none; z-index: 50;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  animation: bit-fall 0.9s var(--ease) forwards;
+}
+@keyframes bit-fall {
+  from { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  to   { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01s !important; }
+}

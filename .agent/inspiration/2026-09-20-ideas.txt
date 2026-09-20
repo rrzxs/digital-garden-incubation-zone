@@ -1,0 +1,7 @@
+horizontal-gallery-kit - 固定文案面板横向画卷陈列生成器
+verse-receipt-printer - 打字机诗意小票创作器
+type-specimen-lab - 视差滚动可变字体样张实验场
+week-rhythm-board - 一周节奏与负荷脉冲规划板
+spend-calm-canvas - 多币种日常开销静音规划板
+svg-mood-orb - 纯SVG驱动的三十二态情绪球工坊
+shot-blocker-canvas - 浏览器分镜机位预演画布

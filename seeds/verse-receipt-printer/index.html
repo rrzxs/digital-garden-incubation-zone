@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verse Receipt Printer · 诗句收据打印机</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-mood="starry">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <main class="stage">
+
+    <!-- === 顶部标题 === -->
+    <header class="masthead">
+      <p class="masthead-eyebrow">DIGITAL GARDEN · SEED</p>
+      <h1 class="masthead-title">诗句收据打印机</h1>
+      <p class="masthead-sub">Verse Receipt Printer — 把此刻的心情，打印成一张可以撕下的诗</p>
+    </header>
+
+    <div class="layout">
+
+      <!-- === 左侧：控制面板（微晶玻璃态） === -->
+      <section class="panel glass">
+        <h2 class="panel-heading">选择心境</h2>
+        <div class="mood-grid" id="moodGrid">
+          <button class="mood-chip" data-mood="starry">
+            <span class="mood-glyph">✦</span><span class="mood-name">星夜</span>
+          </button>
+          <button class="mood-chip" data-mood="mist">
+            <span class="mood-glyph">≋</span><span class="mood-name">海雾</span>
+          </button>
+          <button class="mood-chip" data-mood="dawn">
+            <span class="mood-glyph">☀</span><span class="mood-name">晨光</span>
+          </button>
+          <button class="mood-chip" data-mood="rain">
+            <span class="mood-glyph">☂</span><span class="mood-name">夜雨</span>
+          </button>
+        </div>
+
+        <h2 class="panel-heading">诗行长数</h2>
+        <div class="length-row" id="lengthRow">
+          <button class="len-chip" data-len="3">三行</button>
+          <button class="len-chip is-active" data-len="5">五行</button>
+          <button class="len-chip" data-len="7">七行</button>
+        </div>
+
+        <label class="sound-toggle">
+          <input type="checkbox" id="soundToggle" checked>
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          <span class="toggle-label">打印音效</span>
+        </label>
+
+        <button class="print-btn" id="printBtn">
+          <span class="print-btn-label">打印收据</span>
+          <span class="print-btn-glow"></span>
+        </button>
+
+        <p class="panel-footnote" id="statusLine">READY · 等待指令</p>
+      </section>
+
+      <!-- === 右侧：打印机与收据 === -->
+      <section class="machine-zone">
+
+        <!-- 打印机机身 -->
+        <div class="printer glass" id="printer">
+          <div class="printer-top">
+            <span class="printer-led" id="printerLed"></span>
+            <span class="printer-name">VERSE-O-MATIC · MK-II</span>
+            <span class="printer-temp" id="printerTemp">THERMAL 62°C</span>
+          </div>
+          <div class="printer-slot" id="printerSlot">
+            <div class="slot-inner"></div>
+          </div>
+        </div>
+
+        <!-- 出纸口下方的收据纸 -->
+        <div class="paper-tray" id="paperTray">
+          <div class="receipt" id="receipt">
+            <div class="receipt-body" id="receiptBody"></div>
+            <div class="receipt-tear" id="tearLine">
+              <span class="tear-hint">✂ 撕下收据</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- === 底部：撕下的收据档案 === -->
+    <section class="archive glass" id="archive">
+      <div class="archive-head">
+        <h2 class="panel-heading">收据档案</h2>
+        <button class="archive-clear" id="archiveClear">清空</button>
+      </div>
+      <div class="archive-rail" id="archiveRail">
+        <p class="archive-empty" id="archiveEmpty">还没有撕下的收据 —— 打印一张，然后沿虚线撕下。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
