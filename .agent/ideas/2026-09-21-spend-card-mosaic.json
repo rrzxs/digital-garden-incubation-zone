@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-21",
+  "name": "spend-card-mosaic",
+  "description": "多币种开销卡片可视化规划器",
+  "tagline": "Tile your spend",
+  "interaction": "Drag multi-currency expense cards onto an infinite canvas where they magnetically snap into a color-coded mosaic by category and budget. Hover any tile to see real-time converted amounts in your base currency, with tile size reflecting spending weight. Pinch or scroll to zoom between the big-picture budget view and individual transaction details.",
+  "directory": "seeds/spend-card-mosaic/",
+  "status": "incubated"
+}

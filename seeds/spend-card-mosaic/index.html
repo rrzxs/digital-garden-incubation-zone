@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spend Card Mosaic · 消费卡片马赛克</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- ═══════════════ 流体渐变背景 ═══════════════ -->
+  <div class="ambient" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+  <canvas id="drift-field" aria-hidden="true"></canvas>
+
+  <!-- ═══════════════ 主舞台 ═══════════════ -->
+  <main class="stage">
+
+    <!-- 顶部导航 -->
+    <header class="topbar glass">
+      <div class="brand">
+        <span class="brand-glyph">◫</span>
+        <span class="brand-name">Spend Mosaic</span>
+        <span class="brand-sub">消费卡片马赛克</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="theme-picker" id="theme-picker" title="切换氛围配色">
+          <button class="theme-dot" data-theme="aurora" aria-label="Aurora 配色"></button>
+          <button class="theme-dot" data-theme="ember" aria-label="Ember 配色"></button>
+          <button class="theme-dot" data-theme="midnight" aria-label="Midnight 配色"></button>
+          <button class="theme-dot" data-theme="bloom" aria-label="Bloom 配色"></button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 概览面板 -->
+    <section class="overview glass reveal-item" style="--reveal-i: 0">
+      <div class="overview-left">
+        <p class="overview-label">本期支出 · Monthly Spend</p>
+        <p class="overview-total"><span class="currency">¥</span><span id="total-amount" data-count="0">0</span></p>
+        <p class="overview-delta" id="total-delta">— 与上期持平</p>
+      </div>
+      <div class="overview-ring">
+        <svg viewBox="0 0 120 120" class="ring-svg">
+          <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+          <circle class="ring-value" id="budget-ring" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <div class="ring-center">
+          <span class="ring-percent" id="ring-percent">0%</span>
+          <span class="ring-caption">预算使用</span>
+        </div>
+      </div>
+      <div class="overview-meta">
+        <div class="meta-block">
+          <span class="meta-key">Budget</span>
+          <span class="meta-val mono">¥ <span id="budget-amount">12,800</span></span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-key">Top Category</span>
+          <span class="meta-val" id="top-category">—</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-key">Daily Avg</span>
+          <span class="meta-val mono">¥ <span id="daily-avg">0</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 月份切换 -->
+    <nav class="month-tabs glass reveal-item" style="--reveal-i: 1" id="month-tabs"></nav>
+
+    <!-- 卡片马赛克 -->
+    <section class="mosaic" id="mosaic"></section>
+
+    <footer class="footnote reveal-item" style="--reveal-i: 2">
+      <span class="mono">SPEND-CARD-MOSAIC</span> · 点击卡片展开消费明细 · 悬停感受 3D 倾斜 ·
+      <span class="mono">EDEN</span> 孵化于数字花园
+    </footer>
+  </main>
+
+  <!-- ═══════════════ 详情浮层 (FLIP) ═══════════════ -->
+  <div class="detail-overlay" id="detail-overlay" aria-hidden="true">
+    <div class="detail-card glass-strong" id="detail-card" role="dialog" aria-modal="true">
+      <button class="detail-close" id="detail-close" aria-label="关闭">×</button>
+      <header class="detail-head">
+        <span class="detail-icon" id="detail-icon">◎</span>
+        <div>
+          <h2 class="detail-title" id="detail-title">—</h2>
+          <p class="detail-sub" id="detail-sub">—</p>
+        </div>
+      </header>
+      <div class="detail-grid">
+        <div class="detail-block">
+          <span class="detail-key">本期支出</span>
+          <span class="detail-amount mono" id="detail-amount">¥ 0</span>
+          <span class="detail-delta" id="detail-delta">—</span>
+        </div>
+        <div class="detail-block">
+          <span class="detail-key">预算占比</span>
+          <span class="detail-amount mono" id="detail-share">0%</span>
+          <span class="detail-key subtle">占本期总支出</span>
+        </div>
+        <div class="detail-block detail-block--wide">
+          <span class="detail-key">12 周趋势</span>
+          <svg class="detail-spark" id="detail-spark" viewBox="0 0 320 90" preserveAspectRatio="none"></svg>
+        </div>
+        <div class="detail-block detail-block--wide">
+          <span class="detail-key">构成拆解 · Breakdown</span>
+          <div class="breakdown" id="detail-breakdown"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

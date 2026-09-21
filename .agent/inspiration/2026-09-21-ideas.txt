@@ -1,0 +1,6 @@
+type-specimen-lab - 字体样张动态试写与排版实验台
+kinetic-type-space - 巨型字随滚动扭曲的空间动效场
+receipt-poem-press - 热敏小票风打字机诗歌生成器
+spend-card-mosaic - 多币种开销卡片可视化规划器
+horizontal-reel-presenter - 固定文案面板配横向作品放映器
+scroll-motion-atlas - 沉浸式滚动动效预设试玩图谱

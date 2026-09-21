@@ -1,1 +1,1 @@
-verse-receipt-printer
+spend-card-mosaic

@@ -1870,6 +1870,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Spend Card Mosaic 消费卡片马赛克',
+      description: '沉浸式消费总览微交互体验。9 类支出以微晶玻璃态卡片马赛克拼贴，3D 倾斜眩光、FLIP 弹性详情展开、数字递增、涟漪粒子迸射与月份切换错峰入场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/spend-card-mosaic/index.html',
+      tags: ['Interactive', 'Data Visualization', 'Micro-interaction'],
+      icon: '◫',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 
