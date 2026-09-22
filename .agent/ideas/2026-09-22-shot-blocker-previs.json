@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-22",
+  "name": "shot-blocker-previs",
+  "description": "浏览器内镜头走位与分镜关键帧编排器",
+  "tagline": "Block. Keyframe. Shoot.",
+  "interaction": "在浏览器内的 3D 场景中拖拽规划镜头运动路径，为演员走位与机位变化打上关键帧。通过时间轴实时预演整段分镜的运镜节奏，像剪辑一样反复调整每个 shot 的编排。",
+  "directory": "seeds/shot-blocker-previs/",
+  "status": "incubated"
+}

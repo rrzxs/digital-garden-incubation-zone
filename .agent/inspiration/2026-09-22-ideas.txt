@@ -1,0 +1,7 @@
+multi-currency-pot - 多币种共同开销分摊与预算可视化工具
+shared-list-canvas - 本地存储驱动的多人共享清单演化看板
+typewriter-poem-printer - 打字机风格诗歌生成与票据排版打印器
+type-scale-universe - 滚动驱动的巨型字体空间变形实验场
+horizontal-story-panel - 固定信息栏加横向画廊的作品叙事生成器
+emotion-ball-lab - 纯SVG驱动的三十二态表情球交互调试台
+shot-blocker-previs - 浏览器内镜头走位与分镜关键帧编排器

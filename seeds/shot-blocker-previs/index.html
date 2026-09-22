@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shot Blocker Previs 封盖预演 - 高阶微交互体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- 流体渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell">
+        <header class="panel-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Shot Blocker<span class="brand-dot">.</span></h1>
+                <p class="brand-subtitle">封盖预演 · PREVIS · 弹簧物理 × 轨迹预测</p>
+            </div>
+            <div class="header-actions">
+                <div class="difficulty-toggle" role="group" aria-label="封盖者难度">
+                    <button class="diff-btn" data-diff="rookie" aria-label="新手">ROOKIE</button>
+                    <button class="diff-btn active" data-diff="pro" aria-label="职业">PRO</button>
+                    <button class="diff-btn" data-diff="elite" aria-label="精英">ELITE</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="stage-area" id="stage-area">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- 结果反馈横幅 -->
+            <div class="verdict-layer" id="verdict-layer" aria-live="polite">
+                <div class="verdict verdict-block" id="verdict-block">
+                    <span class="verdict-glyph">✋</span>
+                    <span class="verdict-text">BLOCKED</span>
+                    <span class="verdict-sub" id="verdict-block-sub">REACTION · 182ms</span>
+                </div>
+                <div class="verdict verdict-score" id="verdict-score">
+                    <span class="verdict-glyph">◎</span>
+                    <span class="verdict-text">SCORE</span>
+                    <span class="verdict-sub" id="verdict-score-sub">CLEAN ARC · +3</span>
+                </div>
+                <div class="verdict verdict-miss" id="verdict-miss">
+                    <span class="verdict-glyph">◌</span>
+                    <span class="verdict-text">MISS</span>
+                    <span class="verdict-sub">OFF TARGET</span>
+                </div>
+            </div>
+
+            <!-- 遥测面板 -->
+            <aside class="telemetry glass-surface" id="telemetry">
+                <div class="tele-title">TELEMETRY</div>
+                <div class="tele-row"><span>出手角度</span><b id="tele-angle">--°</b></div>
+                <div class="tele-row"><span>出手力度</span><b id="tele-power">--%</b></div>
+                <div class="tele-row"><span>预测弧顶</span><b id="tele-apex">--px</b></div>
+                <div class="tele-row"><span>封盖者状态</span><b id="tele-blocker">IDLE</b></div>
+                <div class="tele-row"><span>飞行时间</span><b id="tele-flight">0.00s</b></div>
+            </aside>
+
+            <!-- 统计 HUD -->
+            <div class="stats-strip">
+                <div class="stat-chip glass-surface">
+                    <span class="stat-label">ATTEMPTS</span>
+                    <span class="stat-value" id="stat-attempts">0</span>
+                </div>
+                <div class="stat-chip glass-surface">
+                    <span class="stat-label">SCORES</span>
+                    <span class="stat-value" id="stat-scores">0</span>
+                </div>
+                <div class="stat-chip glass-surface">
+                    <span class="stat-label">BLOCKS</span>
+                    <span class="stat-value" id="stat-blocks">0</span>
+                </div>
+                <div class="stat-chip glass-surface accent">
+                    <span class="stat-label">BLOCK RATE</span>
+                    <span class="stat-value" id="stat-rate">0%</span>
+                </div>
+            </div>
+
+            <!-- 引导提示 -->
+            <div class="hint-tip glass-surface" id="hint-tip">
+                <span class="hint-pulse"></span>
+                拖拽篮球瞄准 → 松手出手 · 虚线为 PREVIS 轨迹预测
+            </div>
+        </section>
+
+        <footer class="panel-footer">
+            <div class="palette-toggle" role="group" aria-label="氛围配色">
+                <button class="palette-btn active" data-theme="aurora" aria-label="极光"></button>
+                <button class="palette-btn" data-theme="ember" aria-label="熔炉"></button>
+                <button class="palette-btn" data-theme="abyss" aria-label="深渊"></button>
+                <button class="palette-btn" data-theme="vapor" aria-label="蒸汽"></button>
+            </div>
+            <div class="footer-meta">
+                <span class="mono-tag">GRAVITY 1800px/s²</span>
+                <span class="mono-tag">SPRING-DAMPER BLOCKER</span>
+                <button class="reset-btn" id="reset-stats">RESET STATS</button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

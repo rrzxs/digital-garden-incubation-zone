@@ -1880,6 +1880,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Shot Blocker Previs 封盖预演',
+      description: '沉浸式篮球封盖预演体验。拖拽弹弓瞄准即刻绘制 PREVIS 虚线轨迹预测，弹簧-阻尼封盖者延迟反应锁定拦截点扑向球线，SCORE / BLOCKED / MISS 三态判定、三档难度、粒子冲击波与实时遥测面板，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/shot-blocker-previs/index.html',
+      tags: ['Interactive', 'Physics', 'Sports', 'Micro-interaction'],
+      icon: '✋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
     }
   ]);
 
