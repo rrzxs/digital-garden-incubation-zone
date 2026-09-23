@@ -1,0 +1,8 @@
+humanoid-compare - 机器人图鉴：卡片目录与并排规格对比视图
+kinetic-type-lab - 滚动驱动的巨型字体动态排版实验场
+receipt-poetry - 打字机风格小票诗歌生成器
+row-rhythm - 共享清单追踪：清单管理配趣味动效音效
+flow-gallery - 固定文字面板加横向图像画廊切换器
+spatial-type-scape - 极端尺度字形的 3D 空间滚动环境
+emotion-orb-playground - 纯 SVG 驱动的 AI 助手表情球引擎
+storyboard-blocker - 浏览器内分镜走位与镜头运镜预演台

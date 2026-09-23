@@ -1890,6 +1890,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'game'
+    },
+    {
+      title: 'Humanoid Compare 人形机体对比舱',
+      description: '沉浸式人形机器人双机对比工具。共振雷达、能力脉冲条、3D 倾斜规格卡片与数字递增，磁力交换按钮一键对调双方，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/humanoid-compare/index.html',
+      tags: ['Interactive', 'Comparison', 'Micro-interaction', 'Data Visualization'],
+      icon: '⦿',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

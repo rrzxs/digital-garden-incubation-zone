@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Humanoid Compare · 人形机体对比舱</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- === 顶部导航 === -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-glyph">⦿</span>
+      <span class="brand-name">HUMANOID<span class="brand-accent">/</span>COMPARE</span>
+    </div>
+    <div class="theme-switcher" id="theme-switcher" title="切换氛围配色">
+      <button class="theme-dot" data-theme="aurora" aria-label="Aurora 配色"></button>
+      <button class="theme-dot" data-theme="nebula" aria-label="Nebula 配色"></button>
+      <button class="theme-dot" data-theme="reactor" aria-label="Reactor 配色"></button>
+      <button class="theme-dot" data-theme="abyss" aria-label="Abyss 配色"></button>
+    </div>
+  </header>
+
+  <main class="stage">
+
+    <!-- === Hero 标题 === -->
+    <section class="hero reveal-seq">
+      <p class="hero-eyebrow mono">// DUAL SPEC DECK · 双机对抗档案</p>
+      <h1 class="hero-title">人形机体<br><em>对比舱</em></h1>
+      <p class="hero-sub">选取两台人形机器人，见证参数在流体场中交锋——雷达共振、能力条脉冲、数字递进。</p>
+    </section>
+
+    <!-- === 机体选择区 === -->
+    <section class="selector-zone glass reveal-seq">
+      <div class="slot slot-a" id="slot-a">
+        <div class="slot-label mono">UNIT_A</div>
+        <div class="slot-chips" id="chips-a"></div>
+      </div>
+      <button class="swap-btn" id="swap-btn" title="交换双方" aria-label="交换对比双方">
+        <span class="swap-glyph">⇄</span>
+        <span class="swap-ring"></span>
+      </button>
+      <div class="slot slot-b" id="slot-b">
+        <div class="slot-label mono">UNIT_B</div>
+        <div class="slot-chips" id="chips-b"></div>
+      </div>
+    </section>
+
+    <!-- === 雷达共振图 === -->
+    <section class="panel glass reveal-seq">
+      <div class="panel-head">
+        <h2 class="panel-title">共振雷达 <span class="mono dim">/ RADAR RESONANCE</span></h2>
+        <div class="radar-legend mono" id="radar-legend"></div>
+      </div>
+      <div class="radar-wrap">
+        <canvas id="radar-canvas" width="640" height="460"></canvas>
+      </div>
+    </section>
+
+    <!-- === 能力条对比 === -->
+    <section class="panel glass reveal-seq">
+      <div class="panel-head">
+        <h2 class="panel-title">能力脉冲 <span class="mono dim">/ CAPABILITY PULSE</span></h2>
+        <span class="mono dim" id="pulse-hint">悬停能力条查看差值</span>
+      </div>
+      <div class="pulse-grid" id="pulse-grid"></div>
+      <div class="delta-readout mono glass-inset" id="delta-readout">◤ 将光标悬停于任一能力条以读取差值遥测</div>
+    </section>
+
+    <!-- === 规格卡片 === -->
+    <section class="spec-duo reveal-seq" id="spec-duo">
+      <article class="spec-card glass tilt-card" id="spec-a"></article>
+      <article class="spec-card glass tilt-card" id="spec-b"></article>
+    </section>
+
+    <footer class="foot mono reveal-seq">
+      HUMANOID/COMPARE · MAINTAINED BY <span class="eden">EDEN</span> · CUBIC-BEZIER(0.16, 1, 0.30, 1)
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
