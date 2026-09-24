@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-24",
+  "name": "type-terrain",
+  "description": "巨型字体滚动驱动的空间叙事页",
+  "tagline": "Type Becomes Terrain.",
+  "interaction": "巨型字体在滚动中被拉伸、折叠与推移，文字本身构成可穿行的三维地形。用户滚动时如同在字里行间徒步，段落起伏成山谷、标题隆起为山峰，叙事随海拔逐层展开。",
+  "directory": "seeds/type-terrain/",
+  "status": "incubated"
+}

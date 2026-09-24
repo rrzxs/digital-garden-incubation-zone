@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="abyss">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Type Terrain · 字形地形</title>
+  <meta name="description" content="沉浸式字形地形交互体验。输入文字即刻隆起为 3D 地形，Simplex 噪声风化、光标力场雕刻、脉冲冲击波与粒子流场，4种氛围配色">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="gradient-orb orb-4"></div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <canvas id="terrain-canvas"></canvas>
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <a class="back-link" href="../../index.html">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <span>返回花园</span>
+  </a>
+
+  <div class="theme-switcher" id="theme-switcher">
+    <button class="theme-btn active" data-theme="abyss" title="深渊">◈</button>
+    <button class="theme-btn" data-theme="aurora" title="极光">◈</button>
+    <button class="theme-btn" data-theme="ember" title="熔岩">◈</button>
+    <button class="theme-btn" data-theme="verdant" title="翠林">◈</button>
+  </div>
+
+  <main class="app-shell">
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon">◺</span>
+        <h1 class="brand-title">Type Terrain</h1>
+      </div>
+      <div class="header-actions">
+        <div class="interaction-mode" id="interaction-mode" role="button" tabindex="0" aria-label="切换交互模式">
+          <span class="mode-label active" data-mode="orbit">环绕</span>
+          <span class="mode-divider">/</span>
+          <span class="mode-label" data-mode="sculpt">雕刻</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="glass-panel input-panel">
+      <label class="field-label" for="terrain-input">铸字 · Type to Terrain</label>
+      <div class="input-row">
+        <input id="terrain-input" type="text" maxlength="12" value="TERRAIN" autocomplete="off" spellcheck="false" placeholder="输入文字…">
+        <button class="action-btn" id="random-btn" title="随机glyph">⟳</button>
+        <button class="action-btn pulse-btn" id="pulse-btn" title="脉冲冲击波">◉</button>
+      </div>
+      <div class="quick-words" id="quick-words">
+        <button data-word="TERRAIN">TERRAIN</button>
+        <button data-word="GLYPH">GLYPH</button>
+        <button data-word="地形">地形</button>
+        <button data-word="山水">山水</button>
+        <button data-word="Aa">Aa</button>
+      </div>
+    </section>
+
+    <section class="glass-panel control-panel">
+      <div class="field-label">地形参数 · Terrain Params</div>
+      <div class="slider-group">
+        <label>起伏 <output id="amp-out">1.0</output></label>
+        <input type="range" id="amp-slider" min="0.2" max="2.4" step="0.05" value="1.0">
+      </div>
+      <div class="slider-group">
+        <label>风化 <output id="erosion-out">0.35</output></label>
+        <input type="range" id="erosion-slider" min="0" max="1" step="0.01" value="0.35">
+      </div>
+      <div class="slider-group">
+        <label>网格 <output id="grid-out">96</output></label>
+        <input type="range" id="grid-slider" min="48" max="140" step="4" value="96">
+      </div>
+      <div class="field-label" style="margin-top:14px">渲染 · Render</div>
+      <div class="render-modes" id="render-modes">
+        <button class="render-btn active" data-render="wire">线框</button>
+        <button class="render-btn" data-render="dots">点阵</button>
+        <button class="render-btn" data-render="solid">密度</button>
+      </div>
+    </section>
+
+    <section class="glass-panel telemetry-panel" id="telemetry">
+      <div class="telemetry-row"><span>VERTS</span><span id="tm-verts">—</span></div>
+      <div class="telemetry-row"><span>PEAK</span><span id="tm-peak">—</span></div>
+      <div class="telemetry-row"><span>YAW</span><span id="tm-yaw">—</span></div>
+      <div class="telemetry-row"><span>MODE</span><span id="tm-mode">ORBIT</span></div>
+    </section>
+
+    <footer class="hint-bar">
+      <span>拖拽环绕 · <kbd>SPACE</kbd> 脉冲 · 雕刻模式下光标即力场</span>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,1 +1,1 @@
-humanoid-compare
+type-terrain

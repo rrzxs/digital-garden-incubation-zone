@@ -1892,6 +1892,16 @@
       category: 'game'
     },
     {
+      title: 'Type Terrain 字形地形',
+      description: '沉浸式字形地形交互体验。输入文字即刻隆起为 3D 地形——Simplex 噪声风化、光标力场雕刻、脉冲冲击波与粒子流场，3种渲染模式 × 双交互模式，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/type-terrain/index.html',
+      tags: ['Interactive', 'Typography', '3D Terrain', 'Micro-interaction'],
+      icon: '◺',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'Humanoid Compare 人形机体对比舱',
       description: '沉浸式人形机器人双机对比工具。共振雷达、能力脉冲条、3D 倾斜规格卡片与数字递增，磁力交换按钮一键对调双方，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
       path: '/seed/seeds/humanoid-compare/index.html',
