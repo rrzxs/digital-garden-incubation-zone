@@ -1902,6 +1902,16 @@
       category: 'animation'
     },
     {
+      title: 'Mood Orb 情绪光球',
+      description: '沉浸式情绪光球交互体验。6 种情绪驱动 Simplex 噪声形变与呼吸节律，弹簧物理拖拽回弹、脉冲冲击波、粒子光环与乱码揭示低语，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/mood-orb/index.html',
+      tags: ['Interactive', 'Emotion', 'Physics', 'Micro-interaction'],
+      icon: '◍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'Humanoid Compare 人形机体对比舱',
       description: '沉浸式人形机器人双机对比工具。共振雷达、能力脉冲条、3D 倾斜规格卡片与数字递增，磁力交换按钮一键对调双方，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
       path: '/seed/seeds/humanoid-compare/index.html',

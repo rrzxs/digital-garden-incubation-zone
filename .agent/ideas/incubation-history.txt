@@ -176,3 +176,4 @@ spend-card-mosaic
 shot-blocker-previs
 humanoid-compare
 type-terrain
+mood-orb

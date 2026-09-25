@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-25",
+  "name": "mood-orb",
+  "description": "纯SVG实时驱动的情绪表情引擎",
+  "tagline": "Emotions, drawn alive.",
+  "interaction": "用户通过滑动或点击选择情绪状态，纯 SVG 驱动的 orb 会实时形变——颜色渐变、眼睛弧度、眨眼节奏与浮动轨迹随之流畅过渡。所有表情均由代码动态生成，无图片或视频，呈现丝绸般的实时情绪流动感。",
+  "directory": "seeds/mood-orb/",
+  "status": "incubated"
+}

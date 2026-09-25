@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="nebula">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Orb · 情绪光球</title>
+  <meta name="description" content="沉浸式情绪光球交互体验。选择情绪，观察光球在 Simplex 噪声场中流变呼吸，弹簧物理拖拽、脉冲冲击波与粒子光环，4种氛围配色">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="gradient-orb orb-4"></div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <canvas id="particle-canvas"></canvas>
+  <canvas id="orb-canvas"></canvas>
+
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <a class="back-link" href="../../index.html">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <span>返回花园</span>
+  </a>
+
+  <div class="theme-switcher" id="theme-switcher">
+    <button class="theme-btn active" data-theme="nebula" title="星云">◈</button>
+    <button class="theme-btn" data-theme="abyss" title="深渊">◈</button>
+    <button class="theme-btn" data-theme="ember" title="熔岩">◈</button>
+    <button class="theme-btn" data-theme="verdant" title="翠林">◈</button>
+  </div>
+
+  <main class="app-shell">
+
+    <header class="panel-header glass">
+      <div class="brand">
+        <span class="brand-icon">◍</span>
+        <div class="brand-text">
+          <h1 class="brand-title">Mood Orb</h1>
+          <p class="brand-sub">情绪光球 · 一个会呼吸的情绪生命体</p>
+        </div>
+      </div>
+      <div class="telemetry" id="telemetry">
+        <div class="tele-item">
+          <span class="tele-key">MOOD</span>
+          <span class="tele-val" id="tele-mood">SERENE</span>
+        </div>
+        <div class="tele-item">
+          <span class="tele-key">BPM</span>
+          <span class="tele-val" id="tele-bpm">06</span>
+        </div>
+        <div class="tele-item">
+          <span class="tele-key">COHERENCE</span>
+          <span class="tele-val" id="tele-coherence">98.2%</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="stage" id="stage">
+      <div class="whisper glass" id="whisper">
+        <span class="whisper-text" id="whisper-text">将手放在光球上，感受它的呼吸</span>
+      </div>
+      <div class="hint" id="hint">
+        <span class="hint-item">拖拽 · 牵引光球</span>
+        <span class="hint-divider">/</span>
+        <span class="hint-item">点击 · 释放脉冲</span>
+      </div>
+    </section>
+
+    <section class="mood-selector" id="mood-selector" aria-label="情绪选择">
+      <div class="mood-track" id="mood-track">
+        <button class="mood-card active" data-mood="serene">
+          <span class="mood-glyph">🌤</span>
+          <span class="mood-name">宁静</span>
+          <span class="mood-hint">Serene</span>
+        </button>
+        <button class="mood-card" data-mood="joy">
+          <span class="mood-glyph">✨</span>
+          <span class="mood-name">欢愉</span>
+          <span class="mood-hint">Joy</span>
+        </button>
+        <button class="mood-card" data-mood="melancholy">
+          <span class="mood-glyph">🌧</span>
+          <span class="mood-name">忧郁</span>
+          <span class="mood-hint">Melancholy</span>
+        </button>
+        <button class="mood-card" data-mood="focus">
+          <span class="mood-glyph">◎</span>
+          <span class="mood-name">专注</span>
+          <span class="mood-hint">Focus</span>
+        </button>
+        <button class="mood-card" data-mood="anxious">
+          <span class="mood-glyph">⚡</span>
+          <span class="mood-name">焦躁</span>
+          <span class="mood-hint">Anxious</span>
+        </button>
+        <button class="mood-card" data-mood="wonder">
+          <span class="mood-glyph">🌌</span>
+          <span class="mood-name">惊叹</span>
+          <span class="mood-hint">Wonder</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
