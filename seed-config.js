@@ -1920,6 +1920,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Invoice Sketch 发票速写',
+      description: '沉浸式账单作曲家。微晶玻璃态发票纸、可编辑明细行级联增删、税率/折扣滑块联动总额滚动弹跳、PAID 印章弹簧落锤盖章、磁力按钮、粒子流场迸射与打印导出，流体渐变背景 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/invoice-sketch/index.html',
+      tags: ['Interactive', 'Invoice', 'Micro-interaction', 'Animation'],
+      icon: '⌗',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

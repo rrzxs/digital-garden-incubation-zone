@@ -1,0 +1,5 @@
+pomodoro-atmos - 场景化番茄钟，专注时森林生长、休息时星空流转
+invoice-sketch - 拖拽式发票/收据生成器，实时预览并导出打印
+regex-playroom - 可视化正则测试台，高亮匹配并图解表达式结构
+css-easing-gallery - 缓动曲线对比实验室，实时预览并复制 cubic-bezier
+json-lens - JSON 树形查看/格式化/差异对比工具，深色氛围感界面

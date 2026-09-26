@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Sketch 发票速写 - 沉浸式账单作曲家</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回集木区</span>
+    </a>
+
+    <!-- 流体网格渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain"></div>
+    </div>
+
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <main class="stage">
+        <header class="hud">
+            <div class="hud-title">
+                <h1 class="brand-title">Invoice <em>Sketch</em></h1>
+                <p class="brand-subtitle">发票速写 — 让数字起舞的账单作曲家</p>
+            </div>
+            <div class="theme-dial" role="radiogroup" aria-label="氛围配色">
+                <button class="theme-dot" data-theme="aurora" aria-label="极光配色"></button>
+                <button class="theme-dot" data-theme="amber" aria-label="琥珀配色"></button>
+                <button class="theme-dot" data-theme="mint" aria-label="薄荷配色"></button>
+                <button class="theme-dot" data-theme="midnight" aria-label="午夜配色"></button>
+            </div>
+        </header>
+
+        <section class="invoice-paper" id="invoice-paper">
+            <!-- 发票头 -->
+            <div class="invoice-head reveal-step" style="--step:0">
+                <div class="party from-party">
+                    <span class="party-label">FROM · 开票方</span>
+                    <div class="editable" contenteditable="true" spellcheck="false" data-field="from-name">EDEN Studio</div>
+                    <div class="editable small" contenteditable="true" spellcheck="false" data-field="from-detail">数字花园 · 种子孵化部</div>
+                </div>
+                <div class="invoice-meta">
+                    <div class="invoice-no" id="invoice-no">INV-2026-0926</div>
+                    <div class="invoice-date" id="invoice-date">2026-09-26</div>
+                </div>
+                <div class="party to-party">
+                    <span class="party-label">TO · 收票方</span>
+                    <div class="editable" contenteditable="true" spellcheck="false" data-field="to-name">Lovely Client</div>
+                    <div class="editable small" contenteditable="true" spellcheck="false" data-field="to-detail">somewhere in the garden</div>
+                </div>
+            </div>
+
+            <div class="invoice-divider reveal-step" style="--step:1"></div>
+
+            <!-- 明细行 -->
+            <div class="line-items-head reveal-step" style="--step:2">
+                <span class="col-desc">条目 DESCRIPTION</span>
+                <span class="col-qty">数量 QTY</span>
+                <span class="col-price">单价 PRICE</span>
+                <span class="col-amount">小计 AMOUNT</span>
+                <span class="col-del"></span>
+            </div>
+            <div class="line-items" id="line-items"></div>
+            <button class="add-row-btn" id="add-row-btn">
+                <span class="plus">+</span> 新增一行 line item
+            </button>
+
+            <!-- 汇总 -->
+            <div class="invoice-summary reveal-step" style="--step:3">
+                <div class="summary-block">
+                    <label class="slider-row">
+                        <span class="slider-label">税率 TAX</span>
+                        <input type="range" id="tax-slider" min="0" max="25" step="0.5" value="6">
+                        <span class="slider-value mono" id="tax-display">6.0%</span>
+                    </label>
+                    <label class="slider-row">
+                        <span class="slider-label">折扣 OFF</span>
+                        <input type="range" id="discount-slider" min="0" max="50" step="1" value="0">
+                        <span class="slider-value mono" id="discount-display">0%</span>
+                    </label>
+                </div>
+                <div class="totals-block">
+                    <div class="total-row"><span>小计 Subtotal</span><span class="mono" id="subtotal-el">¥0.00</span></div>
+                    <div class="total-row"><span>折扣 Discount</span><span class="mono neg" id="discount-el">−¥0.00</span></div>
+                    <div class="total-row"><span>税额 Tax</span><span class="mono" id="tax-el">¥0.00</span></div>
+                    <div class="total-row grand">
+                        <span>应付 TOTAL DUE</span>
+                        <span class="mono grand-value" id="grand-el">¥0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 备注 -->
+            <div class="invoice-notes reveal-step" style="--step:4">
+                <span class="notes-label">备注 NOTES</span>
+                <div class="editable small" contenteditable="true" spellcheck="false" data-field="notes">谢谢惠顾 · 30 日内结清 · 像素级手工打磨</div>
+            </div>
+
+            <!-- 盖章区 -->
+            <div class="stamp-zone reveal-step" style="--step:5">
+                <button class="stamp-btn" id="stamp-btn">盖章 · SEAL IT</button>
+                <div class="stamp" id="stamp" aria-hidden="true">
+                    <span class="stamp-inner">PAID</span>
+                </div>
+            </div>
+        </section>
+
+        <footer class="hud-footer">
+            <button class="magnetic-btn primary" id="print-btn">
+                <span class="btn-text">打印 / 导出 PDF</span>
+            </button>
+            <button class="magnetic-btn ghost" id="shuffle-btn">
+                <span class="btn-text">换一张 SKETCH</span>
+            </button>
+            <span class="telemetry mono" id="telemetry">ITEMS 00 · QTY 00 · EDGE 0.00</span>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

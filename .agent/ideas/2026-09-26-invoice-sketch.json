@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-26",
+  "name": "invoice-sketch",
+  "description": "拖拽式发票/收据生成器，实时预览并导出打印",
+  "tagline": "Sketch it. Send it.",
+  "interaction": "从左侧组件面板拖拽 Logo、商品行、税费栏到画布上，像拼贴一样自由排版发票版式。右侧实时预览最终 A4 打印效果，随时调整字体、配色与边距。一键导出 PDF 或直接打印，即拖即所得。",
+  "directory": "seeds/invoice-sketch/",
+  "status": "incubated"
+}
