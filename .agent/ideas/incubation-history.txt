@@ -178,3 +178,4 @@ humanoid-compare
 type-terrain
 mood-orb
 invoice-sketch
+vault-ledger

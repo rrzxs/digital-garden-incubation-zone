@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Ledger · 金库账本</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="aurora">
+  <!-- === 流体渐变背景 === -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="bg-grain"></div>
+  </div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- === 主题切换 === -->
+  <div class="theme-dock glass" role="group" aria-label="氛围配色">
+    <button class="theme-dot" data-theme="aurora" title="极光" aria-label="极光配色"></button>
+    <button class="theme-dot" data-theme="ember" title="熔金" aria-label="熔金配色"></button>
+    <button class="theme-dot" data-theme="abyss" title="深渊" aria-label="深渊配色"></button>
+    <button class="theme-dot" data-theme="orchid" title="幽兰" aria-label="幽兰配色"></button>
+  </div>
+
+  <!-- === 主舞台 === -->
+  <main class="stage">
+    <!-- 头部 -->
+    <header class="stage-header">
+      <div class="vault-sigil" aria-hidden="true">
+        <span class="sigil-ring"></span>
+        <span class="sigil-core"></span>
+      </div>
+      <h1 class="app-title" id="app-title" data-text="VAULT LEDGER">VAULT LEDGER</h1>
+      <p class="app-sub">金库账本 · 每一笔流转，皆有回响</p>
+    </header>
+
+    <!-- 余额圣殿 -->
+    <section class="balance-sanctum glass tilt" id="balance-card">
+      <div class="balance-label">库藏净值 · NET VAULT</div>
+      <div class="balance-value mono" id="balance-value">¥ 0.00</div>
+      <div class="balance-meta">
+        <div class="meta-chip income">
+          <span class="chip-label">流入 IN</span>
+          <span class="chip-value mono" id="income-value">+¥0.00</span>
+        </div>
+        <div class="flow-spark" id="flow-spark" aria-hidden="true"></div>
+        <div class="meta-chip expense">
+          <span class="chip-label">流出 OUT</span>
+          <span class="chip-value mono" id="expense-value">-¥0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 控制台 -->
+    <section class="console glass">
+      <div class="filter-rail" id="filter-rail" role="tablist" aria-label="类别筛选"></div>
+      <div class="console-actions">
+        <button class="btn-ghost magnetic" id="btn-shuffle" title="随机一笔">
+          <span class="btn-glow"></span>⤨ 掷骰
+        </button>
+        <button class="btn-primary magnetic" id="btn-new" title="记一笔">
+          <span class="btn-glow"></span>＋ 记一笔
+        </button>
+      </div>
+    </section>
+
+    <!-- 账本列表 -->
+    <section class="ledger-scroll" id="ledger-scroll">
+      <div class="ledger-list" id="ledger-list"></div>
+      <div class="ledger-empty" id="ledger-empty">
+        <div class="empty-sigil">⌀</div>
+        <p>金库空寂，落下第一枚硬币吧</p>
+      </div>
+    </section>
+
+    <footer class="stage-footer mono">
+      VAULT·LEDGER v1.0 — sealed in glass, driven by physics
+    </footer>
+  </main>
+
+  <!-- === 记账弹窗 === -->
+  <div class="modal-veil" id="modal-veil" aria-hidden="true">
+    <div class="modal glass" id="entry-modal" role="dialog" aria-modal="true" aria-label="新账目">
+      <button class="modal-close magnetic" id="modal-close" aria-label="关闭">✕</button>
+      <h2 class="modal-title">铸造新条目</h2>
+
+      <div class="type-switch" id="type-switch">
+        <button class="type-btn active" data-type="income">流入 IN</button>
+        <button class="type-btn" data-type="expense">流出 OUT</button>
+        <span class="type-slider"></span>
+      </div>
+
+      <label class="field">
+        <span class="field-label">金额 AMOUNT</span>
+        <div class="amount-wrap">
+          <span class="currency mono">¥</span>
+          <input type="text" id="input-amount" class="mono" inputmode="decimal"
+                 placeholder="0.00" autocomplete="off" />
+        </div>
+      </label>
+
+      <label class="field">
+        <span class="field-label">名目 LABEL</span>
+        <input type="text" id="input-label" placeholder="例如：晨间咖啡" maxlength="24" autocomplete="off" />
+      </label>
+
+      <div class="field">
+        <span class="field-label">类别 CATEGORY</span>
+        <div class="category-grid" id="category-grid"></div>
+      </div>
+
+      <button class="btn-primary btn-block magnetic" id="btn-commit">
+        <span class="btn-glow"></span>落锤封存 ⏎
+      </button>
+    </div>
+  </div>
+
+  <!-- 点击涟漪层 -->
+  <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

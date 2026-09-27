@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-27",
+  "name": "vault-ledger",
+  "description": "渐变质感的加密金库与消费账户可视化面板",
+  "tagline": "Vault in color",
+  "interaction": "用户点击渐变金库面板即可解锁加密资产视图，流动的渐变色彩随资产涨跌实时呼吸变化。左右滑动可在金库与消费账户之间切换，每笔支出以渐变光柱的形式从总资产中剥离沉降。悬停任意交易记录，会绽放出该笔消费的细粒度分类光环。",
+  "directory": "seeds/vault-ledger/",
+  "status": "incubated"
+}

@@ -1930,6 +1930,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Vault Ledger 金库账本',
+      description: '沉浸式个人金库账本。乱码揭示标题、easeOutExpo 数字滚动余额、错峰级联账目卡片、磁力按钮、点击涟漪冲击波与粒子流场，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/vault-ledger/index.html',
+      tags: ['Interactive', 'Finance', 'Micro-interaction', 'Glassmorphism'],
+      icon: '◫',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

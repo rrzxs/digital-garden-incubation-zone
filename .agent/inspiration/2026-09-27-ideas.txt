@@ -1,0 +1,7 @@
+typewave-scale - 输入基准字号生成字体比例并导出CSS变量
+crate-shelf - 滚动驱动的黑胶与CD收藏虚拟书架
+archive-snap - 快速拍照建档并按类型自动归档的收藏整理台
+statement-grid - 粘贴银行流水文本解析为结构化账目表格
+scroll-motion-lab - 拖拽编排滚动触发动画的沉浸叙事试验台
+vault-ledger - 渐变质感的加密金库与消费账户可视化面板
+emotion-orb - 纯SVG驱动的三十二态表情球微交互引擎
