@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statement Morph · 语句流变</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+  <!-- 流体渐变背景 -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <main class="stage">
+    <!-- 顶部 HUD -->
+    <header class="hud glass">
+      <div class="hud-brand">
+        <span class="hud-glyph">≍</span>
+        <div class="hud-titles">
+          <h1>Statement Morph</h1>
+          <p>语句流变引擎 · v1.0</p>
+        </div>
+      </div>
+      <div class="hud-right">
+        <div class="hud-ring-wrap">
+          <svg class="hud-ring" viewBox="0 0 40 40">
+            <circle class="ring-track" cx="20" cy="20" r="16"></circle>
+            <circle class="ring-bar" id="cycle-ring" cx="20" cy="20" r="16"></circle>
+          </svg>
+          <span class="ring-count" id="cycle-count">01</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 语句舞台 -->
+    <section class="statement-stage glass" id="stage">
+      <div class="stage-vignette"></div>
+      <p class="stage-label" id="stage-label">// awaiting input</p>
+      <div class="statement" id="statement" aria-live="polite"></div>
+      <div class="stage-footer">
+        <span class="stage-hint">移动光标扰动字符 · 点击释放冲击波</span>
+        <span class="stage-mono" id="telemetry">FORCE 0.00 · CHARS 0</span>
+      </div>
+    </section>
+
+    <!-- 控制面板 -->
+    <section class="controls glass">
+      <div class="ctrl-row">
+        <div class="ctrl-group">
+          <span class="ctrl-label">MORPH FIELD</span>
+          <div class="seg" id="mode-seg">
+            <button class="seg-btn active" data-mode="cascade">Cascade</button>
+            <button class="seg-btn" data-mode="wave">Wave</button>
+            <button class="seg-btn" data-mode="vortex">Vortex</button>
+            <button class="seg-btn" data-mode="quantum">Quantum</button>
+          </div>
+        </div>
+        <div class="ctrl-group">
+          <span class="ctrl-label">PALETTE</span>
+          <div class="seg" id="theme-seg">
+            <button class="seg-btn dot active" data-theme="aurora" title="Aurora"><i></i>Aurora</button>
+            <button class="seg-btn dot" data-theme="dusk" title="Dusk"><i></i>Dusk</button>
+            <button class="seg-btn dot" data-theme="ember" title="Ember"><i></i>Ember</button>
+            <button class="seg-btn dot" data-theme="mono" title="Mono"><i></i>Mono</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ctrl-row">
+        <div class="ctrl-group grow">
+          <span class="ctrl-label">YOUR STATEMENT</span>
+          <form class="composer" id="composer">
+            <input type="text" id="statement-input" maxlength="64" placeholder="写下一句属于你的宣言…" autocomplete="off">
+            <button type="submit" class="btn-seed">Morph ⏎</button>
+          </form>
+        </div>
+        <div class="ctrl-group">
+          <span class="ctrl-label">MOTION</span>
+          <div class="seg">
+            <button class="seg-btn" id="btn-prev">← Prev</button>
+            <button class="seg-btn active" id="btn-play">Pause ⏸</button>
+            <button class="seg-btn" id="btn-next">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ctrl-row">
+        <div class="ctrl-group grow">
+          <span class="ctrl-label">QUEUE · <span id="queue-count">0</span> STATEMENTS</span>
+          <div class="queue" id="queue"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

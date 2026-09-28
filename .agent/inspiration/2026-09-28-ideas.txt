@@ -1,0 +1,7 @@
+archivist-desk - 拖拽照片生成档案卡并自动归类收藏
+type-scale-forge - 可视化字阶生成器，一键导出CSS变量
+statement-morph - 浏览器内解析银行账单PDF转CSV
+vinyl-shelf - 滚动驱动的黑胶唱片三维陈列架
+finance-slider-lab - 沉浸式滑杆驱动的购车贷款试算器
+emotion-orb-playground - 纯SVG驱动的聊天情绪表情引擎
+scene-block-studio - 网页端分镜走位与镜头编排画布

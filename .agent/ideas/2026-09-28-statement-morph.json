@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-28",
+  "name": "statement-morph",
+  "description": "浏览器内解析银行账单PDF转CSV",
+  "tagline": "PDF in, CSV out.",
+  "interaction": "Drag and drop a bank statement PDF — everything is parsed locally in your browser, so sensitive financial data never touches a server. Transactions are auto-extracted into an editable table preview where you can verify, fix, or deselect rows. One click exports a clean CSV ready for Excel, Sheets, or your accounting tool.",
+  "directory": "seeds/statement-morph/",
+  "status": "incubated"
+}

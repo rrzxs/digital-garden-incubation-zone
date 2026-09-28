@@ -1940,6 +1940,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Statement Morph 语句流变',
+      description: '沉浸式语句流变引擎。弹簧-阻尼字符物理驱动的宣言在乱码揭示中流变重组，4种流变场（级联/波浪/漩涡/量子）× 光标力场排斥 × 点击冲击波涟漪，自定义语句队列与自动循环进度环，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/statement-morph/index.html',
+      tags: ['Interactive', 'Typography', 'Micro-interaction', 'Animation'],
+      icon: '≍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
