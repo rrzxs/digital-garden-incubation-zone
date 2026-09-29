@@ -1950,6 +1950,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Typewave Scale 打字波浪缩放',
+      description: '沉浸式打字波浪缩放体验。每个字符都是弹簧振子，输入、退格、点击与悬停激起传播的缩放波浪，3种波浪模式（脉冲/瀑布/回响）× 波幅波长调节 × 4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/typewave-scale/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: '≍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

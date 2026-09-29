@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typewave Scale · 打字波浪缩放</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+  <!-- === 流体渐变背景 === -->
+  <div class="fluid-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <main class="stage">
+    <!-- === 顶部标识 === -->
+    <header class="masthead reveal">
+      <div class="brand">
+        <span class="brand-mark">≍</span>
+        <div class="brand-text">
+          <h1>Typewave Scale</h1>
+          <p>打字波浪缩放 · 字符的弹簧海洋</p>
+        </div>
+      </div>
+      <div class="theme-switcher" id="themeSwitcher" role="group" aria-label="氛围配色">
+        <button class="theme-dot" data-theme="aurora" title="极光"></button>
+        <button class="theme-dot" data-theme="abyss" title="深渊"></button>
+        <button class="theme-dot" data-theme="ember" title="余烬"></button>
+        <button class="theme-dot" data-theme="mint" title="薄荷"></button>
+      </div>
+    </header>
+
+    <!-- === 主舞台：打字面板 === -->
+    <section class="wave-panel glass reveal" id="wavePanel">
+      <div class="panel-toolbar">
+        <div class="mode-group" id="modeGroup" role="group" aria-label="波浪模式">
+          <button class="mode-btn active" data-mode="pulse">脉冲 Pulse</button>
+          <button class="mode-btn" data-mode="waterfall">瀑布 Waterfall</button>
+          <button class="mode-btn" data-mode="orbit">回响 Orbit</button>
+        </div>
+        <div class="stats">
+          <span class="stat"><i id="statChars">0</i><label>字符</label></span>
+          <span class="stat"><i id="statEnergy">0</i><label>波能</label></span>
+          <span class="stat"><i id="statWaves">0</i><label>波次</label></span>
+        </div>
+      </div>
+
+      <div class="type-canvas" id="typeCanvas">
+        <div class="char-sea" id="charSea" aria-live="polite"></div>
+        <div class="caret" id="caret"></div>
+        <div class="empty-hint" id="emptyHint">在此输入，让字符泛起波浪 …</div>
+      </div>
+
+      <div class="panel-footer">
+        <label class="slider-wrap">
+          <span class="slider-label">波幅</span>
+          <input type="range" id="ampSlider" min="0.2" max="2" step="0.05" value="1">
+          <span class="slider-value" id="ampValue">1.00</span>
+        </label>
+        <label class="slider-wrap">
+          <span class="slider-label">波长</span>
+          <input type="range" id="lenSlider" min="1" max="14" step="0.5" value="6">
+          <span class="slider-value" id="lenValue">6.0</span>
+        </label>
+        <button class="ghost-btn" id="clearBtn">清空</button>
+        <button class="ghost-btn" id="sampleBtn">示例句</button>
+      </div>
+    </section>
+
+    <!-- === 提示条 === -->
+    <footer class="footnote reveal">
+      <p><span class="key">输入</span> 触发波浪 · <span class="key">点击</span> 海面激起涟漪 · <span class="key">悬停</span> 字符避让光标</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

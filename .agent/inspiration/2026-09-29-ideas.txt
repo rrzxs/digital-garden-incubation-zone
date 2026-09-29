@@ -1,0 +1,8 @@
+typewave-scale - 拖拽生成字体排版比例并导出CSS变量
+statement-sieve - 浏览器内解析银行账单PDF并导出CSV
+vinyl-shelf - 把唱片收藏渲染成可滚动的3D家庭货架
+scrollfilm - 用滚动与关键帧编排发布短片般的叙事页
+vault-spend - 加密金库与消费账户合一的交互式模拟器
+scene-previs - 在画布中摆角色、运镜并导出分镜脚本
+emotion-orb - 纯SVG驱动的AI助手32态表情小球引擎
+mortgage-motion - 沉浸式滚动驱动的房贷分期可视化计算器

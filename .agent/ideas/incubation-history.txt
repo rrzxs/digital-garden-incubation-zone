@@ -180,3 +180,4 @@ mood-orb
 invoice-sketch
 vault-ledger
 statement-morph
+typewave-scale

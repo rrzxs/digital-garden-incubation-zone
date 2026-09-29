@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-29",
+  "name": "typewave-scale",
+  "description": "拖拽生成字体排版比例并导出CSS变量",
+  "tagline": "Drag. Scale. Ship perfect type.",
+  "interaction": "拖动波形曲线上的锚点，实时调整字体排版的比例关系（比例、基准尺寸、级数），页面文字即刻流畅缩放预览。满意后一键复制生成好的 CSS 变量（`--font-size-sm` 至 `--font-size-xxl`），直接粘贴进项目即可使用。",
+  "directory": "seeds/typewave-scale/",
+  "status": "incubated"
+}
