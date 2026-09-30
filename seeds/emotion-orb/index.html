@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion Orb · 情绪光球</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 流体渐变背景 -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="bg-blob bg-blob--a"></div>
+    <div class="bg-blob bg-blob--b"></div>
+    <div class="bg-blob bg-blob--c"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <main class="stage">
+
+    <!-- 顶部标题 -->
+    <header class="stage-header reveal">
+      <p class="stage-eyebrow">DIGITAL GARDEN · SEED</p>
+      <h1 class="stage-title">Emotion <span>Orb</span></h1>
+      <p class="stage-sub">触碰情绪，让光球替你呼吸。将此刻的感受凝成一枚流动的晶体。</p>
+    </header>
+
+    <!-- 光球画布 -->
+    <section class="orb-zone reveal" data-delay="1">
+      <canvas id="orb-canvas" aria-label="情绪光球"></canvas>
+      <div class="orb-label glass">
+        <span class="orb-label__dot"></span>
+        <span id="orb-emotion-name">平静</span>
+        <em id="orb-emotion-poem">深海无波，光在其中沉眠</em>
+      </div>
+      <div class="orb-hud" id="orb-hud">
+        <span id="hud-coherence">COH 0.00</span>
+        <span id="hud-energy">NRG 0.00</span>
+        <span id="hud-fps">FPS 60</span>
+      </div>
+    </section>
+
+    <!-- 控制面板 -->
+    <section class="panel glass reveal" data-delay="2">
+
+      <div class="panel-block">
+        <p class="panel-block__title">选择此刻的情绪</p>
+        <div class="chips" id="emotion-chips" role="radiogroup" aria-label="情绪选择"></div>
+      </div>
+
+      <div class="panel-block panel-block--split">
+        <div class="slider-group">
+          <label for="intensity-range">强度 <b id="intensity-value">60%</b></label>
+          <input type="range" id="intensity-range" min="10" max="100" value="60">
+        </div>
+        <div class="slider-group">
+          <label for="tempo-range">呼吸节律 <b id="tempo-value">1.0×</b></label>
+          <input type="range" id="tempo-range" min="40" max="200" value="100">
+        </div>
+      </div>
+
+      <div class="panel-block panel-block--actions">
+        <button class="btn" id="pulse-btn">情绪脉冲</button>
+        <button class="btn btn--ghost" id="drift-btn">让思绪漂移</button>
+      </div>
+
+      <p class="panel-foot">每个情绪都是一种频率 · 观察它，而不评判它</p>
+    </section>
+
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

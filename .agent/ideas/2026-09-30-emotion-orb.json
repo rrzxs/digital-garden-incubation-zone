@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-30",
+  "name": "emotion-orb",
+  "description": "纯SVG实时驱动的表情球情绪引擎",
+  "tagline": "Feel. Morph. Evolve.",
+  "interaction": "一个纯 SVG 绘制的发光情绪球实时感知用户的输入（文字、语速或鼠标轨迹），通过路径变形、色彩渐变和粒子脉冲即时"改写"自己的表情。愤怒时球体边缘迸发锯齿波，平静时则化作缓慢呼吸的柔和圆形，让情绪第一次变得可见、可触。",
+  "directory": "seeds/emotion-orb/",
+  "status": "incubated"
+}

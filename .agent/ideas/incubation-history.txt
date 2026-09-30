@@ -181,3 +181,4 @@ invoice-sketch
 vault-ledger
 statement-morph
 typewave-scale
+emotion-orb

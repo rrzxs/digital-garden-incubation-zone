@@ -12,6 +12,16 @@
       isEntry: true
     },
     {
+      title: 'Emotion Orb 情绪光球',
+      description: '沉浸式情绪光球微交互体验。6种情绪预设驱动噪声形变光球实时流变，呼吸节律、环绕粒子、情绪脉冲冲击波与思绪漂移模式，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/emotion-orb/index.html',
+      tags: ['Interactive', 'Emotion', 'Micro-interaction', 'Animation'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'wellness'
+    },
+    {
       title: '小红书封面实验室',
       description: '策略驱动的高级封面生成器。支持概念生成、多模板系统、主题切换、拖拽微调与 SVG/PNG 双导出。',
       path: '/seed/seeds/xhs-cover-studio/index.html',
