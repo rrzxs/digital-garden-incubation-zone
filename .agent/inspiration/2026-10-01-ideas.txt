@@ -1,0 +1,7 @@
+scroll-choreography-lab - 滚动驱动镜头编排实验场，可视化调节网页动效节奏
+vinyl-shelf-visualizer - 模拟家用唱片架的收藏浏览与翻页交互体验
+emotion-orb-playground - 纯SVG实时驱动的AI助手表情球状态引擎
+shot-blocker-storyboard - 浏览器内场景调度与运镜分镜草图工具
+statement-grid-cleaner - 银行流水粘贴清洗为结构化表格并导出CSV
+motion-preset-remixer - 描述情绪即可生成并微调CSS动画预设库
+type-fragment-composer - 碎片化超大字排版与滚动渐变生成器

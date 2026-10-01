@@ -22,6 +22,16 @@
       category: 'wellness'
     },
     {
+      title: 'Emotion Orb Playground 情绪光球游乐场',
+      description: '可拖拽、可戳击、可爆裂重组的情绪光球游乐场。6 种情绪实时流变参数插值、果冻弹簧物理、冲击波粒子与能量滑杆，流体渐变背景 + 微晶玻璃态控制台。',
+      path: '/seed/seeds/emotion-orb-playground/index.html',
+      tags: ['Interactive', 'Emotion', 'Physics', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'wellness'
+    },
+    {
       title: '小红书封面实验室',
       description: '策略驱动的高级封面生成器。支持概念生成、多模板系统、主题切换、拖拽微调与 SVG/PNG 双导出。',
       path: '/seed/seeds/xhs-cover-studio/index.html',

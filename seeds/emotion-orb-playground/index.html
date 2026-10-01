@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emotion Orb Playground · 情绪光球游乐场</title>
+  <meta name="description" content="可拖拽、可戳击、可爆裂的情绪光球游乐场 —— 6 种情绪实时流变、果冻物理与冲击波粒子。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ══════════════ 流体渐变背景层 ══════════════ -->
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient-blob blob-a"></div>
+    <div class="ambient-blob blob-b"></div>
+    <div class="ambient-blob blob-c"></div>
+    <div class="ambient-blob blob-d"></div>
+    <div class="grain"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <!-- ══════════════ 主舞台 ══════════════ -->
+  <main class="stage" id="stage">
+    <canvas id="orb-canvas" aria-label="情绪光球交互画布"></canvas>
+
+    <!-- 自定义光标 -->
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+
+    <!-- 左上 · 标题 HUD -->
+    <header class="hud hud-title glass">
+      <div class="hud-brand">
+        <span class="brand-glyph" id="brand-glyph">◈</span>
+        <div class="brand-text">
+          <h1>Emotion Orb <em>Playground</em></h1>
+          <p>情绪光球游乐场 · 触摸它，感受它，戳爆它</p>
+        </div>
+      </div>
+      <div class="readout mono" id="readout">
+        <span class="readout-line">EMOTION&nbsp;&nbsp;<b id="ro-emotion">JOY</b></span>
+        <span class="readout-line">ENERGY&nbsp;&nbsp;<b id="ro-energy">62%</b></span>
+        <span class="readout-line">WAVES&nbsp;&nbsp;&nbsp;<b id="ro-waves">3</b></span>
+        <span class="readout-line"><b id="ro-status">STABLE</b></span>
+      </div>
+    </header>
+
+    <!-- 右上 · 交互提示 -->
+    <aside class="hud hud-hint glass">
+      <p class="hint-title">交互指南 / FIELD MANUAL</p>
+      <ul class="hint-list mono">
+        <li><i>DRAG</i>拖拽光球 · 果冻回弹</li>
+        <li><i>CLICK</i>轻点画布 · 情绪脉冲</li>
+        <li><i>DBL-CLK</i>双击光球 · 爆裂重组</li>
+        <li><i>1–6</i>切换情绪 · <i>SPACE</i>脉冲</li>
+      </ul>
+    </aside>
+
+    <!-- 底部 · 控制坞 -->
+    <nav class="dock glass" id="dock" aria-label="情绪控制台">
+      <div class="dock-label mono">EMOTION&nbsp;SPECTRUM</div>
+      <div class="dock-emotions" id="dock-emotions"></div>
+      <div class="dock-divider"></div>
+      <div class="dock-slider">
+        <label class="mono" for="energy">ENERGY&nbsp;<b id="energy-value">62</b>%</label>
+        <input type="range" id="energy" min="5" max="100" value="62">
+      </div>
+      <button class="dock-pulse" id="pulse-btn">
+        <span class="pulse-icon"></span>EMIT&nbsp;PULSE
+      </button>
+    </nav>
+
+    <!-- 情绪名称巨字（切换时闪现） -->
+    <div class="emotion-flash" id="emotion-flash" aria-hidden="true">
+      <span class="flash-en" id="flash-en">JOY</span>
+      <span class="flash-zh" id="flash-zh">喜悦</span>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
