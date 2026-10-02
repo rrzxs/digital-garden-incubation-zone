@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-02",
+  "name": "drift-cards",
+  "description": "漂浮对话卡式的思考与追问空间",
+  "tagline": ""Let your thoughts drift into focus."",
+  "interaction": "思绪以漂浮卡片的形式散落于画布上，随视线轻轻摇曳。点击任意卡片即可展开追问，新的回应卡会从原卡边缘“漂”出并连成一条思考链。拖动、堆叠或轻推卡片，让混乱的念头在漂浮中自然聚类成清晰的结构。",
+  "directory": "seeds/drift-cards/",
+  "status": "incubated"
+}

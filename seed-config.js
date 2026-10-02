@@ -1980,6 +1980,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Drift Cards 漂流卡片',
+      description: '沉浸式漂流瓶讯息卡片。噪声流场驱动的微晶玻璃态卡片随洋流漂移呼吸，拖拽抛掷、光标力场、点击涟漪冲击波、双击 3D 翻转揭示回声，3种流场模式 × 4种氛围配色，流体渐变背景 + 非线性动效',
+      path: '/seed/seeds/drift-cards/index.html',
+      tags: ['Interactive', 'Physics', 'Micro-interaction', 'Glassmorphism'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

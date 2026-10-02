@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drift Cards · 漂流卡片</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="abyss">
+
+  <!-- 流体渐变背景（超大模糊 + 混合模式） -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 环境粒子 canvas -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- 顶部导航 -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-glyph">≋</span>
+      <div class="brand-text">
+        <h1>Drift Cards</h1>
+        <p>漂流卡片 · 数字海洋上的讯息</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="mode-switch" role="group" aria-label="流场模式">
+        <button class="mode-btn active" data-mode="calm">漂流</button>
+        <button class="mode-btn" data-mode="magnet">磁吸</button>
+        <button class="mode-btn" data-mode="storm">风暴</button>
+      </div>
+      <button class="btn btn-spawn" id="btn-spawn">✦ 投递新卡</button>
+      <button class="btn btn-theme" id="btn-theme">◍ 配色</button>
+    </div>
+  </header>
+
+  <!-- 漂流舞台 -->
+  <main class="stage" id="stage">
+    <p class="stage-hint">拖拽抛掷卡片 · 点击空处激起涟漪 · 双击卡片翻转回声</p>
+    <!-- 卡片由 JS 动态注入 -->
+  </main>
+
+  <!-- 底部遥测 HUD -->
+  <footer class="hud glass">
+    <span class="hud-item">CARDS <b id="hud-count">00</b></span>
+    <span class="hud-item">MODE <b id="hud-mode">CALM</b></span>
+    <span class="hud-item">CURSOR <b id="hud-cursor">---- , ----</b></span>
+    <span class="hud-item">FIELD <b id="hud-field">0.00</b></span>
+    <span class="hud-item hud-maintainer">maintainer: EDEN</span>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
