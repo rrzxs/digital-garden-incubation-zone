@@ -184,3 +184,4 @@ typewave-scale
 emotion-orb
 emotion-orb-playground
 drift-cards
+cursor-replay-studio

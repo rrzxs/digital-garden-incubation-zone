@@ -1,0 +1,7 @@
+scroll-scene-canvas - 滚动驱动叙事画布，编排章节动效
+record-shelf-player - 横向唱片架式专辑封面试听墙
+insight-shelf - 本地灵感收藏架，附保存理由与检索
+convo-card-deck - 浮动对话卡片式思绪梳理板
+motion-type-lab - 滚动控制巨型字体动效实验台
+cursor-replay-studio - 交互时间轴录制回放编排器
+shot-blocker - 浏览器分镜走位与运镜预演板

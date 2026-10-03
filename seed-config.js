@@ -1990,6 +1990,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Cursor Replay Studio 光标回放工作室',
+      description: '沉浸式光标回放工作室。录制光标手势并以彗尾/回声/缎带/迸射四种风格非线性回放，残影光标错峰追随、点击涟漪冲击波、时间轴拖拽定位与实时速度遥测，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/cursor-replay-studio/index.html',
+      tags: ['Interactive', 'Cursor', 'Micro-interaction', 'Animation'],
+      icon: '⟲',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

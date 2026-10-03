@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-03",
+  "name": "cursor-replay-studio",
+  "description": "交互时间轴录制回放编排器",
+  "tagline": "Replay Every Move",
+  "interaction": "用户的鼠标轨迹、点击与滚动被录制为可编辑的时间轴片段，可拖拽重新编排节奏与顺序。回放时页面如同被幽灵之手操控，访客可随时暂停、加速或插入自己的轨迹，与他人共演一段交互记忆。",
+  "directory": "seeds/cursor-replay-studio/",
+  "status": "incubated"
+}

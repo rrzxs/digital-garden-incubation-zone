@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Replay Studio · 光标回放工作室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="abyss">
+
+  <!-- 流体渐变背景（超大模糊 + 混合模式） -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 环境粒子 canvas -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- 回放舞台 canvas -->
+  <canvas id="stage-canvas"></canvas>
+
+  <!-- 录制状态指示器 -->
+  <div class="rec-indicator" id="rec-indicator" aria-hidden="true">
+    <span class="rec-dot"></span>
+    <span class="rec-label">REC</span>
+    <span class="rec-time" id="rec-time">00:00.0</span>
+  </div>
+
+  <!-- 顶部导航 -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-glyph">⟲</span>
+      <div class="brand-text">
+        <h1>Cursor Replay Studio</h1>
+        <p>光标回放工作室 · 让每一次移动都成为演出</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="trail-switch" role="group" aria-label="轨迹风格">
+        <button class="trail-btn active" data-trail="comet" title="彗尾">彗尾</button>
+        <button class="trail-btn" data-trail="echo" title="回声">回声</button>
+        <button class="trail-btn" data-trail="ribbon" title="缎带">缎带</button>
+        <button class="trail-btn" data-trail="burst" title="迸射">迸射</button>
+      </div>
+      <div class="theme-switch" role="group" aria-label="氛围配色">
+        <button class="theme-btn active" data-theme-value="abyss" title="深渊">abyss</button>
+        <button class="theme-btn" data-theme-value="aurora" title="极光">aurora</button>
+        <button class="theme-btn" data-theme-value="dusk" title="暮色">dusk</button>
+        <button class="theme-btn" data-theme-value="ember" title="烬火">ember</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 遥测 HUD -->
+  <aside class="hud glass" id="hud" aria-hidden="true">
+    <div class="hud-row"><span class="hud-key">DURATION</span><span class="hud-val" id="hud-duration">12.00s</span></div>
+    <div class="hud-row"><span class="hud-key">SAMPLES</span><span class="hud-val" id="hud-samples">0</span></div>
+    <div class="hud-row"><span class="hud-key">CLICKS</span><span class="hud-val" id="hud-clicks">0</span></div>
+    <div class="hud-row"><span class="hud-key">VELOCITY</span><span class="hud-val" id="hud-velocity">0 px/s</span></div>
+    <div class="hud-row"><span class="hud-key">SOURCE</span><span class="hud-val" id="hud-source">DEMO</span></div>
+  </aside>
+
+  <!-- 操作提示 -->
+  <div class="hint" id="hint">
+    <span class="hint-key">R</span> 录制手势
+    <span class="hint-sep">·</span>
+    <span class="hint-key">Space</span> 播放 / 暂停
+    <span class="hint-sep">·</span>
+    <span class="hint-key">Esc</span> 停止
+  </div>
+
+  <!-- 底部控制台 -->
+  <footer class="dock glass" id="dock">
+    <div class="dock-primary">
+      <button class="ctl-btn rec-btn" id="btn-record" title="录制 (R)">
+        <span class="ctl-ico">●</span><span class="ctl-txt">录制</span>
+      </button>
+      <button class="ctl-btn play-btn" id="btn-play" title="播放 / 暂停 (Space)">
+        <span class="ctl-ico" id="play-ico">▶</span><span class="ctl-txt" id="play-txt">播放</span>
+      </button>
+      <button class="ctl-btn stop-btn" id="btn-stop" title="停止 (Esc)">
+        <span class="ctl-ico">■</span><span class="ctl-txt">停止</span>
+      </button>
+      <button class="ctl-btn loop-btn active" id="btn-loop" title="循环回放">
+        <span class="ctl-ico">⟲</span><span class="ctl-txt">循环</span>
+      </button>
+    </div>
+
+    <div class="dock-timeline">
+      <span class="tl-time" id="tl-current">00:00.0</span>
+      <div class="tl-track" id="tl-track">
+        <div class="tl-buffer" id="tl-buffer"></div>
+        <div class="tl-progress" id="tl-progress"></div>
+        <div class="tl-thumb" id="tl-thumb"></div>
+      </div>
+      <span class="tl-time" id="tl-total">12.0s</span>
+    </div>
+
+    <div class="dock-secondary">
+      <label class="slider-group">
+        <span class="slider-label">速度</span>
+        <input type="range" id="speed-range" class="slider" min="0.25" max="2" step="0.05" value="1">
+        <span class="slider-val" id="speed-val">1.00×</span>
+      </label>
+      <label class="slider-group">
+        <span class="slider-label">残影</span>
+        <input type="range" id="ghost-range" class="slider" min="0" max="5" step="1" value="3">
+        <span class="slider-val" id="ghost-val">3</span>
+      </label>
+      <label class="slider-group">
+        <span class="slider-label">余辉</span>
+        <input type="range" id="glow-range" class="slider" min="0.2" max="1" step="0.05" value="0.65">
+        <span class="slider-val" id="glow-val">0.65</span>
+      </label>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
