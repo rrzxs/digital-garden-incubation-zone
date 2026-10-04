@@ -1,0 +1,7 @@
+scroll-film - 滚动驱动电影感长文叙事画布
+record-shelf - 横向唱片墙式专辑试听架
+mood-shelf - 本地私藏灵感卡片检索库
+kinetic-type - 碎片大字滚动动效排版器
+cursor-physics - 鼠标惯性物理粒子画布
+drift-dialogue - 漂浮对话卡片式思考板
+scene-blocker - 俯视图镜头走位预演板

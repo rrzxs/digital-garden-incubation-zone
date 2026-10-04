@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-04",
+  "name": "scroll-film",
+  "description": "滚动驱动电影感长文叙事画布",
+  "tagline": "Scroll Is the Projector",
+  "interaction": "页面化身为一卷电影胶片，滚动条即播放进度——用户每一次滚动都会驱动镜头推拉、场景切换与字幕浮现，像亲手放映一部影片。长文内容被解构为分镜章节，配合视差、淡入与定格动画，让阅读变成一场沉浸式的观影旅程。",
+  "directory": "seeds/scroll-film/",
+  "status": "incubated"
+}

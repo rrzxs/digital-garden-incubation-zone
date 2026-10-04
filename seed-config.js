@@ -2000,6 +2000,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Scroll Film 胶片之卷',
+      description: '沉浸式胶片卷轴放映体验。滚动即放映：7 格胶片章节（显影/曝光/调焦/蒙太奇/溶解/定影/放映）、滚动速度驱动颗粒噪点/色散光棱/胶片颤动/信箱遮幅呼吸、实时时间码 HUD 与光圈光标，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/scroll-film/index.html',
+      tags: ['Interactive', 'Scroll', 'Film', 'Micro-interaction'],
+      icon: '⊡',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
