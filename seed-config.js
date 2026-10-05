@@ -2010,6 +2010,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Vinyl Shelf Flow 黑胶流动货架',
+      description: '沉浸式黑胶唱机微交互体验。点击封面抽盘飞行动画上盘播放，弹簧-阻尼转动物理、拖拽刮擦惯性、33⅓/45 RPM 变速、±8% Pitch、Web Audio 炒豆底噪与流场粒子，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/vinyl-shelf-flow/index.html',
+      tags: ['Interactive', 'Vinyl', 'Physics', 'Micro-interaction'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

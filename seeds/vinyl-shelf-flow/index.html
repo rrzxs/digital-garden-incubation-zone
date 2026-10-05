@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vinyl Shelf Flow · 黑胶流动货架</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body data-palette="dusk">
+  <!-- 流体渐变背景 -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 粒子流场画布 -->
+  <canvas id="flow-canvas" aria-hidden="true"></canvas>
+
+  <main class="stage">
+    <!-- 顶部标题 -->
+    <header class="masthead reveal-item">
+      <div class="masthead-eyebrow">
+        <span class="pulse-dot"></span>
+        <span>ANALOG WARMTH · 33⅓ RPM</span>
+      </div>
+      <h1 class="masthead-title" id="title-text">Vinyl Shelf Flow</h1>
+      <p class="masthead-sub">从货架抽出一张唱片，让唱针落进沟槽。拖动黑胶即可刮擦，松手后惯性回归。</p>
+    </header>
+
+    <div class="layout">
+      <!-- 左侧：唱片货架 -->
+      <section class="shelf-panel glass reveal-item" style="--d: 0.08s">
+        <div class="panel-head">
+          <h2>Crates · 货架</h2>
+          <span class="panel-meta" id="crate-count">8 LPs</span>
+        </div>
+        <div class="shelf-grid" id="shelf-grid"></div>
+        <div class="shelf-hint">点击封面 → 上盘播放 · 悬停感受倾角</div>
+      </section>
+
+      <!-- 右侧：唱机 + 信息 -->
+      <section class="deck-panel reveal-item" style="--d: 0.16s">
+        <!-- 唱机 -->
+        <div class="turntable glass" id="turntable">
+          <div class="platter">
+            <div class="vinyl" id="vinyl">
+              <div class="grooves"></div>
+              <div class="lead-out"></div>
+              <div class="label" id="vinyl-label">
+                <span class="label-top" id="label-title">—</span>
+                <span class="label-bottom" id="label-artist">选择一张唱片</span>
+              </div>
+              <div class="spindle"></div>
+              <div class="sheen"></div>
+            </div>
+          </div>
+          <div class="tonearm" id="tonearm">
+            <div class="tonearm-base"></div>
+            <div class="tonearm-stick">
+              <div class="counterweight"></div>
+              <div class="headshell"></div>
+            </div>
+          </div>
+          <div class="strobe" id="strobe"><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <!-- Now Spinning -->
+        <div class="now-spinning glass">
+          <div class="ns-row">
+            <span class="ns-key">NOW SPINNING</span>
+            <span class="ns-time mono" id="spin-time">00:00</span>
+          </div>
+          <div class="ns-title" id="ns-title">静默等待</div>
+          <div class="ns-artist" id="ns-artist">—</div>
+          <div class="ns-tags" id="ns-tags"></div>
+        </div>
+
+        <!-- 控制台 -->
+        <div class="console glass">
+          <button class="btn btn-primary" id="btn-play" aria-label="播放/暂停">
+            <span class="btn-icon" id="play-icon">▶</span>
+            <span id="play-text">Play</span>
+          </button>
+          <div class="rpm-switch" role="group" aria-label="转速">
+            <button class="rpm-btn active" data-rpm="33.3">33⅓</button>
+            <button class="rpm-btn" data-rpm="45">45</button>
+          </div>
+          <label class="pitch-control">
+            <span class="pitch-label">PITCH</span>
+            <input type="range" id="pitch" min="-8" max="8" step="0.5" value="0" />
+            <span class="mono pitch-value" id="pitch-value">+0.0%</span>
+          </label>
+          <button class="btn btn-ghost" id="btn-eject">⏏ Eject</button>
+          <button class="btn btn-ghost" id="btn-sound">🔇 Crackle</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- 调色板 -->
+    <footer class="palette-dock glass reveal-item" style="--d: 0.24s">
+      <span class="dock-label">AMBIENCE</span>
+      <div class="swatches" id="swatches">
+        <button class="swatch active" data-palette="dusk" title="暮紫"></button>
+        <button class="swatch" data-palette="amber" title="琥珀"></button>
+        <button class="swatch" data-palette="jade" title="墨翠"></button>
+        <button class="swatch" data-palette="mono" title="银盐"></button>
+      </div>
+      <span class="dock-tip mono" id="dock-tip">drag the vinyl to scratch</span>
+    </footer>
+  </main>
+
+  <!-- 飞行中的唱片（抽盘动画载体） -->
+  <div class="flying-record" id="flying-record" aria-hidden="true">
+    <div class="fr-sleeve"></div>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+</html>

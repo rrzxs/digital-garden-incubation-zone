@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-05",
+  "name": "vinyl-shelf-flow",
+  "description": "横向唱片架专辑漫游播放器",
+  "tagline": "Scroll the shelf, spin the sound.",
+  "interaction": "用户横向拖拽浏览一条仿佛无限延伸的黑胶唱片架，指尖划过时专辑封面会随惯性微微倾斜翻转。点击某张唱片，它会从架子上滑出、落到转盘上，唱针落下后音乐随之流淌。支持键盘方向键与滚轮切换，让漫游体验如翻动实体唱片般顺滑。",
+  "directory": "seeds/vinyl-shelf-flow/",
+  "status": "incubated"
+}

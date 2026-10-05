@@ -1,0 +1,7 @@
+scroll-fall-essay - 滚动坠落式长文叙事生成器
+vinyl-shelf-flow - 横向唱片架专辑漫游播放器
+midnight-drift-cards - 深夜漂浮对话卡思考板
+dither-portrait-lab - 复古抖动单色头像工坊
+idea-shelf-garden - 本地灵感书签记忆花园
+motion-glass-gallery - 玻璃质感惯性滚动展厅
+shot-stage-previs - 浏览器分镜相机预演画板

@@ -186,3 +186,4 @@ emotion-orb-playground
 drift-cards
 cursor-replay-studio
 scroll-film
+vinyl-shelf-flow
