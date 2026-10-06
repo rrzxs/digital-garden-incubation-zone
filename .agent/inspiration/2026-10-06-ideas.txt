@@ -1,0 +1,7 @@
+skyfall-essay - 坠落式滚动叙事长文生成器
+vinyl-shelf-flow - 横向唱片架专辑墙与试听体验
+pastel-swatch-lab - 柔和色板采样与多格式导出工具
+dither-portrait-forge - 单色抖动像素头像海报生成器
+camera-blocking-board - 浏览器内分镜走位预演画板
+motion-mood-arena - 描述情绪即出片的动效试玩台
+drift-dialogue-cards - 悬浮对话卡滚动叙事微应用

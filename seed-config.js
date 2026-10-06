@@ -12,6 +12,16 @@
       isEntry: true
     },
     {
+      title: 'Motion Mood Arena 动效情绪竞技场',
+      description: '以「情绪 = 运动行为」为核心的粒子竞技场。6 种情绪预设驱动粒子军团变阵（环绕/爆裂/晶格/湍流/沉降/电弧），呼吸式参数插值过渡、点击冲击波、按住引力井、光标避让与全场脉冲，流体渐变背景 + 微晶玻璃态控制台',
+      path: '/seed/seeds/motion-mood-arena/index.html',
+      tags: ['Interactive', 'Motion', 'Emotion', 'Micro-interaction', 'Canvas'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'Emotion Orb 情绪光球',
       description: '沉浸式情绪光球微交互体验。6种情绪预设驱动噪声形变光球实时流变，呼吸节律、环绕粒子、情绪脉冲冲击波与思绪漂移模式，流体渐变背景 + 微晶玻璃态容器',
       path: '/seed/seeds/emotion-orb/index.html',

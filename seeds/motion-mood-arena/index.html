@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion Mood Arena · 动效情绪竞技场</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- === 流体渐变背景层 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 竞技场主舞台 === -->
+  <main class="stage">
+    <canvas id="arena" aria-label="情绪粒子竞技场"></canvas>
+    <div class="stage-vignette" aria-hidden="true"></div>
+
+    <!-- 光标引力环 -->
+    <div class="cursor-halo" id="cursorHalo" aria-hidden="true"></div>
+
+    <!-- 顶部 HUD -->
+    <header class="hud hud-top glass">
+      <div class="hud-brand">
+        <span class="brand-glyph" id="brandGlyph">◈</span>
+        <div class="brand-text">
+          <h1>MOTION MOOD ARENA</h1>
+          <p>动效情绪竞技场 · maintainer EDEN</p>
+        </div>
+      </div>
+      <div class="hud-readout" id="readout" aria-live="off">
+        <span class="ro-line">MOOD&nbsp;&nbsp;<b id="roMood">SERENITY</b></span>
+        <span class="ro-line">UNITS&nbsp;<b id="roUnits">96</b></span>
+        <span class="ro-line">FLOW&nbsp;&nbsp;<b id="roFps">60</b> FPS</span>
+      </div>
+    </header>
+
+    <!-- 左侧情绪选卡 -->
+    <nav class="mood-rail" id="moodRail" aria-label="情绪预设">
+      <!-- JS 动态注入 mood cards -->
+    </nav>
+
+    <!-- 底部控制台 -->
+    <footer class="hud hud-bottom glass">
+      <div class="ctrl-group">
+        <label class="ctrl-label">ENERGY <b id="energyVal">0.5</b></label>
+        <input type="range" id="energySlider" class="energy-slider" min="0.05" max="1" step="0.01" value="0.5">
+      </div>
+      <div class="ctrl-group">
+        <label class="ctrl-label">UNITS <b id="countVal">96</b></label>
+        <input type="range" id="countSlider" class="energy-slider" min="24" max="220" step="4" value="96">
+      </div>
+      <div class="ctrl-actions">
+        <button class="action-btn" id="btnPulse" title="全场脉冲 (Space)">PULSE</button>
+        <button class="action-btn" id="btnScatter" title="驱散重组 (R)">SCATTER</button>
+      </div>
+      <p class="hint">CLICK 冲击波 · DRAG 引力井 · 1–6 切换情绪</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-06",
+  "name": "motion-mood-arena",
+  "description": "描述情绪即出片的动效试玩台",
+  "tagline": "**Feel It. Film It.**",
+  "interaction": "用户从情绪轮盘中选择一种心情（如狂喜、忧郁、躁动），舞台即时生成匹配的色彩、粒子与节奏动效。拖动滑块调节情绪强度，动效的速率、振幅与光影随之实时演变。一键导出，将此刻的情绪定格为可分享的动态海报。",
+  "directory": "seeds/motion-mood-arena/",
+  "status": "incubated"
+}
