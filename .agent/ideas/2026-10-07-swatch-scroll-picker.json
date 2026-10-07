@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-07",
+  "name": "swatch-scroll-picker",
+  "description": "随滚动取色的色板收藏工具",
+  "tagline": "Scroll & Swatch",
+  "interaction": "As you scroll through any webpage, the tool live-samples the dominant color of the current viewport and spins it into a growing swatch ribbon beside the scrollbar. Click the ribbon at any moment to pin a color, building a personal palette that mirrors your journey through the page. Hover a pinned swatch to copy its hex code instantly.",
+  "directory": "seeds/swatch-scroll-picker/",
+  "status": "incubated"
+}

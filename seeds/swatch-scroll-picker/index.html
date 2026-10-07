@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swatch Scroll Picker — 色卡卷轴拣选器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app">
+    <header class="app-header">
+      <div class="header-left">
+        <span class="logo-icon">▤</span>
+        <h1 class="logo-text">Swatch Scroll Picker</h1>
+      </div>
+      <div class="header-center">
+        <span class="header-subtitle" id="collection-label">Scroll · Snap · Pick</span>
+      </div>
+      <div class="header-right">
+        <button class="theme-btn" id="theme-btn" aria-label="Switch collection">
+          <span class="theme-dot" id="theme-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <section class="preview-panel" id="preview-panel">
+        <div class="preview-glow" id="preview-glow"></div>
+        <div class="preview-disc" id="preview-disc" title="Click to copy hex">
+          <div class="disc-shine"></div>
+          <span class="disc-check" id="disc-check">✓</span>
+        </div>
+        <div class="preview-meta">
+          <h2 class="preview-name" id="preview-name">Signal Blue</h2>
+          <div class="preview-hex-row">
+            <span class="preview-hex" id="preview-hex">#3D7BFF</span>
+            <button class="copy-btn" id="btn-copy">
+              <span class="copy-icon">⧉</span>
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+          <div class="preview-tone-row" id="preview-tone-row">
+            <span class="tone-chip" id="tone-hsl">H 222 · S 100 · L 61</span>
+            <span class="tone-chip" id="tone-rgb">R 61 · G 123 · B 255</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="carousel-section">
+        <div class="carousel-edge carousel-edge-left"></div>
+        <div class="carousel" id="carousel">
+          <div class="swatch-track" id="swatch-track"></div>
+          <div class="center-reticle" aria-hidden="true"></div>
+        </div>
+        <div class="carousel-edge carousel-edge-right"></div>
+      </section>
+    </main>
+
+    <nav class="controls-bar">
+      <div class="collection-tabs" id="collection-tabs">
+        <button class="mode-tab active" data-collection="aurora">
+          <span class="tab-icon">◈</span>
+          <span class="tab-label">Aurora</span>
+        </button>
+        <button class="mode-tab" data-collection="ember">
+          <span class="tab-icon">≋</span>
+          <span class="tab-label">Ember</span>
+        </button>
+        <button class="mode-tab" data-collection="botanic">
+          <span class="tab-icon">⊛</span>
+          <span class="tab-label">Botanic</span>
+        </button>
+        <button class="mode-tab" data-collection="nocturne">
+          <span class="tab-icon">◐</span>
+          <span class="tab-label">Nocturne</span>
+        </button>
+      </div>
+
+      <div class="control-group">
+        <button class="ctrl-btn" id="btn-prev" aria-label="Previous swatch">
+          <span class="ctrl-icon">←</span>
+          <span class="ctrl-label">Prev</span>
+        </button>
+        <button class="ctrl-btn" id="btn-shuffle" aria-label="Random swatch">
+          <span class="ctrl-icon">⁂</span>
+          <span class="ctrl-label">Shuffle</span>
+        </button>
+        <button class="ctrl-btn" id="btn-next" aria-label="Next swatch">
+          <span class="ctrl-icon">→</span>
+          <span class="ctrl-label">Next</span>
+        </button>
+      </div>
+    </nav>
+
+    <footer class="status-bar">
+      <span class="status-text" id="status-index">01 / 12</span>
+      <span class="status-separator">—</span>
+      <span class="status-text" id="status-velocity">VEL 0.0</span>
+      <span class="status-separator">—</span>
+      <span class="status-mode" id="status-mode">Aurora Collection</span>
+      <span class="status-spacer"></span>
+      <span class="status-hint">Drag / Wheel / ← → · Click swatch to copy</span>
+    </footer>
+  </div>
+
+  <div class="toast-layer" id="toast-layer"></div>
+  <div class="ripple-layer" id="ripple-layer"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

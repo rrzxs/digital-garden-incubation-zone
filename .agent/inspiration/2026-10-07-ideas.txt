@@ -1,0 +1,6 @@
+scroll-sky-essay - 滚动操控坠云长文叙事生成器
+vinyl-shelf-player - 横向唱片架专辑陈列试听器
+dither-portrait-lab - 复古抖动单色头像生成器
+lidar-point-drift - 浏览器点云沉浸式漫游体验
+swatch-scroll-picker - 随滚动取色的色板收藏工具
+tilt-scroll-gallery - 倾斜卡片三维滚动陈列画布
