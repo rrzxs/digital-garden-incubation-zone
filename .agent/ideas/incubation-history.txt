@@ -189,3 +189,4 @@ scroll-film
 vinyl-shelf-flow
 motion-mood-arena
 swatch-scroll-picker
+swatch-drift

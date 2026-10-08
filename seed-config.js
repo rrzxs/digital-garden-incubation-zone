@@ -2040,6 +2040,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Swatch Drift 色卡漂移',
+      description: '沉浸式色卡漂移微交互体验。噪声洋流场驱动的微晶玻璃态色卡随流呼吸——拖拽抛掷、光标斥力场、点击涟漪冲击波，双击聚焦取色实时驱动全局主题，3种漂移模式 × 4组色卡集，流体渐变背景 + 微晶玻璃态控制台，4种氛围配色',
+      path: '/seed/seeds/swatch-drift/index.html',
+      tags: ['Interactive', 'Color', 'Physics', 'Micro-interaction'],
+      icon: '▤',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swatch Drift · 色卡漂移</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- ═══════════ 流体渐变背景 ═══════════ -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <!-- ═══════════ 主舞台 ═══════════ -->
+  <main class="stage">
+
+    <header class="stage-header">
+      <div class="brand">
+        <span class="brand-glyph">▤</span>
+        <div class="brand-text">
+          <h1 class="brand-title">Swatch Drift</h1>
+          <p class="brand-sub">色卡漂移 · 色彩随洋流呼吸</p>
+        </div>
+      </div>
+      <div class="hud" id="hud">
+        <span class="hud-item">SWATCHES <b id="hud-count">00</b></span>
+        <span class="hud-item">MODE <b id="hud-mode">CALM</b></span>
+        <span class="hud-item">FLOW <b id="hud-flow">0.00</b></span>
+      </div>
+    </header>
+
+    <!-- 漂移画布：色卡在此漂浮 -->
+    <section class="drift-zone" id="drift-zone">
+      <canvas id="flow-canvas"></canvas>
+      <div class="zone-hint" id="zone-hint">
+        <span class="mono">DRAG</span> 抛掷色卡 ·
+        <span class="mono">DBL-CLICK</span> 聚焦取色 ·
+        <span class="mono">CLICK</span> 涟漪冲击波
+      </div>
+      <!-- 聚焦取色浮层 -->
+      <div class="focus-card glass" id="focus-card">
+        <div class="focus-chip" id="focus-chip"></div>
+        <div class="focus-meta">
+          <span class="focus-name" id="focus-name">—</span>
+          <span class="focus-hex mono" id="focus-hex">#000000</span>
+        </div>
+        <button class="copy-btn" id="copy-btn" title="复制 HEX">COPY</button>
+      </div>
+    </section>
+
+    <!-- ═══════════ 微晶玻璃态控制台 ═══════════ -->
+    <footer class="console glass">
+
+      <div class="console-group">
+        <label class="console-label">漂移模式</label>
+        <div class="seg" id="mode-seg">
+          <button class="seg-btn active" data-mode="calm">风平</button>
+          <button class="seg-btn" data-mode="tempest">湍流</button>
+          <button class="seg-btn" data-mode="orbit">环汐</button>
+        </div>
+      </div>
+
+      <div class="console-group">
+        <label class="console-label">色卡集</label>
+        <div class="seg" id="palette-seg">
+          <button class="seg-btn active" data-palette="dusk">暮霞</button>
+          <button class="seg-btn" data-palette="abyss">深海</button>
+          <button class="seg-btn" data-palette="grove">密林</button>
+          <button class="seg-btn" data-palette="ember">熔金</button>
+        </div>
+      </div>
+
+      <div class="console-group slider-group">
+        <label class="console-label">洋流强度 <b class="mono" id="flow-value">1.0×</b></label>
+        <input type="range" id="flow-slider" class="range" min="0.2" max="2.5" step="0.1" value="1.0">
+      </div>
+
+      <div class="console-group actions">
+        <button class="action-btn" id="shuffle-btn" title="重新洗牌">⤮ 洗牌</button>
+        <button class="action-btn" id="burst-btn" title="全场脉冲">◎ 脉冲</button>
+      </div>
+
+    </footer>
+  </main>
+
+  <!-- 复制成功的吐司 -->
+  <div class="toast mono" id="toast">HEX COPIED</div>
+
+  <script src="main.js"></script>
+</body>
+</html>

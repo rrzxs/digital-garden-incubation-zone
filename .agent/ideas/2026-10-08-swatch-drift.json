@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-08",
+  "name": "swatch-drift",
+  "description": "屏幕取色与多格式色板生成工具",
+  "tagline": "**Drift Through Color, Instantly.**",
+  "interaction": "Hover anywhere on your screen and watch colors drift into your palette in real time — like catching butterflies of light. Each captured swatch automatically converts across HEX, RGB, HSL, and CMYK formats. One click exports the whole drifting collection as a shareable palette.",
+  "directory": "seeds/swatch-drift/",
+  "status": "incubated"
+}

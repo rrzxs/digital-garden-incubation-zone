@@ -1,0 +1,7 @@
+swatch-drift - 屏幕取色与多格式色板生成工具
+dither-lab - 图片抖动/像素化风格转换器
+scrollyteller - 滚动驱动的长文叙事编辑器
+isoflow-kit - 2.5D 等距设备场景拼装器
+point-cloud-terrain - 激光点云地形沉浸式浏览器
+kinetic-type - 巨型动态排版海报生成器
+ascii-mosaic - 纯字符画图像实时渲染器
