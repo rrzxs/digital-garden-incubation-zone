@@ -2050,6 +2050,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Camera Blocking Board 走位调度板',
+      description: '导演视角的机位编排剧场。弹簧阻尼缓摇的 FOV 视场锥机位自动跟焦游走演员，焦段感知摇镜速度、覆盖热区、镜头单与全场脉冲 TAKE，流体渐变背景 + 微晶玻璃态调度台，4种氛围配色',
+      path: '/seed/seeds/camera-blocking-board/index.html',
+      tags: ['Interactive', 'Film', 'Physics', 'Micro-interaction'],
+      icon: '▣',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

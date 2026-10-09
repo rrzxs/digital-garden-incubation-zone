@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera Blocking Board · 走位调度板</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="noir">
+  <!-- 流体渐变背景 -->
+  <div class="fluid-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 主舞台 -->
+  <main class="stage-wrap">
+    <header class="masthead">
+      <div class="brand">
+        <span class="brand-icon">▣</span>
+        <div class="brand-text">
+          <h1>Camera Blocking Board</h1>
+          <p>走位调度板 · 导演视角的机位编排剧场</p>
+        </div>
+      </div>
+      <div class="masthead-meta">
+        <span class="meta-chip mono" id="metaClock">SC 01 · TAKE 00</span>
+        <span class="meta-chip mono" id="metaCoverage">COVER 0%</span>
+      </div>
+    </header>
+
+    <canvas id="stage"></canvas>
+
+    <!-- HUD 状态面板 -->
+    <aside class="hud hud-shots glass" id="shotList">
+      <h2 class="hud-title">SHOT LIST · 镜头单</h2>
+      <ul class="shots" id="shots"></ul>
+      <p class="hud-empty" id="shotsEmpty">尚无机位 — 选择 CAM 工具点击舞台放置</p>
+    </aside>
+
+    <!-- 控制台 -->
+    <aside class="hud hud-console glass">
+      <h2 class="hud-title">DIRECTION · 调度台</h2>
+
+      <div class="tool-row" role="group" aria-label="工具选择">
+        <button class="tool-btn active" data-tool="cam" title="放置机位"><span class="tool-glyph">▣</span>CAM</button>
+        <button class="tool-btn" data-tool="actor" title="放置演员"><span class="tool-glyph">◉</span>ACTOR</button>
+        <button class="tool-btn" data-tool="pan" title="平移拖拽"><span class="tool-glyph">✥</span>PAN</button>
+      </div>
+
+      <div class="param">
+        <label for="fovRange">FOV 视场角 <b class="mono" id="fovVal">58°</b></label>
+        <input type="range" id="fovRange" min="18" max="120" value="58" step="1">
+      </div>
+      <div class="param">
+        <label for="lensRange">LENS 焦段 <b class="mono" id="lensVal">35mm</b></label>
+        <input type="range" id="lensRange" min="14" max="135" value="35" step="1">
+      </div>
+
+      <button class="toggle-btn" id="autoTrack" aria-pressed="true">
+        <span class="toggle-dot"></span>AUTO TRACK · 自动跟焦
+      </button>
+      <button class="toggle-btn" id="showCoverage" aria-pressed="false">
+        <span class="toggle-dot"></span>COVERAGE · 覆盖热区
+      </button>
+
+      <div class="palette-row" role="group" aria-label="配色">
+        <button class="pal-btn active" data-palette="noir" title="Noir"></button>
+        <button class="pal-btn" data-palette="cine" title="Cine"></button>
+        <button class="pal-btn" data-palette="ember" title="Ember"></button>
+        <button class="pal-btn" data-palette="arctic" title="Arctic"></button>
+      </div>
+
+      <div class="action-row">
+        <button class="ghost-btn" id="clearBtn">CLEAR</button>
+        <button class="ghost-btn" id="demoBtn">DEMO</button>
+      </div>
+    </aside>
+
+    <footer class="stage-foot mono">
+      DRAG 机位旋转 · CLICK 放置 · AUTO TRACK 锁定最近演员 · SPACE 全场脉冲
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
