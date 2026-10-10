@@ -1,0 +1,6 @@
+lidar-terrain-scan - 拖拽生成 3D 点云地形扫描可视化
+isometric-flow-kit - 等距 2.5D 设备场景搭建与演示工具
+scroll-sync-swatch - 随滚动取色的渐变调色板生成器
+grain-texture-forge - 噪点颗粒与做旧纹理实时生成器
+shot-previs-board - 浏览器内镜头走位与分镜预演台
+motion-feel-cards - 描述情绪即出动画参数的试验场

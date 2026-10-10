@@ -2052,6 +2052,16 @@
       category: 'tool'
     },
     {
+      title: 'Motion Feel Cards 触感卡片',
+      description: '沉浸式触感卡片微交互体验场。六种触感（果冻按压回弹/磁力牵引/丝绸拨弦/弹簧拉伸/液态搅动/砂砾扬起）以弹簧-阻尼物理驱动，3D 倾斜 + 光泽追踪 + 冲击波推挤 + 洗牌重组，4种氛围配色',
+      path: '/seed/seeds/motion-feel-cards/index.html',
+      tags: ['Interactive', 'Physics', 'Micro-interaction', 'Animation'],
+      icon: '◍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'Camera Blocking Board 走位调度板',
       description: '导演视角的机位编排剧场。弹簧阻尼缓摇的 FOV 视场锥机位自动跟焦游走演员，焦段感知摇镜速度、覆盖热区、镜头单与全场脉冲 TAKE，流体渐变背景 + 微晶玻璃态调度台，4种氛围配色',
       path: '/seed/seeds/camera-blocking-board/index.html',

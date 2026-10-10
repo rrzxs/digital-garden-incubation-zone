@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Motion Feel Cards · 触感卡片</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- 流体渐变背景层 -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="bg-blob bg-blob-a"></div>
+    <div class="bg-blob bg-blob-b"></div>
+    <div class="bg-blob bg-blob-c"></div>
+    <div class="bg-blob bg-blob-d"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <!-- 环境粒子流场 -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- 遥测 HUD -->
+  <aside class="hud" aria-hidden="true">
+    <div class="hud-row"><span class="hud-key">SPEED</span><span class="hud-val" id="hud-speed">0.00</span></div>
+    <div class="hud-row"><span class="hud-key">FPS</span><span class="hud-val" id="hud-fps">60</span></div>
+    <div class="hud-row"><span class="hud-key">WAVES</span><span class="hud-val" id="hud-waves">0</span></div>
+    <div class="hud-row"><span class="hud-key">FEELS</span><span class="hud-val">06</span></div>
+  </aside>
+
+  <div class="page">
+
+    <!-- ===== Header ===== -->
+    <header class="hero">
+      <p class="hero-kicker mono">// MOTION · FEEL · LAB</p>
+      <h1 class="hero-title" id="hero-title" data-scramble>Motion Feel Cards</h1>
+      <p class="hero-sub">六种「触感」居住在微晶玻璃卡片里 —— 按压果冻、牵引磁球、拨动丝绸、
+        拉伸弹簧、搅动液滴、扬起砂砾。所有形变都由弹簧-阻尼物理驱动，拒绝生硬突变。</p>
+      <p class="hero-hint mono">CLICK ANYWHERE → SHOCKWAVE &nbsp;·&nbsp; HOVER CARDS → TILT &nbsp;·&nbsp; DRAG STAGES → PLAY</p>
+    </header>
+
+    <!-- ===== 控制台 ===== -->
+    <nav class="console glass" aria-label="控制台">
+      <div class="console-group">
+        <span class="console-label mono">THEME</span>
+        <div class="theme-dots" id="theme-dots">
+          <button class="theme-dot" data-theme="aurora" title="Aurora 极光" style="--dot:#7ef2c9;--dot2:#6aa6ff"></button>
+          <button class="theme-dot" data-theme="ember" title="Ember 燃烬" style="--dot:#ffb36b;--dot2:#ff6b8f"></button>
+          <button class="theme-dot" data-theme="abyss" title="Abyss 深渊" style="--dot:#4f6dff;--dot2:#9d4fff"></button>
+          <button class="theme-dot" data-theme="mono" title="Mono 骨白" style="--dot:#e8e8e8;--dot2:#9aa3ad"></button>
+        </div>
+      </div>
+      <div class="console-group">
+        <span class="console-label mono">TILT <b id="tilt-val">10</b>°</span>
+        <input type="range" id="tilt-slider" class="slider" min="0" max="20" step="1" value="10">
+      </div>
+      <div class="console-group">
+        <span class="console-label mono">SPRING <b id="spring-val">170</b></span>
+        <input type="range" id="spring-slider" class="slider" min="60" max="320" step="5" value="170">
+      </div>
+      <div class="console-group">
+        <button class="btn" id="btn-pulse">全场脉冲</button>
+        <button class="btn btn-ghost" id="btn-shuffle">洗牌</button>
+      </div>
+    </nav>
+
+    <!-- ===== 触感卡片网格 ===== -->
+    <main class="grid" id="grid"></main>
+
+    <footer class="footer mono">
+      <span>MAINTAINER · EDEN</span>
+      <span class="footer-sep">/</span>
+      <span>cubic-bezier(0.16, 1, 0.3, 1)</span>
+      <span class="footer-sep">/</span>
+      <span>ZERO-BUILD · VANILLA</span>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
