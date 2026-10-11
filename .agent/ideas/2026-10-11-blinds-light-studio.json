@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-11",
+  "name": "blinds-light-studio",
+  "description": "可调百叶窗光影与昼夜氛围模拟器",
+  "tagline": "Paint with light, one slat at a time.",
+  "interaction": "拖动滑块或直接旋转百叶窗，调整叶片角度，让条状光影实时投射在房间墙壁与地板上。切换昼夜时间轴，从清晨暖金到黄昏橘红再到夜晚冷蓝，光影的长度、颜色与强度随之流转。配合窗外场景与室内氛围音，营造出属于此刻的独特光线情绪。",
+  "directory": "seeds/blinds-light-studio/",
+  "status": "incubated"
+}

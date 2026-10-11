@@ -1,0 +1,6 @@
+blinds-light-studio - 可调百叶窗光影与昼夜氛围模拟器
+lidar-point-drift - 激光点云地形沉浸漫游可视化
+isometric-scene-lab - 3D等距设备场景搭建与演示器
+pixel-type-forge - 像素字体与颗粒质感生成器
+shotflow-storyboard - 镜头分镜与运镜草稿创作板
+scroll-scene-reel - 纵向滚动驱动的3D作品卷轴

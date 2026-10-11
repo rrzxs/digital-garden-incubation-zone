@@ -2070,6 +2070,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Blinds Light Studio 百叶窗光影工作室',
+      description: '沉浸式百叶窗光影微交互体验。弹簧-阻尼物理驱动的窗叶级联波浪倾斜、拖拽调角、点击快开快闭、0~24小时时间流转光照、光柱尘埃丁达尔效应与呼吸节律模式，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/blinds-light-studio/index.html',
+      tags: ['Interactive', 'Light', 'Physics', 'Micro-interaction'],
+      icon: '*=*=',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
