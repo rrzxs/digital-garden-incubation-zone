@@ -2080,6 +2080,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Glass Nav Mixer 微晶导航混音台',
+      description: '沉浸式玻璃导航混音台。导航被重新想象为 DJ 混音控制台——五条频道弹簧-阻尼物理推子实时混合流体渐变背景、粒子能量与主导内容频道，冲击波涟漪、错峰洗牌、合成器音效与4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/glass-nav-mixer/index.html',
+      tags: ['Interactive', 'Navigation', 'Micro-interaction', 'Glassmorphism'],
+      icon: '◝',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

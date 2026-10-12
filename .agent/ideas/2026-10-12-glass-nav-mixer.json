@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-12",
+  "name": "glass-nav-mixer",
+  "description": "玻璃拟态导航与渐变光效调配台",
+  "tagline": "Mix Light. Mold Glass.",
+  "interaction": "每个导航项都是一块可拖拽的磨砂玻璃棱镜——拖动它就像推动调音台推子，实时改变底层渐变光的色相、扩散与折射角度。光线从玻璃边缘溢出、互相混合，导航栏本身成为一盏可演奏的灯。松手时玻璃以流体阻尼回弹，留下短暂的光晕余迹。",
+  "directory": "seeds/glass-nav-mixer/",
+  "status": "incubated"
+}

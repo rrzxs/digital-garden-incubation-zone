@@ -10,6 +10,15 @@ echo "[$(date +%H:%M:%S)] [阶段4] 部署 - 开始" | tee -a "$LOG_FILE"
 
 # 读取当前种子
 SEED_NAME=$(cat .agent/ideas/current-seed.txt 2>/dev/null || true)
+# 兜底: current-seed.txt 过期时，从今日成功标记推导种子名（防 git checkout 回滚导致部署失败）
+if [ -z "$SEED_NAME" ] || [ ! -f ".agent/ideas/${DATE}-${SEED_NAME}.json" ]; then
+  FALLBACK=$(ls .agent/status/${DATE}-*.develop.ok 2>/dev/null | head -1 | sed "s|.*/${DATE}-||; s|\.develop\.ok\$||")
+  if [ -n "$FALLBACK" ] && [ -f ".agent/ideas/${DATE}-${FALLBACK}.json" ]; then
+    echo "[$(date +%H:%M:%S)] ⚠ current-seed.txt 过期(${SEED_NAME})，改用成功标记: ${FALLBACK}" | tee -a "$LOG_FILE"
+    SEED_NAME="$FALLBACK"
+    echo "$SEED_NAME" > .agent/ideas/current-seed.txt
+  fi
+fi
 if [ -z "$SEED_NAME" ]; then
   echo "[$(date +%H:%M:%S)] ✗ 未找到今日种子，拒绝部署" | tee -a "$LOG_FILE"
   exit 1

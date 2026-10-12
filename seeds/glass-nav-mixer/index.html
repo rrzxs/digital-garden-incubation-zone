@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glass Nav Mixer · 微晶导航混音台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-mood="aurora">
+
+  <!-- 流体渐变背景（低分辨率 Canvas 拉伸获得自然柔焦） -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="grain-overlay"></div>
+  <div class="vignette"></div>
+
+  <!-- 光标柔光 -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <!-- 顶部 HUD -->
+  <header class="hud">
+    <div class="hud-brand">
+      <span class="hud-mark"></span>
+      <span class="hud-title">GLASS&nbsp;NAV&nbsp;MIXER</span>
+    </div>
+    <div class="hud-readout mono" id="hud-readout">CH—— · ENERGY 0.00</div>
+    <div class="hud-moods" id="hud-moods">
+      <button class="mood-btn active" data-mood="aurora" title="Aurora">IFO</button>
+      <button class="mood-btn" data-mood="abyss" title="Abyss">DTC</button>
+      <button class="mood-btn" data-mood="ember" title="Ember">OHS</button>
+      <button class="mood-btn" data-mood="mono" title="Mono">LTC</button>
+    </div>
+  </header>
+
+  <!-- 主舞台：各频道内容按混合权重交叠 -->
+  <main class="stage" id="stage">
+    <section class="channel-view" data-channel="0">
+      <p class="cv-index mono">01 / ORIGIN</p>
+      <h1 class="cv-title">一切从这里<br><em>开始混响</em></h1>
+      <p class="cv-copy">五条频道，五种频率。推起推子，让背景流体、粒子与文字随你的手感共同呼吸。这不是导航——这是一场可触控的光的混合。</p>
+      <div class="cv-meta mono">LAT 31.23 · LON 121.47 · SIGNAL LOCKED</div>
+    </section>
+    <section class="channel-view" data-channel="1">
+      <p class="cv-index mono">02 / CRAFT</p>
+      <h1 class="cv-title">手艺是<em>缓慢的频率</em></h1>
+      <p class="cv-copy">每一个细节都被反复推敲：玻璃的折射、曲线的呼吸、字距的脉动。把 CRAFT 推到顶，感受界面沉淀下来的那份专注。</p>
+      <div class="cv-meta mono">迭代 1024 次 · 弃稿 347 张 · 仍在此刻</div>
+    </section>
+    <section class="channel-view" data-channel="2">
+      <p class="cv-index mono">03 / SIGNAL</p>
+      <h1 class="cv-title">在噪声里<em>捕捞信号</em></h1>
+      <p class="cv-copy">世界是汹涌的白噪声，而美是其中偶然浮现的谐波。SIGNAL 频道收集这些一闪而过的同步时刻，并把它们放大给你看。</p>
+      <div class="cv-meta mono">SNR 23.4dB · 谐波 ×7 · 采样率 96kHz</div>
+    </section>
+    <section class="channel-view" data-channel="3">
+      <p class="cv-index mono">04 / CHAOS</p>
+      <h1 class="cv-title">混沌是<em>未上色的秩序</em></h1>
+      <p class="cv-copy">推满这一路，粒子将挣脱束缚，色彩互相撕扯又彼此成就。混沌频道献给所有在失控边缘起舞的人。</p>
+      <div class="cv-meta mono">熵 S=1.72 · 吸引子 ×3 · 不可预测</div>
+    </section>
+    <section class="channel-view" data-channel="4">
+      <p class="cv-index mono">05 / VOID</p>
+      <h1 class="cv-title">留白是<em>最响的音符</em></h1>
+      <p class="cv-copy">把所有推子拉到底，世界归于寂静。VOID 频道什么都不播放——它只是让你听见自己。偶尔，停顿就是全部内容。</p>
+      <div class="cv-meta mono">0dB · −∞ · 静默即答案</div>
+    </section>
+  </main>
+
+  <!-- 微晶玻璃态混音台 -->
+  <footer class="console" id="console">
+    <div class="console-inner">
+
+      <!-- 频道推子排 -->
+      <div class="strips" id="strips"></div>
+
+      <!-- 主控区 -->
+      <div class="master">
+        <div class="master-meters" id="master-meters">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="master-info">
+          <span class="mono master-label">MASTER</span>
+          <span class="mono master-value" id="master-value">0.00</span>
+        </div>
+        <div class="master-actions">
+          <button class="btn" id="btn-pulse">PULSE</button>
+          <button class="btn" id="btn-shuffle">SHUFFLE</button>
+          <button class="btn" id="btn-mute" aria-pressed="false">SND&nbsp;OFF</button>
+        </div>
+        <p class="master-hint mono">拖拽推子混合频道 · 点击频道名独奏 · 键盘 1–5 / SPACE</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
