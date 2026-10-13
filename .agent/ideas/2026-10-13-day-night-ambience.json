@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-13",
+  "name": "day-night-ambience",
+  "description": "可调光照与时段的场景氛围页",
+  "tagline": "Drag the sun, feel the mood",
+  "interaction": "用户通过拖动太阳/月亮或滑动时间轴来改变场景时段，页面中的天空色彩、光照角度与阴影长度随时间实时渐变。伴随时段切换，环境音效（鸟鸣、蝉鸣、虫鸣）与光晕氛围同步过渡，营造身临其境的昼夜氛围体验。",
+  "directory": "seeds/day-night-ambience/",
+  "status": "incubated"
+}

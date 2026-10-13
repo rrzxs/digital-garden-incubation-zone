@@ -2090,6 +2090,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Day-Night Ambience 昼夜氛围',
+      description: '沉浸式昼夜氛围呼吸体验。24小时天空引擎驱动流体渐变实时流变，日月弧线运行、星空闪烁、云层漂移、萤火虫与风絮粒子，生成式环境声场（风+鸟鸣+虫声）随昼夜交叉渐变，弹簧时间刻度拖拽，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/day-night-ambience/index.html',
+      tags: ['Interactive', 'Ambience', 'Audio', 'Micro-interaction'],
+      icon: '◐',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'wellness'
     }
   ]);
 

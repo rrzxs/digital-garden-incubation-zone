@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day-Night Ambience · 昼夜氛围</title>
+    <meta name="description" content="沉浸式昼夜氛围呼吸体验。拖拽时间刻度让天空在 24 小时间流变——黎明薄雾、正午钴蓝、黄昏熔金与午夜星河，生成式环境声场随昼夜交叉渐变，流体渐变背景 + 微晶玻璃态容器 + 非线性动效">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === Ambient Fluid Orbs (atmospheric depth behind everything) === -->
+    <div class="ambient-orbs" aria-hidden="true">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+    </div>
+
+    <!-- === Sky Stage (everything that breathes with the hour) === -->
+    <div class="sky-stage" id="sky-stage" aria-hidden="true">
+        <div class="sky-gradient" id="sky-gradient"></div>
+        <div class="sky-glow" id="sky-glow"></div>
+        <div class="celestial-body sun" id="sun-body">
+            <div class="celestial-core"></div>
+            <div class="celestial-halo"></div>
+            <div class="celestial-flare"></div>
+        </div>
+        <div class="celestial-body moon" id="moon-body">
+            <div class="celestial-core"></div>
+            <div class="celestial-halo"></div>
+        </div>
+        <canvas id="sky-canvas"></canvas>
+        <div class="horizon" id="horizon"></div>
+        <div class="horizon-mist" id="horizon-mist"></div>
+        <div class="grain-overlay"></div>
+    </div>
+
+    <!-- === Custom Cursor === -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+    <!-- === Back Link === -->
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === Theme Switcher === -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora · 极光"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="ember" title="Ember · 熔岩"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="tide" title="Tide · 潮汐"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="mono" title="Mono · 月白"><span class="theme-dot"></span></button>
+    </div>
+
+    <!-- === HUD: Atmosphere Telemetry === -->
+    <div class="hud-panel" aria-hidden="true">
+        <div class="hud-row">
+            <span class="hud-key mono">LOCAL HOUR</span>
+            <span class="hud-val mono" id="hud-time">12:00</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">PHASE</span>
+            <span class="hud-val mono" id="hud-phase">NOON</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">DAYLIGHT</span>
+            <span class="hud-val mono" id="hud-daylight">100%</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">NEXT</span>
+            <span class="hud-val mono" id="hud-next">SUNSET 18:00</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">SOUND</span>
+            <span class="hud-val mono" id="hud-sound">OFF</span>
+        </div>
+    </div>
+
+    <!-- === Time Control Dock === -->
+    <div class="time-dock glass-card" id="time-dock">
+        <div class="dock-label mono">TIME · SCRUB THE DAY</div>
+        <div class="time-slider-track" id="time-track">
+            <div class="time-slider-fill" id="time-fill"></div>
+            <div class="time-slider-thumb" id="time-thumb"></div>
+            <div class="time-ticks">
+                <span class="tick" style="left:0%">00</span>
+                <span class="tick" style="left:25%">06</span>
+                <span class="tick" style="left:50%">12</span>
+                <span class="tick" style="left:75%">18</span>
+                <span class="tick" style="left:100%">24</span>
+            </div>
+        </div>
+        <div class="dock-actions">
+            <div class="dock-readout">
+                <span class="readout-val mono" id="time-readout">12:00</span>
+                <span class="readout-phase mono" id="phase-readout">NOON</span>
+            </div>
+            <div class="dock-buttons">
+                <button class="dock-btn" id="sound-btn" title="Ambience · 环境声场">
+                    <svg class="icon-sound-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                    <svg class="icon-sound-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                    <span class="btn-label">AMBIENCE</span>
+                </button>
+                <button class="dock-btn active" id="auto-btn" title="Auto · 自动昼夜">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span class="btn-label">AUTO</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === Hero Content === -->
+    <main id="main-content">
+
+        <section class="hero-section">
+            <div class="glass-card hero-card" id="hero-card">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="section-number mono">001 / AMBIENCE</div>
+                    <div class="section-label">A day that breathes</div>
+                    <h1 class="section-title">
+                        <span class="line ink-line" data-delay="0">昼夜在指尖</span>
+                        <span class="line accent ink-line" data-delay="200">缓慢呼吸</span>
+                    </h1>
+                    <p class="section-body">
+                        <span class="line ink-line" data-delay="420">这是一座会呼吸的昼夜氛围舱。</span>
+                        <span class="line ink-line" data-delay="540">拖拽下方的时间刻度，看黎明如何稀释夜色，</span>
+                        <span class="line ink-line" data-delay="660">黄昏如何熔金，星河如何在午夜重新亮起；</span>
+                        <span class="line ink-line" data-delay="780">打开 AMBIENCE，让白昼的鸟鸣与深夜的虫声</span>
+                        <span class="line ink-line" data-delay="900">在耳畔随天空交叉渐变。</span>
+                    </p>
+                    <div class="hero-hints">
+                        <span class="hint-chip mono" data-delay="1080">◈ 拖拽刻度 · 拨动昼夜</span>
+                        <span class="hint-chip mono" data-delay="1200">☀ 点击天空 · 唤醒风絮</span>
+                        <span class="hint-chip mono" data-delay="1320">♪ AMBIENCE · 生成式声场</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === Phase Cards: six moments of the day === -->
+        <section class="phase-section">
+            <div class="phase-header">
+                <div class="section-number mono">002 / SIX MOMENTS</div>
+                <h2 class="phase-title">
+                    <span class="line ink-line" data-delay="0">一天的 <span class="accent">六个瞬间</span></span>
+                </h2>
+                <p class="phase-sub ink-line" data-delay="160">点击任意瞬间，让时间以非线性缓动滑向那一刻。</p>
+            </div>
+            <div class="phase-grid" id="phase-grid">
+                <button class="phase-card glass-card" data-hour="5.5">
+                    <span class="phase-glyph">☀</span>
+                    <span class="phase-name">黎明</span>
+                    <span class="phase-name-en mono">DAWN · 05:30</span>
+                    <span class="phase-desc">夜色被第一缕薄金稀释</span>
+                </button>
+                <button class="phase-card glass-card" data-hour="9">
+                    <span class="phase-glyph">🌫</span>
+                    <span class="phase-name">早晨</span>
+                    <span class="phase-name-en mono">MORNING · 09:00</span>
+                    <span class="phase-desc">雾气散去，鸟鸣正密</span>
+                </button>
+                <button class="phase-card glass-card" data-hour="12.5">
+                    <span class="phase-glyph">☁</span>
+                    <span class="phase-name">正午</span>
+                    <span class="phase-name-en mono">NOON · 12:30</span>
+                    <span class="phase-desc">钴蓝天空，云影缓慢</span>
+                </button>
+                <button class="phase-card glass-card" data-hour="16.5">
+                    <span class="phase-glyph">🌤</span>
+                    <span class="phase-name">午后</span>
+                    <span class="phase-name-en mono">AFTERNOON · 16:30</span>
+                    <span class="phase-desc">光线开始倾斜变暖</span>
+                </button>
+                <button class="phase-card glass-card" data-hour="18.75">
+                    <span class="phase-glyph">🌇</span>
+                    <span class="phase-name">黄昏</span>
+                    <span class="phase-name-en mono">DUSK · 18:45</span>
+                    <span class="phase-desc">熔金沿地平线缓慢流淌</span>
+                </button>
+                <button class="phase-card glass-card" data-hour="23">
+                    <span class="phase-glyph">🌙</span>
+                    <span class="phase-name">午夜</span>
+                    <span class="phase-name-en mono">MIDNIGHT · 23:00</span>
+                    <span class="phase-desc">星河与虫声重新亮起</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- === Footer === -->
+        <footer class="site-footer">
+            <span class="mono">DAY-NIGHT AMBIENCE · SEED BY EDEN · 数字花园孵化区</span>
+        </footer>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
