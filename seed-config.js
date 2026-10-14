@@ -2100,6 +2100,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'wellness'
+    },
+    {
+      title: 'Blinds Lightbox 百叶窗灯箱',
+      description: '沉浸式百叶窗灯箱画廊。图片以弹簧级联的窗叶开合呈现——切换时窗叶依次合拢、换片、再如涟漪般展开，三种错峰动效（级联/波浪/随机）、光泄露线、丁达尔尘埃粒子、呼吸节律模式与拖拽开合度调节，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/blinds-lightbox/index.html',
+      tags: ['Interactive', 'Lightbox', 'Micro-interaction', 'Animation'],
+      icon: '▥',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

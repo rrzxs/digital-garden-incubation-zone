@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blinds Lightbox — 百叶窗灯箱</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="app">
+    <!-- === Header === -->
+    <header class="app-header glass">
+      <div class="header-left">
+        <span class="logo-icon">*=*=</span>
+        <h1 class="logo-text">Blinds Lightbox</h1>
+      </div>
+      <div class="header-center">
+        <span class="header-subtitle" id="mode-label">images breathe through venetian slats</span>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="theme-btn" aria-label="切换配色" title="切换配色 (T)">
+          <span class="theme-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- === Lightbox Stage === -->
+    <main class="stage-wrap">
+      <section class="stage glass" id="stage">
+        <!-- Slats: each slat renders a slice of the current image via background-position -->
+        <div class="slats" id="slats"></div>
+
+        <!-- Light leaks between slats -->
+        <div class="leaks" id="leaks" aria-hidden="true"></div>
+
+        <!-- Dust particles -->
+        <canvas id="dust-canvas" aria-hidden="true"></canvas>
+
+        <!-- Caption -->
+        <div class="caption glass-dark" id="caption">
+          <span class="caption-index" id="caption-index">01 / 06</span>
+          <span class="caption-title" id="caption-title">Aurora Field</span>
+        </div>
+
+        <!-- Nav arrows -->
+        <button class="nav-btn nav-prev" id="nav-prev" aria-label="上一张">‹</button>
+        <button class="nav-btn nav-next" id="nav-next" aria-label="下一张">›</button>
+
+        <!-- HUD -->
+        <div class="hud glass-dark" id="hud">
+          <div class="hud-row"><span class="hud-key">APERTURE</span><span class="hud-val" id="hud-aperture">100%</span></div>
+          <div class="hud-row"><span class="hud-key">SLATS</span><span class="hud-val" id="hud-slats">14</span></div>
+          <div class="hud-row"><span class="hud-key">STAGGER</span><span class="hud-val" id="hud-stagger">CASCADE ↓</span></div>
+        </div>
+
+        <div class="stage-hint" id="stage-hint">
+          <span class="hint-line"></span>
+          <span class="hint-text">DRAG ↕ APERTURE · ← → NAVIGATE · SPACE SHUTTER</span>
+          <span class="hint-line"></span>
+        </div>
+      </section>
+    </main>
+
+    <!-- === Control Deck === -->
+    <aside class="deck glass">
+      <div class="deck-block">
+        <span class="deck-label">APERTURE 开合度</span>
+        <input type="range" id="aperture-range" class="range" min="0" max="100" value="100">
+        <span class="deck-value" id="aperture-value">100%</span>
+      </div>
+      <div class="deck-block">
+        <span class="deck-label">SLATS 窗叶数</span>
+        <input type="range" id="slats-range" class="range" min="6" max="30" value="14">
+        <span class="deck-value" id="slats-value">14</span>
+      </div>
+      <div class="deck-block">
+        <span class="deck-label">STAGGER 动效</span>
+        <div class="seg" id="stagger-seg">
+          <button class="seg-btn active" data-mode="cascade">CASCADE ↓</button>
+          <button class="seg-btn" data-mode="wave">WAVE ∿</button>
+          <button class="seg-btn" data-mode="random">RANDOM ✦</button>
+        </div>
+      </div>
+      <div class="deck-block">
+        <span class="deck-label">BREATHE 呼吸</span>
+        <button class="toggle-btn" id="breathe-btn" aria-pressed="false">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          <span class="toggle-text">OFF</span>
+        </button>
+      </div>
+      <button class="shutter-btn" id="shutter-btn">SHUTTER 快门</button>
+    </aside>
+
+    <!-- === Thumbnail Rail === -->
+    <footer class="rail-wrap">
+      <div class="rail glass" id="rail"></div>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

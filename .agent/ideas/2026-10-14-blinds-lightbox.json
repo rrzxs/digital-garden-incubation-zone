@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-14",
+  "name": "blinds-lightbox",
+  "description": "百叶窗开合与昼夜光照氛围切换小屋",
+  "tagline": "Light on demand",
+  "interaction": "拖动或点击百叶窗，窗叶随之旋转开合，小屋内的光照与氛围在温暖昼光与静谧夜色之间无缝切换。百叶窗完全展开时，星光与灯光洒满房间；完全闭合时，空间沉入安宁的暗调，营造专属的昼夜仪式感。",
+  "directory": "seeds/blinds-lightbox/",
+  "status": "incubated"
+}
