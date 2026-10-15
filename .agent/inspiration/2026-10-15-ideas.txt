@@ -1,0 +1,7 @@
+kern-playground - 可变字体参数调节与实时预览实验室
+vector-grid-studio - 网格化的矢量图表与信息图速绘工具
+zine-cv-maker - 拼贴报纸风个人小传生成器
+gel-obj-cards - 3D糖果物件驱动的卡片式叙事交互
+shot-previs-board - 浏览器内镜头走位与运镜预演工具
+scroll-case-flow - 滚动驱动的作品案例平滑过渡展示框架
+paper-texture-markup - 纸质印刷质感标注与批注画板

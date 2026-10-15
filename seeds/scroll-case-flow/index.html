@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Case Flow 滚动案例流</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-mood="aurora">
+
+    <!-- === 流体渐变背景 === -->
+    <div class="bg-field" aria-hidden="true">
+        <div class="bg-blob bg-blob-1"></div>
+        <div class="bg-blob bg-blob-2"></div>
+        <div class="bg-blob bg-blob-3"></div>
+        <div class="bg-grain"></div>
+        <canvas id="particle-canvas"></canvas>
+    </div>
+
+    <!-- === 顶部导航 === -->
+    <header class="topbar glass">
+        <div class="topbar-brand">
+            <span class="brand-glyph">≋</span>
+            <span class="brand-name">Scroll&nbsp;Case&nbsp;Flow</span>
+        </div>
+        <div class="topbar-hud">
+            <span class="hud-label">VELOCITY</span>
+            <span class="hud-value" id="hud-velocity">0.00</span>
+            <span class="hud-sep">/</span>
+            <span class="hud-label">CASE</span>
+            <span class="hud-value" id="hud-case">01</span>
+        </div>
+        <div class="mood-switch" id="mood-switch" title="切换氛围配色">
+            <button class="mood-dot" data-mood="aurora" aria-label="Aurora 配色"></button>
+            <button class="mood-dot" data-mood="ember" aria-label="Ember 配色"></button>
+            <button class="mood-dot" data-mood="abyss" aria-label="Abyss 配色"></button>
+            <button class="mood-dot" data-mood="orchid" aria-label="Orchid 配色"></button>
+        </div>
+    </header>
+
+    <main class="page">
+
+        <!-- === 序幕 Hero === -->
+        <section class="hero">
+            <p class="hero-kicker mono reveal-chars" data-reveal-chars>SCROLL · CASE · FLOW</p>
+            <h1 class="hero-title">
+                <span class="line reveal-chars" data-reveal-chars>让滚动成为</span>
+                <span class="line line-accent reveal-chars" data-reveal-chars>叙事本身</span>
+            </h1>
+            <p class="hero-sub reveal-fade">垂直滚动的每一次呼吸，都被转译为案例在水平维度上的流动 —— 速度形变、字符揭示、深度视差，一切由你的指尖律动驱动。</p>
+            <div class="hero-scroll-hint" id="scroll-hint">
+                <span class="hint-ring"></span>
+                <span class="hint-mouse"></span>
+                <span class="hint-text mono">SCROLL TO FLOW</span>
+            </div>
+        </section>
+
+        <!-- === 水平案例流（粘性舞台） === -->
+        <section class="flow-stage" id="flow-stage">
+            <div class="flow-viewport">
+                <div class="flow-track" id="flow-track">
+
+                    <article class="case-card glass" data-index="0">
+                        <div class="case-number mono">01</div>
+                        <div class="case-meta mono">MOTION / 微交互</div>
+                        <h2 class="case-title">弹簧物理卡片</h2>
+                        <p class="case-desc">每一张卡片都是一段弹簧-阻尼系统的轨迹。悬停时的倾斜与回弹遵循真实的物理曲线，而非生硬的属性突变。</p>
+                        <div class="case-tags"><span>spring</span><span>damping</span><span>tilt</span></div>
+                        <div class="case-orbit"></div>
+                    </article>
+
+                    <article class="case-card glass" data-index="1">
+                        <div class="case-number mono">02</div>
+                        <div class="case-meta mono">REVEAL / 揭示</div>
+                        <h2 class="case-title">字符级揭示</h2>
+                        <p class="case-desc">标题在进入视口时以错峰节奏逐字浮现，字符从迷雾中解密，如同卷轴被缓缓展开。</p>
+                        <div class="case-tags"><span>stagger</span><span>scramble</span><span>glyph</span></div>
+                        <div class="case-orbit"></div>
+                    </article>
+
+                    <article class="case-card glass" data-index="2">
+                        <div class="case-number mono">03</div>
+                        <div class="case-meta mono">VELOCITY / 速度</div>
+                        <h2 class="case-title">滚动速度形变</h2>
+                        <p class="case-desc">滚动越快，案例流越倾斜、越模糊、越失重；缓慢浏览时，一切归于宁静的秩序。速度本身就是一种表达。</p>
+                        <div class="case-tags"><span>skew</span><span>velocity</span><span>flow</span></div>
+                        <div class="case-orbit"></div>
+                    </article>
+
+                    <article class="case-card glass" data-index="3">
+                        <div class="case-number mono">04</div>
+                        <div class="case-meta mono">DEPTH / 深度</div>
+                        <h2 class="case-title">多层视差景深</h2>
+                        <p class="case-desc">轨道、卡片、编号以不同速率运动，构建出可被感知的纵深。前景疾驰，背景凝视。</p>
+                        <div class="case-tags"><span>parallax</span><span>layers</span><span>depth</span></div>
+                        <div class="case-orbit"></div>
+                    </article>
+
+                    <article class="case-card glass" data-index="4">
+                        <div class="case-number mono">05</div>
+                        <div class="case-meta mono">FIELD / 流场</div>
+                        <h2 class="case-title">粒子流场背景</h2>
+                        <p class="case-desc">数百枚粒子在噪声流场中游弋，并随滚动速度加速奔涌。它们是案例流的洋流，托举着每一个故事前行。</p>
+                        <div class="case-tags"><span>particles</span><span>noise</span><span>current</span></div>
+                        <div class="case-orbit"></div>
+                    </article>
+
+                    <article class="case-card glass" data-index="5">
+                        <div class="case-number mono">06</div>
+                        <div class="case-meta mono">GLASS / 材质</div>
+                        <h2 class="case-title">微晶玻璃容器</h2>
+                        <p class="case-desc">backdrop-filter 模糊叠加发光描边，让每一张案例卡都像一块悬浮在流体渐变中的微晶玻璃。</p>
+                        <div class="case-tags"><span>glass</span><span>blur</span><span>material</span></div>
+                        <div class="case-orbit"></div>
+                    </article>
+
+                </div>
+
+                <!-- 进度轨道 -->
+                <div class="flow-rail">
+                    <div class="rail-line"><div class="rail-fill" id="rail-fill"></div></div>
+                    <div class="rail-dots" id="rail-dots"></div>
+                    <span class="rail-label mono" id="rail-label">CASE 01 / 06</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 垂直案例细节区 === -->
+        <section class="detail-zone">
+            <h2 class="zone-heading reveal-fade">Flow Notes<span class="mono zone-sub">// 交互注脚</span></h2>
+
+            <div class="detail-list">
+                <div class="detail-row glass reveal-fade">
+                    <span class="detail-key mono">001</span>
+                    <div class="detail-body">
+                        <h3>非线性缓动</h3>
+                        <p>全程使用 cubic-bezier(0.16, 1, 0.3, 1) —— 一个先急后缓、带有物理呼吸感的曲线，拒绝匀速的平庸。</p>
+                    </div>
+                    <span class="detail-glyph">◜</span>
+                </div>
+                <div class="detail-row glass reveal-fade">
+                    <span class="detail-key mono">002</span>
+                    <div class="detail-body">
+                        <h3>速度可感知</h3>
+                        <p>顶部 HUD 实时显示滚动速度。快速滚动时粒子流场与案例轨道同步倾斜，让数据成为氛围。</p>
+                    </div>
+                    <span class="detail-glyph">◝</span>
+                </div>
+                <div class="detail-row glass reveal-fade">
+                    <span class="detail-key mono">003</span>
+                    <div class="detail-body">
+                        <h3>四种氛围</h3>
+                        <p>右上角可在 Aurora / Ember / Abyss / Orchid 四种配色间切换，流体背景、粒子与玻璃容器同步蜕变。</p>
+                    </div>
+                    <span class="detail-glyph">◞</span>
+                </div>
+                <div class="detail-row glass reveal-fade">
+                    <span class="detail-key mono">004</span>
+                    <div class="detail-body">
+                        <h3>免构建交付</h3>
+                        <p>Vanilla JS + CSS3 + HTML5，零依赖零构建。整个体验即插即用，如种子般轻量。</p>
+                    </div>
+                    <span class="detail-glyph">◟</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- === 尾声 === -->
+        <section class="outro">
+            <h2 class="outro-title reveal-chars" data-reveal-chars>The flow never ends.</h2>
+            <p class="outro-sub reveal-fade">滚动是网页最古老的手势，也仍是最动人的叙事节拍。</p>
+            <button class="btn-back glass" id="btn-back">
+                <span class="btn-ring"></span>
+                <span class="btn-text">回到起点 ↺</span>
+            </button>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -12,6 +12,16 @@
       isEntry: true
     },
     {
+      title: 'Scroll Case Flow 滚动案例流',
+      description: '沉浸式滚动案例流体验场。垂直滚动实时转译为水平案例流——6张微晶玻璃态案例卡片在粘性舞台流动，速度形变、字符级揭示、多层视差、粒子流场与进度轨道，4种氛围配色',
+      path: '/seed/seeds/scroll-case-flow/index.html',
+      tags: ['Interactive', 'Scroll', 'Micro-interaction', 'Animation'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'Motion Mood Arena 动效情绪竞技场',
       description: '以「情绪 = 运动行为」为核心的粒子竞技场。6 种情绪预设驱动粒子军团变阵（环绕/爆裂/晶格/湍流/沉降/电弧），呼吸式参数插值过渡、点击冲击波、按住引力井、光标避让与全场脉冲，流体渐变背景 + 微晶玻璃态控制台',
       path: '/seed/seeds/motion-mood-arena/index.html',

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-15",
+  "name": "scroll-case-flow",
+  "description": "滚动驱动的作品案例平滑过渡展示框架",
+  "tagline": "Scroll Stories, Seamlessly Told.",
+  "interaction": "用户滚动页面时，各作品案例以平滑过渡效果连续展开——滚动位置直接驱动案例的进入、切换与退出动画。每个案例如同故事章节般自然衔接，无需点击，仅凭滚动手势即可完成沉浸式的作品浏览体验。",
+  "directory": "seeds/scroll-case-flow/",
+  "status": "incubated"
+}
