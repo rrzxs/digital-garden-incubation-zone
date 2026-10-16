@@ -2120,6 +2120,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Audio Terrain 声波地形',
+      description: '沉浸式声波地形交互体验。声音化为大地——麦克风或4种内置合成音源驱动 Simplex 噪声地形实时隆起流变，四频段分区塑造山体，鼠标力场扰动、点击冲击波与粒子流场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/audio-terrain/index.html',
+      tags: ['Interactive', 'Audio', 'Terrain', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

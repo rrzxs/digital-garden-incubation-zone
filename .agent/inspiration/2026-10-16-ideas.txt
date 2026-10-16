@@ -1,0 +1,7 @@
+type-lab - 可变字体实时调参实验室，滑杆塑形字形
+audio-terrain - 音频驱动低多边形霓虹光景生成器
+vector-grid-forge - 精密网格上拖建信息图并导出SVG
+orbit-cards - 悬浮3D物件环绕探索的故事卡片集
+zine-press - 照片转半调印刷风拼贴zine海报生成器
+scroll-cinema - 滚动驱动运镜的分层场景叙事编辑器
+ambient-scape-mixer - 混搭环境音色并生成流动视觉氛围

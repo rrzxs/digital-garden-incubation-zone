@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-16",
+  "name": "audio-terrain",
+  "description": "音频驱动低多边形霓虹光景生成器",
+  "tagline": "Sound Sculptures in Neon Light",
+  "interaction": "麦克风或音频输入实时驱动一片低多边形霓虹地形——音量隆起山脉，频率流淌成光河，节奏触发色彩脉冲。用户可切换曲风预设，看着音乐在眼前生长为一座会呼吸的霓虹峡谷。",
+  "directory": "seeds/audio-terrain/",
+  "status": "incubated"
+}

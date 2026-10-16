@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="abyss">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Terrain · 声波地形</title>
+  <meta name="description" content="沉浸式声波地形交互体验。声音化为大地——麦克风或内置合成音源驱动 Simplex 噪声地形实时隆起流变，鼠标力场扰动、点击冲击波与粒子流场，4种氛围配色">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="gradient-orb orb-4"></div>
+    <div class="noise-layer"></div>
+  </div>
+
+  <canvas id="terrain-canvas"></canvas>
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <a class="back-link" href="../../index.html">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    <span>返回花园</span>
+  </a>
+
+  <div class="theme-switcher" id="theme-switcher">
+    <button class="theme-btn active" data-theme="abyss" title="深渊">◈</button>
+    <button class="theme-btn" data-theme="aurora" title="极光">◈</button>
+    <button class="theme-btn" data-theme="ember" title="熔岩">◈</button>
+    <button class="theme-btn" data-theme="verdant" title="翠林">◈</button>
+  </div>
+
+  <main class="app-shell">
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon">≋</span>
+        <h1 class="brand-title">Audio Terrain</h1>
+      </div>
+      <div class="header-actions">
+        <div class="interaction-mode" id="interactionMode" role="button" tabindex="0" aria-label="切换交互模式">
+          <span class="mode-label active" data-mode="explore">聆听</span>
+          <span class="mode-divider">/</span>
+          <span class="mode-label" data-mode="sculpt">雕塑</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="source-panel glass-panel" id="sourcePanel">
+      <div class="source-track">
+        <button class="source-card active" data-source="synth">
+          <span class="source-glyph">∿</span>
+          <span class="source-name">合成音源</span>
+          <span class="source-hint">Demo Synth</span>
+        </button>
+        <button class="source-card" data-source="mic">
+          <span class="source-glyph">🎙</span>
+          <span class="source-name">麦克风</span>
+          <span class="source-hint">Live Mic</span>
+        </button>
+        <button class="source-card" data-source="silent">
+          <span class="source-glyph">◌</span>
+          <span class="source-name">静默平原</span>
+          <span class="source-hint">Stillness</span>
+        </button>
+      </div>
+
+      <div class="preset-track" id="presetTrack">
+        <button class="preset-btn active" data-preset="drift">雾海漂移</button>
+        <button class="preset-btn" data-preset="pulse">脉冲心跳</button>
+        <button class="preset-btn" data-preset="storm">雷暴降临</button>
+        <button class="preset-btn" data-preset="chorus">星尘合唱</button>
+      </div>
+    </section>
+
+    <section class="hud-panel glass-panel" id="hudPanel">
+      <div class="hud-row">
+        <span class="hud-label">SRC</span>
+        <span class="hud-value" id="hudSource">SYNTH</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">RMS</span>
+        <div class="meter"><div class="meter-fill" id="rmsMeter"></div></div>
+        <span class="hud-num" id="rmsValue">0.00</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">PEAK</span>
+        <div class="meter"><div class="meter-fill peak" id="peakMeter"></div></div>
+        <span class="hud-num" id="peakValue">0.00</span>
+      </div>
+      <div class="band-grid" id="bandGrid">
+        <div class="band-cell"><span class="band-label">SUB</span><span class="band-bar" data-band="0"></span></div>
+        <div class="band-cell"><span class="band-label">BASS</span><span class="band-bar" data-band="1"></span></div>
+        <div class="band-cell"><span class="band-label">MID</span><span class="band-bar" data-band="2"></span></div>
+        <div class="band-cell"><span class="band-label">HIGH</span><span class="band-bar" data-band="3"></span></div>
+      </div>
+      <div class="hud-row hint-row">
+        <span class="hud-hint" id="modeHint">移动光标扰动声场 · 点击释放冲击波</span>
+      </div>
+    </section>
+
+    <footer class="panel-footer">
+      <span class="footer-note">声音即大地 · SPEAK AND IT SHALL RISE</span>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
