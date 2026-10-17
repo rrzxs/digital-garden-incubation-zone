@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-17",
+  "name": "motion-curve-board",
+  "description": "界面动效节奏曲线编排与预览台",
+  "tagline": "Choreograph Motion, Feel the Rhythm",
+  "interaction": "在曲线画板上直接拖拽、弯折贝塞尔节奏曲线，像编曲一样编排界面的缓动与停顿。调节时右侧舞台实时预演动效的呼吸感，让每个过渡都有可感知的情绪节奏。",
+  "directory": "seeds/motion-curve-board/",
+  "status": "incubated"
+}

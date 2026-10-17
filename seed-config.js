@@ -2130,6 +2130,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Motion Curve Board 动效曲线板',
+      description: '沉浸式缓动曲线实验室。拖拽 cubic-bezier 控制点实时塑形曲线，四条实时赛道（位移/缩放/旋转/景深）同步演示质感，overshoot/anticipate 自动分析、8 组预设曲线画廊与 CSS Token 一键导出注入，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/motion-curve-board/index.html',
+      tags: ['Interactive', 'Easing Curve', 'Micro-interaction', 'CSS Export'],
+      icon: '⋒',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

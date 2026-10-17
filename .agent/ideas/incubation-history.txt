@@ -197,3 +197,4 @@ day-night-ambience
 blinds-lightbox
 scroll-case-flow
 audio-terrain
+motion-curve-board

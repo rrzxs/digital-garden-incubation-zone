@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Curve Board 动效曲线板 - 沉浸式缓动实验室</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <!-- 流体渐变背景 -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <main class="app-shell">
+        <!-- 顶部导航 -->
+        <nav class="board-nav">
+            <div class="nav-brand">
+                <span class="nav-icon">⋒</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">Motion Curve Board</h1>
+                    <span class="nav-subtitle">沉浸式缓动曲线实验室</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="theme-toggle" id="theme-toggle" role="group" aria-label="氛围配色">
+                    <button class="theme-btn active" data-theme="deep-ocean">深海</button>
+                    <button class="theme-btn" data-theme="aurora">极光</button>
+                    <button class="theme-btn" data-theme="ember">余烬</button>
+                    <button class="theme-btn" data-theme="void">虚空</button>
+                </div>
+            </div>
+        </nav>
+
+        <section class="board-grid">
+            <!-- 曲线编辑器 -->
+            <article class="glass-panel curve-panel">
+                <header class="panel-head">
+                    <h2 class="panel-title">Curve Editor <span class="title-cn">曲线编辑器</span></h2>
+                    <div class="curve-readout">
+                        <span class="readout-label">cubic-bezier</span>
+                        <code class="readout-value" id="bezier-readout">(0.16, 1, 0.30, 1)</code>
+                    </div>
+                </header>
+                <div class="curve-stage">
+                    <canvas id="curve-canvas"></canvas>
+                    <div class="curve-hint" id="curve-hint">拖拽两个控制点塑形曲线</div>
+                </div>
+                <div class="curve-meta">
+                    <div class="meta-chip"><span class="chip-label">duration</span><span class="chip-value" id="meta-duration">900ms</span></div>
+                    <div class="meta-chip"><span class="chip-label">overshoot</span><span class="chip-value" id="meta-overshoot">0%</span></div>
+                    <div class="meta-chip"><span class="chip-label">anticipate</span><span class="chip-value" id="meta-anticipate">0%</span></div>
+                </div>
+                <div class="duration-slider">
+                    <label for="duration-range">时长</label>
+                    <input type="range" id="duration-range" min="200" max="2400" step="50" value="900">
+                    <span id="duration-label">900ms</span>
+                </div>
+            </article>
+
+            <!-- 实时预览赛道 -->
+            <article class="glass-panel track-panel">
+                <header class="panel-head">
+                    <h2 class="panel-title">Live Track <span class="title-cn">实时赛道</span></h2>
+                    <button class="play-btn" id="play-btn" aria-label="播放">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        <span>Replay</span>
+                    </button>
+                </header>
+                <div class="track-lanes">
+                    <div class="lane" data-lane="position">
+                        <span class="lane-tag">position</span>
+                        <div class="lane-rail">
+                            <div class="runner" id="runner-position"></div>
+                        </div>
+                    </div>
+                    <div class="lane" data-lane="scale">
+                        <span class="lane-tag">scale</span>
+                        <div class="lane-rail rail-center">
+                            <div class="runner runner-scale" id="runner-scale"></div>
+                        </div>
+                    </div>
+                    <div class="lane" data-lane="rotate">
+                        <span class="lane-tag">rotate</span>
+                        <div class="lane-rail rail-center">
+                            <div class="runner runner-rotate" id="runner-rotate"></div>
+                        </div>
+                    </div>
+                    <div class="lane" data-lane="blur">
+                        <span class="lane-tag">blur</span>
+                        <div class="lane-rail rail-center">
+                            <div class="runner runner-blur" id="runner-blur">态</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress-rail">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </article>
+
+            <!-- 预设曲线画廊 -->
+            <article class="glass-panel gallery-panel">
+                <header class="panel-head">
+                    <h2 class="panel-title">Preset Gallery <span class="title-cn">曲线画廊</span></h2>
+                    <span class="panel-note">点击装载 · 长卡片显示曲线形态</span>
+                </header>
+                <div class="preset-grid" id="preset-grid"></div>
+            </article>
+
+            <!-- CSS 导出 -->
+            <article class="glass-panel export-panel">
+                <header class="panel-head">
+                    <h2 class="panel-title">CSS Export <span class="title-cn">样式导出</span></h2>
+                </header>
+                <pre class="export-code" id="export-code">--motion-curve: cubic-bezier(0.16, 1, 0.3, 1);</pre>
+                <div class="export-actions">
+                    <button class="action-btn primary" id="copy-btn">复制 Token</button>
+                    <button class="action-btn" id="apply-css-btn">注入页面动效</button>
+                </div>
+                <p class="export-footnote" id="apply-note">注入后，整页所有 transition 将采用当前曲线</p>
+            </article>
+        </section>
+
+        <footer class="board-foot">
+            <span class="foot-chip">maintainer · EDEN</span>
+            <span class="foot-chip">Vanilla JS · Zero Build</span>
+            <span class="foot-chip">cubic-bezier(0.16, 1, 0.3, 1)</span>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
