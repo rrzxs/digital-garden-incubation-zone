@@ -2140,6 +2140,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Collage Moodboard 拼贴情绪板',
+      description: '沉浸式拼贴情绪板。便签、色卡与程序化图像碎片在流体渐变背景上自由拼贴——弹簧-阻尼拖拽抛掷物理、边界弹性碰撞、速度姿态倾斜、点击脉冲冲击波、光标光泽追踪、洗牌级联重组与乱码揭示标题，微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/collage-moodboard/index.html',
+      tags: ['Interactive', 'Collage', 'Physics', 'Micro-interaction'],
+      icon: '◧',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

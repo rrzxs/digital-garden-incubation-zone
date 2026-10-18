@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collage Moodboard 拼贴情绪板</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 环境粒子流场 === -->
+  <canvas id="fieldCanvas" aria-hidden="true"></canvas>
+
+  <!-- === 顶部工具栏 === -->
+  <header class="toolbar glass">
+    <div class="brand">
+      <span class="brand-mark">◧</span>
+      <div class="brand-text">
+        <h1 id="brandTitle" data-text="COLLAGE MOODBOARD"></h1>
+        <p>拼贴情绪板 · 拖拽 / 抛掷 / 脉冲</p>
+      </div>
+    </div>
+
+    <div class="tool-group">
+      <button class="tool-btn" id="addNoteBtn" title="添加便签">
+        <span class="tool-ico">✎</span><span class="tool-label">便签</span>
+      </button>
+      <button class="tool-btn" id="addColorBtn" title="添加色卡">
+        <span class="tool-ico">▤</span><span class="tool-label">色卡</span>
+      </button>
+      <button class="tool-btn" id="addImageBtn" title="添加图像碎片">
+        <span class="tool-ico">◑</span><span class="tool-label">碎片</span>
+      </button>
+      <button class="tool-btn" id="shuffleBtn" title="洗牌重组">
+        <span class="tool-ico">⟳</span><span class="tool-label">洗牌</span>
+      </button>
+      <button class="tool-btn danger" id="clearBtn" title="清空画布">
+        <span class="tool-ico">⌫</span><span class="tool-label">清空</span>
+      </button>
+    </div>
+
+    <div class="theme-group" id="themeGroup">
+      <button class="theme-dot dot-aurora is-active" data-theme="aurora" title="极光"></button>
+      <button class="theme-dot dot-dusk" data-theme="dusk" title="暮色"></button>
+      <button class="theme-dot dot-mono" data-theme="mono" title="银盐"></button>
+      <button class="theme-dot dot-tropic" data-theme="tropic" title="热带"></button>
+    </div>
+  </header>
+
+  <!-- === 拼贴舞台 === -->
+  <main class="stage" id="stage">
+    <div class="stage-hint" id="stageHint">
+      <span class="mono">DRAG</span> 拖拽抛掷碎片 · <span class="mono">CLICK</span> 空白处发射脉冲 · <span class="mono">DBL-CLICK</span> 碎片置顶
+    </div>
+  </main>
+
+  <!-- === 遥测面板 === -->
+  <aside class="telemetry glass">
+    <div class="tele-row"><span class="tele-key mono">FRAGMENTS</span><span class="tele-val mono" id="teleCount">0</span></div>
+    <div class="tele-row"><span class="tele-key mono">PINNED</span><span class="tele-val mono" id="telePinned">0</span></div>
+    <div class="tele-row"><span class="tele-key mono">PULSES</span><span class="tele-val mono" id="telePulses">0</span></div>
+    <div class="tele-row"><span class="tele-key mono">THEME</span><span class="tele-val mono" id="teleTheme">AURORA</span></div>
+  </aside>
+
+  <!-- === Toast === -->
+  <div class="toast glass" id="toast"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -198,3 +198,4 @@ blinds-lightbox
 scroll-case-flow
 audio-terrain
 motion-curve-board
+collage-moodboard

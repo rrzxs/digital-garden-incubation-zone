@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-18",
+  "name": "collage-moodboard",
+  "description": "手绘拼贴风的触感情绪板",
+  "tagline": "Tear & Feel",
+  "interaction": "用户从一叠撕纸质感的素材卡中拖拽出照片、色块和手写字条，鼠标划过时纸张边缘会实时“撕开”，产生不规则的毛边。素材可自由堆叠、旋转，并用和纸胶带“贴牢”，层与层之间带有微妙的纸张阴影和物理晃动。整个情绪板像在真实桌面上手工拼贴，指尖的每次拖拽都伴随纸纹摩擦的触觉反馈。",
+  "directory": "seeds/collage-moodboard/",
+  "status": "incubated"
+}
