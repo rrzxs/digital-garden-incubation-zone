@@ -2150,6 +2150,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Candy Orbit 糖果星轨',
+      description: '沉浸式糖果太阳系引力微交互体验。弹弓发射糖果行星环绕糖芯恒星运转——轻点触发冲击波脉冲、三种引力模式（轨道/漂移/蜂群）、果冻挤压形变、糖霜粒子闪烁与实时动能遥测，流体渐变背景 + 微晶玻璃态容器，4种糖果氛围配色',
+      path: '/seed/seeds/candy-orbit/index.html',
+      tags: ['Interactive', 'Physics', 'Micro-interaction', 'Animation'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candy Orbit — 糖果星轨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 流体渐变背景层 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="app">
+    <!-- === Header === -->
+    <header class="hud-header glass">
+      <div class="header-left">
+        <span class="logo-mark">◎</span>
+        <div class="logo-text-group">
+          <h1 class="logo-title">Candy Orbit</h1>
+          <span class="logo-sub">candy solar mechanics</span>
+        </div>
+      </div>
+      <div class="header-center">
+        <span class="mode-label" id="mode-label">DRAG TO LAUNCH A CANDY</span>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="pulse-btn" title="Pulse" aria-label="Pulse">✦</button>
+        <button class="icon-btn" id="theme-btn" title="Theme" aria-label="Switch theme"><span class="theme-dot"></span></button>
+      </div>
+    </header>
+
+    <!-- === Stage === -->
+    <main class="orbit-stage">
+      <canvas id="orbit-canvas"></canvas>
+      <div class="center-readout glass" id="center-readout">
+        <span class="readout-big" id="candy-count">0</span>
+        <span class="readout-small">CANDIES IN ORBIT</span>
+      </div>
+      <div class="drag-hint" id="drag-hint">
+        <span class="hint-line"></span>
+        <span class="hint-text">press &amp; drag from anywhere — release to launch</span>
+        <span class="hint-line"></span>
+      </div>
+    </main>
+
+    <!-- === Controls === -->
+    <nav class="controls-bar glass">
+      <div class="mode-tabs" id="mode-tabs">
+        <button class="mode-tab active" data-mode="orbit">
+          <span class="tab-icon">◎</span>
+          <span class="tab-label">Orbit</span>
+        </button>
+        <button class="mode-tab" data-mode="drift">
+          <span class="tab-icon">≋</span>
+          <span class="tab-label">Drift</span>
+        </button>
+        <button class="mode-tab" data-mode="swarm">
+          <span class="tab-icon">⊛</span>
+          <span class="tab-label">Swarm</span>
+        </button>
+      </div>
+
+      <div class="slider-group">
+        <label class="slider-label" for="gravity-slider">GRAVITY</label>
+        <input type="range" id="gravity-slider" class="range-input" min="20" max="200" value="90">
+        <span class="slider-value" id="gravity-value">0.90</span>
+      </div>
+
+      <div class="slider-group">
+        <label class="slider-label" for="trail-slider">TRAIL</label>
+        <input type="range" id="trail-slider" class="range-input" min="0" max="100" value="55">
+        <span class="slider-value" id="trail-value">55</span>
+      </div>
+
+      <button class="action-btn" id="spawn-btn">
+        <span class="btn-glow"></span>
+        <span class="btn-text">＋ Spawn Candy</span>
+      </button>
+      <button class="action-btn ghost" id="clear-btn">Clear</button>
+    </nav>
+
+    <!-- === Telemetry === -->
+    <footer class="telemetry glass">
+      <span class="tele-item">VEL <b id="tele-vel">0.00</b></span>
+      <span class="tele-item">KINETIC <b id="tele-ke">0.00</b></span>
+      <span class="tele-item">PULSES <b id="tele-pulse">0</b></span>
+      <span class="tele-item tele-theme" id="tele-theme">THEME <b>SUGAR</b></span>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-19",
+  "name": "candy-orbit",
+  "description": "3D糖果物件旋转式内容导航面板",
+  "tagline": "Spin the Sweets",
+  "interaction": "内容节点被封装为一颗颗色彩缤纷的 3D 糖果，沿轨道环绕中心悬浮旋转。用户拖拽可旋转整条糖果轨道，滚轮缩放视角；点击某颗糖果时，它会弹性放大并"剥开糖纸"展开对应内容面板。糖果间的重力感应微晃与高光质感，让导航本身变成一场甜蜜的把玩体验。",
+  "directory": "seeds/candy-orbit/",
+  "status": "incubated"
+}
