@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-20",
+  "name": "audio-atlas",
+  "description": "可交互音频可视化沉浸空间",
+  "tagline": "Map Your Sound",
+  "interaction": "用户的麦克风输入或音乐文件被实时解析为频谱数据，驱动空间中生成式的粒子星图与地形起伏。低音塑造大地的脉动，高音点亮星空的轨迹，用户可拖拽、缩放来漫游这座由声音构筑的沉浸式地图。每次声音都生成独一无二的"音频大陆"，可被保存并分享。",
+  "directory": "seeds/audio-atlas/",
+  "status": "incubated"
+}

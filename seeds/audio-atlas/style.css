@@ -1,0 +1,501 @@
+/* ============================================================
+   Audio Atlas 声之图集 — 完整样式
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   动效曲线统一: cubic-bezier(0.16, 1, 0.3, 1)
+   ============================================================ */
+
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-sans: 'Inter', 'Noto Sans SC', sans-serif;
+  --font-display: 'Outfit', 'Noto Sans SC', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  /* —— 氛围配色（由 body[data-palette] 切换） —— */
+  --c-bg: #070b18;
+  --c-a: #7c5cff;
+  --c-b: #38e8c6;
+  --c-c: #ff6ea9;
+  --c-glow: rgba(124, 92, 255, 0.55);
+  --c-text: #e9ecf8;
+  --c-dim: rgba(233, 236, 248, 0.55);
+  --c-line: rgba(255, 255, 255, 0.10);
+  --c-glass: rgba(255, 255, 255, 0.045);
+}
+
+body[data-palette="aurora"] { --c-a: #7c5cff; --c-b: #38e8c6; --c-c: #ff6ea9; --c-glow: rgba(124, 92, 255, 0.55); }
+body[data-palette="dusk"]   { --c-a: #ff8a5c; --c-b: #ffd166; --c-c: #c05cff; --c-glow: rgba(255, 138, 92, 0.55); }
+body[data-palette="abyss"]  { --c-a: #2f6bff; --c-b: #19d3d3; --c-c: #7c5cff; --c-glow: rgba(47, 107, 255, 0.55); }
+body[data-palette="ember"]  { --c-a: #ff4d3d; --c-b: #ffb02e; --c-c: #ff2e88; --c-glow: rgba(255, 77, 61, 0.55); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+  transition: background 1.2s var(--ease-out-expo);
+}
+
+.mono { font-family: var(--font-mono); letter-spacing: 0.08em; }
+
+/* ============================================================
+   1. 流体渐变背景 (Mesh Gradient Field)
+   ============================================================ */
+.ambient-bg {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+  filter: saturate(1.15);
+}
+
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.orb-a {
+  width: 55vmax; height: 55vmax; left: -12vmax; top: -18vmax;
+  background: radial-gradient(circle at 40% 40%, var(--c-a), transparent 65%);
+  animation: drift-a 26s var(--ease-out-expo) infinite alternate;
+}
+.orb-b {
+  width: 48vmax; height: 48vmax; right: -14vmax; top: 12vmax;
+  background: radial-gradient(circle at 60% 40%, var(--c-b), transparent 65%);
+  animation: drift-b 32s var(--ease-out-expo) infinite alternate;
+  opacity: 0.4;
+}
+.orb-c {
+  width: 42vmax; height: 42vmax; left: 28vmax; bottom: -20vmax;
+  background: radial-gradient(circle at 50% 50%, var(--c-c), transparent 65%);
+  animation: drift-c 38s var(--ease-out-expo) infinite alternate;
+  opacity: 0.35;
+}
+
+@keyframes drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1) rotate(0deg); }
+  to   { transform: translate3d(9vmax, 7vmax, 0) scale(1.18) rotate(24deg); }
+}
+@keyframes drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.1); }
+  to   { transform: translate3d(-11vmax, 9vmax, 0) scale(0.92); }
+}
+@keyframes drift-c {
+  from { transform: translate3d(0, 0, 0) scale(0.95); }
+  to   { transform: translate3d(-7vmax, -10vmax, 0) scale(1.2); }
+}
+
+/* 胶片颗粒 */
+.grain {
+  position: absolute; inset: -50%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  animation: grain-shift 0.9s steps(3) infinite;
+}
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-2%, 1.4%); }
+  66% { transform: translate(1.6%, -1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ============================================================
+   2. 微晶玻璃态容器 (Glassmorphism)
+   ============================================================ */
+.glass {
+  background: var(--c-glass);
+  border: 1px solid var(--c-line);
+  border-radius: 20px;
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: border-color 0.6s var(--ease-out-expo),
+              box-shadow 0.6s var(--ease-out-expo);
+}
+
+/* ============================================================
+   3. 顶部导航
+   ============================================================ */
+.site-head {
+  position: relative; z-index: 2;
+  padding: 26px clamp(16px, 4vw, 48px) 10px;
+}
+
+.head-inner {
+  max-width: 1240px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 14px 22px;
+}
+
+.brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+
+.brand-glyph {
+  font-size: 26px; color: var(--c-b);
+  text-shadow: 0 0 22px var(--c-glow);
+  animation: glyph-breath 4.2s var(--ease-out-expo) infinite alternate;
+}
+@keyframes glyph-breath {
+  from { transform: scale(1) rotate(0deg); opacity: 0.75; }
+  to   { transform: scale(1.14) rotate(12deg); opacity: 1; }
+}
+
+.brand-copy { display: flex; flex-direction: column; line-height: 1.3; }
+.brand-title {
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 19px; letter-spacing: 0.04em;
+}
+.brand-sub {
+  font-size: 11px; color: var(--c-dim);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.head-status {
+  font-size: 11px; color: var(--c-dim);
+  padding: 7px 14px; border-radius: 999px;
+  border: 1px solid var(--c-line);
+  background: rgba(0, 0, 0, 0.22);
+  white-space: nowrap;
+  transition: color 0.5s var(--ease-out-expo), border-color 0.5s var(--ease-out-expo);
+}
+.head-status.live { color: var(--c-b); border-color: rgba(56, 232, 198, 0.35); }
+
+/* ============================================================
+   4. 舞台布局
+   ============================================================ */
+.stage {
+  position: relative; z-index: 1;
+  max-width: 1240px; margin: 0 auto;
+  padding: 18px clamp(16px, 4vw, 48px) 40px;
+  display: flex; flex-direction: column; gap: 26px;
+}
+
+/* —— 图集画布框 —— */
+.atlas-wrap { perspective: 1400px; }
+
+.atlas-frame {
+  position: relative;
+  height: clamp(360px, 52vh, 560px);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.9s var(--ease-out-expo), box-shadow 0.9s var(--ease-out-expo);
+}
+
+#atlas-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; display: block;
+}
+
+.atlas-scanline {
+  position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    rgba(0, 0, 0, 0.14) 3px 4px
+  );
+  opacity: 0.5; mix-blend-mode: overlay;
+}
+
+.atlas-corner {
+  position: absolute; width: 22px; height: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+}
+.atlas-corner.tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+.atlas-corner.tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+.atlas-corner.bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+.atlas-corner.br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+.atlas-hud {
+  position: absolute; left: 16px; bottom: 14px; right: 16px;
+  display: flex; gap: 20px; flex-wrap: wrap;
+  font-size: 10px; color: var(--c-dim);
+  pointer-events: none;
+}
+.atlas-hud span { text-shadow: 0 0 8px rgba(0,0,0,0.6); }
+
+/* —— 声音地貌节点（画布上的标记） —— */
+.atlas-nodes { position: absolute; inset: 0; }
+
+.node {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(1);
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  display: grid; place-items: center;
+  font-size: 15px; color: var(--c-text);
+  transition: transform 0.55s var(--ease-out-expo),
+              border-color 0.55s var(--ease-out-expo),
+              box-shadow 0.55s var(--ease-out-expo);
+  animation: node-in 1s var(--ease-out-expo) both;
+}
+.node:nth-child(1) { animation-delay: 0.05s; }
+.node:nth-child(2) { animation-delay: 0.14s; }
+.node:nth-child(3) { animation-delay: 0.23s; }
+.node:nth-child(4) { animation-delay: 0.32s; }
+.node:nth-child(5) { animation-delay: 0.41s; }
+.node:nth-child(6) { animation-delay: 0.50s; }
+
+@keyframes node-in {
+  from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  to   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.node::before {
+  content: '';
+  position: absolute; inset: -7px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: inset 0.55s var(--ease-out-expo), border-color 0.55s var(--ease-out-expo);
+}
+.node::after {
+  content: '';
+  position: absolute; inset: -16px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transition: opacity 0.55s var(--ease-out-expo), transform 0.55s var(--ease-out-expo);
+}
+
+.node:hover {
+  transform: translate(-50%, -50%) scale(1.22);
+  border-color: var(--c-b);
+  box-shadow: 0 0 26px var(--c-glow);
+}
+.node:hover::after { opacity: 1; transform: rotate(40deg); }
+
+.node.active {
+  transform: translate(-50%, -50%) scale(1.3);
+  border-color: var(--c-b);
+  box-shadow: 0 0 34px var(--c-glow), inset 0 0 14px var(--c-glow);
+}
+.node.active::before { inset: -12px; border-color: var(--c-b); animation: ring-pulse 2.2s var(--ease-out-expo) infinite; }
+.node.active::after { opacity: 1; animation: ring-spin 9s linear infinite; }
+
+@keyframes ring-pulse {
+  0%   { inset: -12px; opacity: 1; }
+  70%  { inset: -30px; opacity: 0; }
+  100% { inset: -30px; opacity: 0; }
+}
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   5. 声音地貌卡片网格
+   ============================================================ */
+.biomes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.biome-card {
+  position: relative;
+  padding: 20px 22px 18px;
+  border-radius: 18px;
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(28px) scale(0.96);
+  transition: transform 0.7s var(--ease-out-expo),
+              border-color 0.7s var(--ease-out-expo),
+              box-shadow 0.7s var(--ease-out-expo),
+              opacity 0.7s var(--ease-out-expo);
+}
+.biome-card.in { opacity: 1; transform: translateY(0) scale(1); }
+
+.biome-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.10), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-out-expo);
+  pointer-events: none;
+}
+.biome-card:hover::before { opacity: 1; }
+.biome-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.45), 0 0 34px var(--c-glow);
+}
+.biome-card:active { transform: translateY(-2px) scale(0.985); transition-duration: 0.18s; }
+
+.biome-card.active {
+  border-color: var(--c-b);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.45), 0 0 40px var(--c-glow), inset 0 0 26px rgba(255,255,255,0.04);
+}
+
+.biome-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.biome-glyph { font-size: 22px; filter: drop-shadow(0 0 10px var(--c-glow)); }
+
+.biome-eq { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
+.biome-eq i {
+  display: block; width: 3px; border-radius: 2px;
+  background: var(--c-dim);
+  height: 30%;
+  transition: background 0.5s var(--ease-out-expo);
+}
+.biome-card.active .biome-eq i {
+  background: var(--c-b);
+  animation: eq-bounce 0.9s var(--ease-out-expo) infinite alternate;
+}
+.biome-card.active .biome-eq i:nth-child(1) { animation-delay: 0s; }
+.biome-card.active .biome-eq i:nth-child(2) { animation-delay: 0.15s; }
+.biome-card.active .biome-eq i:nth-child(3) { animation-delay: 0.30s; }
+.biome-card.active .biome-eq i:nth-child(4) { animation-delay: 0.45s; }
+@keyframes eq-bounce {
+  from { height: 22%; }
+  to   { height: 100%; }
+}
+
+.biome-name {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 600; letter-spacing: 0.02em;
+  margin-bottom: 2px;
+}
+.biome-cn { font-size: 12px; color: var(--c-dim); letter-spacing: 0.28em; }
+
+.biome-desc {
+  font-size: 12.5px; color: var(--c-dim);
+  margin-top: 10px; line-height: 1.65;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.biome-meta {
+  margin-top: 14px; display: flex; justify-content: space-between;
+  font-size: 10px; color: var(--c-dim);
+}
+.biome-meta .coords { color: var(--c-b); opacity: 0.85; }
+
+/* ============================================================
+   6. 控制台
+   ============================================================ */
+.console {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 22px; padding: 18px 24px;
+}
+
+.console-block { display: flex; flex-direction: column; gap: 9px; }
+
+.console-label {
+  font-size: 10px; color: var(--c-dim); letter-spacing: 0.18em;
+}
+#intensity-val { color: var(--c-b); }
+
+.seg-group { display: flex; gap: 6px; }
+
+.seg-btn {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--c-dim);
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--c-line);
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.45s var(--ease-out-expo);
+}
+.seg-btn:hover { color: var(--c-text); border-color: rgba(255,255,255,0.3); transform: translateY(-1px); }
+.seg-btn.active {
+  color: var(--c-bg);
+  background: var(--c-b);
+  border-color: var(--c-b);
+  box-shadow: 0 0 20px var(--c-glow);
+}
+
+.slider-block { flex: 1; min-width: 180px; }
+
+.range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--c-a), var(--c-b));
+  outline: none; cursor: pointer;
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 17px; height: 17px; border-radius: 50%;
+  background: var(--c-text);
+  border: 3px solid var(--c-b);
+  box-shadow: 0 0 14px var(--c-glow);
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.range::-webkit-slider-thumb:hover { transform: scale(1.3); }
+.range::-moz-range-thumb {
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--c-text); border: 3px solid var(--c-b);
+  box-shadow: 0 0 14px var(--c-glow);
+}
+
+.action-block { flex-direction: row; align-items: center; gap: 12px; }
+
+.pulse-btn {
+  position: relative;
+  padding: 11px 26px; border-radius: 999px;
+  border: 1px solid var(--c-b);
+  background: rgba(56, 232, 198, 0.08);
+  color: var(--c-text); font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: 0.2em;
+  cursor: pointer; overflow: visible;
+  transition: all 0.5s var(--ease-out-expo);
+}
+.pulse-btn:hover { box-shadow: 0 0 28px var(--c-glow); transform: translateY(-2px); }
+.pulse-btn:active { transform: scale(0.94); transition-duration: 0.12s; }
+
+.pulse-ring {
+  position: absolute; inset: 0; border-radius: 999px;
+  border: 1px solid var(--c-b);
+  opacity: 0; pointer-events: none;
+}
+.pulse-btn.fired .pulse-ring { animation: pulse-burst 0.9s var(--ease-out-expo) ease-out; }
+@keyframes pulse-burst {
+  from { transform: scale(1); opacity: 0.9; }
+  to   { transform: scale(2.4); opacity: 0; }
+}
+
+.stop-btn {
+  padding: 11px 22px; border-radius: 999px;
+  border: 1px solid var(--c-line);
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--c-dim); font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.5s var(--ease-out-expo);
+}
+.stop-btn:hover { color: var(--c-c); border-color: var(--c-c); transform: translateY(-2px); }
+.stop-btn:active { transform: scale(0.94); }
+
+/* ============================================================
+   7. 页脚
+   ============================================================ */
+.site-foot {
+  position: relative; z-index: 1;
+  text-align: center; padding: 14px 20px 26px;
+  font-size: 10px; color: var(--c-dim);
+  letter-spacing: 0.22em;
+}
+
+/* ============================================================
+   8. 响应式
+   ============================================================ */
+@media (max-width: 720px) {
+  .head-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .atlas-frame { height: 58vh; min-height: 340px; }
+  .console { gap: 16px; }
+  .node { width: 38px; height: 38px; font-size: 13px; }
+}

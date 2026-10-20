@@ -2160,6 +2160,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Audio Atlas 声之图集',
+      description: '沉浸式声音世界图集。六大声音地貌（雨林/洋流/荒漠/都会/极光/牧场）由 Web Audio 实时程序化合成——噪声塑形+振荡器+LFO 无采样生成，径向频谱/波形/粒子三种可视化、冲击波脉冲、乱码揭示与光标视差，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/audio-atlas/index.html',
+      tags: ['Interactive', 'Audio', 'Generative', 'Micro-interaction'],
+      icon: '◍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

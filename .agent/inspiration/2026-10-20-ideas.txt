@@ -1,0 +1,8 @@
+scroll-cinema - 滚动驱动的沉浸式3D叙事页面工坊
+audio-atlas - 可交互音频可视化沉浸空间
+type-poster-lab - 超大字号极简海报排版生成器
+grid-vector-board - 技术网格风格的矢量图示编排画布
+pixel-owl-quest - 8-bit像素风儿童数学闯关游戏
+ref-crate - 创意灵感卡片收藏与策展架
+pair-demo-stage - 结对编程界面的滚动演示剧场
+soft-room-tour - 低多边形软光影3D空间漫游

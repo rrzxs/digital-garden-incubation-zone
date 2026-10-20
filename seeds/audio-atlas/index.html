@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Atlas 声之图集</title>
+  <meta name="description" content="沉浸式声音世界图集。六大声音地貌实时合成播放，流体渐变背景 + 微晶玻璃态容器 + 非线性动效。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070b18'/%3E%3Ccircle cx='32' cy='32' r='14' fill='none' stroke='%237c5cff' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%2338e8c6'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body data-palette="aurora" data-viz="radial">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="mesh-orb orb-a"></div>
+    <div class="mesh-orb orb-b"></div>
+    <div class="mesh-orb orb-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 顶部导航 === -->
+  <header class="site-head">
+    <div class="head-inner glass">
+      <div class="brand">
+        <span class="brand-glyph">◍</span>
+        <div class="brand-copy">
+          <span class="brand-title">Audio Atlas</span>
+          <span class="brand-sub">声之图集 · Generative Soundscape Cartography</span>
+        </div>
+      </div>
+      <div class="head-status mono" id="head-status">SYS.STANDBY — SELECT A BIOME</div>
+    </div>
+  </header>
+
+  <main class="stage">
+
+    <!-- === 图集舞台（画布 + 声音地貌标记） === -->
+    <section class="atlas-wrap">
+      <div class="atlas-frame glass">
+        <canvas id="atlas-canvas"></canvas>
+        <div class="atlas-nodes" id="atlas-nodes"></div>
+        <div class="atlas-scanline" aria-hidden="true"></div>
+        <div class="atlas-corner tl"></div>
+        <div class="atlas-corner tr"></div>
+        <div class="atlas-corner bl"></div>
+        <div class="atlas-corner br"></div>
+        <div class="atlas-hud mono">
+          <span id="hud-biome">BIOME --</span>
+          <span id="hud-energy">ENERGY 0.00</span>
+          <span id="hud-cursor">X 0.00 · Y 0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- === 声音地貌卡片（六大区域） === -->
+    <section class="biomes" id="biomes"></section>
+
+    <!-- === 控制台 === -->
+    <section class="console glass">
+      <div class="console-block">
+        <div class="console-label mono">VIZ.MODE</div>
+        <div class="seg-group" id="viz-group">
+          <button class="seg-btn active" data-viz="radial">Radial</button>
+          <button class="seg-btn" data-viz="wave">Waveform</button>
+          <button class="seg-btn" data-viz="particles">Particles</button>
+        </div>
+      </div>
+      <div class="console-block">
+        <div class="console-label mono">PALETTE</div>
+        <div class="seg-group" id="palette-group">
+          <button class="seg-btn active" data-palette="aurora">Aurora</button>
+          <button class="seg-btn" data-palette="dusk">Dusk</button>
+          <button class="seg-btn" data-palette="abyss">Abyss</button>
+          <button class="seg-btn" data-palette="ember">Ember</button>
+        </div>
+      </div>
+      <div class="console-block slider-block">
+        <div class="console-label mono">INTENSITY <span id="intensity-val" class="mono">0.70</span></div>
+        <input type="range" id="intensity-slider" class="range" min="0" max="100" value="70">
+      </div>
+      <div class="console-block action-block">
+        <button class="pulse-btn" id="pulse-btn">
+          <span class="pulse-ring"></span>
+          <span class="pulse-text">Pulse</span>
+        </button>
+        <button class="stop-btn" id="stop-btn">■ Stop</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-foot mono">
+    AUDIO·ATLAS // zero-build · vanilla web audio synthesis · maintainer EDEN
+  </footer>
+
+  <script src="main.js?v=1"></script>
+</body>
+</html>
