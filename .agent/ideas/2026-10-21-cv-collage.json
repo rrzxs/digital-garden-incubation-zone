@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-21",
+  "name": "cv-collage",
+  "description": "照片连线拼贴式互动简历画布",
+  "tagline": "**Your career, connected.**",
+  "interaction": "简历内容以散落的照片卡片形式铺展在画布上，用户像拼贴手账一样拖拽、旋转、堆叠这些卡片，并在经历、技能与作品之间手绘连线，讲述自己的故事脉络。随着连线完成，画布自动生成一份可分享的个性化拼贴简历海报。",
+  "directory": "seeds/cv-collage/",
+  "status": "incubated"
+}

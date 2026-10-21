@@ -2170,6 +2170,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'CV Collage 履历拼贴',
+      description: '沉浸式履历拼贴体验。把一份履历拆成 7 张微晶玻璃态碎片（身份/信条/履历/技能/作品/教育/联络）——弹簧-阻尼抛掷物理、边界弹性碰撞、速度姿态旋转、冲击波涟漪、拖拽流光轨迹、3D 倾斜与粒子流场，标题乱码揭示 + 洗牌/齐射/复位编排，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/cv-collage/index.html',
+      tags: ['Interactive', 'Resume', 'Collage', 'Micro-interaction'],
+      icon: '◧',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

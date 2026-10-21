@@ -201,3 +201,4 @@ motion-curve-board
 collage-moodboard
 candy-orbit
 audio-atlas
+cv-collage

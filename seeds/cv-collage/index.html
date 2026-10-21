@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV Collage · 履历拼贴</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-mood="aurora">
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 粒子流场画布 -->
+  <canvas id="flow-canvas" aria-hidden="true"></canvas>
+
+  <!-- 点击冲击波层 -->
+  <div id="shock-layer" aria-hidden="true"></div>
+
+  <main class="stage">
+    <!-- === 顶部标题区 === -->
+    <header class="stage-header">
+      <div class="brand">
+        <span class="brand-glyph">◧</span>
+        <span class="brand-name mono">CV / COLLAGE</span>
+      </div>
+      <h1 class="headline" data-scramble="履历拼贴">履历拼贴</h1>
+      <p class="subhead">
+        把一份履历拆成碎片 —— 拖拽、抛掷、拼贴你的职业叙事
+      </p>
+      <div class="header-meta mono">
+        <span id="meta-drag">DRAG ×0</span>
+        <span class="dot">·</span>
+        <span id="meta-cards">FRAGMENTS 7</span>
+        <span class="dot">·</span>
+        <span id="meta-clock">00:00:00</span>
+      </div>
+    </header>
+
+    <!-- === 拼贴舞台 === -->
+    <section class="collage" id="collage">
+      <!-- 碎片由 main.js 生成 -->
+    </section>
+
+    <!-- === 控制台 === -->
+    <footer class="console glass">
+      <div class="console-row">
+        <div class="console-group" id="mood-group">
+          <span class="console-label mono">MOOD</span>
+          <button class="mood-btn" data-mood="aurora" title="极光">◷ 极光</button>
+          <button class="mood-btn" data-mood="ink" title="墨韵">◐ 墨韵</button>
+          <button class="mood-btn" data-mood="ember" title="余烬">◍ 余烬</button>
+          <button class="mood-btn" data-mood="tide" title="潮汐">≋ 潮汐</button>
+        </div>
+        <div class="console-group">
+          <span class="console-label mono">FIELDS</span>
+          <button class="chip-btn" data-field="flow" title="粒子流场">FLOW</button>
+          <button class="chip-btn" data-field="tilt" title="3D 倾斜">TILT</button>
+          <button class="chip-btn" data-field="trace" title="拖拽轨迹">TRACE</button>
+        </div>
+        <div class="console-group">
+          <button class="action-btn" id="btn-shuffle">🔀 洗牌拼贴</button>
+          <button class="action-btn" id="btn-scatter">✦ 齐射散落</button>
+          <button class="action-btn ghost" id="btn-reset">↺ 复位</button>
+        </div>
+      </div>
+      <p class="console-hint mono">拖拽碎片抛掷 · 点击空白处释放冲击波 · 双击碎片置顶</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

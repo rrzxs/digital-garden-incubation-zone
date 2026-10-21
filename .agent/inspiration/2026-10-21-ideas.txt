@@ -1,0 +1,6 @@
+scroll-cinema - 滚动驱动的沉浸式叙事长页生成器
+cv-collage - 照片连线拼贴式互动简历画布
+sound-sculpture - 低多边形三维音乐可视化空间
+math-owl-quest - 像素吉祥物趣味数学闯关小游戏
+gem-light-stage - 光石材质光影交互虚拟展台
+motion-sketchpad - 描述情绪即生成动画的微动效画板
