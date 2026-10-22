@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-22",
+  "name": "pixel-owl-math",
+  "description": "像素猫头鹰陪伴的儿童算术闯关微课堂",
+  "tagline": "Hoot & Count!",
+  "interaction": "一只像素猫头鹰陪伴孩子闯关，答对算术题即可帮它收集星星、解锁新关卡。答错时猫头鹰会歪头卖萌给出提示，鼓励孩子再试一次。随着闯关进度，猫头鹰逐步进化换装，成为孩子专属的学习伙伴。",
+  "directory": "seeds/pixel-owl-math/",
+  "status": "incubated"
+}

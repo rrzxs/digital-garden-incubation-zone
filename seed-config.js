@@ -2180,6 +2180,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Pixel Owl Math 像素猫头鹰数学馆',
+      description: '沉浸式像素猫头鹰数学训练馆。会眨眼、振翅、歪头、脸红的像素猫头鹰导师陪你心算——乱码揭示题目、连击羽翼风暴、粒子迸射与飘落羽毛、环形 XP 等级，5种运算模式 × 4档难度，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/pixel-owl-math/index.html',
+      tags: ['Interactive', 'Math', 'Pixel Art', 'Micro-interaction'],
+      icon: '🦉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
     }
   ]);
 

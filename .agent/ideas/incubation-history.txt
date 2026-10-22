@@ -202,3 +202,4 @@ collage-moodboard
 candy-orbit
 audio-atlas
 cv-collage
+pixel-owl-math

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Owl Math — 像素猫头鹰数学馆</title>
+    <meta name="description" content="沉浸式像素猫头鹰数学训练馆。会眨眼、振翅、歪头的像素猫头鹰导师陪你心算——乱码揭示题目、连击羽翼风暴、弹簧物理反馈、粒子迸射与辉光脉冲，流体渐变背景 + 微晶玻璃态容器，4种氛围配色">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a18'/%3E%3Cg fill='%23f7b955'%3E%3Crect x='12' y='14' width='8' height='8'/%3E%3Crect x='44' y='14' width='8' height='8'/%3E%3Crect x='20' y='12' width='24' height='8'/%3E%3Crect x='16' y='20' width='32' height='16'/%3E%3Crect x='24' y='36' width='16' height='8'/%3E%3C/g%3E%3Cg fill='%230a0a18'%3E%3Crect x='22' y='24' width='6' height='8'/%3E%3Crect x='36' y='24' width='6' height='8'/%3E%3Crect x='28' y='44' width='8' height='6'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="palette-aurora">
+    <!-- Fluid Mesh Background -->
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+        <div class="grain"></div>
+    </div>
+
+    <!-- Particle Layer -->
+    <canvas class="particle-layer" id="particle-layer" aria-hidden="true"></canvas>
+
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <a href="../../index.html" class="back-link" aria-label="返回数字花园">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="app-shell">
+        <!-- Header -->
+        <header class="panel-header glass-panel">
+            <div class="brand-group">
+                <div class="brand-mark" aria-hidden="true">
+                    <span class="mark-pixel"></span>
+                    <span class="mark-pixel"></span>
+                    <span class="mark-pixel"></span>
+                    <span class="mark-pixel"></span>
+                </div>
+                <div class="brand-text">
+                    <h1 class="brand-title">Pixel<span class="brand-dot">·</span>Owl<span class="brand-dot">·</span>Math</h1>
+                    <p class="brand-subtitle">像素猫头鹰数学馆 — 与夜之智者共舞心算</p>
+                </div>
+            </div>
+            <div class="palette-switch" role="radiogroup" aria-label="氛围配色">
+                <button class="palette-btn is-active" data-palette="aurora" role="radio" aria-checked="true" title="极光"></button>
+                <button class="palette-btn" data-palette="cyber" role="radio" aria-checked="false" title="赛博"></button>
+                <button class="palette-btn" data-palette="dusk" role="radio" aria-checked="false" title="暮砂"></button>
+                <button class="palette-btn" data-palette="mint" role="radio" aria-checked="false" title="薄荷"></button>
+            </div>
+        </header>
+
+        <main class="stage">
+            <!-- Owl Stage -->
+            <section class="owl-panel glass-panel">
+                <div class="owl-scene" id="owl-scene">
+                    <div class="owl-moon" aria-hidden="true"></div>
+                    <div class="owl-stars" aria-hidden="true" id="owl-stars"></div>
+                    <div class="owl" id="owl" data-mood="idle" aria-label="像素猫头鹰导师">
+                        <!-- Owlet body (pixel grid via box-shadow) -->
+                        <div class="owl-body">
+                            <div class="owl-wing owl-wing-left"></div>
+                            <div class="owl-wing owl-wing-right"></div>
+                            <div class="owl-belly"></div>
+                            <div class="owl-ear owl-ear-left"></div>
+                            <div class="owl-ear owl-ear-right"></div>
+                            <div class="owl-face">
+                                <div class="owl-eye owl-eye-left">
+                                    <div class="owl-pupil"></div>
+                                    <div class="owl-blink"></div>
+                                </div>
+                                <div class="owl-eye owl-eye-right">
+                                    <div class="owl-pupil"></div>
+                                    <div class="owl-blink"></div>
+                                </div>
+                                <div class="owl-beak"></div>
+                                <div class="owl-blush owl-blush-left"></div>
+                                <div class="owl-blush owl-blush-right"></div>
+                            </div>
+                            <div class="owl-feet">
+                                <span></span><span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="owl-perch" aria-hidden="true"></div>
+                    <div class="owl-shadow" aria-hidden="true"></div>
+                </div>
+                <div class="owl-speech" id="owl-speech">
+                    <span id="owl-speech-text">呜——夜算开始了。按下答案，让我为你振翅。</span>
+                </div>
+                <div class="owl-halo" id="owl-halo" aria-hidden="true"></div>
+            </section>
+
+            <!-- Quiz Panel -->
+            <section class="quiz-panel glass-panel">
+                <div class="quiz-toolbar">
+                    <div class="mode-group" id="mode-group" role="radiogroup" aria-label="运算模式">
+                        <button class="mode-btn is-active" data-mode="add" role="radio" aria-checked="true">加</button>
+                        <button class="mode-btn" data-mode="sub" role="radio" aria-checked="false">减</button>
+                        <button class="mode-btn" data-mode="mul" role="radio" aria-checked="false">乘</button>
+                        <button class="mode-btn" data-mode="div" role="radio" aria-checked="false">除</button>
+                        <button class="mode-btn" data-mode="mix" role="radio" aria-checked="false">混合</button>
+                    </div>
+                    <div class="level-group" id="level-group" role="radiogroup" aria-label="难度">
+                        <button class="level-btn is-active" data-level="1" role="radio" aria-checked="true">I</button>
+                        <button class="level-btn" data-level="2" role="radio" aria-checked="false">II</button>
+                        <button class="level-btn" data-level="3" role="radio" aria-checked="false">III</button>
+                        <button class="level-btn" data-level="4" role="radio" aria-checked="false">IV</button>
+                    </div>
+                </div>
+
+                <div class="question-card" id="question-card">
+                    <div class="question-meta">
+                        <span class="meta-chip" id="meta-index">Q.001</span>
+                        <span class="meta-chip meta-op" id="meta-op">ADDITION</span>
+                    </div>
+                    <div class="question-expression" id="question-expression" aria-live="polite"></div>
+                    <div class="answer-row">
+                        <div class="answer-input-wrap">
+                            <input class="answer-input" id="answer-input" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="?" aria-label="输入答案">
+                            <button class="answer-submit" id="answer-submit" aria-label="提交答案">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6L9 17l-5-5"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="feedback-line" id="feedback-line"></div>
+                    </div>
+                </div>
+
+                <!-- Pixel Keypad -->
+                <div class="keypad" id="keypad" aria-label="像素键盘">
+                    <button class="key" data-key="7">7</button>
+                    <button class="key" data-key="8">8</button>
+                    <button class="key" data-key="9">9</button>
+                    <button class="key key-back" data-key="back" aria-label="退格">⌫</button>
+                    <button class="key" data-key="4">4</button>
+                    <button class="key" data-key="5">5</button>
+                    <button class="key" data-key="6">6</button>
+                    <button class="key key-clear" data-key="clear" aria-label="清空">C</button>
+                    <button class="key" data-key="1">1</button>
+                    <button class="key" data-key="2">2</button>
+                    <button class="key" data-key="3">3</button>
+                    <button class="key key-ok" data-key="ok" aria-label="确认">✓</button>
+                    <button class="key key-zero" data-key="0">0</button>
+                    <button class="key" data-key="-">−</button>
+                </div>
+            </section>
+
+            <!-- Stats Panel -->
+            <aside class="stats-panel glass-panel">
+                <h2 class="stats-title">夜巡档案 · Flight Log</h2>
+                <div class="combo-meter">
+                    <div class="combo-label"><span>连击 COMBO</span><span class="combo-value" id="combo-value">×0</span></div>
+                    <div class="combo-bar"><div class="combo-fill" id="combo-fill"></div></div>
+                    <div class="combo-tier" id="combo-tier">雏鸟 · Fledgling</div>
+                </div>
+                <ul class="stats-grid">
+                    <li class="stat-cell">
+                        <span class="stat-num" id="stat-answered">0</span>
+                        <span class="stat-label">答题 Total</span>
+                    </li>
+                    <li class="stat-cell">
+                        <span class="stat-num" id="stat-accuracy">—</span>
+                        <span class="stat-label">正确率 Accuracy</span>
+                    </li>
+                    <li class="stat-cell">
+                        <span class="stat-num" id="stat-best">0</span>
+                        <span class="stat-label">最佳连击 Best</span>
+                    </li>
+                    <li class="stat-cell">
+                        <span class="stat-num" id="stat-xp">0</span>
+                        <span class="stat-label">羽毛 XP</span>
+                    </li>
+                </ul>
+                <div class="xp-ring-wrap">
+                    <svg class="xp-ring" viewBox="0 0 120 120" aria-hidden="true">
+                        <circle class="xp-ring-track" cx="60" cy="60" r="52"/>
+                        <circle class="xp-ring-fill" id="xp-ring-fill" cx="60" cy="60" r="52"/>
+                    </svg>
+                    <div class="xp-ring-center">
+                        <span class="xp-level" id="xp-level">Lv.1</span>
+                        <span class="xp-level-sub">夜之学徒</span>
+                    </div>
+                </div>
+                <button class="reset-btn" id="reset-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>
+                    </svg>
+                    重置档案
+                </button>
+                <p class="stats-hint">连续答对 5 题点燃「羽翼风暴」· 连击越高，XP 翻倍越猛</p>
+            </aside>
+        </main>
+
+        <footer class="panel-footer">
+            <span class="footer-fte">PIXEL·OWL·MATH</span>
+            <span class="footer-sep">—</span>
+            <span class="footer-note">maintained by EDEN · 数字花园种子区</span>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
