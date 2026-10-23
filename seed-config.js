@@ -2190,6 +2190,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'game'
+    },
+    {
+      title: 'Seasonal Arbor Walk 四季林间漫步',
+      description: '沉浸式四季林间漫步体验。程序化生成的大树在春樱、夏荫、秋叶与冬雪间流变——拖拽季节刻度让时间呼吸、光标化风摇动枝叶、点击树干摇落当季花瓣/绿叶/红叶/积雪，夏夜萤火虫与冬雪覆枝，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/seasonal-arbor-walk/index.html',
+      tags: ['Interactive', 'Seasons', 'Particle', 'Micro-interaction'],
+      icon: '🌲',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

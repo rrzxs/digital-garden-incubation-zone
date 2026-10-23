@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="grove">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Arbor Walk · 四季林间漫步</title>
+    <meta name="description" content="沉浸式四季林间漫步体验。程序化生成的大树在春樱、夏荫、秋叶与冬雪间流变——拖拽季节刻度让时间呼吸，光标化作风摇动枝叶，点击树干抖落花瓣、绿叶、红叶或积雪，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === Ambient Fluid Orbs (breathing mesh gradient) === -->
+    <div class="ambient-orbs">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+    </div>
+
+    <!-- === Main Canvas: the arbor stage === -->
+    <canvas id="arbor-canvas"></canvas>
+
+    <!-- === Grain Overlay === -->
+    <div class="grain-overlay"></div>
+
+    <!-- === Custom Cursor === -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- === Back Link === -->
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === Theme Switcher === -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="grove" title="Grove · 林语"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="dusk" title="Dusk · 暮林"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="frost" title="Frost · 霜境"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="ember" title="Ember · 炽秋"><span class="theme-dot"></span></button>
+    </div>
+
+    <!-- === HUD: Walk Telemetry === -->
+    <div class="hud-panel">
+        <div class="hud-row">
+            <span class="hud-key mono">SEASON</span>
+            <span class="hud-val mono" id="hud-season">SPRING</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">YEAR LOOP</span>
+            <span class="hud-val mono" id="hud-progress">000°</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">LEAVES</span>
+            <span class="hud-val mono" id="hud-leaves">0</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-key mono">WIND</span>
+            <span class="hud-val mono" id="hud-wind">0.00</span>
+        </div>
+    </div>
+
+    <!-- === Hero Title === -->
+    <header class="hero" id="hero">
+        <div class="hero-eyebrow mono">001 / ARBOR WALK</div>
+        <h1 class="hero-title">
+            <span class="line ink-line" data-delay="0">一棵树的一年</span>
+            <span class="line accent ink-line" data-delay="220">在你指尖流过</span>
+        </h1>
+        <p class="hero-sub ink-line" data-delay="480">
+            拖拽下方季节刻度，让春樱、夏荫、秋叶与冬雪缓慢呼吸；<br>
+            移动光标化作林间之风，点击树干，摇落整个季节。
+        </p>
+    </header>
+
+    <!-- === Season Control Dock === -->
+    <div class="season-dock glass-card" id="season-dock">
+        <div class="dock-label mono">SEASON · SCRUB</div>
+        <div class="season-track" id="season-track">
+            <div class="season-fill" id="season-fill"></div>
+            <div class="season-thumb" id="season-thumb"></div>
+            <div class="season-markers">
+                <span class="marker mono" style="left:0%">春 SPR</span>
+                <span class="marker mono" style="left:33.33%">夏 SUM</span>
+                <span class="marker mono" style="left:66.66%">秋 AUT</span>
+                <span class="marker mono" style="left:100%">冬 WIN</span>
+            </div>
+        </div>
+        <div class="dock-readout">
+            <span class="readout-val mono" id="season-readout">SPRING</span>
+            <span class="readout-hint mono">drag to wander the year</span>
+        </div>
+        <button class="auto-btn" id="auto-btn" aria-label="自动四季循环">
+            <span class="auto-icon"></span>
+            <span class="auto-label">AUTO</span>
+        </button>
+    </div>
+
+    <!-- === Season Info Card === -->
+    <aside class="season-card glass-card" id="season-card">
+        <div class="season-glyph" id="season-glyph">❀</div>
+        <div class="season-name" id="season-name">春 · Spring</div>
+        <div class="season-poem" id="season-poem">嫩芽在风里学会呼吸，粉色落在肩头。</div>
+    </aside>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+bookmark-archaeology - 导入浏览器书签文件，挖掘重温被遗忘的链接
+local-shard-search - 本地优先的笔记书签碎片聚合搜索台
+demo-reel-forge - 拖拽步骤自动生成滚动驱动的产品演示页
+mono-index-folio - 巨型单色字配3D雕塑的索引式个人主页
+gem-light-choir - 拖动光源聆听宝石共鸣的珠宝式画廊
+seasonal-arbor-walk - 滚动驱动四季更替的沉浸式树木生长之旅

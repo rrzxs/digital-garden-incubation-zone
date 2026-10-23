@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-23",
+  "name": "seasonal-arbor-walk",
+  "description": "滚动驱动四季更替的沉浸式树木生长之旅",
+  "tagline": "Scroll to Bloom",
+  "interaction": "滚动条即时间轴，驱动一棵树从春日抽芽、盛夏繁茂、秋叶飘零到冬日覆雪的完整生命循环。每次滚动都让枝干生长、叶色渐变并触发季节专属粒子效果（花瓣、蝉鸣光斑、落叶、雪花），配合镜头缓慢推进，营造沉浸式生长叙事。",
+  "directory": "seeds/seasonal-arbor-walk/",
+  "status": "incubated"
+}
