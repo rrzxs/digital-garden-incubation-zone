@@ -2192,6 +2192,16 @@
       category: 'game'
     },
     {
+      title: 'Pixel Math Owl 像素数枭心算舱',
+      description: '沉浸式像素数学猫头鹰心算舱。弹簧-阻尼物理像素矩阵猫头鹰实时解构与重组——答对即刻像素迸散重聚、答错共振颤抖，乱码揭示题目、连击星火、XP 智者星轨与光标撩羽力场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/pixel-math-owl/index.html',
+      tags: ['Interactive', 'Math', 'Pixel Art', 'Micro-interaction'],
+      icon: '🦉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
+    },
+    {
       title: 'Seasonal Arbor Walk 四季林间漫步',
       description: '沉浸式四季林间漫步体验。程序化生成的大树在春樱、夏荫、秋叶与冬雪间流变——拖拽季节刻度让时间呼吸、光标化风摇动枝叶、点击树干摇落当季花瓣/绿叶/红叶/积雪，夏夜萤火虫与冬雪覆枝，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
       path: '/seed/seeds/seasonal-arbor-walk/index.html',

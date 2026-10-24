@@ -204,3 +204,4 @@ audio-atlas
 cv-collage
 pixel-owl-math
 seasonal-arbor-walk
+pixel-math-owl

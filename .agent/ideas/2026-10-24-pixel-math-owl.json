@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-24",
+  "name": "pixel-math-owl",
+  "description": "像素吉祥物儿童数学闯关",
+  "tagline": "Math Whiz Owl",
+  "interaction": "一只复古像素风格的猫头鹰导师陪伴孩子闯过数学关卡。答对题目，猫头鹰会振翅欢呼、点亮星星并进化出新的像素形态；答错则给予温暖提示而非惩罚。随着关卡推进，难度自适应递增，让孩子在收集羽毛徽章的过程中爱上数学。",
+  "directory": "seeds/pixel-math-owl/",
+  "status": "incubated"
+}
