@@ -1,0 +1,8 @@
+link-weave-collage - 散落照片连线叙事拼贴画板，附触发音效
+kinetic-letterform-lab - 可编辑文字的动态字形动画实验室
+fold-scroll-demo - 滚动驱动的产品折叠演示生成器
+mineral-choir-scape - 石材声景化的沉浸式滚动互动体验
+scene-previs-board - 浏览器内摆姿势排机位的分镜预演台
+resurf-shelf - 本地暂存书签与笔记的定期回顾架
+mood-motion-sketch - 输入情绪关键词即时生成动画草稿
+index-portfolio-scroll - 索引式巨型排版滚动履历生成器

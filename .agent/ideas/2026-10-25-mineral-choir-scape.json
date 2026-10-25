@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-25",
+  "name": "mineral-choir-scape",
+  "description": "石材声景化的沉浸式滚动互动体验",
+  "tagline": "Where Stones Learn to Sing",
+  "interaction": "用户滚动页面如同深入矿层，每种石材（花岗岩、大理石、板岩等）在进入视野时被"唤醒"，以粒子涟漪与晶体光影可视化其独特音色。滚动速度与深度控制声景的和声层次——越深，矿物合唱越丰富，最终汇成一段由大地谱写的沉浸式乐曲。",
+  "directory": "seeds/mineral-choir-scape/",
+  "status": "incubated"
+}

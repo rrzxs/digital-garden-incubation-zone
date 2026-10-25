@@ -2210,6 +2210,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Mineral Choir Scape 矿物唱诗班',
+      description: '沉浸式矿物唱诗班声景。13 枚程序化晶簇沿洞窟弧线排布——悬停低吟、点击长音、拖拽扫弦与长按蓄能合唱绽放，Web Audio 三重失谐合唱声部 + 生成式洞穴卷积混响，4种音阶 × 4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/mineral-choir-scape/index.html',
+      tags: ['Interactive', 'Audio', 'Physics', 'Micro-interaction'],
+      icon: '♅',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

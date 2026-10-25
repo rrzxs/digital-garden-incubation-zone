@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mineral Choir Scape · 矿物唱诗班</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-palette="geode">
+  <!-- ═══ 流体网格渐变背景 ═══ -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ═══ 画布层 ═══ -->
+  <canvas id="stage"></canvas>
+
+  <!-- ═══ 顶部标题 ═══ -->
+  <header class="masthead">
+    <div class="masthead-kicker mono" id="kicker">RESONANT CAVE SYSTEM · ONLINE</div>
+    <h1 class="masthead-title" id="title" data-text="MINERAL CHOIR">MINERAL CHOIR</h1>
+    <p class="masthead-sub">矿物唱诗班 · 触碰晶簇，聆听大地和声</p>
+  </header>
+
+  <!-- ═══ 右上遥测 ═══ -->
+  <aside class="telemetry glass" aria-label="遥测面板">
+    <div class="tele-row"><span class="mono tele-k">VOICES</span><span class="mono tele-v" id="teleVoices">0</span></div>
+    <div class="tele-row"><span class="mono tele-k">RESONANCE</span><span class="mono tele-v" id="teleRes">0%</span></div>
+    <div class="tele-row"><span class="mono tele-k">MODE</span><span class="mono tele-v" id="teleMode">TOUCH</span></div>
+    <div class="tele-bar"><i id="teleBarFill"></i></div>
+  </aside>
+
+  <!-- ═══ 左侧提示 ═══ -->
+  <div class="hint mono" id="hint">
+    <span> hovering — 晶簇低吟</span>
+    <span> click — 长音共鸣</span>
+    <span> drag — 扫过和声</span>
+    <span> hold — 蓄能合唱</span>
+  </div>
+
+  <!-- ═══ 底部控制台 ═══ -->
+  <footer class="console glass">
+    <div class="console-block">
+      <label class="console-label mono">SCALE 音阶</label>
+      <div class="seg" id="scaleSeg" role="group" aria-label="音阶选择">
+        <button class="seg-btn active" data-scale="0">Pentatonic</button>
+        <button class="seg-btn" data-scale="1">Dorian</button>
+        <button class="seg-btn" data-scale="2">Lydian</button>
+        <button class="seg-btn" data-scale="3">Hirajoshi</button>
+      </div>
+    </div>
+
+    <div class="console-block">
+      <label class="console-label mono">CAVE 洞穴混响</label>
+      <input type="range" id="reverbSlider" class="range" min="0" max="100" value="55" />
+    </div>
+
+    <div class="console-block">
+      <label class="console-label mono">AUTOCHOIR 自动唱诗</label>
+      <button class="toggle" id="autoBtn" aria-pressed="false"><i class="toggle-knob"></i></button>
+    </div>
+
+    <div class="console-block">
+      <label class="console-label mono">AMBIENT 氛围配色</label>
+      <div class="palette-row" id="paletteRow">
+        <button class="palette-dot active" data-palette="geode" title="Geode 紫晶洞"></button>
+        <button class="palette-dot" data-palette="emerald" title="Emerald 翠谷"></button>
+        <button class="palette-dot" data-palette="rose" title="Rose Quartz 蔷薇水晶"></button>
+        <button class="palette-dot" data-palette="arctic" title="Arctic 极冰"></button>
+      </div>
+    </div>
+
+    <button class="mute-btn mono" id="muteBtn" title="静音">SOUND ON</button>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
