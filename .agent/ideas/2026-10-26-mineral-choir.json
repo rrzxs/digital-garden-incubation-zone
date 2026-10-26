@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-26",
+  "name": "mineral-choir",
+  "description": "矿物光影沉浸式滚动展厅",
+  "tagline": "Where minerals sing in light.",
+  "interaction": "用户通过滚动深入一个虚拟矿物展厅，每件矿物随滚动渐次被"光"唤醒，折射出实时生成的色彩与声景。滚动的速度与方向控制光线的角度与合唱般的音色层次，形成一场由用户亲手指挥的矿物光影合唱。",
+  "directory": "seeds/mineral-choir/",
+  "status": "incubated"
+}

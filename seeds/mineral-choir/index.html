@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mineral Choir · 矿物唱诗班</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="amethyst">
+
+  <!-- 流体渐变背景 -->
+  <div class="ambient-field" aria-hidden="true">
+    <div class="mesh-blob blob-a"></div>
+    <div class="mesh-blob blob-b"></div>
+    <div class="mesh-blob blob-c"></div>
+    <div class="grain-overlay"></div>
+  </div>
+
+  <!-- 晶体舞台 -->
+  <main class="stage">
+    <canvas id="choir-canvas"></canvas>
+
+    <!-- 标题 -->
+    <header class="stage-header">
+      <p class="eyebrow" data-scramble>RESONANT LATTICE · v1.0</p>
+      <h1 class="stage-title">Mineral <span class="title-accent">Choir</span></h1>
+      <p class="stage-subtitle">悬停低吟 · 点击长鸣 · 拖拽扫弦 · 空格合唱绽放</p>
+    </header>
+
+    <!-- 遥测 HUD -->
+    <div class="hud hud-left glass" aria-hidden="true">
+      <p class="hud-row"><span class="hud-key">SCALE</span><span class="hud-val" id="hud-scale">Pentatonic</span></p>
+      <p class="hud-row"><span class="hud-key">ROOT</span><span class="hud-val" id="hud-root">A3 · 220Hz</span></p>
+      <p class="hud-row"><span class="hud-key">VOICES</span><span class="hud-val" id="hud-voices">0 / 9</span></p>
+      <p class="hud-row"><span class="hud-key">ENERGY</span><span class="hud-val" id="hud-energy">0%</span></p>
+    </div>
+
+    <div class="hud hud-right glass" aria-hidden="true">
+      <div class="energy-bar"><div class="energy-fill" id="energy-fill"></div></div>
+      <p class="hud-hint">STRIKE THE LATTICE</p>
+    </div>
+
+    <!-- 控制台 -->
+    <section class="console glass" id="console">
+      <div class="console-head">
+        <h2 class="console-title">Choir Console</h2>
+        <button class="collapse-btn" id="collapse-btn" title="收起 / 展开">—</button>
+      </div>
+
+      <div class="console-body" id="console-body">
+        <div class="control-group">
+          <label class="control-label">音阶 Scale</label>
+          <div class="seg-row" id="scale-row">
+            <button class="seg-btn active" data-scale="pentatonic">五声</button>
+            <button class="seg-btn" data-scale="dorian">多利亚</button>
+            <button class="seg-btn" data-scale="lydian">利底亚</button>
+            <button class="seg-btn" data-scale="hirajoshi">平调子</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">和声 Chorus</label>
+          <div class="seg-row" id="chorus-row">
+            <button class="seg-btn active" data-chorus="solo">独声</button>
+            <button class="seg-btn" data-chorus="duo">双声</button>
+            <button class="seg-btn" data-chorus="choir">唱诗</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label">氛围 Palette</label>
+          <div class="seg-row palette-row" id="palette-row">
+            <button class="seg-btn palette-btn active" data-palette="amethyst"><span class="swatch sw-a"></span>紫晶</button>
+            <button class="seg-btn palette-btn" data-palette="emerald"><span class="swatch sw-b"></span>翡晶</button>
+            <button class="seg-btn palette-btn" data-palette="citrine"><span class="swatch sw-c"></span>黄晶</button>
+            <button class="seg-btn palette-btn" data-palette="moonstone"><span class="swatch sw-d"></span>月石</button>
+          </div>
+        </div>
+
+        <div class="control-group slider-group">
+          <label class="control-label">混响 Cave <span class="slider-val" id="reverb-val">35%</span></label>
+          <input type="range" id="reverb-slider" class="range-input" min="0" max="100" value="35">
+        </div>
+
+        <div class="control-group slider-group">
+          <label class="control-label">音量 Volume <span class="slider-val" id="volume-val">60%</span></label>
+          <input type="range" id="volume-slider" class="range-input" min="0" max="100" value="60">
+        </div>
+
+        <div class="console-actions">
+          <button class="action-btn" id="bloom-btn">合唱绽放 Bloom</button>
+          <button class="action-btn ghost" id="mute-btn">静音 Mute</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

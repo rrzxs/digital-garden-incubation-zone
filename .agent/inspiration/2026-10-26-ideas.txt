@@ -1,0 +1,7 @@
+focus-veil - 聚光遮罩式沉浸阅读工具
+type-motion-lab - 可视化文字动效生成器
+collage-constellation - 照片连线声效记忆拼贴墙
+scroll-stage - 滚动驱动产品演示搭建器
+mineral-choir - 矿物光影沉浸式滚动展厅
+stickframe-studio - 火柴人关键帧动画编辑器
+knowledge-nebula - 本地剪藏知识星图检索
