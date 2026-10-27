@@ -1,0 +1,7 @@
+prose-spotlight - 滚动高亮当前段落的沉浸阅读器
+letterflow - 实时编辑的动态字形与动效排版工具
+stickstage - 浏览器火柴人关键帧动画工作台
+shot-previs - 镜头走位与分镜预演画布
+fold-demo - 滚动驱动的产品形态变化演示生成器
+garden-sift - 本地优先的剪藏收集与全文检索库
+neon-gallery - 暗色高对比旋转3D作品陈列橱窗

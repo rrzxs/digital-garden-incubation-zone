@@ -2230,6 +2230,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Letterflow 字符流',
+      description: '沉浸式字符流微交互体验场。输入文字即刻播撒为发光 glyph——值噪声流场驱动字符旅程，4种流场模式（河川/漩涡/漂移/坠流）× 光标力场（斥力/引力/涡旋）× 点击冲击波迸发，标题乱码揭示与实时遥测，流体渐变背景 + 微晶玻璃态控制台，4种氛围配色',
+      path: '/seed/seeds/letterflow/index.html',
+      tags: ['Interactive', 'Typography', 'Flow Field', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

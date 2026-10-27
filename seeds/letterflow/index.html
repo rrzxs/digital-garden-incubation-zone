@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letterflow 字符流 · Digital Garden Seed</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- 流体渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 主舞台 -->
+  <main class="stage">
+    <header class="stage-header">
+      <div class="brand">
+        <span class="brand-glyph">≋</span>
+        <div class="brand-text">
+          <h1 id="title" data-text="LETTERFLOW">LETTERFLOW</h1>
+          <p>字符流 · 让每个字母都拥有自己的旅程</p>
+        </div>
+      </div>
+      <div class="hint">
+        <span class="key">输入</span> 播撒字符 ·
+        <span class="key">移动</span> 力场扰动 ·
+        <span class="key">点击</span> 冲击波
+      </div>
+    </header>
+
+    <canvas id="flow"></canvas>
+
+    <!-- 输入区 -->
+    <section class="composer glass">
+      <span class="composer-label">SEED TEXT</span>
+      <input id="seedInput" type="text" maxlength="24" placeholder="键入文字，按下回车播撒…" autocomplete="off" spellcheck="false">
+      <button id="castBtn" class="cast-btn">播撒 ⏎</button>
+    </section>
+
+    <!-- 控制台 -->
+    <aside class="console glass" id="console">
+      <div class="console-row">
+        <span class="row-label">流场模式</span>
+        <div class="seg" id="flowSeg">
+          <button data-flow="river" class="on">河川</button>
+          <button data-flow="vortex">漩涡</button>
+          <button data-flow="drift">漂移</button>
+          <button data-flow="rain">坠流</button>
+        </div>
+      </div>
+      <div class="console-row">
+        <span class="row-label">光标力场</span>
+        <div class="seg" id="forceSeg">
+          <button data-force="repel" class="on">斥力</button>
+          <button data-force="attract">引力</button>
+          <button data-force="swirl">涡旋</button>
+          <button data-force="none">无为</button>
+        </div>
+      </div>
+      <div class="console-row">
+        <span class="row-label">氛围配色</span>
+        <div class="swatches" id="swatches">
+          <button data-theme="aurora" class="sw sw-a on" title="极光"></button>
+          <button data-theme="dusk" class="sw sw-b" title="暮色"></button>
+          <button data-theme="abyss" class="sw sw-c" title="深海"></button>
+          <button data-theme="bloom" class="sw sw-d" title="花焰"></button>
+        </div>
+      </div>
+      <div class="console-row">
+        <span class="row-label">字母存量</span>
+        <div class="telemetry">
+          <span id="glyphCount">0</span> glyphs ·
+          <span id="pulseCount">0</span> pulses ·
+          <span id="fps">60</span> fps
+        </div>
+      </div>
+      <button id="clearBtn" class="clear-btn">清空画布</button>
+    </aside>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
