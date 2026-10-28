@@ -1,0 +1,8 @@
+device-fold-stage - 滚动驱动的折叠产品演示生成器
+reading-spotlight - 滚动聚焦阅读高亮排版工具
+focus-blur-frame - 聚焦窗口虚化干扰阅读器
+resume-filter-flow - 可筛选动态履历单页工坊
+kinetic-letter-studio - 可编辑动态字形动画实验室
+vortex-hover-field - 漩涡吸附悬停交互试验场
+race-scroll-lanes - 滚动竞速多车道进度可视化
+stick-pose-timeline - 火柴人关键帧动画编排器

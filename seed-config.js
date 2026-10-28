@@ -2240,6 +2240,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Kinetic Letter Studio 动力学字符工作室',
+      description: '沉浸式动力学字符工作室。输入文字，每个字符都是弹簧-阻尼物理实体——磁力、斥力、涡旋、重力四种力场驱动字符非线性运动，点击冲击波迸散、拖拽抛掷、乱码揭示与粒子流场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/kinetic-letter-studio/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: 'K',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

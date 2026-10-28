@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-28",
+  "name": "kinetic-letter-studio",
+  "description": "可编辑动态字形动画实验室",
+  "tagline": "Letters Alive in Motion",
+  "interaction": "输入任意字母后，字形会以物理弹簧的方式解构重组，用户可拖拽每个锚点实时改变字形骨骼与动画曲线。调整权重、弹性和延迟参数，即可让文字像生命体一样呼吸、弹跳或流动，并支持一键导出动画时间轴。",
+  "directory": "seeds/kinetic-letter-studio/",
+  "status": "incubated"
+}

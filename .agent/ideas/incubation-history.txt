@@ -208,3 +208,4 @@ pixel-math-owl
 mineral-choir-scape
 mineral-choir
 letterflow
+kinetic-letter-studio
