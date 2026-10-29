@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin Stage · 旋转舞台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body data-palette="nebula">
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 粒子流场画布 === -->
+  <canvas id="flow-canvas" aria-hidden="true"></canvas>
+
+  <!-- === 冲击波层 === -->
+  <div id="shock-layer" aria-hidden="true"></div>
+
+  <main class="scene">
+    <!-- === 顶部标题 === -->
+    <header class="stage-header reveal">
+      <p class="eyebrow">SEED · SPIN STAGE</p>
+      <h1 class="title">旋转舞台</h1>
+      <p class="subtitle">拖拽赋予舞台角动量 · 点击卡片将其推至聚光灯下</p>
+    </header>
+
+    <!-- === 3D 旋转舞台 === -->
+    <section class="stage-wrap" id="stage-wrap">
+      <div class="stage-floor" aria-hidden="true"></div>
+      <div class="carousel" id="carousel"></div>
+      <div class="spotlight" aria-hidden="true"></div>
+      <div class="focus-readout glass" id="focus-readout">
+        <span class="mono" id="readout-index">01</span>
+        <span class="sep">/</span>
+        <span class="mono" id="readout-total">08</span>
+        <span class="readout-name" id="readout-name">PRIMA</span>
+      </div>
+    </section>
+
+    <!-- === 控制台 === -->
+    <footer class="console glass reveal">
+      <div class="console-block">
+        <p class="block-label">氛围</p>
+        <div class="palette-row" id="palette-row">
+          <button class="palette-btn active" data-palette="nebula" title="Nebula 星云"><span class="dot dot-nebula"></span>Nebula</button>
+          <button class="palette-btn" data-palette="aurora" title="Aurora 极光"><span class="dot dot-aurora"></span>Aurora</button>
+          <button class="palette-btn" data-palette="ember" title="Ember 熔岩"><span class="dot dot-ember"></span>Ember</button>
+          <button class="palette-btn" data-palette="abyss" title="Abyss 深渊"><span class="dot dot-abyss"></span>Abyss</button>
+        </div>
+      </div>
+      <div class="console-block">
+        <p class="block-label">动量</p>
+        <div class="dial-row">
+          <button class="ctrl-btn" id="btn-nudge" title="轻推一角">Nudge ⟳</button>
+          <button class="ctrl-btn" id="btn-auto" title="自动巡演">Auto ▷</button>
+          <button class="ctrl-btn" id="btn-pulse" title="全场脉冲">Pulse ✦</button>
+        </div>
+      </div>
+      <div class="console-block telemetry">
+        <p class="block-label">遥测</p>
+        <p class="mono tele-line">Ω <span id="tele-omega">0.00</span> rad/s</p>
+        <p class="mono tele-line">θ <span id="tele-theta">0</span>°</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="./main.js"></script>
+</body>
+</html>

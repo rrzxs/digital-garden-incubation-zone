@@ -209,3 +209,4 @@ mineral-choir-scape
 mineral-choir
 letterflow
 kinetic-letter-studio
+spin-stage

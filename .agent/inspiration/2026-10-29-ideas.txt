@@ -1,0 +1,7 @@
+reading-spotlight - 滚动驱动的段落聚焦阅读器
+thought-loom - 白板式本地思维导图画布
+polaroid-darkroom - 复古胶片拼贴相册生成器
+spin-stage - 360度产品旋转展示交互台
+resume-prism - 可筛选过滤的履历时间线工具
+flow-cursor-canvas - 流场粒子沉浸式光标画布
+cut-board - 分镜头拖拽编排预览板

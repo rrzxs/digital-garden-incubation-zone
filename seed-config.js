@@ -2250,6 +2250,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Spin Stage 旋转舞台',
+      description: '沉浸式 3D 旋转舞台微交互体验场。八位表演者玻璃卡片在透视环轨上巡演——拖拽赋予角动量（惯性 + 摩擦物理）、点击卡片以弹簧-阻尼曲线推至聚光灯下、冲击波脉冲令轨道呼吸扩张，粒子流场 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/spin-stage/index.html',
+      tags: ['Interactive', '3D Carousel', 'Physics', 'Micro-interaction'],
+      icon: '◈',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

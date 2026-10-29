@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-29",
+  "name": "spin-stage",
+  "description": "360度产品旋转展示交互台",
+  "tagline": "Spin to Reveal",
+  "interaction": "用户通过拖拽让产品在3D舞台中360度自由旋转，带惯性阻尼的物理手感让每次滑动都顺滑自然。当产品转到特定角度时，热点标注自动浮现，展示对应的细节与工艺说明。双击或滚动可平滑zoom-in聚焦局部，营造沉浸式的产品探索体验。",
+  "directory": "seeds/spin-stage/",
+  "status": "incubated"
+}
