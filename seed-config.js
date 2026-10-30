@@ -2260,6 +2260,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Polaroid Lab 拍立得暗房',
+      description: '沉浸式拍立得暗房体验。拖入 / 粘贴 / 上传照片或拍摄程序化样片，药水显影动画从乳白混沌中缓缓浮现，弹簧物理拖拽、6 种胶片色调、手写注记、颗粒暗角调节与相纸 PNG 导出，流体渐变背景 + 微晶玻璃态控制台，4种氛围配色',
+      path: '/seed/seeds/polaroid-lab/index.html',
+      tags: ['Interactive', 'Photo', 'Physics', 'Micro-interaction'],
+      icon: '◫',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

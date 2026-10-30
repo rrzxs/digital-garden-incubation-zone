@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-30",
+  "name": "polaroid-lab",
+  "description": "照片叠加拍立得相纸与漏光滤镜的暗房",
+  "tagline": "Darkroom Dreams",
+  "interaction": "用户上传照片后，相纸从暗房托盘中缓缓滑出，随之抖动显影——模糊渐散、色彩浮现。拖动滑块或轻扫相纸可叠加不同角度的漏光滤镜，点击相纸即可甩动并听到底片吐出的咔嗒声，最终生成可保存的拍立得成品。",
+  "directory": "seeds/polaroid-lab/",
+  "status": "incubated"
+}

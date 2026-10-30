@@ -1,0 +1,7 @@
+cine-frame-board - 分镜格子拖拽排布，生成电影感故事板
+scroll-racer - 滚动越快画面疾驰感越强的竞速体验
+polaroid-lab - 照片叠加拍立得相纸与漏光滤镜的暗房
+sphere-portfolio-orb - 项目缩成悬浮球，多向滚动展开案例
+voice-drop-forge - 录制人声标签并生成律动波形动画
+filter-resume-craft - 简历信息按标签过滤渐显的单页工坊
+lane-motion-canvas - 车道网格上编排镜头移动与切换预览

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polaroid Lab · 拍立得暗房</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="noir">
+  <!-- 流体渐变背景 -->
+  <div class="fluid-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 快门闪光 -->
+  <div class="shutter-flash" id="shutterFlash" aria-hidden="true"></div>
+
+  <!-- 顶栏 -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-mark">⬥</span>
+      <div class="brand-text">
+        <h1>Polaroid Lab</h1>
+        <p>拍立得暗房 · 显影实验 No.600</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="theme-swatches" id="themeSwatches" title="氛围配色">
+        <button class="swatch active" data-theme="noir" aria-label="Noir 配色"><span></span></button>
+        <button class="swatch" data-theme="amber" aria-label="Amber 配色"><span></span></button>
+        <button class="swatch" data-theme="mint" aria-label="Mint 配色"><span></span></button>
+        <button class="swatch" data-theme="orchid" aria-label="Orchid 配色"><span></span></button>
+      </div>
+      <span class="counter mono" id="frameCounter">FRAMES 000</span>
+    </div>
+  </header>
+
+  <!-- 暗房桌面 -->
+  <main class="darkroom" id="darkroom">
+    <div class="drop-hint glass" id="dropHint">
+      <div class="drop-inner">
+        <span class="drop-icon">◫</span>
+        <h2>把影像拖进暗房</h2>
+        <p>拖拽 / 粘贴 / 上传照片，或拍摄一张合成样片，药水将即刻开始显影</p>
+        <div class="drop-actions">
+          <button class="btn btn-primary" id="btnSample">⦿ 拍摄样片</button>
+          <button class="btn" id="btnUpload">↥ 上传照片</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 控制台 -->
+  <aside class="console glass" id="console">
+    <div class="console-section">
+      <h3 class="console-title">FILM STOCK <span>· 胶片</span></h3>
+      <div class="film-grid" id="filmGrid">
+        <button class="film-chip active" data-tone="original">Original<i>原味</i></button>
+        <button class="film-chip" data-tone="noir">Noir<i>黑白</i></button>
+        <button class="film-chip" data-tone="sepia">Sepia<i>旧时光</i></button>
+        <button class="film-chip" data-tone="vivid">Vivid<i>浓彩</i></button>
+        <button class="film-chip" data-tone="frost">Frost<i>冷调</i></button>
+        <button class="film-chip" data-tone="chrome">Chrome<i>铬印</i></button>
+      </div>
+    </div>
+    <div class="console-section">
+      <h3 class="console-title">DEVELOP <span>· 显影</span></h3>
+      <label class="param">
+        <span class="mono">DEV_TIME</span>
+        <input type="range" id="devTime" min="0.6" max="4" step="0.1" value="2.2">
+        <em class="mono" id="devTimeVal">2.2s</em>
+      </label>
+      <label class="param">
+        <span class="mono">GRAIN</span>
+        <input type="range" id="grainAmt" min="0" max="100" step="1" value="34">
+        <em class="mono" id="grainAmtVal">34%</em>
+      </label>
+      <label class="param">
+        <span class="mono">VIGNETTE</span>
+        <input type="range" id="vignetteAmt" min="0" max="100" step="1" value="42">
+        <em class="mono" id="vignetteAmtVal">42%</em>
+      </label>
+    </div>
+    <div class="console-section">
+      <h3 class="console-title">ACTIONS <span>· 操作</span></h3>
+      <button class="btn btn-full" id="btnShuffle">⤨ 重新铺排</button>
+      <button class="btn btn-full" id="btnDevelopAll">◐ 全部重显影</button>
+      <button class="btn btn-full btn-danger" id="btnClear">✕ 清空暗房</button>
+    </div>
+    <p class="console-foot mono">DRAG 照片 · DBLCLICK 翻面 · CAPTION 手写注记</p>
+  </aside>
+
+  <!-- 详情 / 导出浮层 -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <figure class="polaroid polaroid--lg" id="overlayCard">
+      <div class="polaroid__photo"><img id="overlayImg" alt=""><div class="polaroid__develop"></div></div>
+      <figcaption class="polaroid__caption mono" id="overlayMeta">—</figcaption>
+    </figure>
+    <div class="overlay-actions">
+      <button class="btn btn-primary" id="btnExport">↧ 导出 PNG</button>
+      <button class="btn" id="btnCloseOverlay">↩ 关闭</button>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" accept="image/*" multiple hidden>
+  <canvas id="exportCanvas" hidden></canvas>
+
+  <script src="main.js"></script>
+</body>
+</html>
