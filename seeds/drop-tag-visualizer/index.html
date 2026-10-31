@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop Tag Visualizer · 标签液滴可视化器</title>
+    <meta name="description" content="沉浸式标签液滴可视化器。输入标签即刻凝为液滴坠入液面——飞溅粒子、涟漪冲击波与表面波传播，3 种漂浮模式（流场/聚类/晶格）× 拖拽抛掷 × 光标力场，流体渐变背景 + 微晶玻璃态容器">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- === Ambient Fluid Gradient Background === -->
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <!-- === FX Canvas: ripples / splashes / surface / ambient field === -->
+    <canvas id="fx-canvas"></canvas>
+
+    <!-- === Tag Stage (pills injected by JS) === -->
+    <div id="stage" aria-label="标签液滴舞台"></div>
+
+    <!-- === Cursor Force Ring === -->
+    <div id="cursor-ring"></div>
+
+    <!-- === Back Link === -->
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- === Theme Switcher === -->
+    <div class="theme-switcher" id="theme-switcher">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="ember" title="Ember"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean"><span class="theme-dot"></span></button>
+        <button class="theme-btn" data-theme="void" title="Void"><span class="theme-dot"></span></button>
+    </div>
+
+    <!-- === Glass Console: emitter === -->
+    <header class="glass-console" id="console">
+        <div class="console-brand">
+            <span class="brand-icon">❍</span>
+            <div class="brand-text">
+                <h1 class="brand-title">Drop Tag <em>Visualizer</em></h1>
+                <p class="brand-sub">标签凝为液滴 · 坠入思想的液面</p>
+            </div>
+        </div>
+
+        <div class="console-controls">
+            <div class="input-shell">
+                <span class="input-icon">◍</span>
+                <input id="tag-input" type="text" maxlength="18" placeholder="输入标签，回车滴落…" autocomplete="off" spellcheck="false">
+                <button class="drop-btn" id="drop-btn" title="滴落标签">
+                    <span>滴落</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M7 11l5 5 5-5"/></svg>
+                </button>
+            </div>
+            <button class="ghost-btn" id="rain-btn" title="一阵标签雨">
+                <span>☂ 标签雨</span>
+            </button>
+            <button class="ghost-btn danger" id="clear-btn" title="清空液池">
+                <span>◌ 蒸发</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- === Mode Dock === -->
+    <nav class="mode-dock" id="mode-dock" aria-label="漂浮模式">
+        <button class="mode-chip active" data-mode="flow">
+            <span class="chip-glyph">≋</span>
+            <span class="chip-name">流场</span>
+        </button>
+        <button class="mode-chip" data-mode="cluster">
+            <span class="chip-glyph">◎</span>
+            <span class="chip-name">聚类</span>
+        </button>
+        <button class="mode-chip" data-mode="grid">
+            <span class="chip-glyph">▦</span>
+            <span class="chip-name">晶格</span>
+        </button>
+    </nav>
+
+    <!-- === Telemetry HUD === -->
+    <aside class="hud-panel" id="hud-panel">
+        <div class="hud-row"><span class="hud-key">TAGS</span><span class="hud-val" id="hud-tags">0</span></div>
+        <div class="hud-row"><span class="hud-key">MODE</span><span class="hud-val" id="hud-mode">FLOW</span></div>
+        <div class="hud-row"><span class="hud-key">SPLASH</span><span class="hud-val" id="hud-splash">0</span></div>
+        <div class="hud-row"><span class="hud-key">FPS</span><span class="hud-val" id="hud-fps">--</span></div>
+    </aside>
+
+    <!-- === Footer Hint === -->
+    <footer class="hint-bar" id="hint-bar">
+        <span class="hint-item mono">ENTER · 滴落</span>
+        <span class="hint-sep"></span>
+        <span class="hint-item mono">DRAG · 抛掷标签</span>
+        <span class="hint-sep"></span>
+        <span class="hint-item mono">CLICK · 冲击波</span>
+        <span class="hint-sep"></span>
+        <span class="hint-item mono">DBL-CLICK · 迸裂重生</span>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

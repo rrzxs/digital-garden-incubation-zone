@@ -2270,6 +2270,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Drop Tag Visualizer 标签液滴',
+      description: '沉浸式标签液滴可视化器。输入标签即刻凝为液滴坠入液面——飞溅粒子、涟漪冲击波与表面波传播，3种漂浮模式（流场/聚类/晶格）× 拖拽抛掷 × 光标斥力场 × 点击冲击波，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/drop-tag-visualizer/index.html',
+      tags: ['Interactive', 'Tag', 'Physics', 'Micro-interaction'],
+      icon: '❍',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
     }
   ]);
 

@@ -211,3 +211,4 @@ letterflow
 kinetic-letter-studio
 spin-stage
 polaroid-lab
+drop-tag-visualizer

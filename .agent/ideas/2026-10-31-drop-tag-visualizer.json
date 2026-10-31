@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-31",
+  "name": "drop-tag-visualizer",
+  "description": "音频人声标签波形可视化工作室",
+  "tagline": "See Your Voice",
+  "interaction": "用户拖入或现场录制一段人声 Tag（如姓名 Callout 或品牌签名音），声波即刻渲染为可触摸的动态波形雕塑。拖拽、拉伸、切分波形会实时改变粒子的形态与色彩流动，播放时视觉随频谱起舞，最终可导出为一段属于自己声音的视觉名片。",
+  "directory": "seeds/drop-tag-visualizer/",
+  "status": "incubated"
+}

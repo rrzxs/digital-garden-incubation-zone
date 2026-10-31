@@ -1,0 +1,6 @@
+sphere-orbit-gallery - 球体轨道式作品集滚动展示生成器
+film-pack-collage - 复古胶片拍立得拼贴创作工具
+thermal-gradient-studio - 图片热成像渐变滤镜可视化器
+whirlpool-text-flow - 漩涡吸附文字动效排版实验场
+drop-tag-visualizer - 音频人声标签波形可视化工作室
+road-trip-scroller - 滚动驱动的公路行驶沉浸叙事页
