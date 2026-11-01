@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavetag Studio 波痕标签工坊</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23070d1c'/%3E%3Cpath d='M6 36c6-10 12-10 18 0s12 10 18 0 12-10 16 0' stroke='%2338e8c8' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=20261101a">
+</head>
+
+<body data-palette="abyss">
+    <!-- 流体渐变背景 -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="glow-orb orb-a"></div>
+        <div class="glow-orb orb-b"></div>
+        <div class="glow-orb orb-c"></div>
+        <div class="grain"></div>
+    </div>
+
+    <!-- 顶部导航 -->
+    <header class="topbar glass">
+        <a class="brand" href="/seed/index.html" title="返回数字花园">
+            <span class="brand-glyph">≋</span>
+            <span class="brand-name">Wavetag&nbsp;<em>Studio</em></span>
+        </a>
+        <div class="topbar-right">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span class="mono live-label">FIELD&nbsp;LIVE</span>
+        </div>
+    </header>
+
+    <main class="stage-wrap">
+        <!-- 标题区 -->
+        <section class="hero">
+            <p class="hero-kicker mono">/// characters riding liquid signal</p>
+            <h1 class="hero-title" id="heroTitle">波痕标签工坊</h1>
+            <p class="hero-sub">输入一句话，每个字符都会凝成一颗弹簧物理实体，在流形波场上起伏、避让与共振。</p>
+        </section>
+
+        <!-- 波场画布 -->
+        <section class="canvas-shell glass reveal-load">
+            <canvas id="field" aria-label="波痕标签交互画布"></canvas>
+
+            <!-- 左上角模式指示 -->
+            <div class="mode-chip mono" id="modeChip">MODE&nbsp;//&nbsp;REPEL</div>
+
+            <!-- 右下角遥测 -->
+            <div class="telemetry mono" id="telemetry" aria-hidden="true">
+                <div class="tele-row"><span>CHARS</span><b id="tChars">0</b></div>
+                <div class="tele-row"><span>WAVE·E</span><b id="tEnergy">0.00</b></div>
+                <div class="tele-row"><span>CURSOR·F</span><b id="tForce">0.00</b></div>
+                <div class="tele-row"><span>RIPPLES</span><b id="tRipples">0</b></div>
+            </div>
+
+            <div class="canvas-hint">移动光标扰动波场 · 点击发射冲击波</div>
+        </section>
+
+        <!-- 控制台 -->
+        <section class="console">
+            <!-- 文本输入 -->
+            <div class="glass console-card input-card">
+                <label class="card-label mono" for="tagInput">01&nbsp;//&nbsp; SIGNAL&nbsp;INPUT</label>
+                <div class="input-row">
+                    <input id="tagInput" type="text" maxlength="28" value="RIDE THE LIQUID SIGNAL"
+                        placeholder="输入一句话，回车撒入波场…" autocomplete="off" spellcheck="false">
+                    <button class="btn btn-primary" id="emitBtn" type="button">
+                        <span class="btn-text">撒入波场</span>
+                    </button>
+                </div>
+                <div class="chips-row">
+                    <button class="chip" type="button" data-seed="DREAM IN GLASS">DREAM IN GLASS</button>
+                    <button class="chip" type="button" data-seed="人人智学社">人人智学社</button>
+                    <button class="chip" type="button" data-seed="FLUID ∞ MOTION">FLUID ∞ MOTION</button>
+                </div>
+            </div>
+
+            <!-- 力场模式 -->
+            <div class="glass console-card">
+                <label class="card-label mono">02&nbsp;//&nbsp; FORCE&nbsp;MODE</label>
+                <div class="seg-row" id="modeSeg" role="group" aria-label="力场模式">
+                    <button class="seg active" data-mode="repel" type="button">斥力</button>
+                    <button class="seg" data-mode="attract" type="button">引力</button>
+                    <button class="seg" data-mode="vortex" type="button">漩涡</button>
+                </div>
+                <label class="card-label mono sub">FIELD&nbsp;RADIUS</label>
+                <input type="range" id="radiusRange" min="80" max="320" value="170" aria-label="力场半径">
+                <div class="range-readout mono"><span id="radiusVal">170</span>&nbsp;px</div>
+            </div>
+
+            <!-- 波场参数 + 配色 -->
+            <div class="glass console-card">
+                <label class="card-label mono">03&nbsp;//&nbsp; WAVE&nbsp;&amp;&nbsp;MOOD</label>
+                <label class="card-label mono sub">SWELL&nbsp;AMPLITUDE</label>
+                <input type="range" id="ampRange" min="6" max="60" value="26" aria-label="波幅">
+                <div class="range-readout mono"><span id="ampVal">26</span>&nbsp;px</div>
+                <label class="card-label mono sub">ATMOSPHERE</label>
+                <div class="palette-row" id="paletteRow">
+                    <button class="swatch active" data-palette="abyss" type="button" title="深海电台"><i></i>深海电台</button>
+                    <button class="swatch" data-palette="ember" type="button" title="熔金落日"><i></i>熔金落日</button>
+                    <button class="swatch" data-palette="phosphor" type="button" title="翡翠磷光"><i></i>翡翠磷光</button>
+                    <button class="swatch" data-palette="nocturne" type="button" title="霓虹夜曲"><i></i>霓虹夜曲</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <p class="mono">wavetag-studio · spring-damper glyph field · maintained by EDEN</p>
+        <a class="foot-link" href="/seed/index.html">← 返回数字花园</a>
+    </footer>
+
+    <script src="main.js?v=20261101a"></script>
+</body>
+
+</html>

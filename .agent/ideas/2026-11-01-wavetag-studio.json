@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-01",
+  "name": "wavetag-studio",
+  "description": "用麦克风录音生成可视化的音频签名卡",
+  "tagline": "Speak. See. Sign.",
+  "interaction": "用户对着麦克风录下一段声音（说话、哼唱或呼喊），系统实时分析音色、节奏与频率，将其渲染成独一无二的音频签名卡。卡片以波形、频谱色彩和几何图案呈现声音的"指纹"，用户可微调视觉风格并一键保存分享。",
+  "directory": "seeds/wavetag-studio/",
+  "status": "incubated"
+}

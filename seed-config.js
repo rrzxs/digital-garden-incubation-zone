@@ -2280,6 +2280,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'visual'
+    },
+    {
+      title: 'Wavetag Studio 波痕标签工坊',
+      description: '沉浸式波痕标签工坊。输入一句话，每个字符凝为弹簧-阻尼物理实体在流形波场上起伏避让——3种力场模式（斥力/引力/漩涡）、点击冲击波涟漪、可调波幅、乱码揭示标题与实时遥测面板，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/wavetag-studio/index.html',
+      tags: ['Interactive', 'Physics', 'Typography', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
