@@ -2290,6 +2290,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Pixel Reveal 像素揭示',
+      description: '沉浸式像素揭示微交互体验。马赛克像素瓦片以弹簧-阻尼物理溶解与复原，揭示程序化生成的信号源画作——4种交互模式（聚光灯/涟漪/扫描/降雨）× 4种信号源 × 4种氛围配色，实时遥测 HUD 与键盘快捷键，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/pixel-reveal/index.html',
+      tags: ['Interactive', 'Pixel', 'Reveal', 'Micro-interaction'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

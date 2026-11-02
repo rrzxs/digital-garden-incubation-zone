@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-02",
+  "name": "pixel-reveal",
+  "description": "像素马赛克揭示动画生成器",
+  "tagline": "Pixels into art",
+  "interaction": "用户上传或选择一张图片，点击"揭示"后，图片从一片模糊的像素马赛克开始，以波纹、扫描或随机溶解等动画方式逐渐清晰还原。过程中可实时调节像素颗粒大小、揭示速度和动画方向，感受图像从抽象到具象的渐变魅力，并可导出动画效果。",
+  "directory": "seeds/pixel-reveal/",
+  "status": "incubated"
+}

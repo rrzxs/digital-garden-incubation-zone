@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Reveal — 像素揭示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="ocean" data-mode="spotlight">
+
+  <!-- 流体渐变背景 -->
+  <div class="bg-orb bg-orb--1"></div>
+  <div class="bg-orb bg-orb--2"></div>
+  <div class="bg-orb bg-orb--3"></div>
+  <div class="noise-overlay"></div>
+
+  <div class="app-container">
+
+    <!-- 头部 -->
+    <div class="glass-panel header-area">
+      <div class="header-inner">
+        <div class="header-text">
+          <h1 id="main-title" data-text="PIXEL REVEAL">PIXEL REVEAL</h1>
+          <p class="subtitle">// 马赛克之下沉睡着一幅信号源 —— 移动光标、点击涟漪或静候扫描，让像素逐一消隐</p>
+        </div>
+        <div class="hud" id="hud">
+          <div class="hud-item"><span class="hud-label">REVEALED</span><span class="hud-value" id="hud-revealed">0.0%</span></div>
+          <div class="hud-item"><span class="hud-label">TILES</span><span class="hud-value" id="hud-tiles">0</span></div>
+          <div class="hud-item"><span class="hud-label">FPS</span><span class="hud-value" id="hud-fps">60</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 舞台 -->
+    <div class="glass-panel stage" id="stage">
+      <canvas id="art-canvas"></canvas>
+      <canvas id="pixel-canvas"></canvas>
+      <div class="stage-vignette"></div>
+      <div class="scanline-beam" id="scan-beam"></div>
+      <div class="mode-hint" id="mode-hint">SPOTLIGHT · 移动光标溶解像素</div>
+    </div>
+
+    <!-- 控制台 -->
+    <div class="glass-panel controls-bar">
+
+      <div class="control-group mode-group" role="group" aria-label="交互模式">
+        <span class="group-label">MODE</span>
+        <button class="mode-btn active" data-mode="spotlight">聚光灯</button>
+        <button class="mode-btn" data-mode="ripple">涟漪</button>
+        <button class="mode-btn" data-mode="sweep">扫描</button>
+        <button class="mode-btn" data-mode="rain">降雨</button>
+      </div>
+
+      <div class="control-group source-group" role="group" aria-label="信号源">
+        <span class="group-label">SRC</span>
+        <button class="src-btn active" data-source="garden">花园</button>
+        <button class="src-btn" data-source="nebula">星云</button>
+        <button class="src-btn" data-source="glyph">字符</button>
+        <button class="src-btn" data-source="wave">波场</button>
+      </div>
+
+      <div class="control-group slider-group">
+        <label class="slider-label">像素
+          <input type="range" id="pixel-size" min="10" max="44" step="2" value="20">
+          <span class="slider-value" id="pixel-size-value">20</span>
+        </label>
+        <label class="slider-label">半径
+          <input type="range" id="brush-radius" min="40" max="220" step="4" value="110">
+          <span class="slider-value" id="brush-radius-value">110</span>
+        </label>
+      </div>
+
+      <div class="control-group theme-group" role="group" aria-label="氛围配色">
+        <span class="group-label">TONE</span>
+        <div class="theme-dot active" data-theme="ocean" title="深海"></div>
+        <div class="theme-dot" data-theme="aurora" title="极光"></div>
+        <div class="theme-dot" data-theme="ember" title="余烬"></div>
+        <div class="theme-dot" data-theme="nebula" title="星云"></div>
+      </div>
+
+      <div class="control-group action-group">
+        <button class="action-btn" id="btn-reveal-all">全揭</button>
+        <button class="action-btn" id="btn-reset">复原</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

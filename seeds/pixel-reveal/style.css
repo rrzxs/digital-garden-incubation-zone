@@ -1,0 +1,417 @@
+/* ============================================================
+   Pixel Reveal — 像素揭示
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ============================================================ */
+
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --bg-deep: #060d1a;
+  --orb-1: #0f4c81;
+  --orb-2: #1b6ca8;
+  --orb-3: #0a2e5c;
+  --accent: #6fd6ff;
+  --accent-soft: rgba(111, 214, 255, 0.16);
+  --text-primary: rgba(235, 245, 255, 0.92);
+  --text-secondary: rgba(180, 205, 230, 0.62);
+  --glass-bg: rgba(14, 26, 46, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --panel-glow: rgba(111, 214, 255, 0.08);
+}
+
+/* --- 氛围配色 --- */
+body[data-theme="aurora"] {
+  --bg-deep: #071018;
+  --orb-1: #0f7a5a; --orb-2: #1fa38c; --orb-3: #145c74;
+  --accent: #64f0c8;
+  --accent-soft: rgba(100, 240, 200, 0.16);
+  --glass-bg: rgba(10, 28, 30, 0.42);
+  --panel-glow: rgba(100, 240, 200, 0.08);
+}
+body[data-theme="ember"] {
+  --bg-deep: #160a08;
+  --orb-1: #8a2f1d; --orb-2: #c2582a; --orb-3: #5c1a2e;
+  --accent: #ffb37a;
+  --accent-soft: rgba(255, 179, 122, 0.16);
+  --glass-bg: rgba(34, 14, 10, 0.44);
+  --panel-glow: rgba(255, 179, 122, 0.08);
+}
+body[data-theme="nebula"] {
+  --bg-deep: #0d0716;
+  --orb-1: #55309c; --orb-2: #8a4ec0; --orb-3: #331d66;
+  --accent: #c9a2ff;
+  --accent-soft: rgba(201, 162, 255, 0.16);
+  --glass-bg: rgba(24, 14, 40, 0.44);
+  --panel-glow: rgba(201, 162, 255, 0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Inter', 'Outfit', -apple-system, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.8s var(--ease-out-expo);
+}
+
+/* ============ 流体渐变背景 ============ */
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.8s var(--ease-out-expo);
+  will-change: transform;
+}
+.bg-orb--1 {
+  width: 55vmax; height: 55vmax;
+  top: -20vmax; left: -15vmax;
+  background: var(--orb-1);
+  animation: drift-1 26s ease-in-out infinite alternate;
+}
+.bg-orb--2 {
+  width: 48vmax; height: 48vmax;
+  bottom: -18vmax; right: -12vmax;
+  background: var(--orb-2);
+  animation: drift-2 32s ease-in-out infinite alternate;
+}
+.bg-orb--3 {
+  width: 40vmax; height: 40vmax;
+  top: 40%; left: 50%;
+  background: var(--orb-3);
+  animation: drift-3 40s ease-in-out infinite alternate;
+}
+@keyframes drift-1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(8vmax, 6vmax) scale(1.15); }
+}
+@keyframes drift-2 {
+  from { transform: translate(0, 0) scale(1.1); }
+  to   { transform: translate(-7vmax, -5vmax) scale(0.95); }
+}
+@keyframes drift-3 {
+  from { transform: translate(-50%, -50%) scale(0.9); }
+  to   { transform: translate(-42%, -58%) scale(1.2); }
+}
+
+.noise-overlay {
+  position: fixed; inset: 0;
+  z-index: 1; pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+
+/* ============ 布局 ============ */
+.app-container {
+  position: relative;
+  z-index: 2;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px) clamp(16px, 3vw, 32px) 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ============ 微晶玻璃态容器 ============ */
+.glass-panel {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 60px var(--panel-glow);
+  transition: background 0.8s var(--ease-out-expo), box-shadow 0.8s var(--ease-out-expo);
+}
+
+/* ============ 头部 ============ */
+.header-area { padding: 24px 28px; }
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: linear-gradient(120deg, var(--text-primary) 30%, var(--accent) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+  margin-top: 4px;
+}
+
+/* HUD 遥测 */
+.hud { display: flex; gap: 10px; }
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  min-width: 92px;
+  transition: transform 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo);
+}
+.hud-item:hover { transform: translateY(-2px); border-color: var(--accent-soft); }
+.hud-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  color: var(--text-secondary);
+}
+.hud-value {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  color: var(--accent);
+  transition: color 0.8s var(--ease-out-expo);
+}
+
+/* ============ 舞台 ============ */
+.stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 20px;
+  cursor: crosshair;
+}
+.stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#art-canvas { z-index: 1; }
+#pixel-canvas { z-index: 2; }
+
+.stage-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out-expo);
+}
+.stage:hover .stage-vignette { opacity: 1; }
+
+/* 扫描光束 */
+.scanline-beam {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 3px;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, var(--accent) 30%, var(--accent) 70%, transparent);
+  box-shadow: 0 0 18px 4px var(--accent-soft);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.6s var(--ease-out-expo);
+}
+body[data-mode="sweep"] .scanline-beam { opacity: 0.9; }
+
+.mode-hint {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  z-index: 5;
+  pointer-events: none;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: var(--text-secondary);
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  transition: color 0.4s var(--ease-out-expo), border-color 0.4s var(--ease-out-expo);
+}
+
+/* ============ 控制台 ============ */
+.controls-bar {
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 26px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.group-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+.mode-btn, .src-btn, .action-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+}
+.mode-btn:hover, .src-btn:hover, .action-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  border-color: var(--accent-soft);
+}
+.mode-btn:active, .src-btn:active, .action-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+.mode-btn.active, .src-btn.active {
+  color: var(--bg-deep);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 4px 18px var(--accent-soft);
+  font-weight: 600;
+}
+.action-btn#btn-reveal-all { color: var(--accent); border-color: var(--accent-soft); }
+
+/* 滑杆 */
+.slider-group { gap: 18px; }
+.slider-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.slider-value {
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--accent);
+  min-width: 2.4em;
+  text-align: right;
+  transition: color 0.8s var(--ease-out-expo);
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 96px;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.14);
+  outline: none;
+  cursor: pointer;
+  transition: background 0.4s var(--ease-out-expo);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 12px var(--accent-soft);
+  transition: transform 0.3s var(--ease-spring);
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
+input[type="range"]::-moz-range-thumb {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+/* 主题色点 */
+.theme-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.4s var(--ease-spring);
+}
+.theme-dot:hover { transform: scale(1.2); }
+.theme-dot[data-theme="ocean"]   { background: linear-gradient(135deg, #0f4c81, #6fd6ff); }
+.theme-dot[data-theme="aurora"]  { background: linear-gradient(135deg, #0f7a5a, #64f0c8); }
+.theme-dot[data-theme="ember"]   { background: linear-gradient(135deg, #8a2f1d, #ffb37a); }
+.theme-dot[data-theme="nebula"]  { background: linear-gradient(135deg, #55309c, #c9a2ff); }
+.theme-dot.active {
+  border-color: rgba(255, 255, 255, 0.85);
+  transform: scale(1.18);
+  box-shadow: 0 0 14px var(--accent-soft);
+}
+
+/* ============ Toast ============ */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translate(-50%, 20px);
+  z-index: 10;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  background: rgba(10, 18, 32, 0.72);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 10px 20px;
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ============ 入场动效 ============ */
+.header-area, .stage, .controls-bar {
+  animation: panel-enter 0.9s var(--ease-out-expo) both;
+}
+.stage { animation-delay: 0.12s; }
+.controls-bar { animation-delay: 0.24s; }
+@keyframes panel-enter {
+  from { opacity: 0; transform: translateY(26px) scale(0.985); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* ============ 响应式 ============ */
+@media (max-width: 640px) {
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .hud { width: 100%; justify-content: space-between; }
+  .hud-item { flex: 1; align-items: center; }
+  .controls-bar { gap: 12px 16px; }
+  .stage { aspect-ratio: 4 / 3; }
+}

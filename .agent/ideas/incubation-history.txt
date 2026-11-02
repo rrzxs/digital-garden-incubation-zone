@@ -213,3 +213,4 @@ spin-stage
 polaroid-lab
 drop-tag-visualizer
 wavetag-studio
+pixel-reveal
