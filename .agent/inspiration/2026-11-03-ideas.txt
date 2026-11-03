@@ -1,0 +1,7 @@
+lanyard-badge - 手机变挂绳工牌，随设备方向翻转展示
+thermal-lens - 摄像头热成像风格实时滤镜与色带可视化
+voice-tag-studio - 录制制作者标签，生成律动波形动效卡
+curved-carousel - 弧形三维横向作品轮播搭建器
+pixel-reveal - 马赛克逐级显现的图片动效编辑器
+grid-remixer - 拖拽式网格排版实验与动效预览器
+kinetic-type - 机械感文字动力学动效排版引擎

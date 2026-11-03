@@ -214,3 +214,4 @@ polaroid-lab
 drop-tag-visualizer
 wavetag-studio
 pixel-reveal
+grid-remixer

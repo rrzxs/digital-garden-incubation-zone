@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid Remixer · 网格混音台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora" data-layout="dense">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+  <canvas id="field-canvas" aria-hidden="true"></canvas>
+
+  <!-- === 顶部标题 === -->
+  <header class="stage-header">
+    <div class="brand">
+      <span class="brand-glyph">▦</span>
+      <div class="brand-text">
+        <h1 id="title-target">GRID REMIXER</h1>
+        <p>网格混音台 · Spring-lattice micro-interaction deck</p>
+      </div>
+    </div>
+    <div class="header-hint">
+      <span class="hint-key">R</span> 混音重组
+      <span class="hint-key">1/2/3</span> 布局
+      <span class="hint-key">Space</span> 中心脉冲
+    </div>
+  </header>
+
+  <!-- === 主舞台 === -->
+  <main class="stage-wrap">
+    <section class="stage glass" id="stage">
+      <div class="grid-field" id="grid-field"></div>
+      <div class="stage-frame" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <!-- === 控制台 === -->
+  <footer class="console glass">
+    <button class="remix-btn" id="remix-btn" title="Remix (R)">
+      <span class="remix-icon">⟳</span>
+      <span class="remix-label">REMIX</span>
+    </button>
+
+    <div class="ctrl-group">
+      <span class="ctrl-title">LAYOUT</span>
+      <div class="seg" id="layout-seg" role="group" aria-label="布局模式">
+        <button class="seg-btn active" data-layout="dense">晶格</button>
+        <button class="seg-btn" data-layout="mosaic">马赛克</button>
+        <button class="seg-btn" data-layout="mono">巨石</button>
+      </div>
+    </div>
+
+    <div class="ctrl-group">
+      <span class="ctrl-title">FORCE</span>
+      <div class="seg" id="force-seg" role="group" aria-label="力场模式">
+        <button class="seg-btn active" data-force="repel">斥力</button>
+        <button class="seg-btn" data-force="attract">引力</button>
+        <button class="seg-btn" data-force="vortex">涡旋</button>
+      </div>
+    </div>
+
+    <div class="ctrl-group slider-group">
+      <span class="ctrl-title">INTENSITY</span>
+      <input type="range" id="intensity-range" min="10" max="100" value="55" aria-label="力场强度">
+    </div>
+
+    <div class="ctrl-group">
+      <span class="ctrl-title">MOOD</span>
+      <div class="swatches" id="theme-swatches" role="group" aria-label="氛围配色">
+        <button class="swatch active" data-theme="aurora" style="--sw: linear-gradient(135deg,#46e6c8,#7c6cff)"></button>
+        <button class="swatch" data-theme="ember" style="--sw: linear-gradient(135deg,#ff9a62,#ff5e8a)"></button>
+        <button class="swatch" data-theme="abyss" style="--sw: linear-gradient(135deg,#3b82f6,#8b5cf6)"></button>
+        <button class="swatch" data-theme="bloom" style="--sw: linear-gradient(135deg,#a3e635,#34d399)"></button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- === 遥测 HUD === -->
+  <aside class="telemetry glass" aria-hidden="true">
+    <div class="tele-row"><span>MODE</span><b id="tele-mode">REPEL</b></div>
+    <div class="tele-row"><span>TILES</span><b id="tele-tiles">--</b></div>
+    <div class="tele-row"><span>VELOCITY</span><b id="tele-vel">0.00</b></div>
+    <div class="tele-row"><span>REMIXES</span><b id="tele-remix">0</b></div>
+    <div class="tele-bar"><i id="tele-force-bar"></i></div>
+  </aside>
+
+  <script src="main.js" defer></script>
+</body>
+</html>

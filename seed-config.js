@@ -2300,6 +2300,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Grid Remixer 网格混音台',
+      description: '沉浸式网格混音重组微交互体验场。弹簧-阻尼物理驱动的晶格瓦片阵列，REMIX 触发 FLIP 重排 + 震中扩散交错延迟 + 字形乱码揭示，3种布局 × 3种光标力场（斥力/引力/涡旋）× 点击冲击波涟漪，流体渐变背景 + 微晶玻璃态控制台，4种氛围配色',
+      path: '/seed/seeds/grid-remixer/index.html',
+      tags: ['Interactive', 'Physics', 'Grid', 'Micro-interaction'],
+      icon: '▤',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

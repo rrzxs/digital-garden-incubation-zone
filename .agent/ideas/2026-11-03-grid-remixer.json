@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-03",
+  "name": "grid-remixer",
+  "description": "拖拽式网格排版实验与动效预览器",
+  "tagline": "Drag. Snap. Remix Your Grid.",
+  "interaction": "用户通过拖拽自由重排网格单元，实时调整间距、跨行跨列与对齐方式，即时预览 CSS Grid 代码变化。松手时元素以弹性动效落位，可切换多种缓动曲线对比效果，一键复制生成的布局代码。",
+  "directory": "seeds/grid-remixer/",
+  "status": "incubated"
+}
