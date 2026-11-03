@@ -1,6 +1,7 @@
 #!/bin/bash
 # 阶段4: 部署 - 08:00
 set -e
+set -o pipefail
 
 cd /opt/digital-garden-incubation-zone
 DATE=$(date +%Y-%m-%d)
