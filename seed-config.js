@@ -1,6 +1,16 @@
 (function attachSeedConfig(globalScope) {
   const RAW_SEEDS = Object.freeze([
     {
+      title: 'Thermal Vision 热成像视界',
+      description: '沉浸式热成像微交互体验。光标即热源，热扩散场实时流变冷却，自走热体生命信号、十字准星温度随读、3种交互模式（热刷/焰炬/冷凝）、等温线量化与4种光谱配色，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/thermal-vision/index.html',
+      tags: ['Interactive', 'Simulation', 'Thermal', 'Micro-interaction'],
+      icon: '◉',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: '唤醒新的数字生命',
       description: '用户进行种子创造的固定入口，用来与 EDEN 共创并播种新的项目方向。',
       path: '/seed/seeds/incubator/index.html',

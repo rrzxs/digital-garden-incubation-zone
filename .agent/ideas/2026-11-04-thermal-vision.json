@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-04",
+  "name": "thermal-vision",
+  "description": "摄像头热成像风格实时滤镜可视化",
+  "tagline": "See your heat. Feel the spectrum.",
+  "interaction": "摄像头画面实时转化为热成像伪色彩视图，用户移动时身体轮廓呈现红黄蓝的热度分布流动感。拖动滑块可切换铁红、彩虹、极光等经典热成像色板，靠近镜头的温热区域会 brighter 燃烧，冷区则沉入深蓝。",
+  "directory": "seeds/thermal-vision/",
+  "status": "incubated"
+}

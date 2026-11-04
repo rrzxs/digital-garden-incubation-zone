@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thermal Vision · 热成像视界</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- === 流体渐变背景层 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+  </div>
+
+  <!-- === 热成像主画布 === -->
+  <main class="stage">
+    <canvas id="thermal-canvas"></canvas>
+
+    <!-- CRT 扫描线 / 噪点氛围层 -->
+    <div class="scope-overlay" aria-hidden="true">
+      <div class="scanlines"></div>
+      <div class="vignette"></div>
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+    </div>
+
+    <!-- 十字准星 + 温度随读 -->
+    <div class="reticle" id="reticle" aria-hidden="true">
+      <span class="reticle-h"></span>
+      <span class="reticle-v"></span>
+      <span class="reticle-dot"></span>
+      <span class="reticle-ring"></span>
+      <span class="reticle-tag" id="reticle-tag">--.-°C</span>
+    </div>
+
+    <!-- 左上 · 标题铭牌 -->
+    <header class="brand glass">
+      <div class="brand-icon">
+        <span class="pulse-dot"></span>
+      </div>
+      <div class="brand-text">
+        <h1>THERMAL VISION</h1>
+        <p>热成像视界 · 光标即热源</p>
+      </div>
+    </header>
+
+    <!-- 右上 · 遥测 HUD -->
+    <aside class="hud glass" id="hud" aria-label="热场遥测">
+      <div class="hud-row">
+        <span class="hud-label">PEAK</span>
+        <span class="hud-value" id="hud-peak">--.-°C</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">MEAN</span>
+        <span class="hud-value" id="hud-mean">--.-°C</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">FLUX</span>
+        <span class="hud-value" id="hud-flux">0.00</span>
+      </div>
+      <div class="hud-bar"><i id="hud-bar-fill"></i></div>
+    </aside>
+
+    <!-- 底部 · 控制台 -->
+    <section class="console glass" id="console">
+      <div class="console-block">
+        <span class="block-title">PALETTE / 光谱</span>
+        <div class="palette-row" id="palette-row">
+          <button class="palette-chip is-active" data-palette="ironbow" title="铁虹 Ironbow">
+            <i class="swatch swatch-ironbow"></i><em>IRON</em>
+          </button>
+          <button class="palette-chip" data-palette="inferno" title="炼狱 Inferno">
+            <i class="swatch swatch-inferno"></i><em>INFR</em>
+          </button>
+          <button class="palette-chip" data-palette="arctic" title="极地 Arctic">
+            <i class="swatch swatch-arctic"></i><em>ARCT</em>
+          </button>
+          <button class="palette-chip" data-palette="rainbow" title="彩虹 Rainbow">
+            <i class="swatch swatch-rainbow"></i><em>RN BW</em>
+          </button>
+        </div>
+      </div>
+
+      <div class="console-block">
+        <span class="block-title">SENSITIVITY / 热敏 <b id="val-sense">0.85</b></span>
+        <input type="range" id="ctl-sense" class="range" min="0.1" max="2" step="0.01" value="0.85" />
+      </div>
+
+      <div class="console-block">
+        <span class="block-title">DECAY / 冷却 <b id="val-decay">0.960</b></span>
+        <input type="range" id="ctl-decay" class="range" min="0.90" max="0.998" step="0.001" value="0.96" />
+      </div>
+
+      <div class="console-block">
+        <span class="block-title">DIFFUSION / 传导 <b id="val-diff">0.14</b></span>
+        <input type="range" id="ctl-diff" class="range" min="0" max="0.4" step="0.01" value="0.14" />
+      </div>
+
+      <div class="console-block">
+        <span class="block-title">MODE / 模式</span>
+        <div class="mode-row">
+          <button class="mode-btn is-active" data-mode="brush">BRUSH 热刷</button>
+          <button class="mode-btn" data-mode="torch">TORCH 焰炬</button>
+          <button class="mode-btn" data-mode="freeze">FREEZE 冷凝</button>
+        </div>
+      </div>
+
+      <div class="console-block console-actions">
+        <button class="action-btn" id="btn-life" title="切换自走热体">LIFE 热体</button>
+        <button class="action-btn" id="btn-iso" title="切换等温线">ISO 等温</button>
+        <button class="action-btn action-danger" id="btn-purge" title="瞬间冷却清空">PURGE 净化</button>
+      </div>
+    </section>
+
+    <!-- 底部 · 提示条 -->
+    <footer class="hint" id="hint">
+      <span>移动光标注入热量 · 点击触发脉冲 · 按住拖拽持续加热 · <kbd>SPACE</kbd> 净化 · <kbd>L</kbd> 热体 · <kbd>I</kbd> 等温线</span>
+    </footer>
+  </main>
+
+  <!-- 点击脉冲涟漪容器 -->
+  <div class="pulse-layer" id="pulse-layer" aria-hidden="true"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
