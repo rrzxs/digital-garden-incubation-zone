@@ -2320,6 +2320,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Badge Forge 徽章熔铸台',
+      description: '沉浸式 SVG 徽章熔铸工作台。5种形制 × 4种质感（微晶/熔渐/描金/全息）× 6枚纹章 × 4种氛围配色实时重铸徽章，弹簧落章动画、冲击波粒子迸射、3D 倾斜光泽追踪、熔铸档案恢复与 SVG 一键导出，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/badge-forge/index.html',
+      tags: ['Interactive', 'SVG', 'Micro-interaction', 'Creative'],
+      icon: '✦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

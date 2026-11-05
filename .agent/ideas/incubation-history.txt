@@ -216,3 +216,4 @@ wavetag-studio
 pixel-reveal
 grid-remixer
 thermal-vision
+badge-forge

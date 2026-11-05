@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-05",
+  "name": "badge-forge",
+  "description": "传感器驱动的旋转电子胸牌生成器",
+  "tagline": "Spin Data Into Wearable Light",
+  "interaction": "用户通过挥手、倾斜或旋转设备触发传感器，将实时环境数据（动作、方向、光线）锻造成独一无二的动态电子胸章图案。胸章以旋转动画持续演化，每次交互都像在“锻造炉”中淬炼出新的视觉铭文，可佩戴展示或分享。",
+  "directory": "seeds/badge-forge/",
+  "status": "incubated"
+}

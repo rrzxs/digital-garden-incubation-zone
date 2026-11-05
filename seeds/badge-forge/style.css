@@ -1,0 +1,376 @@
+/* ============================================================
+   BADGE FORGE · 徽章熔铸台
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ============================================================ */
+
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-sans: 'Inter', 'Outfit', -apple-system, sans-serif;
+  --font-display: 'Outfit', var(--font-sans);
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+/* ---------- 氛围配色 ---------- */
+[data-palette="ember"]    { --c1: #ff9a3c; --c2: #ff4d6d; --c3: #ffd166; --ink: #ffe9d6; }
+[data-palette="azure"]    { --c1: #4cc9f0; --c2: #4361ee; --c3: #8ed8f8; --ink: #dcecff; }
+[data-palette="verdant"]  { --c1: #57e39a; --c2: #0f9b6c; --c3: #b8f2c9; --ink: #dcffe9; }
+[data-palette="amethyst"] { --c1: #c77dff; --c2: #7b2cbf; --c3: #e0aaff; --ink: #f1e3ff; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: #07070c;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mono { font-family: var(--font-mono); letter-spacing: 0.08em; }
+
+/* ============================================================
+   流体渐变背景
+   ============================================================ */
+.forge-bg {
+  position: fixed; inset: 0; z-index: -3;
+  background: radial-gradient(120% 120% at 20% 0%, #101020 0%, #07070c 55%, #050508 100%);
+  overflow: hidden;
+}
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); mix-blend-mode: screen; opacity: 0.45;
+  will-change: transform;
+}
+.blob-a {
+  width: 55vmax; height: 55vmax; left: -12vmax; top: -18vmax;
+  background: radial-gradient(circle at 35% 35%, var(--c1), transparent 65%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+.blob-b {
+  width: 48vmax; height: 48vmax; right: -14vmax; top: 22vh;
+  background: radial-gradient(circle at 60% 40%, var(--c2), transparent 65%);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+.blob-c {
+  width: 40vmax; height: 40vmax; left: 28vw; bottom: -20vmax;
+  background: radial-gradient(circle at 50% 50%, var(--c3), transparent 65%);
+  opacity: 0.3;
+  animation: drift-c 38s ease-in-out infinite alternate;
+}
+@keyframes drift-a { to { transform: translate(9vw, 7vh) scale(1.15) rotate(20deg); } }
+@keyframes drift-b { to { transform: translate(-8vw, -6vh) scale(0.92) rotate(-15deg); } }
+@keyframes drift-c { to { transform: translate(-6vw, -10vh) scale(1.2); } }
+.forge-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(90% 90% at 50% 40%, transparent 55%, rgba(0,0,0,0.55) 100%);
+}
+
+#ambient-canvas, #burst-canvas {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+#ambient-canvas { z-index: -2; }
+#burst-canvas { z-index: 5; }
+
+/* ============================================================
+   舞台布局
+   ============================================================ */
+.stage {
+  position: relative; z-index: 1;
+  max-width: 980px; margin: 0 auto;
+  padding: 56px 24px 80px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+
+.stage-header { text-align: center; }
+.stage-eyebrow {
+  font-size: 12px; opacity: 0.6; margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.stage-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 700; letter-spacing: 0.04em; line-height: 1.05;
+  background: linear-gradient(120deg, var(--ink) 20%, var(--c1) 55%, var(--c3) 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 42px rgba(255,255,255,0.06);
+}
+.stage-sub { opacity: 0.62; font-size: 15px; margin-top: 10px; }
+
+/* ============================================================
+   微晶玻璃容器
+   ============================================================ */
+.glass {
+  background: linear-gradient(150deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+  transition: border-color 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
+}
+.glass:hover {
+  border-color: rgba(255,255,255,0.18);
+  box-shadow:
+    0 28px 72px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.16);
+}
+
+/* ============================================================
+   熔铸舞台
+   ============================================================ */
+.mint-panel { position: relative; padding: 44px 28px 24px; }
+
+.badge-stage {
+  position: relative;
+  height: 360px;
+  display: grid; place-items: center;
+  perspective: 900px;
+}
+
+.badge-tilt {
+  position: relative;
+  width: 280px; height: 280px;
+  transform-style: preserve-3d;
+  transition: transform 0.55s var(--ease-out-expo);
+  will-change: transform;
+}
+.badge-tilt svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+.badge-glare {
+  position: absolute; inset: 0; z-index: 2;
+  border-radius: 28%;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 30%),
+              rgba(255,255,255,0.28), rgba(255,255,255,0.05) 38%, transparent 62%);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.45s var(--ease-out-expo);
+  mix-blend-mode: screen;
+}
+.badge-stage:hover .badge-glare { opacity: 1; }
+
+/* 落章弹簧动画 */
+.badge-tilt.minting { animation: mint-press 0.9s var(--ease-out-expo); }
+@keyframes mint-press {
+  0%   { transform: scale(1) rotate(0deg); }
+  22%  { transform: scale(0.82) rotate(-2.5deg); }
+  48%  { transform: scale(1.14) rotate(1.6deg); }
+  70%  { transform: scale(0.96) rotate(-0.6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* 冲击波 */
+.shockwave {
+  position: absolute; left: 50%; top: 50%;
+  width: 60px; height: 60px;
+  margin: -30px 0 0 -30px;
+  border-radius: 50%;
+  border: 2px solid var(--c1);
+  opacity: 0; pointer-events: none;
+}
+.shockwave.fire { animation: shock 0.9s var(--ease-out-expo); }
+@keyframes shock {
+  0%   { transform: scale(0.3); opacity: 0.85; border-width: 3px; }
+  100% { transform: scale(6.5); opacity: 0; border-width: 0.5px; }
+}
+
+.mint-hud {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  margin-top: 8px;
+}
+.hud-chip {
+  font-size: 11px; opacity: 0.7;
+  padding: 6px 14px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+}
+.hud-chip b { color: var(--c1); font-weight: 400; }
+
+/* ============================================================
+   控制台
+   ============================================================ */
+.console { padding: 26px 28px; display: flex; flex-direction: column; gap: 20px; }
+
+.console-row {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+
+.field-label {
+  font-size: 10px; opacity: 0.5; text-transform: uppercase;
+  min-width: 52px;
+}
+
+.text-input {
+  flex: 1; min-width: 160px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 500;
+  padding: 10px 16px;
+  outline: none;
+  transition: border-color 0.4s var(--ease-out-expo),
+              background 0.4s var(--ease-out-expo),
+              box-shadow 0.4s var(--ease-out-expo);
+}
+.text-input::placeholder { color: rgba(255,255,255,0.28); }
+.text-input:focus {
+  border-color: var(--c1);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.04), 0 0 24px -6px var(--c1);
+}
+.text-input-sub { font-size: 13px; flex: 0.7; }
+
+/* 分段控件 */
+.seg-group {
+  display: flex; gap: 6px; padding: 5px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.seg-btn {
+  appearance: none; border: none; cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  background: transparent;
+  padding: 7px 15px; border-radius: 10px;
+  transition: all 0.45s var(--ease-out-expo);
+}
+.seg-btn:hover { color: var(--ink); background: rgba(255,255,255,0.07); }
+.seg-btn.active {
+  color: #0a0a12;
+  background: linear-gradient(135deg, var(--c3), var(--c1));
+  box-shadow: 0 4px 18px -4px var(--c1);
+}
+
+.seg-sigil { font-size: 16px; padding: 6px 12px; }
+.sigil-group { flex-wrap: wrap; }
+
+.seg-swatch { padding: 7px 13px; }
+.seg-swatch i {
+  display: block; width: 16px; height: 16px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--sw1), var(--sw2));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+  transition: transform 0.45s var(--ease-out-expo);
+}
+.seg-swatch:hover i { transform: scale(1.2); }
+.seg-swatch[data-palette="ember"]    { --sw1: #ffd166; --sw2: #ff4d6d; }
+.seg-swatch[data-palette="azure"]    { --sw1: #8ed8f8; --sw2: #4361ee; }
+.seg-swatch[data-palette="verdant"]  { --sw1: #b8f2c9; --sw2: #0f9b6c; }
+.seg-swatch[data-palette="amethyst"] { --sw1: #e0aaff; --sw2: #7b2cbf; }
+
+/* 按钮 */
+.btn {
+  appearance: none; cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 600;
+  color: var(--ink);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  padding: 11px 24px; border-radius: 14px;
+  transition: all 0.45s var(--ease-out-expo);
+}
+.btn:hover {
+  background: rgba(255,255,255,0.11);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -8px rgba(0,0,0,0.6);
+}
+.btn:active { transform: translateY(0) scale(0.97); }
+
+.btn-mint {
+  color: #0a0a12;
+  background: linear-gradient(135deg, var(--c3), var(--c1));
+  border: none;
+  padding: 12px 34px;
+  box-shadow: 0 8px 30px -6px var(--c1);
+}
+.btn-mint:hover { box-shadow: 0 14px 42px -6px var(--c1); }
+.btn-mint .btn-spark {
+  display: inline-block; margin-left: 8px;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+.btn-mint:hover .btn-spark { transform: rotate(180deg) scale(1.25); }
+
+.console-actions { justify-content: center; }
+
+/* ============================================================
+   熔铸档案
+   ============================================================ */
+.archive { padding: 24px 28px; }
+.archive-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.archive-title { font-size: 12px; opacity: 0.65; text-transform: uppercase; }
+.archive-empty { opacity: 0.4; font-size: 12px; padding: 8px 2px; }
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 14px;
+}
+
+.archive-card {
+  cursor: pointer;
+  border-radius: 18px;
+  padding: 14px 10px 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.5s var(--ease-out-expo);
+  animation: card-in 0.8s var(--ease-out-expo) both;
+}
+.archive-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 14px 34px -10px rgba(0,0,0,0.6);
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.archive-card svg { width: 62px; height: 62px; }
+.archive-card-label {
+  font-size: 11px; font-weight: 600;
+  max-width: 100%; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+  opacity: 0.85;
+}
+
+/* Toast */
+.toast {
+  position: fixed; left: 50%; bottom: 34px;
+  transform: translate(-50%, 20px);
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em;
+  color: #0a0a12;
+  background: linear-gradient(135deg, var(--c3), var(--c1));
+  padding: 11px 22px; border-radius: 999px;
+  opacity: 0; pointer-events: none;
+  transition: all 0.5s var(--ease-out-expo);
+  z-index: 20;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+.stage-foot { text-align: center; font-size: 11px; opacity: 0.35; }
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media (max-width: 640px) {
+  .badge-stage { height: 300px; }
+  .badge-tilt { width: 220px; height: 220px; }
+  .console { padding: 20px; }
+  .field-label { min-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

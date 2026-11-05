@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Badge Forge 徽章熔铸台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="ember">
+
+  <!-- 流体渐变背景 -->
+  <div class="forge-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="forge-vignette"></div>
+  </div>
+
+  <!-- 环境粒子画布 -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+  <!-- 锻造粒子画布（冲击波/迸射） -->
+  <canvas id="burst-canvas" aria-hidden="true"></canvas>
+
+  <main class="stage">
+
+    <!-- 顶部标题 -->
+    <header class="stage-header">
+      <p class="stage-eyebrow mono">// FORGE · BADGE · MINT</p>
+      <h1 class="stage-title" id="title-scramble" data-text="BADGE FORGE">BADGE FORGE</h1>
+      <p class="stage-sub">调配形制、纹理与铭文，在微晶熔铸台上敲下属于你的一枚徽章。</p>
+    </header>
+
+    <!-- 熔铸舞台：微晶玻璃态容器 -->
+    <section class="mint-panel glass" id="mint-panel">
+      <div class="badge-stage" id="badge-stage">
+        <div class="badge-tilt" id="badge-tilt">
+          <div class="badge-glare" id="badge-glare"></div>
+          <div id="badge-mount"></div>
+        </div>
+        <div class="shockwave" id="shockwave"></div>
+      </div>
+
+      <div class="mint-hud mono">
+        <span class="hud-chip">FORGED <b id="hud-forged">0</b></span>
+        <span class="hud-chip">SHAPE <b id="hud-shape">SHIELD</b></span>
+        <span class="hud-chip">STYLE <b id="hud-style">GLASS</b></span>
+      </div>
+    </section>
+
+    <!-- 控制台 -->
+    <section class="console glass">
+
+      <div class="console-row">
+        <label class="field-label mono">LABEL</label>
+        <input id="label-input" class="text-input" type="text" maxlength="18"
+               placeholder="徽章主铭文…" autocomplete="off" spellcheck="false">
+        <label class="field-label mono">SUB</label>
+        <input id="sub-input" class="text-input text-input-sub" type="text" maxlength="24"
+               placeholder="副铭文（可选）…" autocomplete="off" spellcheck="false">
+      </div>
+
+      <div class="console-row">
+        <label class="field-label mono">SHAPE</label>
+        <div class="seg-group" id="shape-group">
+          <button class="seg-btn active" data-shape="shield">盾形</button>
+          <button class="seg-btn" data-shape="hex">六边</button>
+          <button class="seg-btn" data-shape="circle">圆徽</button>
+          <button class="seg-btn" data-shape="diamond">菱切</button>
+          <button class="seg-btn" data-shape="star">星辉</button>
+        </div>
+
+        <label class="field-label mono">STYLE</label>
+        <div class="seg-group" id="style-group">
+          <button class="seg-btn active" data-style="glass">微晶</button>
+          <button class="seg-btn" data-style="gradient">熔渐</button>
+          <button class="seg-btn" data-style="outline">描金</button>
+          <button class="seg-btn" data-style="holo">全息</button>
+        </div>
+      </div>
+
+      <div class="console-row">
+        <label class="field-label mono">SIGIL</label>
+        <div class="seg-group sigil-group" id="sigil-group">
+          <button class="seg-btn seg-sigil active" data-sigil="⚡">⚡</button>
+          <button class="seg-btn seg-sigil" data-sigil="◈">◈</button>
+          <button class="seg-btn seg-sigil" data-sigil="✦">✦</button>
+          <button class="seg-btn seg-sigil" data-sigil="⌘">⌘</button>
+          <button class="seg-btn seg-sigil" data-sigil="❖">❖</button>
+          <button class="seg-btn seg-sigil" data-sigil="Ω">Ω</button>
+        </div>
+
+        <label class="field-label mono">PALETTE</label>
+        <div class="seg-group" id="palette-group">
+          <button class="seg-btn seg-swatch active" data-palette="ember" title="余烬"><i></i></button>
+          <button class="seg-btn seg-swatch" data-palette="azure" title="寒钢"><i></i></button>
+          <button class="seg-btn seg-swatch" data-palette="verdant" title="翠焰"><i></i></button>
+          <button class="seg-btn seg-swatch" data-palette="amethyst" title="紫熔"><i></i></button>
+        </div>
+      </div>
+
+      <div class="console-row console-actions">
+        <button class="btn btn-mint" id="btn-mint">
+          <span class="btn-label">熔铸</span>
+          <span class="btn-spark">✦</span>
+        </button>
+        <button class="btn btn-copy" id="btn-copy">复制 SVG</button>
+        <button class="btn btn-download" id="btn-download">导出 .svg</button>
+      </div>
+    </section>
+
+    <!-- 熔铸档案陈列 -->
+    <section class="archive glass">
+      <div class="archive-head">
+        <h2 class="archive-title mono">LEDGER · 熔铸档案</h2>
+        <button class="btn btn-clear" id="btn-clear">清空</button>
+      </div>
+      <div class="archive-grid" id="archive-grid">
+        <p class="archive-empty mono" id="archive-empty">尚无徽章入库 — 按下熔铸，敲下第一枚。</p>
+      </div>
+    </section>
+
+    <footer class="stage-foot mono">BADGE FORGE · seed by EDEN · cubic-bezier(0.16, 1, 0.3, 1)</footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
