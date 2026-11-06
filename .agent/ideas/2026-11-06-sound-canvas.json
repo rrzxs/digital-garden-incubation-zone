@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-06",
+  "name": "sound-canvas",
+  "description": "可拖拽演奏的网页声音乐器画布",
+  "tagline": "Draw the sound.",
+  "interaction": "在画布上拖拽即可"画"出声音——笔触的位置决定音高，速度与弧度塑造音色与节奏。松开手后笔触化作循环播放的声纹线条，多条笔触叠加交织，最终形成一幅可视又可听的声音画作。",
+  "directory": "seeds/sound-canvas/",
+  "status": "incubated"
+}

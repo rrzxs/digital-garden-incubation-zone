@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sound Canvas — 声弦画布</title>
+  <meta name="description" content="沉浸式声画合成画布。以光标作画即谱曲——纵向定位音高、横向声像漫游、笔速控制音色明暗，4 种音色 × 4 种音阶 × 4 种氛围配色，回放模式让画作演奏自己">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 流体网格渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+    <div class="grain-overlay"></div>
+  </div>
+
+  <!-- 光标光晕 -->
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <!-- 顶部标题栏 -->
+    <header class="panel-header">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true">◗</span>
+        <div class="brand-text">
+          <h1 class="brand-title">Sound Canvas</h1>
+          <span class="brand-sub">声弦画布 · Paint to Compose</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="stat-chip" title="画作音符数">
+          <span class="stat-label">NOTES</span>
+          <span class="stat-value" id="noteCount">0</span>
+        </div>
+        <div class="stat-chip" title="画作时长（秒）">
+          <span class="stat-label">DUR</span>
+          <span class="stat-value" id="durCount">0.0s</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- 画布舞台 -->
+    <section class="stage" id="stage">
+      <canvas id="paintCanvas" aria-label="声弦画布，按住并拖动光标即可作画与演奏"></canvas>
+
+      <!-- 回放扫描线 -->
+      <div class="playhead" id="playhead" aria-hidden="true">
+        <span class="playhead-beam"></span>
+        <span class="playhead-cap"></span>
+      </div>
+
+      <!-- 背景谱表幽灵装饰 -->
+      <div class="ghost-staff" aria-hidden="true">
+        <span class="ghost-clef">♪</span>
+        <span class="ghost-clef ghost-clef-b">♫</span>
+      </div>
+
+      <!-- 初始提示 -->
+      <div class="stage-hint" id="stageHint">
+        <div class="hint-ring"></div>
+        <span class="hint-text">按住画布拖动 · 纵向是音高 · 横向是时间<br><em>落笔即成曲，松手即成画</em></span>
+      </div>
+
+      <!-- 回放状态浮标 -->
+      <div class="replay-badge" id="replayBadge" aria-hidden="true">
+        <span class="replay-dot"></span>
+        <span class="replay-text">REPLAY</span>
+        <span class="replay-time" id="replayTime">0.0s</span>
+      </div>
+    </section>
+
+    <!-- 控制台 -->
+    <footer class="console">
+      <div class="console-group">
+        <span class="console-label">音色</span>
+        <div class="seg-row" id="timbreRow" role="group" aria-label="音色选择">
+          <button class="seg-btn active" data-timbre="glass">Glass</button>
+          <button class="seg-btn" data-timbre="bell">Bell</button>
+          <button class="seg-btn" data-timbre="pluck">Pluck</button>
+          <button class="seg-btn" data-timbre="pad">Pad</button>
+        </div>
+      </div>
+
+      <div class="console-group">
+        <span class="console-label">音阶</span>
+        <div class="seg-row" id="scaleRow" role="group" aria-label="音阶选择">
+          <button class="seg-btn active" data-scale="penta-major">Major Penta</button>
+          <button class="seg-btn" data-scale="penta-minor">Minor Penta</button>
+          <button class="seg-btn" data-scale="dorian">Dorian</button>
+          <button class="seg-btn" data-scale="lydian">Lydian</button>
+        </div>
+      </div>
+
+      <div class="console-group console-group--tools">
+        <span class="console-label">操作</span>
+        <div class="seg-row">
+          <button class="tool-btn" id="replayBtn" aria-label="回放画作">
+            <span class="tool-icon">▶</span><span class="tool-name">回放</span>
+          </button>
+          <button class="tool-btn" id="undoBtn" aria-label="撤销上一笔">
+            <span class="tool-icon">↩</span><span class="tool-name">撤销</span>
+          </button>
+          <button class="tool-btn tool-btn--danger" id="clearBtn" aria-label="清空画布">
+            <span class="tool-icon">✕</span><span class="tool-name">清空</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="console-group console-group--themes">
+        <span class="console-label">氛围</span>
+        <div class="theme-row" id="themeRow" role="group" aria-label="氛围配色">
+          <button class="theme-dot theme-dot--nebula active" data-theme="nebula" aria-label="星云"></button>
+          <button class="theme-dot theme-dot--abyss" data-theme="abyss" aria-label="深海"></button>
+          <button class="theme-dot theme-dot--ember" data-theme="ember" aria-label="余烬"></button>
+          <button class="theme-dot theme-dot--aurora" data-theme="aurora" aria-label="极光"></button>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

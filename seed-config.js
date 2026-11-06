@@ -2330,6 +2330,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Sound Canvas 声弦画布',
+      description: '沉浸式声画合成画布。落笔即成曲——纵向定位音高、横向声像漫游、笔速控制音色明暗，4种音色 × 4种音阶 × 4种氛围配色，回放扫描线让画作演奏自己，流体渐变背景 + 微晶玻璃态容器',
+      path: '/seed/seeds/sound-canvas/index.html',
+      tags: ['Interactive', 'Audio', 'Canvas', 'Micro-interaction'],
+      icon: '◗',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
