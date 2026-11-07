@@ -1,1 +1,1 @@
-sound-canvas
+sound-dial-instrument

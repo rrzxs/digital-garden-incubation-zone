@@ -2340,6 +2340,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Sound Dial Instrument 声波刻度盘',
+      description: '沉浸式声音刻度盘乐器。中央主盘以弹簧-阻尼物理选择音阶音高，四枚环绕子盘实时塑形音色（TONE 滤波/ECHO 回声/DRIVE 驱动/SPACE 空间），Web Audio 实时合成、弹拨/持续音/琶音/随机四种演奏模式 × 4种音阶 × 4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/sound-dial-instrument/index.html',
+      tags: ['Interactive', 'Audio', 'Synth', 'Micro-interaction'],
+      icon: '◎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

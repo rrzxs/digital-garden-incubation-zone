@@ -218,3 +218,4 @@ grid-remixer
 thermal-vision
 badge-forge
 sound-canvas
+sound-dial-instrument

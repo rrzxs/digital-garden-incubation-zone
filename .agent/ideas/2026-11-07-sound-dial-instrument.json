@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-07",
+  "name": "sound-dial-instrument",
+  "description": "可拖拽表盘演奏的声画互动乐器",
+  "tagline": "Dials that sing",
+  "interaction": "每个表盘对应一种音色，拖拽旋转指针即触发音符——旋转角度控制音高，转速控制节奏与力度。拨动瞬间，表盘荡开涟漪光彩，声与画随指尖同频共振，多人同时演奏即合奏出一幅流动的声景。",
+  "directory": "seeds/sound-dial-instrument/",
+  "status": "incubated"
+}

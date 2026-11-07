@@ -1,0 +1,489 @@
+/* ==========================================================================
+   Sound Dial Instrument — 声波刻度盘
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ========================================================================== */
+
+:root {
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --dial-main-size: min(380px, 58vmin);
+  --dial-sub-size: min(128px, 18vmin);
+  --orbit-radius: min(300px, 44vmin);
+
+  --bg-deep: #09090f;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --surface-active: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-glow: rgba(255, 255, 255, 0.18);
+
+  --text-primary: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-muted: rgba(255, 255, 255, 0.32);
+
+  --accent-h: 265;
+  --accent-s: 88%;
+  --accent-l: 68%;
+  --accent: hsl(var(--accent-h), var(--accent-s), var(--accent-l));
+  --accent-glow: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.35);
+  --accent-dim: hsla(var(--accent-h), var(--accent-s), var(--accent-l), 0.12);
+
+  --aurora-a: hsl(265, 80%, 22%);
+  --aurora-b: hsl(320, 70%, 20%);
+  --aurora-c: hsl(200, 80%, 18%);
+  --aurora-d: hsl(160, 60%, 14%);
+}
+
+[data-theme="aurora"] {
+  --accent-h: 160; --accent-s: 80%; --accent-l: 55%;
+  --aurora-a: hsl(160, 60%, 14%);
+  --aurora-b: hsl(190, 70%, 16%);
+  --aurora-c: hsl(140, 50%, 12%);
+  --aurora-d: hsl(180, 65%, 10%);
+}
+
+[data-theme="ember"] {
+  --accent-h: 22; --accent-s: 95%; --accent-l: 60%;
+  --aurora-a: hsl(22, 75%, 16%);
+  --aurora-b: hsl(350, 75%, 18%);
+  --aurora-c: hsl(15, 80%, 12%);
+  --aurora-d: hsl(40, 65%, 12%);
+}
+
+[data-theme="frost"] {
+  --accent-h: 200; --accent-s: 75%; --accent-l: 72%;
+  --aurora-a: hsl(210, 45%, 14%);
+  --aurora-b: hsl(230, 55%, 16%);
+  --aurora-c: hsl(195, 40%, 11%);
+  --aurora-d: hsl(220, 50%, 13%);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === 流体渐变背景（Aurora Mesh） ==================================== */
+
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  filter: saturate(1.15);
+}
+
+.aurora-blob {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  transition: background 1.2s var(--ease-out-expo);
+}
+
+.blob-a { background: var(--aurora-a); top: -18vmax; left: -12vmax; animation: driftA 26s ease-in-out infinite alternate; }
+.blob-b { background: var(--aurora-b); bottom: -20vmax; right: -14vmax; animation: driftB 32s ease-in-out infinite alternate; }
+.blob-c { background: var(--aurora-c); top: 30%; left: 45%; width: 45vmax; height: 45vmax; animation: driftC 24s ease-in-out infinite alternate; }
+.blob-d { background: var(--aurora-d); bottom: 10%; left: -10vmax; width: 40vmax; height: 40vmax; animation: driftD 30s ease-in-out infinite alternate; }
+
+@keyframes driftA {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(14vmax, 10vmax) scale(1.18); }
+}
+@keyframes driftB {
+  0% { transform: translate(0, 0) scale(1.1); }
+  100% { transform: translate(-12vmax, -9vmax) scale(0.92); }
+}
+@keyframes driftC {
+  0% { transform: translate(0, 0) scale(0.9); }
+  100% { transform: translate(-10vmax, 12vmax) scale(1.2); }
+}
+@keyframes driftD {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(12vmax, -10vmax) scale(1.12); }
+}
+
+#flow-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* === 应用布局 ======================================================== */
+
+.app {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 20px 28px;
+}
+
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* === 顶栏 ============================================================ */
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.header-left { display: flex; align-items: center; gap: 10px; }
+
+.logo-icon {
+  font-size: 22px;
+  color: var(--accent);
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+  animation: logoPulse 4s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { opacity: 0.8; transform: scale(1) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.06) rotate(8deg); }
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, var(--text-primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-center { position: absolute; left: 50%; transform: translateX(-50%); }
+
+.header-subtitle {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+.theme-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.theme-btn:hover { background: var(--surface-hover); border-color: var(--border-glow); transform: scale(1.08) rotate(30deg); }
+
+.theme-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  transition: background 0.6s var(--ease-out-expo), box-shadow 0.6s var(--ease-out-expo);
+}
+
+/* === 刻度盘舞台 ====================================================== */
+
+.stage {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.dial-main {
+  position: relative;
+  width: var(--dial-main-size);
+  height: var(--dial-main-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.dial-main:active { cursor: grabbing; }
+.dial-main:hover { transform: scale(1.015); }
+
+.dial-main .dial-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dial-core {
+  position: relative;
+  width: 52%;
+  height: 52%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: box-shadow 0.6s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.dial-main.playing .dial-core {
+  box-shadow: 0 0 60px var(--accent-glow), 0 8px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.dial-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(34px, 7vmin, 56px);
+  letter-spacing: 1px;
+  background: linear-gradient(180deg, var(--text-primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dial-freq {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 1.5px;
+}
+
+.dial-caption {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.4s var(--ease-out-expo);
+}
+
+/* --- 环绕子刻度盘 ---------------------------------------------------- */
+
+.orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+}
+
+.orbit-1 { transform: rotate(0deg) translateY(calc(var(--orbit-radius) * -1)); }
+.orbit-2 { transform: rotate(90deg) translateY(calc(var(--orbit-radius) * -1)); }
+.orbit-3 { transform: rotate(180deg) translateY(calc(var(--orbit-radius) * -1)); }
+.orbit-4 { transform: rotate(270deg) translateY(calc(var(--orbit-radius) * -1)); }
+
+.dial-sub {
+  position: absolute;
+  left: calc(var(--dial-sub-size) / -2);
+  top: calc(var(--dial-sub-size) / -2);
+  width: var(--dial-sub-size);
+  height: var(--dial-sub-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: none;
+  transition: transform 0.5s var(--ease-spring);
+}
+
+.dial-sub:active { cursor: grabbing; }
+.dial-sub:hover { transform: scale(1.1); }
+
+.dial-sub .dial-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dial-sub-core {
+  position: relative;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.sub-value {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--text-primary);
+  text-shadow: 0 0 12px var(--accent-glow);
+}
+
+.dial-sub .dial-caption {
+  bottom: -22px;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+/* === 控制台 ========================================================== */
+
+.controls-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 18px;
+  border-radius: 18px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.scale-tabs { display: flex; gap: 6px; }
+
+.scale-tab {
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.scale-tab:hover { color: var(--text-primary); background: var(--surface-hover); }
+
+.scale-tab.active {
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 16px var(--accent-dim);
+}
+
+.control-group { display: flex; gap: 8px; }
+
+.ctrl-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.ctrl-btn:hover {
+  color: var(--text-primary);
+  background: var(--surface-hover);
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+}
+
+.ctrl-btn:active { transform: translateY(0) scale(0.96); }
+
+.ctrl-btn.active {
+  color: var(--accent);
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 18px var(--accent-dim);
+}
+
+.ctrl-icon { font-size: 14px; }
+
+/* === 状态栏 ========================================================== */
+
+.status-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.status-sep { opacity: 0.4; }
+
+/* === 涟漪层 ========================================================== */
+
+.ripple-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  animation: rippleExpand 0.9s var(--ease-out-expo) forwards;
+}
+
+@keyframes rippleExpand {
+  0% { opacity: 0.7; transform: translate(-50%, -50%) scale(0); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* === 响应式 ========================================================== */
+
+@media (max-width: 760px) {
+  .app { padding: 14px; }
+  .header-center { display: none; }
+  :root {
+    --dial-main-size: min(260px, 52vmin);
+    --dial-sub-size: min(84px, 15vmin);
+    --orbit-radius: min(210px, 40vmin);
+  }
+  .controls-bar { justify-content: center; }
+}

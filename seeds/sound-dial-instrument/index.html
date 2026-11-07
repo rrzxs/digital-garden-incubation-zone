@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sound Dial Instrument — 声波刻度盘</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="aurora">
+    <span class="aurora-blob blob-a"></span>
+    <span class="aurora-blob blob-b"></span>
+    <span class="aurora-blob blob-c"></span>
+    <span class="aurora-blob blob-d"></span>
+  </div>
+
+  <canvas id="flow-canvas"></canvas>
+
+  <div class="app">
+    <header class="app-header">
+      <div class="header-left">
+        <span class="logo-icon">◎</span>
+        <h1 class="logo-text" id="logo-title">Sound Dial Instrument</h1>
+      </div>
+      <div class="header-center">
+        <span class="header-subtitle" id="hint-label">DRAG A DIAL · TUNE THE SOUND</span>
+      </div>
+      <div class="header-right">
+        <button class="theme-btn" id="theme-btn" aria-label="Switch theme">
+          <span class="theme-dot"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <!-- 中央主刻度盘：音高 -->
+      <div class="dial-main" id="dial-main">
+        <canvas class="dial-canvas" width="520" height="520"></canvas>
+        <div class="dial-core glass">
+          <span class="dial-value" id="main-note">A4</span>
+          <span class="dial-freq" id="main-freq">440.0 Hz</span>
+        </div>
+        <div class="dial-caption">PITCH · 主音刻度</div>
+      </div>
+
+      <!-- 环绕子刻度盘：音色参数 -->
+      <div class="orbit orbit-1">
+        <div class="dial-sub" id="dial-tone">
+          <canvas class="dial-canvas" width="200" height="200"></canvas>
+          <div class="dial-sub-core glass">
+            <span class="sub-value" data-value>64</span>
+          </div>
+          <div class="dial-caption">TONE 滤波</div>
+        </div>
+      </div>
+      <div class="orbit orbit-2">
+        <div class="dial-sub" id="dial-echo">
+          <canvas class="dial-canvas" width="200" height="200"></canvas>
+          <div class="dial-sub-core glass">
+            <span class="sub-value" data-value>35</span>
+          </div>
+          <div class="dial-caption">ECHO 回声</div>
+        </div>
+      </div>
+      <div class="orbit orbit-3">
+        <div class="dial-sub" id="dial-drive">
+          <canvas class="dial-canvas" width="200" height="200"></canvas>
+          <div class="dial-sub-core glass">
+            <span class="sub-value" data-value>20</span>
+          </div>
+          <div class="dial-caption">DRIVE 驱动</div>
+        </div>
+      </div>
+      <div class="orbit orbit-4">
+        <div class="dial-sub" id="dial-space">
+          <canvas class="dial-canvas" width="200" height="200"></canvas>
+          <div class="dial-sub-core glass">
+            <span class="sub-value" data-value>50</span>
+          </div>
+          <div class="dial-caption">SPACE 空间</div>
+        </div>
+      </div>
+    </main>
+
+    <nav class="controls-bar glass">
+      <div class="scale-tabs" id="scale-tabs">
+        <button class="scale-tab active" data-scale="pentatonic">五声</button>
+        <button class="scale-tab" data-scale="dorian">多利亚</button>
+        <button class="scale-tab" data-scale="lydian">利底亚</button>
+        <button class="scale-tab" data-scale="japanese">和风</button>
+      </div>
+      <div class="control-group">
+        <button class="ctrl-btn" id="btn-pluck"><span class="ctrl-icon">♪</span><span class="ctrl-label">弹拨</span></button>
+        <button class="ctrl-btn" id="btn-drone"><span class="ctrl-icon">∿</span><span class="ctrl-label">持续音</span></button>
+        <button class="ctrl-btn" id="btn-arpeggio"><span class="ctrl-icon">≫</span><span class="ctrl-label">琶音</span></button>
+        <button class="ctrl-btn" id="btn-random"><span class="ctrl-icon">⁂</span><span class="ctrl-label">随机</span></button>
+      </div>
+    </nav>
+
+    <footer class="status-bar">
+      <span class="status-text" id="status-text">Ready · 拖动主盘选择音高，子盘塑形音色</span>
+      <span class="status-sep">—</span>
+      <span class="status-scale" id="status-scale">五声音阶</span>
+    </footer>
+  </div>
+
+  <div class="ripple-layer" id="ripple-layer"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
