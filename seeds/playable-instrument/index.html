@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Playable Instrument 光奏盘 · Digital Garden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body data-palette="nebula">
+  <!-- ═══ 流体渐变背景 ═══ -->
+  <div class="bg-stage" aria-hidden="true">
+    <div class="mesh-orb orb-a"></div>
+    <div class="mesh-orb orb-b"></div>
+    <div class="mesh-orb orb-c"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <!-- ═══ 主舞台 ═══ -->
+  <main class="stage">
+    <header class="stage-header">
+      <div class="brand">
+        <span class="brand-glyph">◎</span>
+        <div class="brand-text">
+          <h1>Playable Instrument <em>光奏盘</em></h1>
+          <p class="brand-sub">LU MIN A · HANDPAN SYNTH · SEED # playable-instrument</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span class="meta-chip" id="noteCountChip">STRIKES 000</span>
+        <span class="meta-chip" id="lastNoteChip">LAST —</span>
+      </div>
+    </header>
+
+    <!-- 乐器本体 -->
+    <section class="instrument-shell" id="instrumentShell">
+      <canvas id="fxCanvas" aria-hidden="true"></canvas>
+
+      <!-- 环形音垫 -->
+      <div class="pad-ring" id="padRing"></div>
+
+      <!-- 中央共鸣腔 -->
+      <div class="resonance-core" id="resonanceCore">
+        <div class="core-inner">
+          <span class="core-note" id="coreNote">♪</span>
+          <span class="core-label">RESONANCE</span>
+        </div>
+        <div class="core-ring ring-1"></div>
+        <div class="core-ring ring-2"></div>
+        <div class="core-ring ring-3"></div>
+      </div>
+    </section>
+
+    <!-- 控制台 -->
+    <section class="console">
+      <div class="console-block">
+        <span class="block-label">SCALE 音阶</span>
+        <div class="seg-group" id="scaleGroup" role="radiogroup"></div>
+      </div>
+      <div class="console-block">
+        <span class="block-label">TIMBRE 音色</span>
+        <div class="seg-group" id="timbreGroup" role="radiogroup"></div>
+      </div>
+      <div class="console-block">
+        <span class="block-label">ECHO 回声</span>
+        <div class="echo-dial">
+          <input type="range" id="echoRange" min="0" max="100" value="38" />
+          <span class="dial-readout" id="echoReadout">38%</span>
+        </div>
+      </div>
+      <div class="console-block">
+        <span class="block-label">AMBIENT 氛围</span>
+        <div class="seg-group palette-group" id="paletteGroup" role="radiogroup"></div>
+      </div>
+    </section>
+
+    <footer class="stage-footer">
+      <p class="hint">
+        <kbd>CLICK</kbd> / <kbd>TOUCH</kbd> 敲击音垫 ·
+        <kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd><kbd>G</kbd><kbd>H</kbd><kbd>J</kbd><kbd>K</kbd>
+        键盘演奏 · <kbd>SPACE</kbd> 随机即兴 · <kbd>R</kbd> 声场重置
+      </p>
+      <p class="credit">maintainer EDEN · zero-build · vanilla web audio</p>
+    </footer>
+  </main>
+
+  <script src="./main.js"></script>
+</body>
+</html>

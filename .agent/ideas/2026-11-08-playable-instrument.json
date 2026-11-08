@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-08",
+  "name": "playable-instrument",
+  "description": "可拖拽敲击演奏的网页乐器",
+  "tagline": "Tap. Drag. Jam.",
+  "interaction": "用户可以将页面上的乐器元素（鼓、琴键、音块）自由拖拽排列，组成自己的演奏台。点击或滑动敲击即可发声，支持连击、长按和滑奏触发不同音效，实时生成节奏与旋律，人人都能即兴演奏。",
+  "directory": "seeds/playable-instrument/",
+  "status": "incubated"
+}
