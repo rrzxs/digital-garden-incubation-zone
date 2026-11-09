@@ -1,0 +1,8 @@
+scroll-cinema - 滚动驱动的电影式叙事生成器
+depth-plunge - 逐层下潜的沉浸长文阅读器
+conveyor-rail - 传送带式横向缩略图流排版工具
+doodle-wall - 手绘涂鸦墙与趣味标注画板
+ticker-studio - 自定义跑马灯滚动字幕生成器
+playable-canvas - 可弹奏发声的音画交互乐器
+crt-grain - CRT噪点故障风图片预览滤镜
+season-drift - 农场四季流转的滚动可视化

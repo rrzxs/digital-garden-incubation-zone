@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-09",
+  "name": "ticker-studio",
+  "description": "自定义跑马灯滚动字幕生成器",
+  "tagline": "Words That Move",
+  "interaction": "用户输入任意文字后，可实时调节滚动速度、方向、字体、配色与背景样式，预览区即时呈现电影级跑马灯效果。支持一键导出为 GIF 或视频，直接分享到社交平台，让每一条消息都动起来。",
+  "directory": "seeds/ticker-studio/",
+  "status": "incubated"
+}

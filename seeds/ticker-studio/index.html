@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticker Studio 滚动字带工作室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- 流体渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="mesh-grain"></div>
+  </div>
+
+  <!-- 粒子流场画布 -->
+  <canvas id="field-canvas" aria-hidden="true"></canvas>
+
+  <main class="stage-wrap">
+
+    <!-- 顶部标题 -->
+    <header class="stage-header">
+      <p class="stage-kicker mono">// KINETIC TICKER LAB</p>
+      <h1 class="stage-title" id="title-text">TICKER STUDIO</h1>
+      <p class="stage-sub">让每一段文字都成为一条有生命的字带 —— 输入、调制、发射。</p>
+    </header>
+
+    <!-- 主舞台 -->
+    <section class="stage glass" id="stage">
+      <canvas id="ticker-canvas"></canvas>
+
+      <!-- 冲击波 HUD -->
+      <div class="stage-hud mono" aria-hidden="true">
+        <span id="hud-mode">MODE·FLOW</span>
+        <span id="hud-fps">60 FPS</span>
+        <span id="hud-chars">0 GLYPHS</span>
+      </div>
+
+      <div class="stage-edge edge-top"></div>
+      <div class="stage-edge edge-bottom"></div>
+    </section>
+
+    <!-- 控制台 -->
+    <section class="console glass">
+
+      <!-- 文本输入 -->
+      <div class="console-row console-input-row">
+        <label class="mono console-label" for="ticker-input">TEXT</label>
+        <div class="input-shell">
+          <input id="ticker-input" type="text" maxlength="64" value="THE QUICK BROWN FOX · 敏捷的棕色狐狸" autocomplete="off" spellcheck="false">
+          <button class="btn btn-primary" id="btn-launch">发射 <span class="arrow">→</span></button>
+        </div>
+      </div>
+
+      <!-- 模式 -->
+      <div class="console-row">
+        <span class="mono console-label">MODE</span>
+        <div class="seg-group" id="mode-group" role="group" aria-label="运动模式">
+          <button class="seg active" data-mode="flow">流动 Flow</button>
+          <button class="seg" data-mode="wave">波浪 Wave</button>
+          <button class="seg" data-mode="pulse">脉冲 Pulse</button>
+          <button class="seg" data-mode="glitch">故障 Glitch</button>
+        </div>
+      </div>
+
+      <!-- 参数 -->
+      <div class="console-row console-sliders">
+        <div class="slider-cell">
+          <label class="mono console-label" for="slider-speed">SPEED <b id="val-speed">1.0×</b></label>
+          <input type="range" id="slider-speed" min="0.2" max="3" step="0.1" value="1">
+        </div>
+        <div class="slider-cell">
+          <label class="mono console-label" for="slider-size">SIZE <b id="val-size">64</b></label>
+          <input type="range" id="slider-size" min="28" max="110" step="1" value="64">
+        </div>
+        <div class="slider-cell">
+          <label class="mono console-label" for="slider-gap">GAP <b id="val-gap">48</b></label>
+          <input type="range" id="slider-gap" min="16" max="140" step="2" value="48">
+        </div>
+        <div class="slider-cell cell-dir">
+          <label class="mono console-label">DIR</label>
+          <button class="btn btn-ghost" id="btn-direction" aria-label="切换方向">→ 向右</button>
+        </div>
+      </div>
+
+      <!-- 主题 + 动作 -->
+      <div class="console-row console-footer">
+        <div class="seg-group theme-group" id="theme-group" aria-label="氛围配色">
+          <button class="seg theme active" data-theme="aurora"><i class="dot"></i>极光</button>
+          <button class="seg theme" data-theme="neon"><i class="dot"></i>霓虹</button>
+          <button class="seg theme" data-theme="dusk"><i class="dot"></i>暮色</button>
+          <button class="seg theme" data-theme="mono"><i class="dot"></i>磷光</button>
+        </div>
+        <div class="footer-actions">
+          <button class="btn btn-ghost" id="btn-scramble">乱码重构</button>
+          <button class="btn btn-ghost" id="btn-pulse">全场脉冲</button>
+        </div>
+      </div>
+
+    </section>
+
+    <footer class="stage-foot mono">
+      CLICK STAGE → SHOCKWAVE · MOVE CURSOR → FORCE FIELD · MAINTAINER: EDEN
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

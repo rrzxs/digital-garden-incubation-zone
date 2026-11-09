@@ -1,6 +1,16 @@
 (function attachSeedConfig(globalScope) {
   const RAW_SEEDS = Object.freeze([
     {
+      title: 'Ticker Studio 滚动字带工作室',
+      description: '沉浸式动态字带微交互体验场。输入文字即刻发射为弹簧-阻尼物理驱动的活体字带，4种运动模式（流动/波浪/脉冲/故障）、光标力场排斥、点击冲击波涟漪、乱码揭示重构与粒子流场，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/ticker-studio/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: '≋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'Thermal Vision 热成像视界',
       description: '沉浸式热成像微交互体验。光标即热源，热扩散场实时流变冷却，自走热体生命信号、十字准星温度随读、3种交互模式（热刷/焰炬/冷凝）、等温线量化与4种光谱配色，流体渐变背景 + 微晶玻璃态容器',
       path: '/seed/seeds/thermal-vision/index.html',
