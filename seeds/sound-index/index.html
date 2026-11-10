@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sound Index 声音索引</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="aurora">
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- === 波形画布 === -->
+  <canvas id="waveCanvas" aria-hidden="true"></canvas>
+
+  <!-- === 主舞台 === -->
+  <main class="stage">
+    <header class="hero glass">
+      <p class="hero-eyebrow mono">// SOUND_INDEX v1.0</p>
+      <h1 class="hero-title">声音索引</h1>
+      <p class="hero-sub">每一枚词条都是一件可演奏的乐器。悬停倾听预览，点击奏响全场——让索引本身成为乐谱。</p>
+      <div class="hero-stats mono">
+        <span>ENTRIES <b id="statCount">08</b></span>
+        <span>SR <b>44100</b></span>
+        <span>CTX <b id="statCtx">IDLE</b></span>
+      </div>
+    </header>
+
+    <section class="index-grid" id="indexGrid" aria-label="声音索引条目"></section>
+
+    <footer class="footer glass">
+      <div class="palette-row" role="group" aria-label="氛围配色">
+        <button class="pal-btn active" data-pal="aurora" title="极光"></button>
+        <button class="pal-btn" data-pal="abyss" title="深渊"></button>
+        <button class="pal-btn" data-pal="ember" title="余烬"></button>
+        <button class="pal-btn" data-pal="mint" title="薄荷"></button>
+      </div>
+      <p class="mono footer-hint">HOVER → PREVIEW · CLICK → PERFORM · [1-8] → STRIKE · SPACE → PULSE ALL</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

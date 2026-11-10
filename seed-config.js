@@ -2364,9 +2364,15 @@
     {
       title: 'Playable Instrument 光奏盘',
       description: '沉浸式可演奏 Web 乐器。8 枚环形微晶玻璃态音垫环绕共鸣腔，Web Audio 双分音合成 + 回声链路实时塑形，4种音阶 × 4种音色 × 键盘/触摸/点击多模态演奏，击打弹性形变、涟漪冲击波、粒子迸射与琶音共鸣，流体渐变背景 + 非线性动效，4种氛围配色',
-      path: '/seed/seeds/playable-instrument/index.html',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
+      title: 'Sound Index 声音索引',
+      description: '沉浸式声音索引乐器。8 枚微晶玻璃态词条即 8 件 Web Audio 合成乐器（拨奏/铃音/持续音/声呐/低频/编钟/故障/泛音），悬停弱音预览、点击涟漪冲击波、键盘击打与 Space 全场级联脉冲，实时频谱辐射与 4 种氛围配色，流体渐变背景 + 非线性动效',
+      path: '/seed/seeds/sound-index/index.html',
       tags: ['Interactive', 'Audio', 'Synth', 'Micro-interaction'],
-      icon: '◎',
+      icon: '∿',
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'

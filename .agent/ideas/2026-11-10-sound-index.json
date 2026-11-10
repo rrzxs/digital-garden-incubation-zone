@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-10",
+  "name": "sound-index",
+  "description": "极简档案风格音频索引播放器",
+  "tagline": "Sound, indexed.",
+  "interaction": "一个纯文字的档案索引界面，每条音频以编号、标题和时长呈现在密集的等宽字体列表中。点击任意条目，该行会展开显示波形与播放控制，同时页面底色微妙地随音频频率明暗呼吸。键盘上下键可在索引间快速导航，空格键即时试听，营造出在声音档案馆中检索的仪式感。",
+  "directory": "seeds/sound-index/",
+  "status": "incubated"
+}
