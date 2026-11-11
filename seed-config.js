@@ -2376,6 +2376,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'VHS Filter Lab 磁带滤镜实验室',
+      description: '沉浸式 VHS 磁带滤镜实验场。逐帧像素级信号管线——磁迹失真带滚动、行抖动撕裂、RGB 色度分离、色彩渗溢、噪点扫描线，PLAY/REW/FF 传输控制、拖拽装入磁带画面、6种磁带工况预设 × 7维信号调校 × 快照导出，光标波纹与点击磁迹撕裂，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/vhs-filter-lab/index.html',
+      tags: ['Interactive', 'Retro', 'Image Processing', 'Micro-interaction'],
+      icon: '⏵',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-11",
+  "name": "vhs-filter-lab",
+  "description": "VHS噪点扫描线复古滤镜生成器",
+  "tagline": "Rewind Reality",
+  "interaction": "用户上传图片或视频后，通过拖动滑块实时调节扫描线密度、噪点强度、色彩偏移和磁带抖动等参数，画面瞬间穿越回90年代的录像带时代。调整过程中可随机触发"TRACKING ERROR"故障效果，最终一键导出带复古滤镜的GIF或图片。",
+  "directory": "seeds/vhs-filter-lab/",
+  "status": "incubated"
+}

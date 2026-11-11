@@ -222,3 +222,4 @@ sound-dial-instrument
 playable-instrument
 ticker-studio
 sound-index
+vhs-filter-lab

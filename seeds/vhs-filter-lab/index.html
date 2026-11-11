@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="magnet">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VHS Filter Lab · 磁带滤镜实验室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 流体渐变背景 -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="bg-blob blob-a"></div>
+    <div class="bg-blob blob-b"></div>
+    <div class="bg-blob blob-c"></div>
+    <div class="bg-blob blob-d"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <div class="app">
+    <!-- ===== Header ===== -->
+    <header class="app-header reveal" style="--reveal-order: 0">
+      <div class="header-left">
+        <div class="logo-mark">
+          <span class="logo-glyph">⏵</span>
+          <span class="logo-rec"></span>
+        </div>
+        <div class="header-titles">
+          <h1>VHS <em>FILTER LAB</em></h1>
+          <p>磁带滤镜实验室 — 把任何画面塞进 1985 年的录像机里</p>
+        </div>
+      </div>
+      <div class="theme-switch" role="group" aria-label="氛围配色">
+        <button class="theme-dot" data-theme-btn="magnet" title="磁带洋红"></button>
+        <button class="theme-dot" data-theme-btn="acid" title="酸性绿"></button>
+        <button class="theme-dot" data-theme-btn="sunset" title="落日橙"></button>
+        <button class="theme-dot" data-theme-btn="arctic" title="北极蓝"></button>
+      </div>
+    </header>
+
+    <!-- ===== Main Stage ===== -->
+    <main class="stage">
+      <!-- 录像机屏幕 -->
+      <section class="screen-shell glass reveal" style="--reveal-order: 1">
+        <div class="screen-bezel">
+          <div class="vhs-screen" id="vhsScreen">
+            <canvas id="vhsCanvas" width="720" height="405"></canvas>
+            <!-- OSD 屏幕文字 -->
+            <div class="osd osd-mode" id="osdMode">PLAY <span class="osd-arrow">▶</span></div>
+            <div class="osd osd-tr">SP&nbsp;&nbsp;CH 03</div>
+            <div class="osd osd-bl" id="osdTimecode">0:00:00</div>
+            <div class="osd osd-br">NOV.11 2026</div>
+            <div class="drop-hint" id="dropHint">松手装入磁带画面</div>
+          </div>
+        </div>
+
+        <!-- 传输控制条 -->
+        <div class="transport">
+          <div class="transport-buttons">
+            <button class="t-btn" id="btnRew" title="倒带">◀◀</button>
+            <button class="t-btn" id="btnPlay" title="播放">▶</button>
+            <button class="t-btn" id="btnPause" title="暂停">❚❚</button>
+            <button class="t-btn" id="btnFf" title="快进">▶▶</button>
+          </div>
+          <div class="transport-actions">
+            <button class="t-action" id="btnGlitch">⚡ 触发故障</button>
+            <button class="t-action" id="btnEject">⏏ 装入画面</button>
+            <button class="t-action" id="btnSnap">⤓ 导出快照</button>
+            <input type="file" id="fileInput" accept="image/*" hidden>
+          </div>
+        </div>
+      </section>
+
+      <!-- 控制面板 -->
+      <aside class="panel glass reveal" style="--reveal-order: 2">
+        <div class="panel-section">
+          <h2 class="panel-title">磁带工况预设</h2>
+          <div class="preset-grid" id="presetGrid">
+            <button class="preset-btn is-active" data-preset="sp">SP 标准</button>
+            <button class="preset-btn" data-preset="worn">旧磁带</button>
+            <button class="preset-btn" data-preset="broadcast">广播级</button>
+            <button class="preset-btn" data-preset="mayhem">故障暴走</button>
+            <button class="preset-btn" data-preset="faded">褪色记忆</button>
+            <button class="preset-btn" data-preset="b/w">单色监视</button>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 class="panel-title">信号调校</h2>
+          <div class="slider-rows" id="sliderRows">
+            <label class="s-row">
+              <span class="s-name">噪点颗粒 <b>NOISE</b></span>
+              <input type="range" min="0" max="100" value="26" data-param="noise">
+              <span class="s-val" data-val="noise">26</span>
+            </label>
+            <label class="s-row">
+              <span class="s-name">色度分离 <b>CHROMA</b></span>
+              <input type="range" min="0" max="100" value="34" data-param="chroma">
+              <span class="s-val" data-val="chroma">34</span>
+            </label>
+            <label class="s-row">
+              <span class="s-name">磁迹失真 <b>TRACKING</b></span>
+              <input type="range" min="0" max="100" value="42" data-param="track">
+              <span class="s-val" data-val="track">42</span>
+            </label>
+            <label class="s-row">
+              <span class="s-name">行抖动 <b>JITTER</b></span>
+              <input type="range" min="0" max="100" value="18" data-param="jitter">
+              <span class="s-val" data-val="jitter">18</span>
+            </label>
+            <label class="s-row">
+              <span class="s-name">扫描线 <b>SCANLINE</b></span>
+              <input type="range" min="0" max="100" value="50" data-param="scan">
+              <span class="s-val" data-val="scan">50</span>
+            </label>
+            <label class="s-row">
+              <span class="s-name">色彩饱和 <b>SATURATION</b></span>
+              <input type="range" min="0" max="200" value="118" data-param="sat">
+              <span class="s-val" data-val="sat">118</span>
+            </label>
+            <label class="s-row">
+              <span class="s-name">色彩渗溢 <b>BLEED</b></span>
+              <input type="range" min="0" max="100" value="30" data-param="bleed">
+              <span class="s-val" data-val="bleed">30</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <h2 class="panel-title">操作提示</h2>
+          <ul class="hints">
+            <li><i>◍</i> 光标掠过屏幕会激起信号波纹</li>
+            <li><i>◈</i> 点击屏幕触发磁迹撕裂</li>
+            <li><i>⏏</i> 支持拖拽图片直接装入磁带</li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="app-footer reveal" style="--reveal-order: 3">
+      <span class="footer-mono">TRACKING ▮▮▮▮▯ · HEAD CLEANING OK · SP MODE</span>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
