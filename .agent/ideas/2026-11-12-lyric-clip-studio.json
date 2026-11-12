@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-12",
+  "name": "lyric-clip-studio",
+  "description": "依节拍自动切分的竖屏歌词视频生成器",
+  "tagline": "Clip the beat.",
+  "interaction": "粘贴歌词并上传音频后，系统自动检测节拍点，将歌词智能切分为卡点片段并生成竖屏时间轴。用户可在预览界面拖拽微调每句歌词的起止与样式，实时查看与音乐同步的效果，一键导出适配短视频平台的竖屏歌词视频。",
+  "directory": "seeds/lyric-clip-studio/",
+  "status": "incubated"
+}

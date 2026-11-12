@@ -223,3 +223,4 @@ playable-instrument
 ticker-studio
 sound-index
 vhs-filter-lab
+lyric-clip-studio

@@ -2386,6 +2386,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Lyric Clip Studio 歌词片段工作室',
+      description: '沉浸式歌词卡片锻造工作室。输入歌词与曲名实时铸造微晶玻璃态歌词卡——4种视觉模板（光轨/蒙太奇/终端/幕间）× 4种氛围配色，字符级级联揭示、3D 倾斜跟随、点击涟漪与 1080×1440 PNG 导出，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/lyric-clip-studio/index.html',
+      tags: ['Interactive', 'Typography', 'Micro-interaction', 'PNG Export'],
+      icon: '♪',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

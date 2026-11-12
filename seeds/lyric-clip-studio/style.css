@@ -1,0 +1,374 @@
+/* ============================================================
+   Lyric Clip Studio · 歌词片段工作室
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ============================================================ */
+
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-brd: rgba(255, 255, 255, 0.12);
+  --ink: #f2eeff;
+  --ink-dim: rgba(242, 238, 255, 0.55);
+  --page-bg: #0b0a14;
+}
+
+/* --- 氛围配色变量（页面 + 卡片共用） --- */
+body[data-mood="violet"] { --m1: #7c5cff; --m2: #c56bff; --m3: #4dd0ff; --page-bg: #100c1e; }
+body[data-mood="amber"]  { --m1: #ff8a3d; --m2: #ffcb5e; --m3: #ff5e7e; --page-bg: #180e08; }
+body[data-mood="teal"]   { --m1: #2dd4bf; --m2: #4f9dff; --m3: #9dffef; --page-bg: #06131a; }
+body[data-mood="rose"]   { --m1: #ff5d8f; --m2: #b892ff; --m3: #ffc2d4; --page-bg: #190b14; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  font-family: 'Inter', 'Outfit', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--page-bg);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 1.2s var(--ease-out);
+}
+
+/* === 流体渐变背景 === */
+.ambient-bg {
+  position: fixed; inset: 0;
+  z-index: -1; overflow: hidden;
+  transition: filter 1.2s var(--ease-out);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  will-change: transform;
+}
+.blob-a { width: 55vmax; height: 55vmax; left: -12vmax; top: -18vmax; background: var(--m1); animation: drift-a 26s ease-in-out infinite alternate; }
+.blob-b { width: 48vmax; height: 48vmax; right: -14vmax; top: 22vh; background: var(--m2); animation: drift-b 32s ease-in-out infinite alternate; }
+.blob-c { width: 40vmax; height: 40vmax; left: 28vw; bottom: -22vmax; background: var(--m3); animation: drift-c 38s ease-in-out infinite alternate; opacity: 0.35; }
+
+@keyframes drift-a { to { transform: translate(14vw, 10vh) scale(1.15); } }
+@keyframes drift-b { to { transform: translate(-12vw, -14vh) scale(0.9); } }
+@keyframes drift-c { to { transform: translate(-10vw, -12vh) scale(1.2); } }
+
+.grain {
+  position: absolute; inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* === 舞台骨架 === */
+.stage {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 48px 28px 72px;
+}
+
+.masthead { text-align: center; margin-bottom: 40px; }
+.masthead-eyebrow {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; letter-spacing: 0.42em;
+  color: var(--ink-dim); text-transform: uppercase;
+}
+.masthead-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(30px, 4.4vw, 46px);
+  font-weight: 600; letter-spacing: 0.04em;
+  margin: 10px 0 6px;
+}
+.masthead-sub { font-size: 14px; color: var(--ink-dim); font-weight: 300; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 36px;
+  align-items: start;
+}
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+/* === 微晶玻璃态 === */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  border: 1px solid var(--glass-brd);
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* === 控制面板 === */
+.panel { padding: 26px 24px; }
+
+.panel-heading {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin: 22px 0 10px;
+}
+.panel-heading:first-child { margin-top: 0; }
+
+.lyric-input {
+  width: 100%;
+  resize: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--ink);
+  font-family: inherit; font-size: 15px;
+  padding: 12px 14px; line-height: 1.7;
+  transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+.lyric-input:focus {
+  outline: none;
+  border-color: var(--m1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--m1) 22%, transparent);
+}
+
+.meta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field-label { font-size: 11px; color: var(--ink-dim); letter-spacing: 0.12em; }
+.field-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: var(--ink);
+  font-family: inherit; font-size: 13px;
+  padding: 9px 11px;
+  transition: border-color 0.4s var(--ease-out);
+}
+.field-input:focus { outline: none; border-color: var(--m1); }
+
+/* --- 模板 & 配色芯片 --- */
+.tpl-grid, .mood-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media (max-width: 480px) { .tpl-grid, .mood-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.tpl-chip, .mood-chip {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--ink-dim);
+  font-family: inherit; font-size: 12px;
+  padding: 10px 4px; cursor: pointer;
+  transition: all 0.45s var(--ease-out);
+}
+.tpl-chip:hover, .mood-chip:hover {
+  transform: translateY(-3px);
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.09);
+}
+.tpl-chip.is-active, .mood-chip.is-active {
+  color: var(--ink);
+  border-color: var(--m1);
+  background: color-mix(in srgb, var(--m1) 20%, transparent);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--m1) 30%, transparent);
+}
+.tpl-glyph { font-family: 'Share Tech Mono', monospace; font-size: 15px; }
+
+.mood-dot { width: 14px; height: 14px; border-radius: 50%; }
+.dot-violet { background: linear-gradient(135deg, #7c5cff, #c56bff); }
+.dot-amber  { background: linear-gradient(135deg, #ff8a3d, #ffcb5e); }
+.dot-teal   { background: linear-gradient(135deg, #2dd4bf, #4f9dff); }
+.dot-rose   { background: linear-gradient(135deg, #ff5d8f, #b892ff); }
+
+/* --- 对齐 + 字号 --- */
+.twin-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; margin-top: 22px; }
+.align-row { display: flex; gap: 6px; }
+.align-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px; color: var(--ink-dim);
+  font-family: inherit; font-size: 12px;
+  padding: 7px 12px; cursor: pointer;
+  transition: all 0.4s var(--ease-out);
+}
+.align-chip:hover { color: var(--ink); }
+.align-chip.is-active { color: var(--ink); border-color: var(--m1); background: color-mix(in srgb, var(--m1) 20%, transparent); }
+
+.scale-field { display: flex; flex-direction: column; gap: 5px; flex: 1; max-width: 130px; }
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 3px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--m1), var(--m2));
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 15px; height: 15px; border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s var(--ease-out);
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.25); }
+
+/* --- 动作按钮 --- */
+.action-row { display: flex; gap: 10px; margin-top: 26px; }
+.btn {
+  flex: 1;
+  font-family: inherit; font-size: 14px; font-weight: 500;
+  border-radius: 13px; padding: 13px 10px; cursor: pointer;
+  transition: all 0.45s var(--ease-out);
+}
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--ink);
+}
+.btn-ghost:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.11); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--m1), var(--m2));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--m1) 38%, transparent);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px color-mix(in srgb, var(--m1) 50%, transparent); }
+.btn:active { transform: translateY(0) scale(0.97); }
+
+.panel-foot {
+  margin-top: 18px; font-size: 11px;
+  color: var(--ink-dim); text-align: center;
+  min-height: 17px;
+  transition: color 0.4s var(--ease-out);
+}
+
+/* === 预览舞台 === */
+.preview-zone { display: flex; flex-direction: column; align-items: center; gap: 14px; perspective: 1200px; }
+
+.card-tilt { will-change: transform; transition: transform 0.15s linear; }
+
+.clip-card {
+  position: relative;
+  width: min(420px, 88vw);
+  aspect-ratio: 3 / 4;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    radial-gradient(120% 90% at 15% 0%, color-mix(in srgb, var(--m1) 42%, transparent), transparent 60%),
+    radial-gradient(120% 100% at 100% 100%, color-mix(in srgb, var(--m2) 34%, transparent), transparent 62%),
+    linear-gradient(160deg, rgba(20, 16, 34, 0.72), rgba(10, 8, 20, 0.86));
+  transition: border-color 0.6s var(--ease-out);
+}
+.clip-card.pop { animation: card-pop 0.7s var(--ease-out); }
+@keyframes card-pop {
+  0% { transform: scale(0.92); opacity: 0.4; }
+  60% { transform: scale(1.02); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.card-inner { position: absolute; inset: 0; padding: 34px 32px; display: flex; flex-direction: column; }
+
+/* --- 字符揭示动画 --- */
+.char {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  transform: translateY(14px) rotate(4deg);
+  filter: blur(6px);
+  animation: char-in 0.7s var(--ease-out) forwards;
+}
+@keyframes char-in {
+  to { opacity: 1; transform: translateY(0) rotate(0deg); filter: blur(0); }
+}
+
+/* --- 卡片内通用元素 --- */
+.lyric-body {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 0.35em;
+  font-size: calc(24px * var(--card-scale, 1));
+  font-weight: 500; line-height: 1.55;
+  letter-spacing: 0.02em;
+  transition: font-size 0.5s var(--ease-out), text-align 0.5s var(--ease-out);
+}
+.lyric-line { display: block; }
+.card-meta {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  font-size: 11px; letter-spacing: 0.14em;
+  color: var(--ink-dim);
+  opacity: 0; animation: char-in 0.8s var(--ease-out) 0.5s forwards;
+}
+.card-meta .meta-song { color: var(--ink); font-weight: 500; }
+
+/* --- 模板：光轨 --- */
+[data-tpl="tracklight"] .lyric-body { text-align: left; }
+[data-tpl="tracklight"] .card-inner { border-left: 4px solid; border-image: linear-gradient(180deg, var(--m1), var(--m2)) 1; padding-left: 28px; }
+[data-tpl="tracklight"] .card-meta { justify-content: flex-start; gap: 16px; }
+
+/* --- 模板：蒙太奇 --- */
+[data-tpl="montage"] .lyric-body { text-align: left; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: calc(30px * var(--card-scale, 1)); line-height: 1.4; }
+[data-tpl="montage"] .lyric-body::before {
+  content: '“';
+  display: block;
+  font-size: 84px; line-height: 0.6;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--m1), var(--m2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin-bottom: 18px;
+}
+
+/* --- 模板：终端 --- */
+[data-tpl="terminal"] .card-inner { font-family: 'Share Tech Mono', monospace; padding: 0; }
+[data-tpl="terminal"] .term-head {
+  display: flex; gap: 7px; align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 12px; color: var(--ink-dim); letter-spacing: 0.1em;
+}
+[data-tpl="terminal"] .term-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--m1); box-shadow: 0 0 8px var(--m1); }
+[data-tpl="terminal"] .term-dot:nth-child(2) { background: var(--m2); box-shadow: 0 0 8px var(--m2); }
+[data-tpl="terminal"] .term-dot:nth-child(3) { background: var(--m3); box-shadow: 0 0 8px var(--m3); }
+[data-tpl="terminal"] .term-body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 28px; position: relative; }
+[data-tpl="terminal"] .lyric-body { font-family: 'Share Tech Mono', monospace; font-weight: 400; font-size: calc(21px * var(--card-scale, 1)); }
+[data-tpl="terminal"] .lyric-line::before { content: '> '; color: var(--m2); }
+[data-tpl="terminal"] .term-body::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 3px);
+}
+[data-tpl="terminal"] .term-foot { padding: 14px 28px; }
+
+/* --- 模板：幕间 --- */
+[data-tpl="interlude"] .lyric-body { text-align: center; font-weight: 300; font-size: calc(26px * var(--card-scale, 1)); letter-spacing: 0.08em; }
+[data-tpl="interlude"] .card-inner::before,
+[data-tpl="interlude"] .card-inner::after {
+  content: ''; position: absolute; left: 0; right: 0; height: 34px;
+  background: rgba(0, 0, 0, 0.55);
+}
+[data-tpl="interlude"] .card-inner::before { top: 0; }
+[data-tpl="interlude"] .card-inner::after { bottom: 0; }
+[data-tpl="interlude"] .card-meta { justify-content: center; letter-spacing: 0.3em; }
+
+/* --- 涟漪层 --- */
+.ripple-layer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: inherit; }
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--m3) 70%, transparent);
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple-out 0.9s var(--ease-out) forwards;
+}
+@keyframes ripple-out {
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+.preview-caption {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; letter-spacing: 0.34em;
+  color: var(--ink-dim);
+}
+
+/* --- 模板居中修正（卡片 data-align） --- */
+.clip-card[data-align="center"] .lyric-body { text-align: center !important; align-items: center; }
+.clip-card[data-align="center"][data-tpl="terminal"] .lyric-line::before { content: ''; }
+
+/* --- Toast 提示态 --- */
+.panel-foot.flash { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01s !important; transition-duration: 0.01s !important; }
+}

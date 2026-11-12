@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lyric Clip Studio · 歌词片段工作室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-mood="violet" data-tpl="tracklight">
+
+  <!-- === 流体渐变背景 === -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="grain"></div>
+  </div>
+
+  <main class="stage">
+
+    <!-- === 顶部标题 === -->
+    <header class="masthead">
+      <p class="masthead-eyebrow">DIGITAL GARDEN · SEED</p>
+      <h1 class="masthead-title">歌词片段工作室</h1>
+      <p class="masthead-sub">Lyric Clip Studio — 把一句歌词，铸成一张值得收藏的声音切片</p>
+    </header>
+
+    <div class="layout">
+
+      <!-- === 左侧：控制面板（微晶玻璃态） === -->
+      <section class="panel glass">
+
+        <h2 class="panel-heading">歌词片段</h2>
+        <textarea class="lyric-input" id="lyricInput" rows="4" maxlength="140" spellcheck="false">把晚风折进信封里
+寄给还没抵达的夏天</textarea>
+
+        <div class="meta-row">
+          <label class="field">
+            <span class="field-label">曲名</span>
+            <input class="field-input" id="songInput" type="text" maxlength="24" value="未寄出的夏" spellcheck="false">
+          </label>
+          <label class="field">
+            <span class="field-label">歌者</span>
+            <input class="field-input" id="artistInput" type="text" maxlength="24" value="匿名海豚" spellcheck="false">
+          </label>
+        </div>
+
+        <h2 class="panel-heading">视觉模板</h2>
+        <div class="tpl-grid" id="tplGrid">
+          <button class="tpl-chip" data-tpl="tracklight"><span class="tpl-glyph">▎</span><span>光轨</span></button>
+          <button class="tpl-chip" data-tpl="montage"><span class="tpl-glyph">“</span><span>蒙太奇</span></button>
+          <button class="tpl-chip" data-tpl="terminal"><span class="tpl-glyph">&gt;_</span><span>终端</span></button>
+          <button class="tpl-chip" data-tpl="interlude"><span class="tpl-glyph">▭</span><span>幕间</span></button>
+        </div>
+
+        <h2 class="panel-heading">氛围配色</h2>
+        <div class="mood-grid" id="moodGrid">
+          <button class="mood-chip" data-mood="violet"><span class="mood-dot dot-violet"></span><span>紫夜</span></button>
+          <button class="mood-chip" data-mood="amber"><span class="mood-dot dot-amber"></span><span>落日</span></button>
+          <button class="mood-chip" data-mood="teal"><span class="mood-dot dot-teal"></span><span>深海</span></button>
+          <button class="mood-chip" data-mood="rose"><span class="mood-dot dot-rose"></span><span>玫瑰</span></button>
+        </div>
+
+        <div class="twin-row">
+          <div class="align-row" id="alignRow">
+            <button class="align-chip is-active" data-align="left">左对齐</button>
+            <button class="align-chip" data-align="center">居中</button>
+          </div>
+          <label class="scale-field">
+            <span class="field-label">字号</span>
+            <input type="range" id="scaleRange" min="0.8" max="1.3" step="0.05" value="1">
+          </label>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-ghost" id="shuffleBtn">换一句 ♪</button>
+          <button class="btn btn-primary" id="exportBtn">导出 PNG ↓</button>
+        </div>
+
+        <p class="panel-foot" id="toast">在卡片上移动光标可倾斜视角 · 点击卡片触发涟漪</p>
+      </section>
+
+      <!-- === 右侧：预览舞台 === -->
+      <section class="preview-zone">
+        <div class="card-tilt" id="cardTilt">
+          <article class="clip-card glass" id="clipCard" data-align="left">
+            <div class="card-inner" id="cardInner"></div>
+            <div class="ripple-layer" id="rippleLayer"></div>
+          </article>
+        </div>
+        <p class="preview-caption"> LIVE PREVIEW · 1080 × 1440 EXPORT</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
