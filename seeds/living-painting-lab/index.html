@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Living Painting Lab · 活体绘画实验室</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+
+  <!-- 流体网格渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="mesh-blob blob-a"></div>
+    <div class="mesh-blob blob-b"></div>
+    <div class="mesh-blob blob-c"></div>
+    <div class="mesh-noise"></div>
+  </div>
+
+  <main class="stage">
+
+    <!-- 顶部标题 -->
+    <header class="masthead reveal">
+      <div class="masthead-eyebrow">
+        <span class="pulse-dot"></span>
+        <span>LIVING&nbsp;PAINTING&nbsp;LAB</span>
+        <span class="eyebrow-sep">/</span>
+        <span class="mono" id="blob-counter">0000&nbsp;pigments</span>
+      </div>
+      <h1 class="masthead-title">活体绘画实验室</h1>
+      <p class="masthead-sub">画下的每一笔都是活的——颜料粒子在噪声流场中呼吸、漂移、彼此纠缠。</p>
+    </header>
+
+    <!-- 画布 + 控制台布局 -->
+    <section class="lab-shell reveal" style="--reveal-delay: 120ms">
+
+      <!-- 微晶玻璃态画框 -->
+      <div class="canvas-frame" id="canvas-frame">
+        <canvas id="paint-canvas"></canvas>
+        <div class="frame-glint" aria-hidden="true"></div>
+        <div class="hud hud-topleft mono" id="hud-mode">MODE&nbsp;//&nbsp;FLOW</div>
+        <div class="hud hud-bottomright mono" id="hud-flow">FLOW&nbsp;0.60&nbsp;·&nbsp;DRIFT&nbsp;ON</div>
+        <div class="empty-hint" id="empty-hint">
+          <span class="hint-ring"></span>
+          <span>在此落笔 · 笔触将获得生命</span>
+        </div>
+      </div>
+
+      <!-- 微晶玻璃态控制台 -->
+      <aside class="console">
+
+        <div class="console-block">
+          <div class="block-label mono">01&nbsp;//&nbsp;氛围配色</div>
+          <div class="theme-row" id="theme-row">
+            <button class="theme-chip active" data-theme="aurora" style="--chip: linear-gradient(135deg,#7af0c3,#4aa8ff)" title="Aurora 极光"></button>
+            <button class="theme-chip" data-theme="ember" style="--chip: linear-gradient(135deg,#ffb45a,#ff5e7e)" title="Ember 燃焰"></button>
+            <button class="theme-chip" data-theme="abyss" style="--chip: linear-gradient(135deg,#3a4a8f,#0e1440)" title="Abyss 深渊"></button>
+            <button class="theme-chip" data-theme="orchid" style="--chip: linear-gradient(135deg,#e29aff,#8f7bff)" title="Orchid 幽兰"></button>
+          </div>
+        </div>
+
+        <div class="console-block">
+          <div class="block-label mono">02&nbsp;//&nbsp;颜料生命模式</div>
+          <div class="mode-grid" id="mode-grid">
+            <button class="mode-btn active" data-mode="flow">流场<br><span class="mono">FLOW</span></button>
+            <button class="mode-btn" data-mode="swirl">涡旋<br><span class="mono">SWIRL</span></button>
+            <button class="mode-btn" data-mode="pulse">脉动<br><span class="mono">PULSE</span></button>
+            <button class="mode-btn" data-mode="freeze">凝滞<br><span class="mono">FREEZE</span></button>
+          </div>
+        </div>
+
+        <div class="console-block">
+          <div class="block-label mono">03&nbsp;//&nbsp;物理参数</div>
+
+          <div class="param-row">
+            <label for="slider-life">生命强度 <span class="mono" id="val-life">0.60</span></label>
+            <input type="range" id="slider-life" min="0" max="100" value="60">
+          </div>
+
+          <div class="param-row">
+            <label for="slider-brush">笔触粒径 <span class="mono" id="val-brush">14</span></label>
+            <input type="range" id="slider-brush" min="4" max="40" value="14">
+          </div>
+
+          <div class="param-row">
+            <label for="slider-trail">拖尾余韵 <span class="mono" id="val-trail">0.86</span></label>
+            <input type="range" id="slider-trail" min="50" max="99" value="86">
+          </div>
+
+          <div class="param-row">
+            <label for="check-drift"><span class="checkbox-face" id="check-face"></span>颜料自走漂移</label>
+            <input type="checkbox" id="check-drift" checked hidden>
+          </div>
+        </div>
+
+        <div class="console-block console-actions">
+          <div class="block-label mono">04&nbsp;//&nbsp;实验操作</div>
+          <div class="action-row">
+            <button class="action-btn primary" id="btn-pulse">全场脉冲</button>
+            <button class="action-btn" id="btn-clear">清空画布</button>
+            <button class="action-btn" id="btn-seed">随机播种</button>
+            <button class="action-btn" id="btn-export">导出 PNG</button>
+          </div>
+          <p class="console-tip">拖拽绘画 · 点击画布内任意处施加冲击波 · 光标即力场</p>
+        </div>
+
+      </aside>
+    </section>
+
+    <footer class="footnote mono reveal" style="--reveal-delay: 240ms">
+      SEED&nbsp;//&nbsp;living-painting-lab&nbsp;·&nbsp;MAINTAINER&nbsp;EDEN&nbsp;·&nbsp;cubic-bezier(0.16,1,0.3,1)
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

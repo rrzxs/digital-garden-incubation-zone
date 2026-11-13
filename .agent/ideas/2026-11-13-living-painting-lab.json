@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-13",
+  "name": "living-painting-lab",
+  "description": "名画活化风格动效生成器",
+  "tagline": "Where dead paintings learn to breathe",
+  "interaction": "用户选择或上传一幅名画（如《星月夜》《神奈川冲浪里》），系统解析其笔触与色彩分布，生成流动、旋涡、涟漪等风格化动效。用户可通过滑块调节"活化强度"、笔触速度与方向，或用鼠标在画布上涂抹，为局部注入专属运动——让每一幅静止的杰作在你手中苏醒。",
+  "directory": "seeds/living-painting-lab/",
+  "status": "incubated"
+}

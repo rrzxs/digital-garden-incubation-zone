@@ -2400,6 +2400,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Living Painting Lab 活体绘画实验室',
+      description: '沉浸式活体绘画体验场。笔触即刻转化为有呼吸节律的发光颜料粒子，在噪声流场中漂移纠缠——4种生命模式（流场/涡旋/脉动/凝滞）、光标力场、点击冲击波、随机播种、拖尾余韵与 PNG 导出，流体渐变背景 + 微晶玻璃态控制台 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/living-painting-lab/index.html',
+      tags: ['Interactive', 'Painting', 'Flow Field', 'Micro-interaction'],
+      icon: '❋',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

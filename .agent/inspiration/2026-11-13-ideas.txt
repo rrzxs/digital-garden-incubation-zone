@@ -1,0 +1,7 @@
+living-painting-lab - 名画活化风格动效生成器
+floor-dive-explorer - 楼层逐层下潜滚动探索长页
+holo-tilt-forge - 指针响应全息卡效果工作台
+orbit-intercept-sim - 轨道拦截轨迹预测互动模拟
+renovation-flip-compare - 室内装修前后拖动对比查看器
+style-specimen-index - 设计风格标本卡检索索引库
+composition-archive-desk - 乐谱手稿档案索引播放台
