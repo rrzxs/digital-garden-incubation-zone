@@ -1,0 +1,7 @@
+lyric-beat-cutter - 音乐节拍自动切分歌词竖屏短片生成器
+vhs-signal-viewer - VHS噪点扫描线复古影像滤镜播放器
+archive-index-player - 极简黑白色块风格音乐档案索引播放器
+doodle-wall-studio - 手绘涂鸦墙互动共创画板
+chrome-letter-lab - 全息彩虹镀铬3D文字效果生成器
+scroll-motion-scene - 滚动驱动的沉浸式叙事画布
+holo-tilt-card-forge - 指针感应3D镭射反光卡片定制器

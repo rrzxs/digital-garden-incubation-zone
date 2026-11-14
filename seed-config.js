@@ -2410,6 +2410,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Archive Index Player 档案索引播放器',
+      description: '沉浸式档案索引播放体验。卷宗即唱片——12份虚构档案条目乱码揭示、波形示波播放包络、可拖拽进度跳转、卷轴旋转装饰、Web Audio 索引音色、随机抽卷与AUTO连续播放，点击涟漪冲击波与粒子流场，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/archive-index-player/index.html',
+      tags: ['Interactive', 'Archive', 'Micro-interaction', 'Web Audio'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

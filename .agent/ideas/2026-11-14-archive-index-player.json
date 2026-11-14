@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-14",
+  "name": "archive-index-player",
+  "description": "极简黑白色块风格音乐档案索引播放器",
+  "tagline": "Index. Play. Repeat.",
+  "interaction": "所有曲目以黑白方块的索引网格呈现，每个色块即一首档案曲目。悬停时色块翻转显示元数据，点击即播放——方块随音频脉冲明暗呼吸，成为唯一的视觉播放器。整个索引本身就是播放列表，播放进度以方块填充的比例呈现。",
+  "directory": "seeds/archive-index-player/",
+  "status": "incubated"
+}
