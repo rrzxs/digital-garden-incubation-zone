@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tape Archive Ledger · 磁带档案账本</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="aurora">
+  <!-- === 流体渐变背景 === -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="bg-grain"></div>
+  </div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- === 主题切换 === -->
+  <div class="theme-dock glass" role="group" aria-label="氛围配色">
+    <button class="theme-dot" data-theme="aurora" title="极光" aria-label="极光配色"></button>
+    <button class="theme-dot" data-theme="ember" title="熔金" aria-label="熔金配色"></button>
+    <button class="theme-dot" data-theme="abyss" title="深渊" aria-label="深渊配色"></button>
+    <button class="theme-dot" data-theme="orchid" title="幽兰" aria-label="幽兰配色"></button>
+  </div>
+
+  <!-- === 主舞台 === -->
+  <main class="stage">
+    <!-- 头部 -->
+    <header class="stage-header">
+      <div class="tape-sigil" aria-hidden="true">
+        <span class="reel reel-l"><span class="reel-hub"></span></span>
+        <span class="tape-window"></span>
+        <span class="reel reel-r"><span class="reel-hub"></span></span>
+      </div>
+      <h1 class="app-title" id="app-title" data-text="TAPE ARCHIVE LEDGER">TAPE ARCHIVE LEDGER</h1>
+      <p class="app-sub">磁带档案账本 · 每一段记忆，都值得倒带重听</p>
+    </header>
+
+    <!-- 走带机芯 · Deck -->
+    <section class="deck glass" id="deck">
+      <div class="deck-reels" aria-hidden="true">
+        <div class="deck-reel" id="reel-left">
+          <div class="spokes"></div>
+          <div class="tape-coil" id="coil-left"></div>
+        </div>
+        <div class="deck-tape-path">
+          <div class="tape-strip" id="tape-strip">
+            <span class="tape-shine"></span>
+          </div>
+        </div>
+        <div class="deck-reel" id="reel-right">
+          <div class="spokes"></div>
+          <div class="tape-coil" id="coil-right"></div>
+        </div>
+      </div>
+
+      <div class="deck-readout">
+        <div class="counter-block">
+          <span class="counter-label">COUNTER</span>
+          <span class="counter-value mono" id="counter-value">000000</span>
+        </div>
+        <div class="now-label">
+          <span class="now-title" id="now-title">NO TAPE LOADED</span>
+          <span class="now-meta mono" id="now-meta">— 请从档案架选取一盘磁带 —</span>
+        </div>
+        <div class="counter-block align-right">
+          <span class="counter-label">REMAIN</span>
+          <span class="counter-value mono" id="remain-value">--:--</span>
+        </div>
+      </div>
+
+      <div class="waveform" id="waveform" aria-hidden="true"></div>
+
+      <div class="deck-controls">
+        <button class="deck-btn magnetic" id="btn-rew" title="倒带 REW" aria-label="倒带">
+          <span class="btn-glow"></span>◀◀
+        </button>
+        <button class="deck-btn deck-btn-main magnetic" id="btn-play" title="播放 / 暂停" aria-label="播放或暂停">
+          <span class="btn-glow"></span>▶
+        </button>
+        <button class="deck-btn magnetic" id="btn-ff" title="快进 FF" aria-label="快进">
+          <span class="btn-glow"></span>▶▶
+        </button>
+        <button class="deck-btn magnetic" id="btn-eject" title="弹出磁带" aria-label="弹出磁带">
+          <span class="btn-glow"></span>⏏
+        </button>
+      </div>
+    </section>
+
+    <!-- 控制台 -->
+    <section class="console glass">
+      <div class="stats-rail">
+        <div class="stat-chip">
+          <span class="chip-label">馆藏 TAPES</span>
+          <span class="chip-value mono" id="stat-count">0</span>
+        </div>
+        <div class="stat-chip">
+          <span class="chip-label">总时长 DURATION</span>
+          <span class="chip-value mono" id="stat-duration">00:00</span>
+        </div>
+        <div class="stat-chip">
+          <span class="chip-label">已归档 ARCHIVED</span>
+          <span class="chip-value mono" id="stat-archived">0</span>
+        </div>
+      </div>
+      <div class="console-actions">
+        <button class="btn-ghost magnetic" id="btn-shuffle" title="随机倒带一盘">
+          <span class="btn-glow"></span>⤨ 随机倒带
+        </button>
+        <button class="btn-primary magnetic" id="btn-new" title="录制新磁带">
+          <span class="btn-glow"></span>● REC 录制
+        </button>
+      </div>
+    </section>
+
+    <!-- 档案架 -->
+    <section class="archive-scroll" id="archive-scroll">
+      <div class="archive-list" id="archive-list"></div>
+      <div class="archive-empty" id="archive-empty">
+        <div class="empty-sigil">⌾</div>
+        <p>档案架空空如也，录下第一盘磁带吧</p>
+      </div>
+    </section>
+
+    <footer class="stage-footer mono">
+      TAPE·ARCHIVE·LEDGER v1.0 — analog memory, digital glass
+    </footer>
+  </main>
+
+  <!-- === 录制弹窗 === -->
+  <div class="modal-veil" id="modal-veil" aria-hidden="true">
+    <div class="modal glass" id="entry-modal" role="dialog" aria-modal="true" aria-label="录制新磁带">
+      <button class="modal-close magnetic" id="modal-close" aria-label="关闭">✕</button>
+      <h2 class="modal-title">录制新磁带</h2>
+
+      <label class="field">
+        <span class="field-label">磁带标目 LABEL</span>
+        <input type="text" id="input-label" placeholder="例如：深夜电台 · 第 7 期" maxlength="28" autocomplete="off" />
+      </label>
+
+      <div class="field">
+        <span class="field-label">声轨类别 TRACK</span>
+        <div class="category-grid" id="category-grid"></div>
+      </div>
+
+      <div class="field-inline">
+        <label class="field">
+          <span class="field-label">时长(分) MINUTES</span>
+          <input type="range" id="input-minutes" class="range" min="1" max="90" value="24" />
+          <span class="range-readout mono" id="minutes-readout">24 min</span>
+        </label>
+        <label class="field">
+          <span class="field-label">基调 MOOD</span>
+          <select id="input-mood" class="select">
+            <option value="warm">暖砂 Warm</option>
+            <option value="cool">冷泉 Cool</option>
+            <option value="noir">夜 Noir</option>
+            <option value="dream">梦境 Dream</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-ghost magnetic" id="btn-cancel">
+          <span class="btn-glow"></span>放弃
+        </button>
+        <button class="btn-primary magnetic" id="btn-confirm">
+          <span class="btn-glow"></span>⏏ 入架归档
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- === Toast === -->
+  <div class="toast-veil" id="toast-veil" aria-live="polite"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

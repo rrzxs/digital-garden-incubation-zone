@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-15",
+  "name": "tape-archive-ledger",
+  "description": "卡带式音乐档案编目索引播放器",
+  "tagline": "Play the Ledger",
+  "interaction": "一个复古图书馆卡片柜式的音乐档案索引界面，每张卡片对应一盘虚拟卡带。用户像查目录一样抽卡、翻页，卡片抽出后自动展开为可旋转的卡带播放器。拖动卡带左右卷轴可快进/回卷，进度以磁带长度实时可视化呈现。",
+  "directory": "seeds/tape-archive-ledger/",
+  "status": "incubated"
+}

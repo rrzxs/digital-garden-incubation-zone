@@ -11,6 +11,16 @@
       category: 'animation'
     },
     {
+      title: 'Tape Archive Ledger 磁带档案账本',
+      description: '沉浸式磁带档案账本。每份记忆录制为一盘磁带，入舱由走带机芯驱动播放——卷轴随带卷直径变速旋转、机械计数器滚动、种子驱动波形呼吸律动，录制/倒带/消磁/随机倒带，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/tape-archive-ledger/index.html',
+      tags: ['Interactive', 'Retro', 'Micro-interaction', 'Animation'],
+      icon: '⏿',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
+    },
+    {
       title: 'Thermal Vision 热成像视界',
       description: '沉浸式热成像微交互体验。光标即热源，热扩散场实时流变冷却，自走热体生命信号、十字准星温度随读、3种交互模式（热刷/焰炬/冷凝）、等温线量化与4种光谱配色，流体渐变背景 + 微晶玻璃态容器',
       path: '/seed/seeds/thermal-vision/index.html',
