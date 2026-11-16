@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Guardian Stage 守护者舞台 - 沉浸式 AI 守护微交互体验</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="nebula" data-mode="watch">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas id="field-canvas"></canvas>
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <main class="app-shell" id="app-shell">
+        <nav class="top-nav glass-panel">
+            <div class="nav-brand">
+                <span class="nav-icon">⬡</span>
+                <div class="nav-text">
+                    <h1 class="nav-title">AI Guardian Stage</h1>
+                    <span class="nav-subtitle">沉浸式 AI 守护者舞台</span>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <div class="mode-toggle" id="mode-toggle">
+                    <button class="mode-btn active" data-mode="watch" aria-label="守望">守望</button>
+                    <button class="mode-btn" data-mode="alert" aria-label="警戒">警戒</button>
+                    <button class="mode-btn" data-mode="sanctuary" aria-label="庇护">庇护</button>
+                    <button class="mode-btn" data-mode="resonance" aria-label="共振">共振</button>
+                </div>
+                <div class="theme-toggle" id="theme-toggle">
+                    <button class="theme-btn active" data-theme="nebula" aria-label="星穹">星穹</button>
+                    <button class="theme-btn" data-theme="aurora" aria-label="极光">极光</button>
+                    <button class="theme-btn" data-theme="ember" aria-label="熔核">熔核</button>
+                    <button class="theme-btn" data-theme="void" aria-label="虚空">虚空</button>
+                </div>
+                <button class="icon-btn" id="btn-fullscreen" aria-label="全屏">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </button>
+            </div>
+        </nav>
+
+        <section class="stage-area" id="stage-area">
+            <div class="grid-floor"></div>
+
+            <div class="guardian" id="guardian">
+                <div class="g-halo">
+                    <svg viewBox="0 0 300 300" class="halo-svg">
+                        <circle cx="150" cy="150" r="140" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 14" opacity="0.5"/>
+                        <circle cx="150" cy="150" r="120" fill="none" stroke="currentColor" stroke-width="0.6" stroke-dasharray="1 10" opacity="0.35"/>
+                    </svg>
+                    <span class="halo-tick tick-n"></span>
+                    <span class="halo-tick tick-e"></span>
+                    <span class="halo-tick tick-s"></span>
+                    <span class="halo-tick tick-w"></span>
+                </div>
+
+                <div class="g-ring g-ring-outer" id="ring-outer"></div>
+                <div class="g-ring g-ring-inner" id="ring-inner"></div>
+
+                <div class="g-shards" id="shards">
+                    <span class="shard shard-1"></span>
+                    <span class="shard shard-2"></span>
+                    <span class="shard shard-3"></span>
+                    <span class="shard shard-4"></span>
+                    <span class="shard shard-5"></span>
+                    <span class="shard shard-6"></span>
+                </div>
+
+                <div class="g-core glass-panel" id="g-core">
+                    <div class="g-face">
+                        <div class="g-eye" id="g-eye">
+                            <div class="eye-socket">
+                                <div class="iris" id="iris">
+                                    <div class="pupil" id="pupil"></div>
+                                    <div class="iris-ring"></div>
+                                    <div class="iris-tick"></div>
+                                </div>
+                                <div class="eye-shine"></div>
+                                <div class="eye-shine eye-shine-sm"></div>
+                                <div class="scanline" id="scanline"></div>
+                            </div>
+                            <div class="eyelid" id="eyelid"></div>
+                        </div>
+                        <div class="g-status-bar" id="g-status-bar">
+                            <span class="status-dot" id="status-dot"></span>
+                            <span class="status-text" id="g-status-text">SENTINEL ONLINE</span>
+                        </div>
+                    </div>
+                    <div class="g-plate plate-l"></div>
+                    <div class="g-plate plate-r"></div>
+                </div>
+
+                <div class="g-shield" id="g-shield"></div>
+                <div class="g-shadow" id="g-shadow"></div>
+            </div>
+
+            <div class="impact-layer" id="impact-layer"></div>
+        </section>
+
+        <section class="lower-deck">
+            <div class="log-panel glass-panel">
+                <div class="log-head">
+                    <span class="log-title">GUARDIAN.LOG</span>
+                    <span class="log-cursor-blink">▊</span>
+                </div>
+                <div class="log-body" id="log-body"></div>
+            </div>
+
+            <div class="hud-panel glass-panel">
+                <div class="hud-row">
+                    <span class="hud-label">SHIELD 护盾完整性</span>
+                    <span class="hud-value" id="hud-shield-pct">100%</span>
+                </div>
+                <div class="shield-bar">
+                    <div class="shield-fill" id="shield-fill"></div>
+                    <div class="shield-ticks"></div>
+                </div>
+                <div class="hud-grid">
+                    <div class="hud-cell">
+                        <span class="hud-key">已拦截</span>
+                        <span class="hud-val" id="hud-kills">0</span>
+                    </div>
+                    <div class="hud-cell">
+                        <span class="hud-key">威胁数</span>
+                        <span class="hud-val" id="hud-threats">0</span>
+                    </div>
+                    <div class="hud-cell">
+                        <span class="hud-key">运行时间</span>
+                        <span class="hud-val" id="hud-uptime">00:00</span>
+                    </div>
+                    <div class="hud-cell">
+                        <span class="hud-key">帧率</span>
+                        <span class="hud-val" id="hud-fps">60</span>
+                    </div>
+                </div>
+                <div class="mode-hint" id="mode-hint">移动光标 · 守护者注视你 · 点击释放脉冲</div>
+            </div>
+        </section>
+    </main>
+
+    <div class="transition-flash" id="transition-flash"></div>
+
+    <script src="main.js"></script>
+</body>
+</html>

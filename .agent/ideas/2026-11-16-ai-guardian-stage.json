@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-16",
+  "name": "ai-guardian-stage",
+  "description": "可拖拽环绕巡视的3D守护者舞台",
+  "tagline": "Drag to Awaken",
+  "interaction": "用户可360°拖拽旋转视角，环绕巡视悬浮在舞台中央的3D AI守护者。守护者的目光会实时追随观察者的方位，姿态与光环随旋转角度流转变换。松开拖拽后舞台缓缓自转，守护者进入待机呼吸态，等待下一次被唤醒。",
+  "directory": "seeds/ai-guardian-stage/",
+  "status": "incubated"
+}

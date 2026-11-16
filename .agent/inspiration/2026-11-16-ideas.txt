@@ -1,0 +1,6 @@
+beat-lyric-slicer - 随节拍自动切片的竖屏歌词视频生成器
+channel-flip-tv - 复古电视换台式的可拖拽空间界面
+chrome-letter-forge - 虹彩铬质感3D动态文字生成器
+ai-guardian-stage - 可拖拽环绕巡视的3D守护者舞台
+brew-sensory-scroll - 咖啡风味沉浸式滚动品鉴之旅
+boring-switch-mode - 一键切换趣味与极简的网页模式开关
