@@ -2440,6 +2440,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Doodle Note Wall 涂鸦便签墙',
+      description: '沉浸式涂鸦便签墙体验场。输入念头掷向墙面——弹簧-阻尼物理驱动的微晶玻璃态便签弹跳生根，拖拽抛掷、光标斥力场推挤、点击空壁激起冲击波涟漪、双击撕毁迸射粒子与乱码揭示，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/doodle-note-wall/index.html',
+      tags: ['Interactive', 'Physics', 'Micro-interaction', 'Glassmorphism'],
+      icon: '✎',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

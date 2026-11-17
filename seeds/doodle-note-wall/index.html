@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doodle Note Wall 涂鸦便签墙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body data-palette="dawn">
+  <!-- === 流体渐变背景 === -->
+  <div class="mesh-bg" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="grain"></div>
+  </div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- === 顶部栏 === -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-icon">✎</span>
+      <div class="brand-text">
+        <h1 id="brand-title" data-scramble>Doodle Note Wall</h1>
+        <p>把念头掷向墙面 · 让它们弹跳生根</p>
+      </div>
+    </div>
+    <div class="palette-row" id="palette-row" role="radiogroup" aria-label="氛围配色">
+      <button class="palette-dot" data-palette="dawn" title="拂晓 Dawn"></button>
+      <button class="palette-dot" data-palette="noon" title="正午 Noon"></button>
+      <button class="palette-dot" data-palette="dusk" title="暮色 Dusk"></button>
+      <button class="palette-dot" data-palette="aurora" title="极光 Aurora"></button>
+    </div>
+  </header>
+
+  <!-- === 控制台 === -->
+  <section class="console glass" aria-label="便签控制台">
+    <div class="console-input-wrap">
+      <span class="console-cursor-blink">▸</span>
+      <input id="note-input" class="console-input" type="text" maxlength="80"
+        placeholder="写下一个念头，按 Enter 掷出…" autocomplete="off" />
+      <button id="note-add-btn" class="btn-primary">掷出 ⏎</button>
+    </div>
+    <div class="console-stats">
+      <span class="stat"><b id="stat-count">0</b> 便签</span>
+      <span class="stat">拖拽抛掷 · 点击空壁激起冲击波 · 双击便签撕毁</span>
+      <button id="note-clear-btn" class="btn-ghost">撕毁全部</button>
+    </div>
+  </section>
+
+  <!-- === 便签墙 === -->
+  <main id="wall" class="wall" aria-label="涂鸦便签墙"></main>
+
+  <!-- === 遥测 HUD === -->
+  <footer class="hud glass">
+    <span id="hud-mode">MODE · <b>漂移</b></span>
+    <span id="hud-energy">能量 <b>0.00</b></span>
+    <span id="hud-notes">在场 <b>0</b></span>
+    <span class="hud-hint">光标靠近便签会温柔推挤</span>
+  </footer>
+
+  <script src="./main.js"></script>
+</body>
+</html>

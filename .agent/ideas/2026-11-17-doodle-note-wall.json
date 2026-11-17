@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-17",
+  "name": "doodle-note-wall",
+  "description": "手绘涂鸦批注墙与趣味开关交互",
+  "tagline": "Doodle it. Pin it. Smile.",
+  "interaction": "用户在便利贴上自由手绘涂鸦与批注，随手钉在充满生活气息的软木墙上，墙面的歪斜角度和纸质纹理营造出真实桌面感。趣味开关是核心亮点——拉动蜡笔滑块、拨动橡皮擦拨杆、翻转手绘开关，会触发贴纸弹跳、墨迹晕染或整面墙重新洗牌的动画效果。每张涂鸦贴纸都可以被拖拽、旋转和分层堆叠，让整面墙成为一块不断生长的共享画布。",
+  "directory": "seeds/doodle-note-wall/",
+  "status": "incubated"
+}

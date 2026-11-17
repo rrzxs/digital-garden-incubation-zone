@@ -1,0 +1,7 @@
+lyric-sync-studio - 逐字对齐歌词并生成节拍滚动可视化
+vhs-filter-lab - 复古电视扫描线与VHS滤镜效果生成器
+music-archive-index - 黑白极简数字索引式音乐档案播放器
+doodle-note-wall - 手绘涂鸦批注墙与趣味开关交互
+iridescent-type-forge - 3D虹彩立体字与光泽动效生成器
+scroll-cinema-builder - 滚动驱动的沉浸式 cinematic 叙事搭建器
+editorial-calm-tuner - 留白编辑排版与静音动效卡片调节器
