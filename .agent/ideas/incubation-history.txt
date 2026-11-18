@@ -229,3 +229,4 @@ archive-index-player
 tape-archive-ledger
 ai-guardian-stage
 doodle-note-wall
+archive-score-index

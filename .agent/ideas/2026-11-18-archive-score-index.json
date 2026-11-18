@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-18",
+  "name": "archive-score-index",
+  "description": "极简黑白的音乐档案索引播放器",
+  "tagline": "Play the index.",
+  "interaction": "A stark black-and-white archive where every track exists only as a numbered index entry. Hovering an entry reveals its metadata and starts a faint preview; clicking expands it into a full typographic score that plays in real time, with playback visualized purely through shifting text weight and spacing.",
+  "directory": "seeds/archive-score-index/",
+  "status": "incubated"
+}

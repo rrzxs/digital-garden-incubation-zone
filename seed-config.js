@@ -2450,6 +2450,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Archive Score Index 档案评分索引',
+      description: '沉浸式档案评分索引工具。五维加权综合分引擎（价值/稀有/完整/时效/复用）实时驱动活体索引榜——FLIP 物理重排、tier 评级徽章、微条形图、乱码揭示、点击升分冲击波与权重行进器，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/archive-score-index/index.html',
+      tags: ['Interactive', 'Assessment', 'Micro-interaction', 'Data Visualization'],
+      icon: '▦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

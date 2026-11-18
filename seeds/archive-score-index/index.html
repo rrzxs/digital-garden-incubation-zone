@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive Score Index · 档案评分索引</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ═══ 流体渐变背景 ═══ -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+  </div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="app glass">
+    <!-- ═══ 顶栏 ═══ -->
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-sigil">▦</span>
+        <div class="brand-text">
+          <h1 id="app-title" data-text="ARCHIVE SCORE INDEX">ARCHIVE SCORE INDEX</h1>
+          <p class="brand-sub">档案评分索引 · 卷宗价值的度量衡</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="stat-chip" title="索引条目总数">
+          <span class="stat-label">ENTRIES</span>
+          <span class="stat-val mono" id="stat-entries">00</span>
+        </div>
+        <div class="stat-chip" title="榜首综合分">
+          <span class="stat-label">APEX</span>
+          <span class="stat-val mono" id="stat-apex">--</span>
+        </div>
+        <div class="theme-dots" id="theme-dots" role="radiogroup" aria-label="氛围配色">
+          <button class="theme-dot" data-theme="obsidian" title="曜石"></button>
+          <button class="theme-dot" data-theme="aurora" title="极光"></button>
+          <button class="theme-dot" data-theme="ember" title="熔金"></button>
+          <button class="theme-dot" data-theme="nebula" title="幽紫"></button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══ 主体 ═══ -->
+    <section class="app-body">
+      <!-- 左：评级台 -->
+      <aside class="panel composer-panel glass-inset">
+        <h2 class="panel-title"><span class="mono idx-mark">01</span>评级台 CALIBRATION</h2>
+
+        <div class="field">
+          <label class="field-label" for="entry-title-input">卷宗题名</label>
+          <div class="title-input-wrap">
+            <input id="entry-title-input" type="text" maxlength="28" placeholder="为一份档案命名…" autocomplete="off">
+            <span class="input-caret"></span>
+          </div>
+        </div>
+
+        <div class="dims" id="dims-container">
+          <!-- 维度滑块由 JS 渲染 -->
+        </div>
+
+        <div class="composer-preview">
+          <div class="preview-score">
+            <span class="mono preview-num" id="preview-score">00.0</span>
+            <span class="preview-tier" id="preview-tier">—</span>
+          </div>
+          <div class="preview-ring" id="preview-ring">
+            <svg viewBox="0 0 72 72"><circle class="ring-track" cx="36" cy="36" r="30"/><circle class="ring-fill" id="preview-ring-fill" cx="36" cy="36" r="30"/></svg>
+          </div>
+        </div>
+
+        <div class="composer-actions">
+          <button class="btn btn-primary" id="btn-add">
+            <span class="btn-glow"></span>
+            <span class="btn-label">归档入册 INDEX →</span>
+          </button>
+          <button class="btn btn-ghost" id="btn-random">随机抽卷 ⁂</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="reweight-hint">
+          <span class="mono">WEIGHTS</span> — 维度行右侧行进器可调权重，重排即刻发生
+        </div>
+        <button class="btn btn-ghost btn-slim" id="btn-jitter">重新校准 ↯ 所有条目 ±3 漂移</button>
+      </aside>
+
+      <!-- 右：索引榜 -->
+      <section class="panel index-panel glass-inset">
+        <div class="index-head">
+          <h2 class="panel-title"><span class="mono idx-mark">02</span>活体索引 LIVING INDEX</h2>
+          <div class="index-legend">
+            <span class="legend-item"><i class="tier-dot tier-s"></i>S ≥ 85</span>
+            <span class="legend-item"><i class="tier-dot tier-a"></i>A ≥ 70</span>
+            <span class="legend-item"><i class="tier-dot tier-b"></i>B ≥ 55</span>
+            <span class="legend-item"><i class="tier-dot tier-c"></i>C ≥ 40</span>
+            <span class="legend-item"><i class="tier-dot tier-d"></i>D</span>
+          </div>
+        </div>
+        <div class="mean-bar">
+          <span class="mean-label mono">MEAN</span>
+          <div class="mean-track"><div class="mean-fill" id="mean-fill"></div></div>
+          <span class="mean-val mono" id="mean-val">--.-</span>
+        </div>
+        <ol class="index-list" id="index-list">
+          <!-- 条目卡由 JS 渲染 -->
+        </ol>
+        <div class="empty-state" id="empty-state">
+          <span class="empty-sigil">▢ ▢ ▢</span>
+          <p>索引为空 — 在评级台上归档第一份卷宗</p>
+        </div>
+      </section>
+    </section>
+
+    <footer class="app-footer">
+      <span class="mono footer-code">IDX·v1 // weighted-composite · FLIP-reorder · scramble-reveal</span>
+      <span class="footer-hint">点击条目激化冲击波 · 拖动滑块即时重算</span>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
