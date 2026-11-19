@@ -2460,6 +2460,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Scroll Demo Choreographer 滚动演示编舞家',
+      description: '沉浸式滚动演示编舞体验。滚动速度即编舞指令——七幕微交互演出：视差深度层、字符级联揭示、3D 倾斜卡片、速度脉冲网格、里程碑 CUE 时间轴与终幕数据谢幕，速度遥测 HUD + 粒子流场，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/scroll-demo-choreographer/index.html',
+      tags: ['Interactive', 'Scroll', 'Micro-interaction', 'Animation'],
+      icon: '♪',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

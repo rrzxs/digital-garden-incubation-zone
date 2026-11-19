@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Demo Choreographer · 滚动演示编舞家</title>
+    <meta name="description" content="沉浸式滚动演示编舞体验。滚动速度即编舞指令——七幕微交互演出：视差深度层、字符级联揭示、3D 倾斜卡片、速度脉冲网格、里程碑时间轴与粒子流场，流体渐变背景 + 微晶玻璃态容器 + 非线性动效">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==================== 流体渐变背景 ==================== -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="gradient-orb orb-4"></div>
+        <div class="noise-layer"></div>
+    </div>
+
+    <canvas id="particle-field" aria-hidden="true"></canvas>
+
+    <a class="back-link" href="../../index.html">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        <span>返回花园</span>
+    </a>
+
+    <!-- ==================== 进度轨道 + 幕节点 ==================== -->
+    <nav class="progress-rail" aria-label="演出进度">
+        <div class="progress-track">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="section-dots" id="section-dots"></div>
+    </nav>
+
+    <!-- ==================== 氛围配色切换 ==================== -->
+    <div class="theme-switcher" id="theme-switcher" role="group" aria-label="氛围配色">
+        <button class="theme-btn active" data-theme="aurora" title="Aurora 极光">◈</button>
+        <button class="theme-btn" data-theme="ember" title="Ember 烬光">◈</button>
+        <button class="theme-btn" data-theme="ocean" title="Ocean 深海">◈</button>
+        <button class="theme-btn" data-theme="void" title="Void 虚空">◈</button>
+    </div>
+
+    <!-- ==================== 编舞遥测 HUD ==================== -->
+    <div class="tempo-hud" id="tempo-hud" aria-hidden="true">
+        <div class="hud-row">
+            <span class="hud-label mono">VELOCITY</span>
+            <span class="hud-value mono" id="velocity-value">0.00</span>
+        </div>
+        <div class="hud-bar"><div class="hud-fill" id="velocity-bar"></div></div>
+        <div class="hud-row">
+            <span class="hud-label mono">CUE</span>
+            <span class="hud-value mono" id="cue-value">I / VII</span>
+        </div>
+    </div>
+
+    <main id="main-content">
+
+        <!-- ACT I · 序曲 -->
+        <section class="scene scene-hero" data-section="0" data-act="Overture">
+            <div class="scene-inner">
+                <div class="parallax-layer layer-far" data-depth="0.12">
+                    <div class="floating-glyph mono">♪</div>
+                    <div class="floating-glyph mono">♩</div>
+                    <div class="floating-glyph mono">♫</div>
+                    <div class="floating-glyph mono">♬</div>
+                </div>
+                <div class="parallax-layer layer-mid" data-depth="0.3">
+                    <div class="floating-ring ring-1"></div>
+                    <div class="floating-ring ring-2"></div>
+                </div>
+                <div class="glass-card hero-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">001</div>
+                        <div class="section-label">Overture · 序曲</div>
+                        <h1 class="section-title" data-scramble>滚动演示编舞家</h1>
+                        <p class="section-body">
+                            <span class="line" data-line>你的滑轮是节拍器，滚动速度是编舞指令。</span>
+                            <span class="line" data-line>七幕微交互演出，随你的节奏依次登场。</span>
+                            <span class="line" data-line>快，则群元素激荡；慢，则一切优雅呼吸。</span>
+                        </p>
+                        <div class="scroll-hint" data-reveal>
+                            <span class="scroll-arrow">↓</span>
+                            <span class="mono hint-text">向下滚动，开始排练</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT II · 视差深度 -->
+        <section class="scene" data-section="1" data-act="Parallax">
+            <div class="scene-inner">
+                <div class="parallax-stack" id="parallax-stack">
+                    <div class="parallax-card card-back" data-depth="0.6" data-tilt>
+                        <div class="card-glow"></div>
+                        <div class="parallax-label mono">DEPTH · 60%</div>
+                    </div>
+                    <div class="parallax-card card-mid" data-depth="0.35" data-tilt>
+                        <div class="card-glow"></div>
+                        <div class="parallax-label mono">DEPTH · 35%</div>
+                    </div>
+                    <div class="parallax-card card-front" data-depth="0.1" data-tilt>
+                        <div class="card-glow"></div>
+                        <div class="parallax-label mono">DEPTH · 10%</div>
+                    </div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">002</div>
+                        <div class="section-label">Parallax · 视差</div>
+                        <h2 class="section-title" data-scramble>深度，是空间的呼吸</h2>
+                        <p class="section-body">
+                            <span class="line" data-line>三层微晶玻璃以不同深度系数响应滚动，</span>
+                            <span class="line" data-line>快慢之间，平面获得了纵深与呼吸。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT III · 字符级联揭示 -->
+        <section class="scene" data-section="2" data-act="Reveal">
+            <div class="scene-inner">
+                <div class="glass-card wide-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">003</div>
+                        <div class="section-label">Reveal · 揭示</div>
+                        <h2 class="section-title" data-scramble>文字逐字苏醒</h2>
+                        <p class="char-cascade mono" id="char-cascade"
+                           data-text="SCROLL IS THE CONDUCTOR — EVERY PIXEL DANCES TO YOUR TEMPO">
+                        </p>
+                        <p class="section-body">
+                            <span class="line" data-line>滚动进度映射为字符揭示序列，</span>
+                            <span class="line" data-line>回滚即让文字重新沉入暗场。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT IV · 3D 倾斜卡片 -->
+        <section class="scene" data-section="3" data-act="Tilt">
+            <div class="scene-inner">
+                <div class="tilt-grid" id="tilt-grid">
+                    <div class="glass-card mini-card" data-tilt data-reveal>
+                        <div class="card-glow"></div>
+                        <div class="mini-index mono">04·A</div>
+                        <div class="mini-title">透视倾斜</div>
+                        <p class="mini-body">光标掠过，卡片以弹簧曲线倾斜注视你。</p>
+                    </div>
+                    <div class="glass-card mini-card" data-tilt data-reveal>
+                        <div class="card-glow"></div>
+                        <div class="mini-index mono">04·B</div>
+                        <div class="mini-title">光泽追踪</div>
+                        <p class="mini-body">高光随光标位置在玻璃表面游移。</p>
+                    </div>
+                    <div class="glass-card mini-card" data-tilt data-reveal>
+                        <div class="card-glow"></div>
+                        <div class="mini-index mono">04·C</div>
+                        <div class="mini-title">错峰入场</div>
+                        <p class="mini-body">级联延迟登场，如舞者依次步入舞台。</p>
+                    </div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">004</div>
+                        <div class="section-label">Tilt · 倾斜</div>
+                        <h2 class="section-title" data-scramble>玻璃有自己的目光</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT V · 速度脉冲网格 -->
+        <section class="scene" data-section="4" data-act="Pulse">
+            <div class="scene-inner">
+                <div class="pulse-grid" id="pulse-grid" aria-hidden="true"></div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">005</div>
+                        <div class="section-label">Pulse · 脉冲</div>
+                        <h2 class="section-title" data-scramble>速度点亮网格</h2>
+                        <p class="section-body">
+                            <span class="line" data-line>滚动越快，网格脉动越炽烈；</span>
+                            <span class="line" data-line>停下时，它如退潮般缓缓平息。</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT VI · 里程碑时间轴 -->
+        <section class="scene" data-section="5" data-act="Timeline">
+            <div class="scene-inner">
+                <div class="timeline-stage" id="timeline-stage">
+                    <div class="timeline-track">
+                        <div class="timeline-fill" id="timeline-fill"></div>
+                    </div>
+                    <div class="milestone" data-ms="0.05"><div class="ms-dot"></div><div class="ms-label mono">CUE-01 视差</div></div>
+                    <div class="milestone" data-ms="0.25"><div class="ms-dot"></div><div class="ms-label mono">CUE-02 揭示</div></div>
+                    <div class="milestone" data-ms="0.45"><div class="ms-dot"></div><div class="ms-label mono">CUE-03 倾斜</div></div>
+                    <div class="milestone" data-ms="0.65"><div class="ms-dot"></div><div class="ms-label mono">CUE-04 脉冲</div></div>
+                    <div class="milestone" data-ms="0.85"><div class="ms-dot"></div><div class="ms-label mono">CUE-05 终幕</div></div>
+                </div>
+                <div class="glass-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">006</div>
+                        <div class="section-label">Timeline · 时间轴</div>
+                        <h2 class="section-title" data-scramble>每个 cue 都被点亮</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACT VII · 终幕统计 -->
+        <section class="scene scene-finale" data-section="6" data-act="Finale">
+            <div class="scene-inner">
+                <div class="glass-card finale-card" data-tilt data-reveal>
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <div class="section-number mono">007</div>
+                        <div class="section-label">Finale · 终幕</div>
+                        <h2 class="section-title" data-scramble>谢幕，以数据致意</h2>
+                        <div class="stat-grid">
+                            <div class="stat-cell">
+                                <div class="stat-value mono" id="stat-distance">0</div>
+                                <div class="stat-name">累计滚动 px</div>
+                            </div>
+                            <div class="stat-cell">
+                                <div class="stat-value mono" id="stat-peak">0.00</div>
+                                <div class="stat-name">峰值速度</div>
+                            </div>
+                            <div class="stat-cell">
+                                <div class="stat-value mono" id="stat-cues">0 / 5</div>
+                                <div class="stat-name">已点亮 CUE</div>
+                            </div>
+                            <div class="stat-cell">
+                                <div class="stat-value mono" id="stat-theme">AURORA</div>
+                                <div class="stat-name">当前氛围</div>
+                            </div>
+                        </div>
+                        <button class="replay-btn" id="replay-btn">
+                            <span class="replay-icon">↺</span>
+                            <span>回到第一幕</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

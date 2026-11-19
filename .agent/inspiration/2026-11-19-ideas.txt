@@ -1,0 +1,7 @@
+lyric-beat-cutter - 按节拍切割歌词生成竖屏动态字幕卡
+font-specimen-lab - 字体样张卡片预览与并排对比器
+holo-foil-cards - 指针感应3D全息光泽卡片生成器
+vhs-scanline-frame - VHS扫描线复古滤镜相框工具
+pixel-fx-playground - 像素风特效实时预览调参实验台
+kinetic-type-canvas - 彩虹3D动态文字海报生成器
+scroll-demo-choreographer - 滚动驱动产品演示编排工具

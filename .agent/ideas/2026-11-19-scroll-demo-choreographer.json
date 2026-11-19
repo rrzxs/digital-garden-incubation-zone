@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-19",
+  "name": "scroll-demo-choreographer",
+  "description": "滚动驱动产品演示编排工具",
+  "tagline": ""Scroll is your storyteller"",
+  "interaction": "页面滚动位置即演示时间轴——向下滚动时，产品演示按预设编排逐幕展开：元素钉住、高亮、切换与动画过渡全部与滚动进度精准同步。用户无需点击，仅凭滚轮节奏即可像导演般掌控整场产品叙事。",
+  "directory": "seeds/scroll-demo-choreographer/",
+  "status": "incubated"
+}
