@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Fragment Lab — 文字碎片实验室</title>
+    <meta name="description" content="沉浸式文字碎片微交互体验。输入文字即刻切片为碎片晶格，弹簧-阻尼物理驱动的五种碎片模式（散裂/环轨/瀑布/风暴/静默）、光标力场、点击冲击波与碎片重组，流体渐变背景 + 微晶玻璃态容器">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23080814'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='26' font-family='monospace' fill='%2367e8f9'%3ETF%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@200;300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="mesh-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas class="particle-layer" id="particle-layer"></canvas>
+
+    <div class="cursor-glow" id="cursor-glow"></div>
+
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回花园</span>
+    </a>
+
+    <div class="app-shell">
+        <header class="panel-header glass-panel">
+            <div class="brand-group">
+                <h1 class="brand-title">Type<span class="brand-dot">/</span>Fragment</h1>
+                <p class="brand-subtitle">文字碎片实验室 — 字符切片的非线性物理空间</p>
+            </div>
+            <div class="header-actions">
+                <button class="icon-btn" id="btn-blast" aria-label="碎片爆破" title="碎片爆破 (Space)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-shuffle" aria-label="随机模式" title="随机模式 (S)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+                </button>
+                <button class="icon-btn" id="btn-reset" aria-label="重组重置" title="重组重置 (R)">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <section class="stage" id="stage">
+            <div class="stage-inner" id="stage-inner">
+                <div class="fragment-canvas glass-panel" id="fragment-canvas">
+                    <div class="fragment-display" id="fragment-display"></div>
+                    <div class="canvas-rings" id="canvas-rings"></div>
+                    <div class="fragment-meta" id="fragment-meta"></div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="controls-bar glass-panel">
+            <div class="controls-scroll">
+                <div class="ctrl-group">
+                    <label class="ctrl-label">输入文字</label>
+                    <div class="text-input-wrap">
+                        <input type="text" id="input-text" class="text-input" value="Fragment" maxlength="18" placeholder="输入任意文字...">
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">碎片密度 <span class="ctrl-value" id="val-slices">5</span></label>
+                    <input type="range" id="ctrl-slices" class="range-input" min="2" max="9" value="5">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">字号 <span class="ctrl-value" id="val-size">96</span></label>
+                    <input type="range" id="ctrl-size" class="range-input" min="40" max="170" value="96">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">字重 <span class="ctrl-value" id="val-weight">300</span></label>
+                    <input type="range" id="ctrl-weight" class="range-input" min="100" max="900" value="300" step="100">
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">碎片模式</label>
+                    <div class="mode-toggle" id="mode-toggle">
+                        <button class="mode-btn active" data-mode="scatter" aria-label="散裂模式">Scatter</button>
+                        <button class="mode-btn" data-mode="orbit" aria-label="环轨模式">Orbit</button>
+                        <button class="mode-btn" data-mode="cascade" aria-label="瀑布模式">Cascade</button>
+                        <button class="mode-btn" data-mode="storm" aria-label="风暴模式">Storm</button>
+                        <button class="mode-btn" data-mode="still" aria-label="静默模式">Still</button>
+                    </div>
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">散布强度 <span class="ctrl-value" id="val-amplitude">55</span></label>
+                    <input type="range" id="ctrl-amplitude" class="range-input" min="0" max="100" value="55">
+                </div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">光标力场</label>
+                    <div class="field-toggle" id="field-toggle">
+                        <button class="mode-btn active" data-field="repel" aria-label="排斥">Repel</button>
+                        <button class="mode-btn" data-field="attract" aria-label="吸引">Attract</button>
+                        <button class="mode-btn" data-field="vortex" aria-label="涡旋">Vortex</button>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-group">
+                    <label class="ctrl-label">氛围配色</label>
+                    <div class="palette-toggle" id="palette-toggle">
+                        <button class="palette-btn active" data-palette="nebula" aria-label="星云">
+                            <span class="swatch" style="background: linear-gradient(135deg, #67e8f9, #818cf8)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="solar" aria-label="日珥">
+                            <span class="swatch" style="background: linear-gradient(135deg, #fbbf24, #f97316)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="rose" aria-label="蔷薇">
+                            <span class="swatch" style="background: linear-gradient(135deg, #fb7185, #e879f9)"></span>
+                        </button>
+                        <button class="palette-btn" data-palette="void" aria-label="虚空">
+                            <span class="swatch" style="background: linear-gradient(135deg, #94a3b8, #475569)"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-20",
+  "name": "type-fragment-lab",
+  "description": "碎片字海报生成器，字形间嵌入几何图形",
+  "tagline": "Typography in Fragments",
+  "interaction": "用户输入任意文字，每个字形会被自动"击碎"，在笔画间隙嵌入随机生成的几何碎片（圆、三角、线条）。点击可重新碎裂排布，拖拽碎片微调密度与角度，最终导出为高对比度海报。每次生成都是独一无二的字形解构实验。",
+  "directory": "seeds/type-fragment-lab/",
+  "status": "incubated"
+}

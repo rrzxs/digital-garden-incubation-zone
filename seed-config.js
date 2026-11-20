@@ -2470,6 +2470,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Type Fragment Lab 文字碎片实验室',
+      description: '沉浸式文字碎片微交互体验。输入文字即刻切片为碎片晶格——弹簧-阻尼物理驱动的5种碎片模式（散裂/环轨/瀑布/风暴/静默）、光标力场扰动、点击冲击波涟漪、碎片爆破重组与乱码揭示，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/type-fragment-lab/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: '◫',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 

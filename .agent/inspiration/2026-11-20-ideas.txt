@@ -1,0 +1,6 @@
+lyric-kinetics - 逐字歌词动态排版，随节拍律动的字幕可视化
+specimen-sheets - 本地字体拖入即生成样张卡片与对比试排
+type-fragment-lab - 碎片字海报生成器，字形间嵌入几何图形
+foil-type-forge - 全息镭虹流光字效预览与参数调校
+tilt-card-showcase - 指针感应3D倾斜眩光卡片效果试验场
+scroll-demo-stage - 滚动驱动的产品演示步骤编排小工具
