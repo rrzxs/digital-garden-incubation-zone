@@ -1,0 +1,7 @@
+font-specimen-studio - 字体样张卡对比与预览工作台
+sunlit-wall - 随真实日照角度变化的房间光影壁纸
+scrollytelling-canvas - 滚动驱动的插画分镜叙事画布
+kinetic-type-lab - 碎片化动态排版实验生成器
+iridescent-type-forge - 幻彩金属质感字效生成器
+pixel-fx-playground - 像素艺术特效预览试衣间
+story-strip-director - 连环画分格脚本可视化编排器

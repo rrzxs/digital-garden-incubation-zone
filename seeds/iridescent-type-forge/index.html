@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iridescent Type Forge · 虹彩字形锻造炉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-mood="aurora">
+
+<!-- ═══ 流体渐变背景 ═══ -->
+<div class="mesh-bg" aria-hidden="true">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+  <div class="grain"></div>
+</div>
+
+<!-- ═══ 粒子流场 + 字形锻造画布 ═══ -->
+<canvas id="stage"></canvas>
+
+<!-- ═══ 顶部 HUD 遥测 ═══ -->
+<header class="hud glass">
+  <div class="hud-brand">
+    <span class="hud-glyph">T</span>
+    <div class="hud-titles">
+      <h1 id="hud-title">IRIDESCENT TYPE FORGE</h1>
+      <p>虹彩字形锻造炉 · v1.0</p>
+    </div>
+  </div>
+  <div class="hud-stats">
+    <div class="stat"><span class="stat-label">GLYPHS</span><span class="stat-value" id="stat-glyphs">00</span></div>
+    <div class="stat"><span class="stat-label">FPS</span><span class="stat-value" id="stat-fps">60</span></div>
+    <div class="stat"><span class="stat-label">WAVES</span><span class="stat-value" id="stat-waves">00</span></div>
+    <div class="stat"><span class="stat-label">CURSOR</span><span class="stat-value" id="stat-cursor">0.00</span></div>
+  </div>
+</header>
+
+<!-- ═══ 微晶玻璃态控制台 ═══ -->
+<aside class="console glass" aria-label="锻造控制台">
+
+  <section class="panel-block">
+    <label class="block-label" for="text-input">INGOT · 锭料</label>
+    <input id="text-input" type="text" value="IRIDESCENT" maxlength="18" autocomplete="off" spellcheck="false">
+  </section>
+
+  <section class="panel-block">
+    <span class="block-label">SHEEN · 虹彩模式</span>
+    <div class="btn-row" id="sheen-row">
+      <button class="chip active" data-sheen="holo">HOLO</button>
+      <button class="chip" data-sheen="prism">PRISM</button>
+      <button class="chip" data-sheen="chrome">CHROME</button>
+      <button class="chip" data-sheen="oil">OIL</button>
+    </div>
+  </section>
+
+  <section class="panel-block">
+    <span class="block-label">FORCE · 力场</span>
+    <div class="btn-row" id="force-row">
+      <button class="chip active" data-force="repel">REPEL</button>
+      <button class="chip" data-force="attract">ATTRACT</button>
+      <button class="chip" data-force="vortex">VORTEX</button>
+    </div>
+  </section>
+
+  <section class="panel-block">
+    <span class="block-label">MOOD · 氛围</span>
+    <div class="btn-row" id="mood-row">
+      <button class="chip active" data-mood="aurora">AURORA</button>
+      <button class="chip" data-mood="ember">EMBER</button>
+      <button class="chip" data-mood="abyss">ABYSS</button>
+      <button class="chip" data-mood="orchid">ORCHID</button>
+    </div>
+  </section>
+
+  <section class="panel-block sliders">
+    <div class="slider-row">
+      <label for="slider-radius">力场半径</label>
+      <input type="range" id="slider-radius" min="60" max="420" value="200">
+      <span class="slider-readout" id="readout-radius">200</span>
+    </div>
+    <div class="slider-row">
+      <label for="slider-stiff">弹簧刚度</label>
+      <input type="range" id="slider-stiff" min="20" max="300" value="120">
+      <span class="slider-readout" id="readout-stiff">120</span>
+    </div>
+    <div class="slider-row">
+      <label for="slider-irid">虹彩流速</label>
+      <input type="range" id="slider-irid" min="0" max="200" value="100">
+      <span class="slider-readout" id="readout-irid">100</span>
+    </div>
+  </section>
+
+  <section class="panel-block">
+    <button class="pulse-btn" id="pulse-btn">⌁ PULSE 全场脉冲</button>
+    <p class="hint">移动光标施加力场 · 点击画布发射冲击波 · 输入文字重新锻造</p>
+  </section>
+
+</aside>
+
+<!-- ═══ 底部状态栏 ═══ -->
+<footer class="statusbar glass">
+  <span id="status-text">FORGE READY — 等待锻造指令</span>
+  <span class="status-dots"><i></i><i></i><i></i></span>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

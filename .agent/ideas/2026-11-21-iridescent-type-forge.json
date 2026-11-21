@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-21",
+  "name": "iridescent-type-forge",
+  "description": "幻彩金属质感字效生成器",
+  "tagline": "Molten Words",
+  "interaction": "用户输入任意文字，实时铸造出流光幻彩的金属质感字效。通过拖拽改变光照角度，观察虹彩薄膜在字形表面流动折射；再调节色相、金属度与粗糙度滑块，打造独一无二的液态金属排版，并一键导出高清海报。",
+  "directory": "seeds/iridescent-type-forge/",
+  "status": "incubated"
+}

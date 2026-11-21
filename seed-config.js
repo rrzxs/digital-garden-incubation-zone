@@ -2480,6 +2480,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Iridescent Type Forge 虹彩字形锻造炉',
+      description: '沉浸式虹彩字形锻造实验室。输入文字即刻锻造成活体虹彩字形——弹簧-阻尼物理驱动字符对光标产生排斥/吸引/涡旋力场响应，4种虹彩着色模式（全息/色散棱镜/镀铬/油膜干涉）、点击冲击波涟漪、全场共振脉冲、粒子流场与乱码揭示，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/iridescent-type-forge/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: 'T',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
