@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>日光墙 · Sunlight Wall Sim</title>
+  <meta name="description" content="沉浸式日光墙模拟。拖动时间让太阳掠过墙面，光斑、尘埃与窗台绿影随之呼吸。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="sand">
+
+  <!-- 场景画布：墙面 / 窗 / 光斑 / 尘埃 -->
+  <canvas id="scene"></canvas>
+
+  <!-- 流体渐变氛围层（叠加在画布之上，为整面墙提供呼吸感） -->
+  <div class="ambient" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+  </div>
+
+  <!-- 暗角与颗粒 -->
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- 标题区 -->
+  <header class="stage-header">
+    <p class="eyebrow">SEED · SUNLIGHT WALL SIM</p>
+    <h1 class="title" id="title" data-text="日光墙">日光墙</h1>
+    <p class="subtitle">一间只有光与尘埃的房间 —— 拖动时间，看太阳掠过墙面。</p>
+  </header>
+
+  <!-- 遥测面板 -->
+  <aside class="hud" id="hud" aria-label="光照遥测">
+    <div class="hud-row"><span class="hud-k">TIME</span><span class="hud-v" id="hud-time">15:00</span></div>
+    <div class="hud-row"><span class="hud-k">ALT</span><span class="hud-v" id="hud-alt">--</span></div>
+    <div class="hud-row"><span class="hud-k">AZI</span><span class="hud-v" id="hud-azi">--</span></div>
+    <div class="hud-row"><span class="hud-k">LUX</span><span class="hud-v" id="hud-lux">--</span></div>
+    <div class="hud-row"><span class="hud-k">MODE</span><span class="hud-v" id="hud-mode">云影</span></div>
+    <div class="hud-row"><span class="hud-k">THEME</span><span class="hud-v" id="hud-theme">暖砂</span></div>
+  </aside>
+
+  <!-- 控制台 -->
+  <nav class="panel" aria-label="控制台">
+    <div class="ctrl ctrl-time">
+      <div class="ctrl-head"><span class="ctrl-label">时间</span><output class="ctrl-out" id="out-time">15:00</output></div>
+      <input type="range" id="in-time" min="0" max="24" step="0.05" value="15" aria-label="时间" />
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-head"><span class="ctrl-label">光强</span><output class="ctrl-out" id="out-int">1.00</output></div>
+      <input type="range" id="in-int" min="0.25" max="1.6" step="0.01" value="1" aria-label="光强" />
+    </div>
+    <div class="ctrl">
+      <div class="ctrl-head"><span class="ctrl-label">尘埃</span><output class="ctrl-out" id="out-dust">1.00</output></div>
+      <input type="range" id="in-dust" min="0" max="2" step="0.01" value="1" aria-label="尘埃密度" />
+    </div>
+    <div class="ctrl ctrl-modes">
+      <span class="ctrl-label">模式</span>
+      <div class="seg" role="group" aria-label="交互模式">
+        <button class="seg-btn active" data-mode="cloud">云影</button>
+        <button class="seg-btn" data-mode="hand">掌影</button>
+        <button class="seg-btn" data-mode="breeze">微风</button>
+      </div>
+    </div>
+    <div class="ctrl ctrl-themes">
+      <span class="ctrl-label">墙面</span>
+      <div class="themes" role="group" aria-label="墙面配色">
+        <button class="dot active" data-theme="sand" title="暖砂" aria-label="暖砂"></button>
+        <button class="dot" data-theme="plaster" title="灰泥" aria-label="灰泥"></button>
+        <button class="dot" data-theme="terra" title="赤陶" aria-label="赤陶"></button>
+        <button class="dot" data-theme="ink" title="墨青" aria-label="墨青"></button>
+      </div>
+    </div>
+    <button class="ghost-btn" id="btn-clear" title="移除窗台上的所有物件">清空窗台</button>
+  </nav>
+
+  <p class="hint">点击窗台摆放绿植 / 玻璃瓶 · 再点一次移除 · ←/→ 调整时间 · 光标即是云</p>
+
+  <script src="main.js"></script>
+</body>
+</html>

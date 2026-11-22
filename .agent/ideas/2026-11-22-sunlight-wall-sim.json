@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-22",
+  "name": "sunlight-wall-sim",
+  "description": "基于地理定位的实时日光墙面模拟器",
+  "tagline": "Chase the light",
+  "interaction": "The wall renders real-time sunlight for any spot on Earth, synced to your geolocation — golden hour, blue hour, or starry night. Tap anywhere on the map to teleport the wall and watch light and shadow shift instantly. Time-lapse scrubbing lets you replay a full day in seconds.",
+  "directory": "seeds/sunlight-wall-sim/",
+  "status": "incubated"
+}

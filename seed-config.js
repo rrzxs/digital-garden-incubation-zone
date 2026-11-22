@@ -1,6 +1,16 @@
 (function attachSeedConfig(globalScope) {
   const RAW_SEEDS = Object.freeze([
     {
+      title: 'Sunlight Wall 日光墙',
+      description: '沉浸式日光墙模拟体验。时间滑杆驱动太阳从窗口掠过——光斑斜投墙面、百叶帘影流动、焦散微光游弋、尘埃在光柱中亮起，点击窗台摆放蕨叶/玻璃瓶/叠书拖出剪影投影，3种交互模式（云影/掌影/微风）× 4种墙面氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/sunlight-wall-sim/index.html',
+      tags: ['Interactive', 'Simulation', 'Light', 'Micro-interaction'],
+      icon: '☀',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
+    },
+    {
       title: 'AI Guardian Stage 守护者舞台',
       description: '沉浸式 AI 守护者微交互体验场。光标追踪瞳孔与弹簧倾斜的活体哨兵，自动锁定并光束中和逼近的故障威胁体，护盾完整性系统与过载重启序列，4种运作模式（守望/警戒/庇护/共振）× 打字机守护日志，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
       path: '/seed/seeds/ai-guardian-stage/index.html',

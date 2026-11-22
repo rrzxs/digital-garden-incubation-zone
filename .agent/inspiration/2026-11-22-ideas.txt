@@ -1,0 +1,6 @@
+type-specimen-cards - 字体标本卡片浏览器，本地字体预览管理
+sunlight-wall-sim - 基于地理定位的实时日光墙面模拟器
+voice-mood-garden - 语音情绪可视化 botanical 心境花园
+cassette-scroll-story - 磁带式滚动叙事微应用
+pixel-fx-playground - 像素风特效试衣间生成器
+night-drive-canvas - 夜路霓虹驾驶沉浸小体验
