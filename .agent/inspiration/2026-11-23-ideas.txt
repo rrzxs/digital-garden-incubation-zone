@@ -1,0 +1,6 @@
+poster-type-3d-shaper - 巨型碎裂排版嵌入3D物件的海报编辑器
+cassette-mixtape-maker - 录制并分享复古磁带混合歌单卡带
+night-drive-ambience - 伪3D夜间公路驾驶沉浸氛围生成器
+voice-print-botanical - 用麦克风声纹生成植物版画图案
+pixel-fx-atlas - 像素艺术特效图册与参数实时试玩
+museum-motion-remix - 为名画挑选动画风格使其动起来

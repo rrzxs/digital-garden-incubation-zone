@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cassette Mixtape Maker · 卡带混音带工坊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="aurora">
+  <!-- === 流体渐变背景 === -->
+  <div class="bg-field" aria-hidden="true">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+    <div class="bg-grain"></div>
+  </div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- === 主题切换 === -->
+  <div class="theme-dock glass" role="group" aria-label="氛围配色">
+    <button class="theme-dot" data-theme="aurora" title="极光" aria-label="极光配色"></button>
+    <button class="theme-dot" data-theme="ember" title="熔金" aria-label="熔金配色"></button>
+    <button class="theme-dot" data-theme="abyss" title="深渊" aria-label="深渊配色"></button>
+    <button class="theme-dot" data-theme="orchid" title="幽兰" aria-label="幽兰配色"></button>
+  </div>
+
+  <!-- === 主舞台 === -->
+  <main class="stage">
+    <!-- 头部 -->
+    <header class="stage-header">
+      <p class="stage-eyebrow">SIDE A · HANDMADE FREQUENCIES</p>
+      <h1 class="app-title" id="app-title" data-text="CASSETTE MIXTAPE MAKER">CASSETTE MIXTAPE MAKER</h1>
+      <p class="app-sub">卡带混音带工坊 · 把心事卷进 3.81 毫米宽的磁带里</p>
+    </header>
+
+    <div class="stage-grid">
+      <!-- === 卡带机芯 · Deck === -->
+      <section class="deck glass" id="deck" aria-label="卡带机芯">
+        <!-- 卡带本体 -->
+        <div class="cassette-shell" id="cassette">
+          <div class="cassette-screws" aria-hidden="true">
+            <span class="screw screw-tl"></span><span class="screw screw-tr"></span>
+            <span class="screw screw-bl"></span><span class="screw screw-br"></span>
+          </div>
+          <!-- 手写标签 -->
+          <div class="cassette-label" id="cassette-label">
+            <span class="label-title" id="label-title">UNTITLED MIXTAPE</span>
+            <span class="label-meta" id="label-meta">SIDE A · 0 TRACKS · C-60</span>
+          </div>
+          <!-- 磁带窗口 -->
+          <div class="tape-window" aria-hidden="true">
+            <span class="reel reel-left" id="reel-left">
+              <span class="reel-spokes" aria-hidden="true"></span>
+              <span class="reel-hub"></span>
+            </span>
+            <span class="tape-taution" id="tape-taution"></span>
+            <span class="reel reel-right" id="reel-right">
+              <span class="reel-spokes" aria-hidden="true"></span>
+              <span class="reel-hub"></span>
+            </span>
+          </div>
+          <!-- 底部导带孔 -->
+          <div class="capstan-holes" aria-hidden="true">
+            <span class="hole"></span><span class="hole"></span>
+            <span class="capstan"></span><span class="capstan"></span>
+          </div>
+        </div>
+
+        <!-- 计数器 + 表头 -->
+        <div class="deck-hud">
+          <div class="counter" id="counter" aria-label="磁带计数器">
+            <span class="counter-digit" data-slot="0">0</span>
+            <span class="counter-digit" data-slot="1">0</span>
+            <span class="counter-digit" data-slot="2">0</span>
+            <span class="counter-digit" data-slot="3">0</span>
+          </div>
+          <div class="vu-meter" aria-label="输出电平">
+            <div class="vu-track"><div class="vu-fill" id="vu-fill"></div></div>
+            <span class="vu-label">VU</span>
+          </div>
+        </div>
+
+        <!-- 走带进度 -->
+        <div class="tape-progress" aria-hidden="true">
+          <div class="tape-progress-fill" id="tape-progress-fill"></div>
+          <div class="tape-progress-ghost" id="tape-progress-ghost"></div>
+        </div>
+
+        <!-- 传输控制 -->
+        <div class="transport" role="group" aria-label="走带控制">
+          <button class="transport-btn" id="btn-rew" title="倒带 REW" aria-label="倒带">
+            <span class="glyph">&#9664;&#9664;</span><span class="key">R</span>
+          </button>
+          <button class="transport-btn transport-main" id="btn-play" title="播放 PLAY" aria-label="播放或暂停">
+            <span class="glyph glyph-play" id="play-glyph">&#9654;</span><span class="key">Space</span>
+          </button>
+          <button class="transport-btn" id="btn-ff" title="快进 FF" aria-label="快进">
+            <span class="glyph">&#9654;&#9654;</span><span class="key">F</span>
+          </button>
+          <button class="transport-btn" id="btn-eject" title="退带 EJECT" aria-label="退带并换新卡带">
+            <span class="glyph">&#9650;</span><span class="key">E</span>
+          </button>
+        </div>
+
+        <!-- 监听开关 -->
+        <label class="monitor-toggle">
+          <input type="checkbox" id="monitor-toggle" />
+          <span class="monitor-track"><span class="monitor-dot"></span></span>
+          <span class="monitor-text">MONITOR · 磁带监听声场</span>
+        </label>
+      </section>
+
+      <!-- === 曲目清单 · Tracklist === -->
+      <section class="tracklist glass" aria-label="曲目清单">
+        <div class="tracklist-head">
+          <h2 class="tracklist-title">SIDE A · TRACKLIST</h2>
+          <span class="tracklist-total" id="tracklist-total">00:00 / 30:00</span>
+        </div>
+
+        <!-- 新增曲目 -->
+        <form class="track-form" id="track-form" autocomplete="off">
+          <input class="track-input" id="track-title-input" type="text" maxlength="32"
+            placeholder="曲名 · e.g. 海边偶遇的猫" aria-label="曲名" />
+          <input class="track-input track-input-dur" id="track-dur-input" type="text"
+            placeholder="3:30" inputmode="numeric" aria-label="时长 分:秒" />
+          <button class="track-add" type="submit" aria-label="录制进磁带">＋ REC</button>
+        </form>
+
+        <!-- 曲目列表 -->
+        <ul class="track-rows" id="track-rows"></ul>
+
+        <p class="tracklist-empty" id="tracklist-empty">
+          空白磁带正在等待第一首歌。<br />输入曲名，按下 REC，把它卷进磁带里。
+        </p>
+
+        <div class="tracklist-foot">
+          <button class="chip-btn" id="btn-shuffle">&#8646; 随机重排</button>
+          <button class="chip-btn" id="btn-clear">&#9633; 消磁清空</button>
+        </div>
+      </section>
+    </div>
+
+    <footer class="stage-footer">
+      <span class="footer-hint">DRAG 曲目可重排 · SPACE 播放/暂停 · R/F 倒带/快进 · E 退带</span>
+      <span class="footer-sig">maintained by EDEN · handmade frequencies only</span>
+    </footer>
+  </main>
+
+  <div class="ripple-layer" id="ripple-layer" aria-hidden="true"></div>
+  <script src="main.js"></script>
+</body>
+</html>

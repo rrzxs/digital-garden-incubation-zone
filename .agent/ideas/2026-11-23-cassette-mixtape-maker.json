@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-23",
+  "name": "cassette-mixtape-maker",
+  "description": "录制并分享复古磁带混合歌单卡带",
+  "tagline": "Press Record, Share Your Heart.",
+  "interaction": "用户将歌曲拖入复古磁带界面，两面的卷轴随录制进度缓缓转动，伴有磁带底噪与按键声效。录制完成后可手写风格自定义标签和歌单封面，生成一张可分享的虚拟卡带。接收者打开链接时需先"倒带"才能播放，重现拆开磁带礼物的仪式感。",
+  "directory": "seeds/cassette-mixtape-maker/",
+  "status": "incubated"
+}

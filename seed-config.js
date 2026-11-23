@@ -2500,6 +2500,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Cassette Mixtape Maker 卡带混音带工坊',
+      description: '沉浸式卡带混音带制作体验。为 SIDE A 录制曲目——卷轴随带卷直径变速旋转、机械计数器走字、VU 表律动、曲目拖拽重排与随机洗牌，倒带/快进/退带/消磁，Web Audio 磁带嘶声与种子音景，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/cassette-mixtape-maker/index.html',
+      tags: ['Interactive', 'Retro', 'Micro-interaction', 'Animation'],
+      icon: '📼',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
