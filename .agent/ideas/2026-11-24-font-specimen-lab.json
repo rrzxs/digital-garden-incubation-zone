@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-24",
+  "name": "font-specimen-lab",
+  "description": "本地字体样张对比预览器",
+  "tagline": "Compare type, side by side.",
+  "interaction": "用户拖入本地字体文件，多栏样张即时并排渲染，同一段文字在不同字体下直观对比。悬停即可实时调节字号、字距与行高，支持暗色/亮度背景切换预览，快速找到最契合设计的字体。",
+  "directory": "seeds/font-specimen-lab/",
+  "status": "incubated"
+}

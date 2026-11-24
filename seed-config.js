@@ -2510,6 +2510,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'animation'
+    },
+    {
+      title: 'Font Specimen Lab 字体样张实验室',
+      description: '沉浸式字体样张实验室。可编辑样张文本 × 光标邻近力场驱动 Variable Font 字重实时呼吸（邻近呼吸/正弦波流/静默平铺三种模式），Inter/Outfit/Share Tech Mono 三家族轨道、字形图鉴检视舱（cap/mean/base 度量参考线 + 独立字重）、乱码揭示换句与4种氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
+      path: '/seed/seeds/font-specimen-lab/index.html',
+      tags: ['Interactive', 'Typography', 'Variable Font', 'Micro-interaction'],
+      icon: 'Aa',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'tool'
     }
   ]);
 

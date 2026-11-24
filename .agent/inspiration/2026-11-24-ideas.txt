@@ -1,0 +1,8 @@
+scroll-story-weaver - 滚动驱动的插画叙事生成器
+pixel-desk-grid - 可拖拽像素风个人主页生成器
+font-specimen-lab - 本地字体样张对比预览器
+sun-wall-sim - 跟随真实日照的动态壁纸
+typoforge-poster - 碎片字3D海报合成器
+mood-botanical - 情绪记录生成植物纹样
+slidebox-motion - 网页幻灯片动画排版工具
+night-drive-canvas - 复古夜间驾驶沉浸小游戏

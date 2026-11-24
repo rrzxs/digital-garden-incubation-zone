@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Specimen Lab — 字体样张实验室</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="aurora">
+    <a href="../../index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回数字花园</span>
+    </a>
+
+    <div class="mesh-bg" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <canvas class="dust-canvas" id="dust-canvas" aria-hidden="true"></canvas>
+
+    <main class="app-shell">
+        <!-- ══════════════ 头部 ══════════════ -->
+        <header class="lab-header">
+            <div class="brand-group">
+                <h1 class="brand-title">Font<span class="brand-dot">·</span>Specimen<span class="brand-fade"> Lab</span></h1>
+                <p class="brand-subtitle">字体样张实验室 — 移动光标，让字重随你呼吸</p>
+            </div>
+            <div class="header-actions">
+                <div class="theme-dots" id="theme-dots" role="radiogroup" aria-label="氛围配色">
+                    <button class="theme-dot active" data-theme="aurora" style="--dot: #7dd3fc" aria-label="极光"></button>
+                    <button class="theme-dot" data-theme="ember" style="--dot: #fda4af" aria-label="余烬"></button>
+                    <button class="theme-dot" data-theme="lime" style="--dot: #bef264" aria-label="酸柠"></button>
+                    <button class="theme-dot" data-theme="vapor" style="--dot: #c4b5fd" aria-label="雾紫"></button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ══════════════ 字体切换轨道 ══════════════ -->
+        <nav class="family-rail" id="family-rail" role="tablist" aria-label="字体家族">
+            <button class="family-btn" data-family="Inter" role="tab" aria-selected="false">
+                <span class="family-name">Inter</span>
+                <span class="family-meta"> grotesque / 100–900</span>
+            </button>
+            <button class="family-btn active" data-family="Outfit" role="tab" aria-selected="true">
+                <span class="family-name">Outfit</span>
+                <span class="family-meta"> geometric / 100–900</span>
+            </button>
+            <button class="family-btn" data-family="'Share Tech Mono'" role="tab" aria-selected="false">
+                <span class="family-name">Share Tech Mono</span>
+                <span class="family-meta"> monospace / 400</span>
+            </button>
+        </nav>
+
+        <!-- ══════════════ 主样张舞台 ══════════════ -->
+        <section class="specimen-stage panel-glass" id="specimen-stage">
+            <div class="stage-corner tl"></div>
+            <div class="stage-corner tr"></div>
+            <div class="stage-corner bl"></div>
+            <div class="stage-corner br"></div>
+
+            <div class="specimen-editor" id="specimen-editor" contenteditable="true" spellcheck="false" aria-label="样张文本，可编辑"></div>
+
+            <div class="stage-hud" id="stage-hud">
+                <span class="hud-item" id="hud-family">Outfit</span>
+                <span class="hud-sep">/</span>
+                <span class="hud-item" id="hud-weight">W 400</span>
+                <span class="hud-sep">/</span>
+                <span class="hud-item" id="hud-size">S 128</span>
+                <span class="hud-sep">/</span>
+                <span class="hud-item" id="hud-track">T 0</span>
+            </div>
+        </section>
+
+        <!-- ══════════════ 控制台 ══════════════ -->
+        <section class="control-deck panel-glass">
+            <div class="control-row">
+                <label class="control-cell">
+                    <span class="control-label">字号 <em id="val-size">128</em></span>
+                    <input type="range" id="ctl-size" min="40" max="220" value="128" step="1">
+                </label>
+                <label class="control-cell">
+                    <span class="control-label">字距 <em id="val-track">0</em></span>
+                    <input type="range" id="ctl-track" min="-8" max="32" value="0" step="0.5">
+                </label>
+                <label class="control-cell">
+                    <span class="control-label">基础字重 <em id="val-weight">400</em></span>
+                    <input type="range" id="ctl-weight" min="100" max="900" value="400" step="10">
+                </label>
+            </div>
+            <div class="control-row control-row-modes">
+                <div class="mode-group" id="mode-group" role="tablist" aria-label="力场模式">
+                    <span class="mode-group-label">字重力场</span>
+                    <button class="mode-btn active" data-mode="proximity" role="tab" aria-selected="true">邻近呼吸</button>
+                    <button class="mode-btn" data-mode="wave" role="tab" aria-selected="false">正弦波流</button>
+                    <button class="mode-btn" data-mode="static" role="tab" aria-selected="false">静默平铺</button>
+                </div>
+                <button class="shuffle-btn" id="shuffle-btn">
+                    <span class="shuffle-glyph">⟳</span>
+                    <span>换一句样张</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ══════════════ 字形画廊 ══════════════ -->
+        <section class="glyph-section">
+            <div class="section-head">
+                <h2 class="section-title">Glyph Atlas <span class="title-fade">字形图鉴</span></h2>
+                <p class="section-sub">点击字形，放入检视舱</p>
+            </div>
+            <div class="glyph-grid panel-glass" id="glyph-grid" aria-label="字形网格"></div>
+        </section>
+
+        <!-- ══════════════ 字形检视舱 ══════════════ -->
+        <section class="inspector-drawer" id="inspector-drawer" aria-hidden="true">
+            <div class="inspector-card panel-glass" id="inspector-card">
+                <button class="inspector-close" id="inspector-close" aria-label="关闭检视舱">×</button>
+                <div class="inspector-glyph-stage">
+                    <div class="metric-line cap-line"><span>cap</span></div>
+                    <div class="metric-line mean-line"><span>mean</span></div>
+                    <div class="metric-line base-line"><span>base</span></div>
+                    <div class="inspector-glyph" id="inspector-glyph">A</div>
+                </div>
+                <div class="inspector-info">
+                    <span class="info-family" id="info-family">Outfit</span>
+                    <span class="info-code" id="info-code">U+0041</span>
+                    <span class="info-weight-read" id="info-weight-read">wght 400</span>
+                    <input type="range" id="inspector-weight" min="100" max="900" value="400" step="10" aria-label="检视字重">
+                </div>
+            </div>
+        </section>
+
+        <footer class="lab-footer">
+            <span class="footer-mono">specimen.lab / vanilla js / cubic-bezier(0.16, 1, 0.3, 1)</span>
+        </footer>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

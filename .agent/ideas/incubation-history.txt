@@ -235,3 +235,4 @@ type-fragment-lab
 iridescent-type-forge
 sunlight-wall-sim
 cassette-mixtape-maker
+font-specimen-lab
