@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fragment Type Poster 碎片字海报 · Digital Garden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-mood="neon">
+  <!-- 流体渐变背景 -->
+  <div class="bg-mesh" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+  </div>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <!-- 顶栏 -->
+  <header class="topbar">
+    <a class="back-link" href="/seed/index.html">← Garden</a>
+    <h1 class="brand">
+      <span class="brand-mark">◫</span>
+      <span class="brand-name">Fragment Type Poster</span>
+      <span class="brand-sub">碎片字海报工作室</span>
+    </h1>
+    <div class="topbar-meta mono" id="hud-clock">--:--:--</div>
+  </header>
+
+  <main class="layout">
+    <!-- 控制台 -->
+    <aside class="panel glass" id="panel">
+      <section class="panel-block">
+        <label class="block-label mono" for="word-input">SEED_TEXT // 文字种子</label>
+        <input id="word-input" type="text" maxlength="18" value="FRAGMENT" autocomplete="off" spellcheck="false">
+        <button class="btn primary" id="forge-btn">
+          <span class="btn-glow"></span>
+          <span class="btn-text">锻造海报 FORGE</span>
+        </button>
+      </section>
+
+      <section class="panel-block">
+        <label class="block-label mono">LAYOUT // 碎片编排</label>
+        <div class="seg-grid" id="layout-seg">
+          <button class="seg-btn active" data-layout="scatter">散射</button>
+          <button class="seg-btn" data-layout="cascade">瀑布</button>
+          <button class="seg-btn" data-layout="orbit">环轨</button>
+          <button class="seg-btn" data-layout="glitch">故障</button>
+        </div>
+      </section>
+
+      <section class="panel-block">
+        <label class="block-label mono">FORCE // 光标力场</label>
+        <div class="seg-grid" id="force-seg">
+          <button class="seg-btn active" data-force="repel">斥力</button>
+          <button class="seg-btn" data-force="attract">引力</button>
+          <button class="seg-btn" data-force="vortex">涡旋</button>
+          <button class="seg-btn" data-force="off">关闭</button>
+        </div>
+      </section>
+
+      <section class="panel-block">
+        <label class="block-label mono">MOOD // 氛围配色</label>
+        <div class="mood-row" id="mood-row">
+          <button class="mood-dot active" data-mood="neon" title="霓虹夜"></button>
+          <button class="mood-dot" data-mood="ember" title="熔岩烬"></button>
+          <button class="mood-dot" data-mood="mint" title="冷萃薄荷"></button>
+          <button class="mood-dot" data-mood="violet" title="紫外幻影"></button>
+        </div>
+      </section>
+
+      <section class="panel-block">
+        <label class="block-label mono" for="chaos-slider">CHAOS <span class="mono" id="chaos-val">0.5</span></label>
+        <input type="range" id="chaos-slider" min="0" max="1" step="0.01" value="0.5">
+        <div class="btn-row">
+          <button class="btn ghost" id="shuffle-btn">洗牌 SHUFFLE</button>
+          <button class="btn ghost" id="export-btn">导出 PNG</button>
+        </div>
+      </section>
+
+      <section class="panel-block telemetry">
+        <div class="tele-row mono"><span>FRAGMENTS</span><span id="tele-frag">0</span></div>
+        <div class="tele-row mono"><span>SHOCKWAVES</span><span id="tele-wave">0</span></div>
+        <div class="tele-row mono"><span>FPS</span><span id="tele-fps">--</span></div>
+        <div class="tele-row mono"><span>CURSOR_V</span><span id="tele-vel">0.00</span></div>
+      </section>
+
+      <p class="panel-hint mono">点击海报触发冲击波 · 空格全场脉冲</p>
+    </aside>
+
+    <!-- 海报舞台 -->
+    <section class="stage-wrap">
+      <div class="stage-frame glass" id="stage-frame">
+        <canvas id="stage"></canvas>
+        <div class="stage-corner tl"></div>
+        <div class="stage-corner tr"></div>
+        <div class="stage-corner bl"></div>
+        <div class="stage-corner br"></div>
+        <div class="stage-caption mono" id="stage-caption">FRAGMENT / POSTER / №001</div>
+      </div>
+      <p class="stage-note mono">每个字符都是一个弹簧-阻尼物理碎片 —— 移动光标扰动，点击轰击，锻造属于你的排版海报。</p>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

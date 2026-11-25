@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-25",
+  "name": "fragment-type-poster",
+  "description": "碎片大字间嵌入 3D 物件的海报生成器",
+  "tagline": "Type Shatters, Objects Rise",
+  "interaction": "用户输入的文字会自动碎裂成大字碎片，3D 物件（几何体、金属、玻璃材质）会精准嵌入字间缝隙。拖拽可旋转整个排版场景、实时调整光源与景深，一键导出高清海报。",
+  "directory": "seeds/fragment-type-poster/",
+  "status": "incubated"
+}

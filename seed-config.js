@@ -2520,6 +2520,16 @@
       status: '已发布',
       maintainer: 'EDEN',
       category: 'tool'
+    },
+    {
+      title: 'Fragment Type Poster 碎片字海报',
+      description: '沉浸式碎片字海报锻造工作室。输入文字即刻锻造成弹簧-阻尼物理驱动的活体碎片海报——4种编排模式（散射/瀑布/环轨/故障）、光标力场（斥力/引力/涡旋）、点击冲击波与火花迸射、乱码揭示、CHAOS 混沌滑杆与 PNG 导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
+      path: '/seed/seeds/fragment-type-poster/index.html',
+      tags: ['Interactive', 'Typography', 'Physics', 'Micro-interaction'],
+      icon: '◫',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'animation'
     }
   ]);
 
