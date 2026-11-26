@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-26",
+  "name": "pixel-chess-desk",
+  "description": "可拖拽的像素棋盘风桌面组件广场",
+  "tagline": "Your desk, your pixel kingdom.",
+  "interaction": "拖拽像素风棋子、时钟和便利贴等桌面小部件，自由布局在棋盘格桌面上。每个组件吸附网格对齐，像下棋一样"落子"布置你的工作空间。",
+  "directory": "seeds/pixel-chess-desk/",
+  "status": "incubated"
+}

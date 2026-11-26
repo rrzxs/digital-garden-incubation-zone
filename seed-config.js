@@ -1,6 +1,16 @@
 (function attachSeedConfig(globalScope) {
   const RAW_SEEDS = Object.freeze([
     {
+      title: 'Pixel Chess Desk 像素棋桌',
+      description: '沉浸式像素国际象棋桌面。8×8 手绘像素精灵棋盘悬浮于流体光雾，点选落子以弹簧曲线滑行，完整规则引擎（易位/吃过路兵/升变/将杀判定）、贪心桌面 AI 对弈、捕获星尘粒子、战利品托盘与实时棋谱，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/pixel-chess-desk/index.html',
+      tags: ['Interactive', 'Game', 'Pixel Art', 'Micro-interaction'],
+      icon: '♟',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'game'
+    },
+    {
       title: 'Sunlight Wall 日光墙',
       description: '沉浸式日光墙模拟体验。时间滑杆驱动太阳从窗口掠过——光斑斜投墙面、百叶帘影流动、焦散微光游弋、尘埃在光柱中亮起，点击窗台摆放蕨叶/玻璃瓶/叠书拖出剪影投影，3种交互模式（云影/掌影/微风）× 4种墙面氛围配色，流体渐变背景 + 微晶玻璃态容器 + 非线性动效',
       path: '/seed/seeds/sunlight-wall-sim/index.html',

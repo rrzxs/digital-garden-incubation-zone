@@ -1,0 +1,7 @@
+drape-poster-loop - 滚动驱动的布料海报无限画廊
+waveform-beat-grid - 本地音频波形与节拍网格可视化
+sunlit-wall-studio - 随真实太阳位置变化的墙面光影壁纸
+inkdrop-brand-lab - 墨滴扩散生成图案与标识纹理
+pixel-chess-desk - 可拖拽的像素棋盘风桌面组件广场
+fragment-type-weaver - 字母碎片间嵌入立体物的排版编辑器
+particle-rain-stage - 线框揭示与粒子雨的3D演播模拟

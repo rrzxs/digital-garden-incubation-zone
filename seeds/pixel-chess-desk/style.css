@@ -1,0 +1,338 @@
+/* ============================================================
+   Pixel Chess Desk 像素棋桌
+   流体渐变背景 + 微晶玻璃态容器 + 非线性动效
+   ============================================================ */
+
+:root {
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-sans: 'Inter', 'Outfit', -apple-system, sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+/* ---------- 氛围配色 ---------- */
+body[data-palette="dusk"] {
+  --bg-0: #0b0e1a; --bg-1: #131735;
+  --blob-a: #5b4bff; --blob-b: #b84bff; --blob-c: #2fd4ff;
+  --ink: #eef0ff; --ink-dim: rgba(238, 240, 255, 0.55);
+  --glass: rgba(255, 255, 255, 0.055); --glass-strong: rgba(255, 255, 255, 0.09);
+  --hair: rgba(255, 255, 255, 0.12);
+  --accent: #8f7bff; --accent-soft: rgba(143, 123, 255, 0.28);
+  --sq-light: #3a3f66; --sq-dark: #22253f;
+  --pc-white: #f2f4ff; --pc-black: #14162b;
+  --hint: rgba(143, 123, 255, 0.9);
+}
+body[data-palette="moss"] {
+  --bg-0: #0a120e; --bg-1: #10231a;
+  --blob-a: #2f9e6e; --blob-b: #a8c46a; --blob-c: #35d0a0;
+  --ink: #eaf6ee; --ink-dim: rgba(234, 246, 238, 0.55);
+  --glass: rgba(255, 255, 255, 0.055); --glass-strong: rgba(255, 255, 255, 0.09);
+  --hair: rgba(255, 255, 255, 0.12);
+  --accent: #57d99a; --accent-soft: rgba(87, 217, 154, 0.28);
+  --sq-light: #35543f; --sq-dark: #1e2f25;
+  --pc-white: #f0f7ef; --pc-black: #12201a;
+  --hint: rgba(87, 217, 154, 0.9);
+}
+body[data-palette="ember"] {
+  --bg-0: #160c0a; --bg-1: #2a1310;
+  --blob-a: #ff6b4a; --blob-b: #ffb347; --blob-c: #ff4a8f;
+  --ink: #fff0e8; --ink-dim: rgba(255, 240, 232, 0.55);
+  --glass: rgba(255, 255, 255, 0.05); --glass-strong: rgba(255, 255, 255, 0.085);
+  --hair: rgba(255, 255, 255, 0.13);
+  --accent: #ff8a5c; --accent-soft: rgba(255, 138, 92, 0.28);
+  --sq-light: #5c3527; --sq-dark: #331d15;
+  --pc-white: #fff1e0; --pc-black: #241009;
+  --hint: rgba(255, 138, 92, 0.9);
+}
+body[data-palette="tide"] {
+  --bg-0: #061418; --bg-1: #0a2733;
+  --blob-a: #1f9e9e; --blob-b: #3f7fff; --blob-c: #6ee7d8;
+  --ink: #e6f7fb; --ink-dim: rgba(230, 247, 251, 0.55);
+  --glass: rgba(255, 255, 255, 0.055); --glass-strong: rgba(255, 255, 255, 0.09);
+  --hair: rgba(255, 255, 255, 0.12);
+  --accent: #4fd8e0; --accent-soft: rgba(79, 216, 224, 0.28);
+  --sq-light: #274a54; --sq-dark: #142b31;
+  --pc-white: #eafcff; --pc-black: #0a1e24;
+  --hint: rgba(79, 216, 224, 0.9);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-0);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.8s var(--ease-spring), color 0.8s var(--ease-spring);
+}
+
+/* ============================================================
+   流体渐变背景
+   ============================================================ */
+.mesh-bg {
+  position: fixed; inset: 0; z-index: -3;
+  background: linear-gradient(160deg, var(--bg-0), var(--bg-1));
+  overflow: hidden;
+  transition: background 0.8s var(--ease-spring);
+}
+.blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); opacity: 0.32;
+  mix-blend-mode: screen;
+  animation: drift 26s ease-in-out infinite;
+  transition: background 1s var(--ease-spring);
+}
+.blob-a { width: 55vmax; height: 55vmax; left: -12vmax; top: -14vmax; background: var(--blob-a); }
+.blob-b { width: 48vmax; height: 48vmax; right: -14vmax; top: 22vh; background: var(--blob-b); animation-duration: 34s; animation-direction: reverse; }
+.blob-c { width: 40vmax; height: 40vmax; left: 28vw; bottom: -18vmax; background: var(--blob-c); animation-duration: 42s; animation-delay: -8s; }
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6vw, -4vh) scale(1.12); }
+  66% { transform: translate(-4vw, 5vh) scale(0.94); }
+}
+.grain {
+  position: absolute; inset: 0; opacity: 0.05; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#ambient-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
+
+/* ============================================================
+   舞台布局
+   ============================================================ */
+.stage { max-width: 1280px; margin: 0 auto; padding: 48px 28px 80px; }
+
+.masthead { text-align: center; margin-bottom: 40px; }
+.kicker {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.42em;
+  color: var(--accent); text-transform: uppercase; margin-bottom: 14px;
+}
+.title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(34px, 5vw, 56px); letter-spacing: -0.02em; line-height: 1.1;
+}
+.subtitle {
+  max-width: 560px; margin: 16px auto 0; font-size: 15px; font-weight: 300;
+  color: var(--ink-dim);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr) 250px;
+  gap: 22px; align-items: start;
+}
+@media (max-width: 1080px) {
+  .layout { grid-template-columns: 1fr; max-width: 620px; margin: 0 auto; }
+  .side-panel { order: 2; }
+  .board-zone { order: 1; }
+}
+
+/* ---------- 入场揭示 ---------- */
+.reveal { opacity: 0; transform: translateY(28px); animation: rise 1s var(--ease-spring) forwards; animation-delay: var(--reveal-delay, 0s); }
+@keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+/* ============================================================
+   微晶玻璃态容器
+   ============================================================ */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--hair);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: background 0.6s var(--ease-spring), border-color 0.6s var(--ease-spring);
+}
+.card-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.3em;
+  color: var(--ink-dim); text-transform: uppercase; margin-bottom: 14px;
+}
+.side-panel { display: flex; flex-direction: column; gap: 18px; }
+
+.mono { font-family: var(--font-mono); }
+
+/* ---------- 状态卡 ---------- */
+.turn-row { display: flex; align-items: center; gap: 12px; }
+.turn-indicator {
+  width: 14px; height: 14px; border-radius: 4px;
+  background: var(--pc-white); border: 1px solid var(--hair);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+  transition: all 0.5s var(--ease-spring);
+}
+.turn-indicator.black { background: var(--pc-black); box-shadow: 0 0 12px var(--accent-soft); }
+.turn-text { font-family: var(--font-display); font-weight: 600; font-size: 18px; }
+.status-sub {
+  margin-top: 12px; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.12em; color: var(--accent);
+}
+.status-sub.alert { animation: pulse-text 0.9s var(--ease-spring) infinite alternate; }
+@keyframes pulse-text { to { opacity: 0.45; } }
+
+/* ---------- 战利品 ---------- */
+.tray { margin-bottom: 10px; }
+.tray-tag { font-size: 11px; color: var(--ink-dim); display: block; margin-bottom: 6px; }
+.tray-pieces { display: flex; flex-wrap: wrap; gap: 4px; min-height: 30px; }
+.tray-pieces canvas { width: 26px; height: 26px; image-rendering: pixelated; opacity: 0.9; }
+
+/* ---------- 按钮 ---------- */
+.control-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.control-row:last-child { margin-bottom: 0; }
+.btn {
+  flex: 1; padding: 10px 14px; border-radius: 12px; cursor: pointer;
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  color: var(--ink); background: var(--glass-strong);
+  border: 1px solid var(--hair);
+  transition: all 0.4s var(--ease-spring);
+}
+.btn:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 8px 24px var(--accent-soft); }
+.btn:active { transform: translateY(0) scale(0.97); }
+.btn.primary { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); }
+
+.palette-row { justify-content: center; }
+.swatch {
+  width: 26px; height: 26px; flex: 0 0 auto; border-radius: 50%;
+  border: 2px solid transparent; cursor: pointer; position: relative;
+  transition: all 0.4s var(--ease-spring);
+}
+.swatch[data-palette="dusk"] { background: linear-gradient(135deg, #5b4bff, #2fd4ff); }
+.swatch[data-palette="moss"] { background: linear-gradient(135deg, #2f9e6e, #a8c46a); }
+.swatch[data-palette="ember"] { background: linear-gradient(135deg, #ff6b4a, #ffb347); }
+.swatch[data-palette="tide"] { background: linear-gradient(135deg, #1f9e9e, #6ee7d8); }
+.swatch:hover { transform: scale(1.2); }
+.swatch.active { border-color: var(--ink); box-shadow: 0 0 12px var(--accent-soft); }
+
+/* ============================================================
+   棋盘
+   ============================================================ */
+.board-zone { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+.board-card { padding: 22px; position: relative; overflow: hidden; }
+.board-card::before {
+  content: ''; position: absolute; inset: -40%;
+  background: conic-gradient(from 0deg, transparent, var(--accent-soft), transparent 30%);
+  animation: sweep 14s linear infinite; opacity: 0.5; pointer-events: none;
+}
+@keyframes sweep { to { transform: rotate(360deg); } }
+
+.board-frame { position: relative; padding: 0 0 26px 26px; }
+.board {
+  display: grid; grid-template-columns: repeat(8, 1fr);
+  width: min(560px, 76vw); height: min(560px, 76vw);
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--hair);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), inset 0 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.coords { position: absolute; display: grid; font-family: var(--font-mono); font-size: 10px; color: var(--ink-dim); letter-spacing: 0.08em; }
+.coords-left { left: 0; top: 0; bottom: 26px; grid-template-rows: repeat(8, 1fr); }
+.coords-bottom { left: 26px; right: 0; bottom: 0; grid-template-columns: repeat(8, 1fr); }
+.coords span { display: grid; place-items: center; }
+
+/* ---------- 格子 ---------- */
+.square {
+  position: relative; display: grid; place-items: center;
+  cursor: pointer;
+  transition: filter 0.4s var(--ease-spring);
+}
+.square.light { background: var(--sq-light); }
+.square.dark { background: var(--sq-dark); }
+.square:hover { filter: brightness(1.25); }
+
+.square.selected { filter: brightness(1.4); }
+.square.selected::after {
+  content: ''; position: absolute; inset: 0;
+  border: 2px solid var(--hint); border-radius: 4px;
+  animation: sel-pulse 1.2s var(--ease-spring) infinite alternate;
+}
+@keyframes sel-pulse { from { opacity: 1; } to { opacity: 0.35; } }
+
+.square.last-move::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--accent-soft); pointer-events: none;
+}
+.square.in-check { animation: check-flash 0.8s var(--ease-spring) infinite alternate; }
+@keyframes check-flash { to { filter: brightness(1.8) saturate(1.6); } }
+
+/* ---------- 可行点 / 捕获环 ---------- */
+.hint-dot, .hint-ring {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  animation: hint-in 0.5s var(--ease-spring) backwards;
+}
+.hint-dot { width: 22%; height: 22%; background: var(--hint); opacity: 0.85; }
+.hint-ring { width: 82%; height: 82%; border: 3px solid var(--hint); opacity: 0.9; }
+@keyframes hint-in { from { transform: scale(0.2); opacity: 0; } }
+
+/* ---------- 像素棋子 ---------- */
+.piece {
+  width: 78%; height: 78%; position: relative; z-index: 2;
+  transition: transform 0.45s var(--ease-spring);
+  will-change: transform;
+}
+.piece canvas { width: 100%; height: 100%; image-rendering: pixelated; display: block; }
+.piece.lift { transform: translateY(-7px) scale(1.1); filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5)); }
+.piece.dragging { transition: none; z-index: 10; }
+
+/* 棋子入场 */
+@keyframes piece-in { from { transform: scale(0.3); opacity: 0; } }
+.piece.enter canvas { animation: piece-in 0.5s var(--ease-spring); }
+
+/* ---------- 捕获粒子层 ---------- */
+.fx-layer { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+
+.board-caption { font-size: 11px; letter-spacing: 0.25em; color: var(--ink-dim); }
+
+/* ============================================================
+   棋谱
+   ============================================================ */
+.log-card { max-height: 380px; display: flex; flex-direction: column; }
+.move-log {
+  list-style: none; overflow-y: auto; flex: 1;
+  display: grid; grid-template-columns: 34px 1fr 1fr; gap: 4px 8px;
+  align-content: start; font-size: 12px; color: var(--ink-dim);
+  padding-right: 6px;
+}
+.move-log::-webkit-scrollbar { width: 4px; }
+.move-log::-webkit-scrollbar-thumb { background: var(--hair); border-radius: 4px; }
+.move-log .mv-num { color: var(--accent); }
+.move-log .mv { color: var(--ink); transition: all 0.4s var(--ease-spring); cursor: default; }
+.move-log .mv:hover { color: var(--accent); transform: translateX(2px); }
+.log-empty { font-size: 11px; color: var(--ink-dim); }
+.log-card.has-moves .log-empty { display: none; }
+
+/* ---------- 玩法 ---------- */
+.hint-list { list-style: none; font-size: 12.5px; color: var(--ink-dim); display: grid; gap: 8px; }
+.hint-list li { padding-left: 14px; position: relative; }
+.hint-list li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+
+/* ---------- 落子涟漪 ---------- */
+.move-ripple {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid var(--hint); pointer-events: none;
+  animation: ripple-out 0.7s var(--ease-spring) forwards;
+}
+@keyframes ripple-out {
+  from { transform: scale(0.3); opacity: 0.9; }
+  to { transform: scale(1.8); opacity: 0; }
+}
+
+/* ---------- 终局遮罩 ---------- */
+.gameover-toast {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.8);
+  z-index: 60; opacity: 0; pointer-events: none;
+  padding: 28px 44px; border-radius: 20px; text-align: center;
+  background: rgba(10, 12, 24, 0.75); backdrop-filter: blur(22px);
+  border: 1px solid var(--hair);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+  transition: all 0.6s var(--ease-spring);
+}
+.gameover-toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.gameover-toast h2 { font-family: var(--font-display); font-weight: 800; font-size: 30px; margin-bottom: 6px; }
+.gameover-toast p { font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); letter-spacing: 0.15em; }
+
+@media (max-width: 560px) {
+  .stage { padding: 28px 14px 60px; }
+  .glass-card { padding: 16px; }
+}

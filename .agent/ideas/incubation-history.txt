@@ -237,3 +237,4 @@ sunlight-wall-sim
 cassette-mixtape-maker
 font-specimen-lab
 fragment-type-poster
+pixel-chess-desk

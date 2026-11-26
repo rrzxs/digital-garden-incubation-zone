@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel Chess Desk 像素棋桌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-palette="dusk">
+
+  <!-- 流体渐变背景 -->
+  <div class="mesh-bg" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+    <span class="grain"></span>
+  </div>
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <main class="stage">
+
+    <!-- 顶部标题 -->
+    <header class="masthead reveal">
+      <p class="kicker">SEED · PIXEL CHESS DESK</p>
+      <h1 class="title">像素棋桌</h1>
+      <p class="subtitle">一张悬浮在流体光雾中的像素棋盘。点选棋子，落子于光斑之上 —— 每一步都以弹簧曲线滑行，每一次捕获都迸裂为像素星尘。</p>
+    </header>
+
+    <section class="layout">
+
+      <!-- 左侧： captured / status -->
+      <aside class="side-panel reveal" style="--reveal-delay:.12s">
+        <div class="glass-card status-card">
+          <p class="card-label">TURN 轮次</p>
+          <div class="turn-row">
+            <span class="turn-indicator" id="turn-indicator"></span>
+            <span class="turn-text" id="turn-text">白方行棋</span>
+          </div>
+          <p class="status-sub" id="status-sub">READY — 对局就绪</p>
+        </div>
+
+        <div class="glass-card tray-card">
+          <p class="card-label">CAPTURED 战利品</p>
+          <div class="tray" id="tray-white"><span class="tray-tag">白方所获</span><div class="tray-pieces" id="captured-by-white"></div></div>
+          <div class="tray" id="tray-black"><span class="tray-tag">黑方所获</span><div class="tray-pieces" id="captured-by-black"></div></div>
+        </div>
+
+        <div class="glass-card control-card">
+          <p class="card-label">CONTROL 台面</p>
+          <div class="control-row">
+            <button class="btn primary" id="btn-mode">模式：双人对弈</button>
+          </div>
+          <div class="control-row">
+            <button class="btn" id="btn-undo">悔棋</button>
+            <button class="btn" id="btn-reset">重开</button>
+          </div>
+          <div class="control-row palette-row">
+            <button class="swatch active" data-palette="dusk" title="暮穴 Dusk"></button>
+            <button class="swatch" data-palette="moss" title="苔原 Moss"></button>
+            <button class="swatch" data-palette="ember" title="余烬 Ember"></button>
+            <button class="swatch" data-palette="tide" title="潮汐 Tide"></button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- 中央棋盘 -->
+      <div class="board-zone reveal" style="--reveal-delay:.2s">
+        <div class="glass-card board-card">
+          <div class="board-frame" id="board-frame">
+            <div class="coords coords-left" id="coords-left"></div>
+            <div class="coords coords-bottom" id="coords-bottom"></div>
+            <div class="board" id="board" role="grid" aria-label="国际象棋棋盘"></div>
+          </div>
+        </div>
+        <p class="board-caption mono" id="board-caption">MODE: 2P · PALETTE: DUSK</p>
+      </div>
+
+      <!-- 右侧：棋谱 -->
+      <aside class="side-panel reveal" style="--reveal-delay:.28s">
+        <div class="glass-card log-card">
+          <p class="card-label">MOVE LOG 棋谱</p>
+          <ol class="move-log mono" id="move-log"></ol>
+          <p class="log-empty mono" id="log-empty">// 等待第一手落子…</p>
+        </div>
+        <div class="glass-card hint-card">
+          <p class="card-label">HOW 玩法</p>
+          <ul class="hint-list">
+            <li>点选己方棋子，光斑即为可行之着</li>
+            <li>圆点 = 行进 · 圆环 = 捕获</li>
+            <li>支持王车易位 / 吃过路兵 / 升变</li>
+            <li>切换模式可与桌面 AI 对弈</li>
+          </ul>
+        </div>
+      </aside>
+
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
