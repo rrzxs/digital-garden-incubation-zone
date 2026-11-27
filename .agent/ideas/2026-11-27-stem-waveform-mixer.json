@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-27",
+  "name": "stem-waveform-mixer",
+  "description": "拖拽音频生成分轨波形可视化",
+  "tagline": "Drop. Split. See the Sound.",
+  "interaction": "拖拽任意音频文件后，系统实时分离出人声、鼓组、贝斯等分轨，并以层叠彩色波形动态展开。每条波形可独立拖拽调整音量或静音，波形随混音变化实时律动，让用户像操纵乐器一样“看见”并重塑音乐结构。",
+  "directory": "seeds/stem-waveform-mixer/",
+  "status": "incubated"
+}

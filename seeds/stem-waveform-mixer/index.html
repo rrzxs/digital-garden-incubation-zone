@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="aurora">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stem Waveform Mixer · 分轨波形混音台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══ 流体渐变背景 ══ -->
+<div class="bg-field" aria-hidden="true">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+  <div class="grain"></div>
+</div>
+
+<main class="studio">
+
+  <!-- ══ 顶栏：标识 + 走带控制 ══ -->
+  <header class="masthead glass">
+    <div class="brand">
+      <div class="brand-glyph"><span>∿</span></div>
+      <div class="brand-text">
+        <h1>Stem Waveform Mixer</h1>
+        <p>分轨波形混音台 · Web Audio 实时合成</p>
+      </div>
+    </div>
+
+    <div class="transport">
+      <button id="play-btn" class="play-btn" aria-label="播放 / 暂停">
+        <span class="play-icon">▶</span>
+        <span class="play-label">PLAY</span>
+      </button>
+
+      <div class="bpm-cluster">
+        <span class="bpm-value"><span id="bpm-num">112</span><small>BPM</small></span>
+        <input id="bpm-slider" type="range" min="70" max="160" value="112" step="1" aria-label="BPM">
+      </div>
+
+      <div class="theme-dots" role="radiogroup" aria-label="氛围配色">
+        <button class="theme-dot" data-set-theme="aurora" title="极光"></button>
+        <button class="theme-dot" data-set-theme="ember"  title="熔岩"></button>
+        <button class="theme-dot" data-set-theme="mint"   title="深海"></button>
+        <button class="theme-dot" data-set-theme="rose"   title="霓虹"></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ 主总线：巨幅镜像波形 ══ -->
+  <section class="master-panel glass">
+    <div class="master-head">
+      <span class="bus-label">MASTER BUS · 混音总线</span>
+      <span class="bus-readout" id="master-readout">— dBFS · STANDBY</span>
+    </div>
+    <canvas id="master-canvas" aria-label="主总线波形"></canvas>
+    <div class="master-foot">
+      <div class="out-cluster">
+        <span class="out-label">OUT</span>
+        <div class="out-meter"><div class="out-fill" id="out-fill-l"></div></div>
+        <div class="out-meter"><div class="out-fill" id="out-fill-r"></div></div>
+      </div>
+      <div class="master-fader">
+        <span class="fader-cap">VOL</span>
+        <input id="master-vol" type="range" min="0" max="100" value="82" aria-label="主音量">
+        <span class="fader-cap mono" id="master-vol-num">82</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 分轨通道条 ══ -->
+  <section class="stems-grid" id="stems-grid">
+    <!-- 通道条由 main.js 生成 -->
+  </section>
+
+  <footer class="foot-hints">
+    <span><kbd>Space</kbd> 播放 / 暂停</span>
+    <span><kbd>M</kbd><kbd>S</kbd> 静音 / 独奏</span>
+    <span>点击任意波形发射涟漪</span>
+    <span class="eden-mark">maintainer · EDEN</span>
+  </footer>
+
+</main>
+
+<script src="main.js"></script>
+</body>
+</html>

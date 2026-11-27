@@ -1,0 +1,8 @@
+morph-sphere-visualizer - 拖拽变形球体生成蜡染等高线纹样
+particle-forge - 可调粒子雨与线框揭示动画实验室
+sunlight-wall-studio - 基于定位的日照墙面动态壁纸生成器
+stem-waveform-mixer - 拖拽音频生成分轨波形可视化
+pixel-board-mover - 像素棋盘风可拖拽卡片布局画布
+ink-drop-pattern-lab - 墨滴扩散生成品牌纹样与标签
+voice-mood-bloom - 录音声纹转化为植物生长图
+dither-bit-typewriter - 位图抖动风打字机与像素字体排版器

@@ -1,6 +1,16 @@
 (function attachSeedConfig(globalScope) {
   const RAW_SEEDS = Object.freeze([
     {
+      title: 'Stem Waveform Mixer 分轨波形混音台',
+      description: '沉浸式分轨波形混音台。Web Audio 实时合成六大分轨（底鼓/军鼓/踩镲/贝斯/琶音主音/和声垫），每轨独立活体波形、发光电平表、音量推子与静音/独奏，主总线巨幅镜像波形、16 步节拍指示、BPM 实时变速与点击涟漪冲击波，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/stem-waveform-mixer/index.html',
+      tags: ['Interactive', 'Audio', 'Mixer', 'Micro-interaction'],
+      icon: '∿',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
+    },
+    {
       title: 'Pixel Chess Desk 像素棋桌',
       description: '沉浸式像素国际象棋桌面。8×8 手绘像素精灵棋盘悬浮于流体光雾，点选落子以弹簧曲线滑行，完整规则引擎（易位/吃过路兵/升变/将杀判定）、贪心桌面 AI 对弈、捕获星尘粒子、战利品托盘与实时棋谱，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
       path: '/seed/seeds/pixel-chess-desk/index.html',
