@@ -1,0 +1,7 @@
+slide-box-story-deck - 抽拉盒式分段叙事演示画布
+contour-pattern-loom - 蜡染风等高线纹样生成器
+wireframe-reveal-stage - 线框揭示式3D场景预演台
+margin-gloss-harvest - 沉浸阅读页边批注采集器
+voice-botanical-print - 语音信号转植物图鉴插画
+beatgrid-tap-forge - 音轨节拍网格敲击编辑器
+ink-dossier-stamp - 红章档案风个人履历生成器

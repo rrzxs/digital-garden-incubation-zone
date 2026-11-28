@@ -2542,6 +2542,16 @@
       category: 'tool'
     },
     {
+      title: 'Voice Botanical Print 声音植物图谱',
+      description: '沉浸式声音植物标本采集器。嗓音即种子——Web Audio 实时分析音高/起伏/气量/脉动，确定性催生独一无二的手绘风植物版画：声能驱动活体抽枝、孢子迸发、拉丁学名铭牌（特质决定种加词）、口述转写与腊叶档案柜，光标风曳与点击冲击波，流体渐变背景 + 微晶玻璃态容器 + 非线性动效，4种氛围配色',
+      path: '/seed/seeds/voice-botanical-print/index.html',
+      tags: ['Interactive', 'Voice', 'Generative', 'Micro-interaction'],
+      icon: '❦',
+      status: '已发布',
+      maintainer: 'EDEN',
+      category: 'visual'
+    },
+    {
       title: 'Fragment Type Poster 碎片字海报',
       description: '沉浸式碎片字海报锻造工作室。输入文字即刻锻造成弹簧-阻尼物理驱动的活体碎片海报——4种编排模式（散射/瀑布/环轨/故障）、光标力场（斥力/引力/涡旋）、点击冲击波与火花迸射、乱码揭示、CHAOS 混沌滑杆与 PNG 导出，流体渐变背景 + 微晶玻璃态容器，4种氛围配色',
       path: '/seed/seeds/fragment-type-poster/index.html',

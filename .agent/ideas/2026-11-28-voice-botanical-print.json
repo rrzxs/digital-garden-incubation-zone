@@ -1,0 +1,9 @@
+{
+  "date": "2026-11-28",
+  "name": "voice-botanical-print",
+  "description": "语音信号转植物图鉴插画",
+  "tagline": "Voice, in bloom.",
+  "interaction": "用户对着麦克风说话或发声，系统实时采集音高、音量与音色特征，将其映射为植物的茎干弯曲度、花瓣层数与叶脉密度。语音落定时，一幅独一无二的"声音植物"图鉴插画缓缓生成，并附上以声音特征命名的拉丁学名，可导出为打印图鉴。",
+  "directory": "seeds/voice-botanical-print/",
+  "status": "incubated"
+}

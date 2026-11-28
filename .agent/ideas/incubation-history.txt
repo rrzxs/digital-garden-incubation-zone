@@ -239,3 +239,4 @@ font-specimen-lab
 fragment-type-poster
 pixel-chess-desk
 stem-waveform-mixer
+voice-botanical-print

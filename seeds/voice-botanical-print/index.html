@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Botanical Print 声音植物图谱</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="verdigris">
+  <!-- 流体渐变背景 -->
+  <div class="bg-mesh" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+    <span class="blob blob-d"></span>
+    <div class="grain"></div>
+  </div>
+
+  <!-- 顶栏 -->
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="brand-glyph">❦</span>
+      <div class="brand-text">
+        <h1>Voice Botanical Print</h1>
+        <p>声音植物图谱 · Herbarium Vocis</p>
+      </div>
+    </div>
+    <div class="theme-picker" id="themePicker" role="group" aria-label="氛围配色">
+      <button class="theme-dot" data-theme="verdigris" title="铜绿"></button>
+      <button class="theme-dot" data-theme="cyanotype" title="蓝晒"></button>
+      <button class="theme-dot" data-theme="duskrose" title="暮玫"></button>
+      <button class="theme-dot" data-theme="nocturne" title="夜阑"></button>
+    </div>
+  </header>
+
+  <main class="stage-wrap">
+    <!-- 标本压制台 -->
+    <section class="stage glass" id="stage">
+      <canvas id="pressCanvas"></canvas>
+      <div class="stage-frame" aria-hidden="true">
+        <span class="corner corner-tl"></span><span class="corner corner-tr"></span>
+        <span class="corner corner-bl"></span><span class="corner corner-br"></span>
+      </div>
+      <div class="stage-empty" id="stageEmpty">
+        <span class="empty-glyph">✧</span>
+        <p>声尚未至，草木未生</p>
+        <p class="mono dim">ad vocem expectans — 等待一次发声</p>
+      </div>
+      <!-- 标本铭牌 -->
+      <div class="specimen-label glass-deep" id="specimenLabel" hidden>
+        <div class="label-row label-latin">
+          <span class="latin-name" id="latinName">—</span>
+          <span class="mono dim" id="latinAuthor">sp. nov. vox</span>
+        </div>
+        <div class="label-row mono" id="labelTraits">—</div>
+        <div class="label-row field-note" id="fieldNote">—</div>
+        <div class="label-row mono dim" id="labelMeta">—</div>
+      </div>
+      <div class="rec-hud mono" id="recHud" hidden>
+        <span class="hud-item"><i class="hud-dot"></i>REC</span>
+        <span class="hud-item" id="hudPitch">PITCH — Hz</span>
+        <span class="hud-item" id="hudVol">AMP —</span>
+        <span class="hud-item" id="hudTime">00.0 s</span>
+      </div>
+      <div class="wind-hint mono dim" id="windHint">移动光标 · 标本随风轻曳</div>
+    </section>
+
+    <!-- 控制台 -->
+    <aside class="console">
+      <div class="panel glass" id="recordPanel">
+        <h2 class="panel-title"><span>❧</span> 采集发声</h2>
+        <p class="panel-desc">按下并对着麦克风说话、低吟或哼唱——<br>音量催生枝叶，音高雕琢形态，时长成就成熟。</p>
+        <div class="waveform-box">
+          <canvas id="waveCanvas"></canvas>
+        </div>
+        <div class="controls-row">
+          <button class="btn-record" id="btnRecord" aria-label="开始采集">
+            <span class="record-ring"></span>
+            <span class="record-core"></span>
+            <span class="btn-record-text" id="btnRecordText">采集声音</span>
+          </button>
+          <button class="btn-ghost" id="btnDemo" title="无麦克风时合成一份样本">合成样本</button>
+        </div>
+        <div class="hint mono dim" id="micHint">需要麦克风权限 · 全程本地分析，不上传任何音频</div>
+      </div>
+
+      <div class="panel glass" id="traitsPanel">
+        <h2 class="panel-title"><span>✕</span> 声纹形质</h2>
+        <div class="traits-grid">
+          <div class="trait"><div class="trait-head mono"><span>音高 PITCH</span><span id="tPitchV">—</span></div><div class="trait-bar"><i id="tPitchBar"></i></div></div>
+          <div class="trait"><div class="trait-head mono"><span>起伏 TREMO</span><span id="tTremoV">—</span></div><div class="trait-bar"><i id="tTremoBar"></i></div></div>
+          <div class="trait"><div class="trait-head mono"><span>气量 VIGOR</span><span id="tVigorV">—</span></div><div class="trait-bar"><i id="tVigorBar"></i></div></div>
+          <div class="trait"><div class="trait-head mono"><span>脉动 PULSE</span><span id="tPulseV">—</span></div><div class="trait-bar"><i id="tPulseBar"></i></div></div>
+        </div>
+        <div class="transcript-box mono" id="transcriptBox" hidden>
+          <span class="dim">转写 · </span><span id="transcriptText">—</span>
+        </div>
+      </div>
+
+      <div class="panel glass" id="archivePanel">
+        <h2 class="panel-title"><span>▥</span> 腊叶档案 <span class="mono dim archive-count" id="archiveCount">0 sheets</span></h2>
+        <div class="archive-grid" id="archiveGrid">
+          <div class="archive-empty mono dim" id="archiveEmpty">尚无藏品 · 采集第一株标本</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="toast mono" id="toast" hidden></div>
+  <script src="main.js"></script>
+</body>
+</html>
